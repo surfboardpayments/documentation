@@ -1,0 +1,109 @@
+{
+    "id": "additional-operations",
+    "name": "Additional Operations",
+    "description": "Learn how to manage other operations based on merchant and store",
+    "scenarios": [
+        {
+            "id": "fetch-settlement-reports",
+            "name": "Fetch Settlement Reports",
+            "description": "Fetch Settlement Reports",
+            "order": 1
+        },
+        {
+            "id": "fetch-adjustments",
+            "name": "Fetch Adjustments",
+            "description": "Fetch Adjustments",
+            "order": 2
+        },
+        {
+            "id": "create-merchant-charge",
+            "name": "Create Merchant Charge",
+            "description": "Create Merchant Charge",
+            "order": 3
+        },
+        {
+            "id": "update-merchant-charge",
+            "name": "Update Merchant Charge",
+            "description": "Update Merchant Charge",
+            "order": 4
+        },
+        {
+            "id": "fetch-all-merchant-charges",
+            "name": "Fetch All Merchant Charges",
+            "description": "Fetch All Merchant Charges",
+            "order": 5
+        },
+        {
+            "id": "add-customer-details",
+            "name": "Add Customer Details",
+            "description": "Add Customer Details",
+            "order": 6
+        },
+        {
+            "id": "create-product-catalog",
+            "name": "Create Product Catalog",
+            "description": "Create Product Catalog",
+            "order": 7
+        },
+        {
+            "id": "create-product",
+            "name": "Create Product",
+            "description": "Create Product",
+            "order": 8
+        },
+        {
+            "id": "fetch-all-products",
+            "name": "Fetch All Products",
+            "description": "Fetch All Products",
+            "order": 9
+        },
+        {
+            "id": "update-product",
+            "name": "Update Product",
+            "description": "Update Product",
+            "order": 10
+        },
+        {
+            "id": "update-product-inventory",
+            "name": "Update Product Inventory",
+            "description": "Update Product Inventory",
+            "order": 11
+        },
+        {
+            "id": "add-variant-for-product",
+            "name": "Add Variant For Product",
+            "description": "Add Variant For Product",
+            "order": 12
+        },
+        {
+            "id": "update-variant",
+            "name": "Update Variant",
+            "description": "Update Variant",
+            "order": 13
+        },
+        {
+            "id": "update-variant-inventory",
+            "name": "Update Variant Inventory",
+            "description": "Update Variant Inventory",
+            "order": 14
+        },
+        {
+            "id": "add-related-products",
+            "name": "Add Related Products",
+            "description": "Add Related Products",
+            "order": 15
+        },
+        {
+            "id": "get-product-statistics",
+            "name": "Get Product Statistics",
+            "description": "Get Product Statistics",
+            "order": 16
+        },
+        {
+            "id": "get-product-catalog-statistics",
+            "name": "Get Product Catalog Statistics",
+            "description": "Get Product Catalog Statistics",
+            "order": 17
+        }
+    ]
+}

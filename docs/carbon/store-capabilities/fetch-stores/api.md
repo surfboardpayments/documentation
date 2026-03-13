@@ -1,0 +1,1 @@
+Create a `GET` request to the Fetch Stores API to retrieve a list of all stores associated with a specific merchant.

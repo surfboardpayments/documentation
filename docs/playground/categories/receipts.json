@@ -1,0 +1,35 @@
+{
+    "scenario": "receipts",
+    "scenarios": [
+        {
+            "id": "email-receipt",
+            "name": "Email Receipt",
+            "description": "Send a receipt to a customer's email address.",
+            "order": 1
+        },
+        {
+            "id": "print-receipt",
+            "name": "Print Receipt",
+            "description": "Direct printing of receipts and invoices from your POS system.",
+            "order": 2
+        },
+        {
+            "id": "print-escpos-receipt",
+            "name": "Print ESCPOS Receipt",
+            "description": "Print receipts using your own template with ESC/POS commands.",
+            "order": 3
+        },
+        {
+            "id": "add-receipt-information",
+            "name": "Add Receipt Information",
+            "description": "Add and store cash register–specific details for generating accurate receipt information.",
+            "order": 4
+        },
+        {
+            "id": "fetch-receipt-link",
+            "name": "Fetch Receipt Link",
+            "description": "Retrieve a receipt link for a specific transaction.",
+            "order": 5
+        }
+    ]
+}

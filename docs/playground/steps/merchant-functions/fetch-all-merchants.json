@@ -1,0 +1,176 @@
+{
+    "scenarioId": "fetch-all-merchants",
+    "scenarioName": "Fetch All Merchants",
+    "steps": [
+        {
+            "id": "fetch-all-merchants",
+            "name": "Fetch All Merchants",
+            "description": "To check all the merchants details under a partner",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "partners/{{partnerId}}/merchants",
+            "hasMerchantId": false,
+            "guidePath": "/carbon/merchant-functions/fetch-all-merchants/home",
+            "payload":{},
+            "specifications":{
+                "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "merchantId",
+                            "type": "String",
+                            "description": "Merchant ID of the merchant."
+                        },
+                        {
+                            "name": "partnerId",
+                            "type": "String",
+                            "description": "The Partner ID of the partner with whom the merchant is affiliated."
+                        },
+                        {
+                            "name": "merchantName",
+                            "type": "String",
+                            "description": "Name of the merchant."
+                        },
+                        {
+                            "name": "merchantLanguage",
+                            "type": "String",
+                            "description": "Preferred language selected by the merchant."
+                        },
+                        {
+                            "name": "merchantLogoUrl",
+                            "type": "String",
+                            "description": "Merchant logo URL."
+                        },
+                        {
+                            "name": "email",
+                            "type": "String",
+                            "description": "Email address of the merchant."
+                        },
+                        {
+                            "name": "companyId",
+                            "type": "String",
+                            "description": "Company ID of the merchant."
+                        },
+                        {
+                            "name": "countryCode",
+                            "type": "String",
+                            "description": "Two-letter ISO country code in uppercase, representing the primary location of the merchant."
+                        },
+                        {
+                            "name": "mccCode",
+                            "type": "String",
+                            "description": "Merchant Category Code (MCC) of the merchant."
+                        },
+                        {
+                            "name": "address",
+                            "type": "object",
+                            "description": "Physical address of the merchant.",
+                            "resParams": [
+                                {
+                                    "name": "careOf",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Name of the addressee that is accepting the correspondence for the intended recipient."
+                                },
+                                {
+                                    "name": "addressLine1",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Address of the merchant."
+                                },
+                                {
+                                    "name": "addressLine2",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Address of the merchant."
+                                },
+                                {
+                                    "name": "addressLine3",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Address of the merchant."
+                                },
+                                {
+                                    "name": "city",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "City where the merchant is located."
+                                },
+                                {
+                                    "name": "countryCode",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Two-letter ISO country code in uppercase, representing the location of the merchant."
+                                },
+                                {
+                                    "name": "postalCode",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Postal code of the merchant."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "createdAt",
+                            "type": "String",
+                            "description": "Timestamp at which the merchant was created."
+                        },
+                        {
+                            "name": "totalNumberOfTransaction",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "The total number of transactions performed."
+                        },
+                        {
+                            "name": "totalAmountOfTransaction",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "The total amount of money involved in all transactions."
+                        },
+                        {
+                            "name": "lastTransactionAt",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "The timestamp of the last transaction in ISO format."
+                        },
+                        {
+                            "name": "phoneNumber",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "The contact phone number related to the merchant."
+                        },
+                        {
+                            "name": "currencyCode",
+                            "type": "Number",
+                            "description": "Three-digit ISO currency code, representing the supported currency for the merchant. Can be any one of the following: ‘208’ | ‘978’ | ‘752’."
+                        },
+                        {
+                            "name": "acquirerMID",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Denotes the Acquirer MID for onboarding merchants through payment institution partners(PF or Acquirer)."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ]
+            }
+        }
+    ]
+}

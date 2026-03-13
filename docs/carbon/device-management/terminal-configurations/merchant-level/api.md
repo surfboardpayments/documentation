@@ -1,0 +1,1 @@
+Sets configurations for all the terminals registered to a specific merchant. Use this API to configure uniform settings and parameters across multiple terminals associated with a specific merchant.

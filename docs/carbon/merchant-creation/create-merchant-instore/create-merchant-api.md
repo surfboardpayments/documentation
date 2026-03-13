@@ -1,0 +1,1 @@
+As a Surfboard partner, you can use our APIs for onboarding your merchants. In this method, a unique merchant application URL  will be generated which you should share with your merchant so they can complete the application and submit it.

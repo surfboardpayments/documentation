@@ -1,0 +1,23 @@
+{
+    "scenario": "additional-payment-methods",
+    "scenarios": [
+        {
+            "id": "activate-payment-method",
+            "name": "Activate Payment Method",
+            "description": "Activate a specific payment method for a merchant.",
+            "order": 1
+        },
+        {
+            "id": "deactivate-payment-method",
+            "name": "Deactivate Payment Method",
+            "description": "Deactivate a specific payment method for a merchant.",
+            "order": 2
+        },
+        {
+            "id": "fetch-all-payment-methods",
+            "name": "Fetch All Payment Methods",
+            "description": "Retrieve a list of all available payment methods and their activation status.",
+            "order": 3
+        }
+    ]
+}

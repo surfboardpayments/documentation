@@ -1,0 +1,432 @@
+{
+    "title": "NFC Reading",
+    "description": "The NFC Reading API's enables you to read NFC tags for an order.",
+    "endpoints": [
+        {
+            "fragment": "Create Read Session",
+            "method": "POST",
+            "link": "API_URL/terminals/:terminalId/sessions"
+        },
+        {
+            "fragment": "Fetch Sessions for Terminal",
+            "method": "GET",
+            "link": "API_URL/terminals/:terminalId/sessions"
+        },
+        {
+            "fragment": "Fetch Tags for Session",
+            "method": "GET",
+            "link": "API_URL/terminals/:terminalId/sessions/:sessionId/tags"
+        },
+        {
+            "fragment": "Fetch Session Status",
+            "method": "GET",
+            "link": "API_URL/terminals/:terminalId/sessions/:sessionId/status"
+        },
+        {
+            "fragment": "Complete NFC Reading Session",
+            "method": "POST",
+            "link": "API_URL/terminals/:terminalId/sessions/:sessionId/complete"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Create Read Session",
+            "description": "Use this API to start a NFC reading session on the terminal.",
+            "reqParams": [
+                {
+                    "name": "mode",
+                    "type": "string",
+                    "mandatory": true,
+                    "possibleValues": [
+                        {
+                            "value": "single",
+                            "description": "Allows you to read one NFC tag"
+                        },
+                        {
+                            "value": "multiple",
+                            "description": "Allows you to read multiple NFC tags"
+                        }
+                    ],
+                    "description": "Denotes the number of tags that can be read under the created session. The possible values are - 'single' | 'multiple'"
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "sessionId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "A unique identifier for the NFC reading session."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/terminals/:terminalId/sessions",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"mode\":\"single\"}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"sessionId\": \"827125a9d9d0301949\"\n\t},\n\t\"message\": \"NFC reading session started successfully.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Sessions for Terminal",
+            "description": "This API lets you fetch all reading sessions created under the terminal",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "sessionId",
+                            "type": "string",
+                            "description": "A unique identifier for the RFID reading session."
+                        },
+                        {
+                            "name": "action",
+                            "type": "string",
+                            "possibleValues": [
+                                {
+                                    "value": "start",
+                                    "description": "NFC read session started."
+                                },
+                                {
+                                    "value": "end",
+                                    "description": "NFC read session ended."
+                                }
+                            ],
+                            "description": "Denotes the stage at which the session is. The possible values are - 'start' | 'end'"
+                        },
+                        {
+                            "name": "mode",
+                            "type": "string",
+                            "possibleValues": [
+                                {
+                                    "value": "single",
+                                    "description": "One NFC tag read."
+                                },
+                                {
+                                    "value": "multiple",
+                                    "description": "Multiple NFC tags read."
+                                }
+                            ],
+                            "description": "Denotes the number of tags read under the created session. The  possible values are - 'single' | 'multiple'"
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/terminals/:terminalId/sessions",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"sessionId\": \"826e5fb507cd180849\",\n\t\t\t\"action\": \"end\",\n\t\t\t\"mode\": \"multiple\"\n\t\t},\n\t\t{\n\t\t\t\"sessionId\": \"826e5fff87cd181b49\",\n\t\t\t\"action\": \"end\",\n\t\t\t\"mode\": \"multiple\"\n\t\t},\n\t\t{\n\t\t\t\"sessionId\": \"826e600207cd180049\",\n\t\t\t\"action\": \"end\",\n\t\t\t\"mode\": \"multiple\"\n\t\t},\n\t\t{\n\t\t\t\"sessionId\": \"826e609587cd181249\",\n\t\t\t\"action\": \"end\",\n\t\t\t\"mode\": \"multiple\"\n\t\t}\n\t\t\t],\n\t\"message\": \"Fetched all NFC reading sessions under terminal.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Tags for Session",
+            "description": "This API retrieves all the tags read during the specified session.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "sessionId",
+                            "type": "string",
+                            "description": "A unique identifier for the RFID reading session."
+                        },
+                        {
+                            "name": "tagId",
+                            "type": "string",
+                            "description": "The unique identifier of the tag read."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/terminals/:terminalId/sessions/:sessionId/tags",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"sessionId\": \"826e7bcc086e901149\",\n\t\t\t\"tagId\": \"MDQ2QzUwMzJDMzNCODA=\"\n\t\t}\n\t],\n\t\"message\": \"Fetched all tags under session.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Session Status",
+            "description": "This API retrieves the current status of the NFC reading session.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "sessionStatus",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "The current status of the session.",
+                            "possibleValues": [
+                                {
+                                    "value": "PENDING",
+                                    "description": "The session is currently pending and waiting for NFC reading."
+                                },
+                                {
+                                    "value": "CANCELLED",
+                                    "description": "The session was cancelled by the user or system."
+                                },
+                                {
+                                    "value": "COMPLETED",
+                                    "description": "The session has been successfully completed."
+                                },
+                                {
+                                    "value": "TIMED_OUT",
+                                    "description": "The session has timed out due to inactivity or other issues."
+                                },
+                                {
+                                    "value": "NOT_FOUND",
+                                    "description": "The session was not found or does not exist."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "nfcTags",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "List of NFC (Base64 encoded RFID value) tags involved in the session."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/terminals/:terminalId/sessions/:sessionId/status",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"sessionStatus\": \"COMPLETED\",\n\t\t\"nfcTags\": [\n\t\t\t\"QjQ2RTE2OEY=\"\n\t\t]\n\t},\n\t\"message\": \"Fetched NFC session status.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Complete NFC Reading Session",
+            "description": "This endpoint completes an ongoing NFC (RFID) reading session. You must provide both the terminal ID and session ID in the path, as well as an optional result in the request body.",
+            "method": "POST",
+            "reqParams": [
+                {
+                    "name": "result",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Indicates the final state of the NFC session. Default is set to 'COMPLETED'",
+                    "possibleValues": [
+                        {
+                            "value": "COMPLETED",
+                            "description": "Indicates that the NFC session was completed successfully."
+                        },
+                        {
+                            "value": "CANCELLED",
+                            "description": "Indicates that the NFC session was cancelled."
+                        },
+                        {
+                            "value": "TIMED_OUT",
+                            "description": "Indicates that the NFC session timed out without a valid result."
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Describes the outcome of the request."
+                }
+            ],
+            "path": "/terminals/:terminalId/sessions/:sessionId/complete",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"result\":\"COMPLETED\"}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "\n{\n  \"status\": \"SUCCESS\",\n  \"message\": \"NFC reading session completed successfully.\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

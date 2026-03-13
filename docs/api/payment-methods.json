@@ -1,0 +1,361 @@
+{
+    "title": "Payment Methods API",
+    "description": "The Payment Methods API enables you to add, manage, and remove additional payments methods offered by Surfboard. While the CARD is the default payment method, these APIs allows for the addition and removal of other payment methods such as AMEX and SWISH. These payment methods can be added to specific merchants and/or stores, offering versatility in payment strategies.",
+    "endpoints": [
+        {
+            "fragment": "Activate Payment Method",
+            "method": "POST",
+            "link": "API_URL/merchants/:merchantId/payment-methods"
+        },
+        {
+            "fragment": "Deactivate Payment Method",
+            "method": "DELETE",
+            "link": "API_URL/merchants/:merchantId/payment-methods/:paymentMethodId"
+        },
+        {
+            "fragment": "Fetch Payment Method Details",
+            "method": "GET",
+            "link": "API_URL/merchants/:merchantId/payment-methods/:paymentMethodId"
+        },
+        {
+            "fragment": "Fetch All Payment Methods",
+            "method": "GET",
+            "link": "API_URL/merchants/:merchantId/payment-methods"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Activate Payment Method",
+            "description": "Activates multiple payment methods for a merchant in a single request. Each payment method can be enabled with a boolean value or configured with specific settings using an object.",
+            "reqParams": [
+                {
+                    "name": "storeId",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Optional store identifier to associate payment methods with a specific store."
+                },
+                {
+                    "name": "merchantId",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Optional merchant identifier for the payment method configuration."
+                },
+                {
+                    "name": "card",
+                    "type": "boolean",
+                    "mandatory": false,
+                    "description": "Card payment method configuration. Set to true to enable card payments."
+                },
+                {
+                    "name": "amex",
+                    "type": "boolean",
+                    "mandatory": false,
+                    "description": "American Express payment method configuration. Set to true to enable AMEX payments."
+                },
+                {
+                    "name": "swish",
+                    "type": "boolean",
+                    "mandatory": false,
+                    "description": "Swedish mobile payment method configuration. Set to true to enable Swish payments."
+                },
+                {
+                    "name": "klarna",
+                    "type": "boolean",
+                    "mandatory": false,
+                    "description": "Buy now, pay later payment method configuration. Set to true to enable Klarna payments."
+                },
+                {
+                    "name": "b2binv",
+                    "type": "boolean",
+                    "mandatory": false,
+                    "description": "B2B invoice payment method configuration. Set to true to enable B2B invoice payments."
+                },
+                {
+                    "name": "acc2acc",
+                    "type": "boolean",
+                    "mandatory": false,
+                    "description": "Account to account transfer payment method configuration. Set to true to enable account to account transfers."
+                },
+                {
+                    "name": "vipps",
+                    "type": "boolean",
+                    "mandatory": false,
+                    "description": "Norwegian mobile payment method. Set to true to enable Vipps payment method."
+                },
+                {
+                    "name": "mobilepay",
+                    "type": "boolean",
+                    "mandatory": false,
+                    "description": "Danish mobile payment method. Set to true to enable MobilePay payment method."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Array of payment method registration results.",
+                    "resParams": [
+                        {
+                            "name": "method",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "The payment method name (e.g., 'amex', 'swish', 'card')."
+                        },
+                        {
+                            "name": "paymentMethodId",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Unique identifier assigned to the payment method (present on success)."
+                        },
+                        {
+                            "name": "status",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Registration status for this payment method, either 'SUCCESS' or 'ERROR'."
+                        },
+                        {
+                            "name": "message",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Error message if registration failed (present on error)."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the overall status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/merchants/:merchantId/payment-methods",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\n\t\"card\": true,\n\t\"amex\": true,\n\t\"swish\": true,\n\t\"klarna\": true,\n\t\"b2binv\": true,\n\t\"acc2acc\": true,\n\t\"vipps\": true,\n\t\"mobilepay\": true\n}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"method\": \"b2binv\",\n\t\t\t\"paymentMethodId\": \"838f499c1f7bf00c23\",\n\t\t\t\"status\": \"SUCCESS\"\n\t\t},\n\t\t{\n\t\t\t\"method\": \"card\",\n\t\t\t\"paymentMethodId\": \"82523116c63be80123\",\n\t\t\t\"status\": \"SUCCESS\"\n\t\t},\n\t\t{\n\t\t\t\"method\": \"swish\",\n\t\t\t\"status\": \"ERROR\",\n\t\t\t\"message\": \"PM_0010 - Register payment method failed: SWISH registration already exists.\"\n\t\t},\n\t\t{\n\t\t\t\"method\": \"acc2acc\",\n\t\t\t\"paymentMethodId\": \"838f499c1f7bf01c23\",\n\t\t\t\"status\": \"SUCCESS\"\n\t\t}\n\t],\n\t\"message\": \"Processed payment method registrations\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Deactivate Payment Method",
+            "description": "Deactivates a specific payment method. Use this API to deactivate the payment method added to the merchant or store using its Payment Method ID.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "DELETE",
+            "path": "/merchants/:merchantId/payment-methods/:paymentMethodId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Deactivated payment method successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Payment Method Details",
+            "description": "Retrieves information for a specific payment method. Use this API to get information regarding the payment method using its Payment Method ID.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "paymentMethodId",
+                            "type": "String",
+                            "description": "PaymentMethod ID of the payment method."
+                        },
+                        {
+                            "name": "paymentMethod",
+                            "type": "String",
+                            "description": "Specifies the payment method. It can be one of the following: 'AMEX', 'SWISH', or 'CARD’."
+                        },
+                        {
+                            "name": "status",
+                            "type": "String",
+                            "description": "Status of the payment method, indicated as either ACTIVATED' or 'DEACTIVATED’."
+                        },
+                        {
+                            "name": "amexMID",
+                            "type": "Number",
+                            "description": "Returns AMEX MID for AMEX payment method."
+                        },
+                        {
+                            "name": "acquirerMID",
+                            "type": "String",
+                            "description": "Returns the respective Acquirer MID for CARD payment method."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/merchants/:merchantId/payment-methods/:paymentMethodId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"paymentMethodId\": \"8235c0943bd9800023\",\n\t\t\"paymentMethod\": \"AMEX\",\n\t\t\"status\": \"ACTIVATED\",\n\t\t\"amexMID\": \"abcedefg\"\n\t},\n\t\"message\": \"Fetched payment method successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch All Payment Methods",
+            "description": "Retrieves a list of all payment methods activated for a specific merchant. You can use this API to get information regarding all the payment methods added for the merchant.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "paymentMethodId",
+                            "type": "String",
+                            "description": "PaymentMethod ID of the payment method."
+                        },
+                        {
+                            "name": "paymentMethod",
+                            "type": "String",
+                            "description": "Specifies the payment method. It can be one of the following: 'AMEX', 'SWISH', or 'CARD’."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/merchants/:merchantId/payment-methods",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"paymentMethodId\": \"8235c0a33bd9800223\",\n\t\t\t\"paymentMethod\": \"SSWISH\"\n\t\t},\n\t\t{\n\t\t\t\"paymentMethodId\": \"8235c0943bd9800023\",\n\t\t\t\"paymentMethod\": \"AMEX\"\n\t\t}\n\t],\n\t\"message\": \"Fetched activated payment methods\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,1 @@
+As a Surfboard partner, you can use our APIs for onboarding your merchants for accepting online payments.  It involves two primary stages, Merchant onboarding and store creation, followed by Online store setup and domain verification. Upon completion, you can register terminals, configure them, and integrate the payment flow.

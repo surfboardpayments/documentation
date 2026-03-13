@@ -1,0 +1,112 @@
+{
+    "scenarioId": "get-gift-card-transactions",
+    "scenarioName": "Get Gift Card Transactions",
+    "steps": [
+        {
+            "id": "get-gift-card-transactions",
+            "name": "Get Gift Card Transactions",
+            "description": "Get transactions associated with a specific gift card.",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "gift-cards/{{giftCardId}}/transactions",
+            "guidePath": "/carbon/advanced-customizations/get-gift-card-transactions",
+            "payload": {},
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "transactionType",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Filter transactions by type.",
+                        "possibleValues": [
+                            {
+                                "value": "ISSUED",
+                                "description": "Gift card issuance transactions"
+                            },
+                            {
+                                "value": "CREDIT",
+                                "description": "Credit transactions (adding value)"
+                            },
+                            {
+                                "value": "DEBIT",
+                                "description": "Debit transactions (using value)"
+                            }
+                        ]
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "array",
+                        "mandatory": true,
+                        "description": "Array of transaction objects.",
+                        "resParams": [
+                            {
+                                "name": "paymentId",
+                                "type": "string",
+                                "description": "Unique identifier for the payment/transaction."
+                            },
+                            {
+                                "name": "transactionType",
+                                "type": "string",
+                                "description": "Type of transaction (ISSUED, CREDIT, DEBIT)."
+                            },
+                            {
+                                "name": "transactionAmount",
+                                "type": "number",
+                                "description": "Amount involved in the transaction."
+                            },
+                            {
+                                "name": "currency",
+                                "type": "string",
+                                "description": "Currency code for the transaction amount."
+                            },
+                            {
+                                "name": "valueBefore",
+                                "type": "number",
+                                "description": "Gift card value before the transaction."
+                            },
+                            {
+                                "name": "valueAfter",
+                                "type": "number",
+                                "description": "Gift card value after the transaction."
+                            },
+                            {
+                                "name": "orderId",
+                                "type": "string",
+                                "description": "Associated order ID if applicable."
+                            },
+                            {
+                                "name": "merchantId",
+                                "type": "string",
+                                "description": "Merchant ID associated with the transaction."
+                            },
+                            {
+                                "name": "storeId",
+                                "type": "string",
+                                "description": "Store ID associated with the transaction."
+                            },
+                            {
+                                "name": "metadata",
+                                "type": "object",
+                                "description": "Additional metadata for the transaction."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

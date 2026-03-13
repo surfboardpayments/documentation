@@ -1,0 +1,248 @@
+{
+    "scenarioId": "fetch-transaction-analytics",
+    "scenarioName": "Fetch Transaction Analytics",
+    "steps": [
+        {
+            "id": "fetch-transaction-analytics",
+            "name": "Fetch Transaction Analytics",
+            "description": "To fetch the transaction analytics for the merchant",
+            "order": 4,
+            "method": "GET",
+            "endpoint": "merchants/{{merchantId}}/analytics",
+            "guidePath": "/carbon/merchant-functions/fetch-transaction-analytics/home",
+            "payload": {},
+            "specifications": {
+               "reqParams": [
+                {
+                    "name": "storeId",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Provide store ID to filter analytics for a specific store."
+                },
+                {
+                    "name": "terminalId",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Provide terminal ID to filter analytics for a specific terminal."
+                },
+                {
+                    "name": "startDate",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Start of the date range in yyyy-mm-dd format."
+                },
+                {
+                    "name": "endDate",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "End of the date range in yyyy-mm-dd format."
+                },
+                {
+                    "name": "orderType",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Type of order to filter by. Possible values are 'purchase' and 'return'."
+                },
+                {
+                    "name": "terminalType",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Type of terminal to filter results.",
+                    "possibleValues": [
+                        {
+                            "value": "surfpad",
+                            "description": "Hardware terminal with a physical keypad."
+                        },
+                        {
+                            "value": "surftouch",
+                            "description": "Android terminal with custom payment apps, digital receipts etc."
+                        },
+                        {
+                            "value": "surfprint",
+                            "description": "Android terminal with a built-in printer."
+                        },
+                        {
+                            "value": "checkoutPro",
+                            "description": "Complete checkout solution with a customer facing screen."
+                        },
+                        {
+                            "value": "checkoutX",
+                            "description": "Software checkout solution for NFC-enabled Android devices to accept contactless card payments."
+                        },
+                        {
+                            "value": "softpos",
+                            "description": "SoftPOS solution on COTS devices."
+                        },
+                        {
+                            "value": "PaymentPage",
+                            "description": "In this mode, the payment page and all associated configuration is managed by Surfboard."
+                        },
+                        {
+                            "value": "SelfHostedPage",
+                            "description": "With SelfHostedPage, Surfboard renders the fields in your page."
+                        },
+                        {
+                            "value": "MerchantInitiated",
+                            "description": "Set this type if you want to accept Merchant Initiated Transactions (MIT)."
+                        }
+                    ]
+                },
+                {
+                    "name": "paymentMethod",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Payment method to filter analytics."
+                },
+                {
+                    "name": "posEntryMode",
+                    "type": "string",
+                    "in": "query",
+                    "mandatory": false,
+                    "description": "POS entry mode to filter by."
+                },
+                {
+                    "name": "cardBrand",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Card brand to filter by."
+                },
+                {
+                    "name": "currency",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Three digit numeric or ISO code representing currency."
+                },
+                {
+                    "name": "groupBy",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "Use this object to group analytics by store, terminal, etc. For example, groupBy[storeId]=true.",
+                    "reqParams": [
+                        {
+                            "name": "storeId",
+                            "type": "boolean",
+                            "mandatory": false,
+                            "description": "Set to true to group results by store."
+                        },
+                        {
+                            "name": "terminalId",
+                            "type": "boolean",
+                            "mandatory": false,
+                            "description": "Set to true to group results by terminalId."
+                        },
+                        {
+                            "name": "orderType",
+                            "type": "boolean",
+                            "mandatory": false,
+                            "description": "Set to true to group results by orderType."
+                        },
+                        {
+                            "name": "terminalType",
+                            "type": "boolean",
+                            "mandatory": false,
+                            "description": "Set to true to group results by terminalType."
+                        },
+                        {
+                            "name": "paymentMethod",
+                            "type": "boolean",
+                            "mandatory": false,
+                            "description": "Set to true to group results by paymentMethod."
+                        },
+                        {
+                            "name": "cardBrand",
+                            "type": "boolean",
+                            "mandatory": false,
+                            "description": "Set to true to group results by cardBrand."
+                        },
+                        {
+                            "name": "posEntryMode",
+                            "type": "boolean",
+                            "mandatory": false,
+                            "description": "Set to true to group results by posEntryMode."
+                        },
+                        {
+                            "name": "timeSegments",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Segments the analytics by time. Possible values are 'DAILY', 'WEEKLY', 'MONTHLY', 'QUARTERLY', 'YEARLY'.for example groupBy[timeSegments]=DAILY."
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": false,
+                    "description": "An array of analytics objects, each containing aggregated transaction information.",
+                    "resParams": [
+                        {
+                            "name": "currency",
+                            "type": "string",
+                            "description": "The currency code for the transactions, typically a three-digit numeric code."
+                        },
+                        {
+                            "name": "terminalId",
+                            "type": "string",
+                            "description": "The terminal ID from which the transactions were made."
+                        },
+                        {
+                            "name": "terminalType",
+                            "type": "string",
+                            "description": "Specifies the type of terminal."
+                        },
+                        {
+                            "name": "orderType",
+                            "type": "string",
+                            "description": "The type of order."
+                        },
+                        {
+                            "name": "paymentMethod",
+                            "type": "string",
+                            "description": "The payment method used."
+                        },
+                        {
+                            "name": "cardBrand",
+                            "type": "string",
+                            "description": "The brand of the card, if paymentMethod is 'CARD'. This may be empty if no card brand applies."
+                        },
+                        {
+                            "name": "timeSegments",
+                            "type": "string",
+                            "description": "The date/time segment in which these transactions occurred."
+                        },
+                        {
+                            "name": "orderTransactionCount",
+                            "type": "string",
+                            "description": "Number of transactions that match this grouping or filter."
+                        },
+                        {
+                            "name": "totalTransactionAmount",
+                            "type": "number",
+                            "description": "Aggregate sum of transaction amounts (in minor currency units) for this group."
+                        },
+                        {
+                            "name": "message",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "A message describing the status or outcome of the request."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message describing the status or outcome of the request."
+                }
+            ]
+            }
+        }
+    ]
+}

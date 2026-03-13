@@ -1,0 +1,42 @@
+{
+    "scenarioId": "email-receipt",
+    "scenarioName": "Email Receipt",
+    "steps": [
+        {
+            "id": "email-receipt",
+            "name": "Email Receipt",
+            "description": "Send payment receipts to the required email address.",
+            "order": 1,
+            "method": "PUT",
+            "endpoint": "receipts/{{id}}/email",
+            "guidePath": "/carbon/receipts/email-receipt/home",
+            "payload": {
+                "email": "integrations@surfboard.se"
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "email",
+                        "type": "String",
+                        "mandatory": true,
+                        "description": "Email address to which the receipt should be delivered."
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request."
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the email receipt request."
+                    }
+                ]
+            }
+        }
+    ]
+}

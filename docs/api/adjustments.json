@@ -1,0 +1,111 @@
+{
+    "title": "Adjustments API",
+    "description": "Adjustments API takes care of handling additional amounts to orders like tips, surcharges, insurance payments etc included while performing a transaction.",
+    "endpoints": [
+        {
+            "fragment": "Fetch Adjustments",
+            "method": "GET",
+            "link": "API_URL/adjustments/:id"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Fetch Adjustments",
+            "type": "note",
+            "pagination": true,
+            "note": "The <span class='font-semibold'>:id</span> in url supports Merchant ID and Store ID.",
+            "description": "Fetch all adjustments created under a merchant or store.",
+            "query": "To fetch adjustments made under a certain date range send in <span class='font-semibold'>startDate</span> and <span class='font-semibold'>endDate</span> as query params",
+            "reqParams": [
+                {
+                    "name": "startDate",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Start date of the range in yyyy-mm-dd format."
+                },
+                {
+                    "name": "endDate",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "End date of the range in yyyy-mm-dd format."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "adjustmentId",
+                            "type": "String",
+                            "description": "Adjustment ID of the adjustment."
+                        },
+                        {
+                            "name": "adjustmentType",
+                            "type": "String",
+                            "description": "Type of the adjustment."
+                        },
+                        {
+                            "name": "amount",
+                            "type": "String",
+                            "description": "Amount of the adjustment."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/adjustments/:id",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"adjustmentId\": \"81efdbe975ebc800ff\",\n\t\t\t\"adjustmentType\": \"tips\",\n\t\t\t\"amount\": \"100\"\n\t\t}\n\t],\n\t\"message\": \"Adjustments fetched successfully\"\n}"
+                    },
+                    {
+                        "code": 400,
+                        "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Invalid date format\"\n}"
+                    },
+                    {
+                        "code": 401,
+                        "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Authentication failed\"\n}"
+                    },
+                    {
+                        "code": 404,
+                        "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"No adjustments found\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

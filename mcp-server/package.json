@@ -1,0 +1,21 @@
+{
+  "name": "@surfboardpayments/surf-mcp",
+  "version": "1.1.0",
+  "description": "MCP server that exposes Surfboard Payments API documentation as searchable tools",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": { "surfboard-docs-mcp": "dist/index.js" },
+  "scripts": {
+    "prebuild": "node scripts/bundle-docs.js",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "files": ["dist", "data", "README.md"],
+  "publishConfig": { "access": "public" },
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/surfboardpayments/documentation/tree/main/mcp-server#readme",
+  "repository": { "type": "git", "url": "https://github.com/surfboardpayments/documentation", "directory": "mcp-server" },
+  "keywords": ["mcp", "surfboard", "payments", "api", "documentation"],
+  "dependencies": { "@modelcontextprotocol/sdk": "^1.12.1" },
+  "devDependencies": { "@types/node": "^22.0.0", "typescript": "^5.7.0" }
+}

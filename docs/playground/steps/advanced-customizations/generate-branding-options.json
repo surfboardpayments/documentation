@@ -1,0 +1,140 @@
+{
+    "scenarioId": "generate-branding-options",
+    "scenarioName": "Generate Branding Options",
+    "steps": [
+        {
+            "id": "generate-branding-options",
+            "name": "Generate Branding Options",
+            "description": "Generate a list of branding options for a merchant.",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "ai/branding",
+            "guidePath": "/carbon/advanced-customizations/generate-branding-options",
+            "payload": {
+                "url": "https://example-company.com"
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "url",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Website URL to analyze for branding inspiration and color scheme generation."
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data containing generated branding options.",
+                        "resParams": [
+                            {
+                                "name": "options",
+                                "type": "array",
+                                "mandatory": true,
+                                "description": "Array of branding option sets with metadata.",
+                                "resParams": [
+                                    {
+                                        "name": "brandingOptions",
+                                        "type": "array",
+                                        "mandatory": true,
+                                        "description": "Array of branding configuration options.",
+                                        "resParams": [
+                                            {
+                                                "name": "backgroundColor",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "Hex color code for the background color."
+                                            },
+                                            {
+                                                "name": "brandColor",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "Hex color code for the primary brand color."
+                                            },
+                                            {
+                                                "name": "accentColor",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "Hex color code for accent elements."
+                                            },
+                                            {
+                                                "name": "rectShape",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "Shape style for rectangular elements (e.g., 'rounded', 'square')."
+                                            },
+                                            {
+                                                "name": "fontType",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "Font family type for text elements (e.g., 'mono', 'serif', 'sans-serif')."
+                                            },
+                                            {
+                                                "name": "logoUrl",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "URL of the generated or suggested logo image."
+                                            },
+                                            {
+                                                "name": "iconUrl",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "URL of the generated or suggested icon image."
+                                            },
+                                            {
+                                                "name": "footerColor",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "Hex color code for footer elements."
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "metadata",
+                                        "type": "object",
+                                        "mandatory": true,
+                                        "description": "Metadata about the AI generation process.",
+                                        "resParams": [
+                                            {
+                                                "name": "inputTokens",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Number of input tokens used in the AI generation."
+                                            },
+                                            {
+                                                "name": "outputTokens",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Number of output tokens generated by the AI."
+                                            },
+                                            {
+                                                "name": "outputType",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "Type of output generated (e.g., 'text', 'image')."
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

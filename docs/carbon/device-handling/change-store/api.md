@@ -1,0 +1,1 @@
+Changes the store to which the terminal is registered. You can use this API to utilize the terminal in another store created under the same merchant. However, the Terminal ID remains unchanged.

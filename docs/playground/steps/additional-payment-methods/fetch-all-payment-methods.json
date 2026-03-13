@@ -1,0 +1,48 @@
+{
+    "scenarioId": "fetch-all-payment-methods",
+    "scenarioName": "Fetch All Payment Methods",
+    "steps": [
+        {
+            "id": "fetch-all-payment-methods",
+            "name": "Fetch All Payment Methods",
+            "description": "Retrieve a list of all available payment methods and their activation status.",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "merchants/{{merchantId}}/payment-methods",
+            "guidePath": "/carbon/additional-payment-methods/fetch-all-payment-methods/home",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "array",
+                        "description": "Response data",
+                        "resParams": [
+                            {
+                                "name": "paymentMethodId",
+                                "type": "String",
+                                "description": "PaymentMethod ID of the payment method."
+                            },
+                            {
+                                "name": "paymentMethod",
+                                "type": "String",
+                                "description": "Specifies the payment method. It can be one of the following: 'AMEX', 'SWISH', or 'CARD’."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

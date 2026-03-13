@@ -1,0 +1,18 @@
+### Pre-requisites
+
+To create a merchant application and track its status, ensure you have the following:
+
+- **API Credentials**: Valid API-KEY, API-SECRET, and **`partnerId`** for access to APIs.
+- Merchant’s **`country`**  and **`organisation`** with the  **`corporateId`**  are required for application creation.
+
+### To Generate an Onboarding Link
+
+1. Start by making a **`POST`** request to the [**Create Merchant API**](/api/merchants#Create-Merchant) with these key parameters in your request **`country`**,**`organisation`**. Share the **KYB URL** with the merchant, who can then complete the KYB step by visiting this URL.
+
+{% callout type="note" label="Note" %}💡
+The **Application ID** is required to track the status of the merchant application. Store the **Application ID** securely and associate it with an identifiable record in your system for easy retrieval.{% /callout %}
+
+> **Note**: As a Partner, you can streamline onboarding by including store information within the control fields of the [Create Merchant API](/api/merchants#Create-Merchant). This automatically creates a store for the merchant during onboarding. You can also pass information regarding pricing plans, hardware configurations, and device options. If no information is provided, default preferences will be applied. The details passed in the API request will be pre-filled in the merchant application form.
+
+Here’s an example of a request and response for the Create Merchant API
+{% requestresponse method="POST" requests=[{language: "cURL", code: "curl -d ' \\\n{\n\t\"country\": \"SE\",\n\t\"organisation\": {\n\t\t\"corporateId\": \"12345678901\",\n\t\t\"legalName\": \"Legal Name\",\n\t\t\"mccCode\": \"5192\",\n\t\t\"address\": {\n\t\t\t\"careOf\": \"John Doe\",\n\t\t\t\"addressLine1\": \"Main Street 123\",\n\t\t\t\"addressLine2\": \"Building C\",\n\t\t\t\"city\": \"Stockholm\",\n\t\t\t\"countryCode\": \"SE\",\n\t\t\t\"postalCode\": \"123 45\"\n\t\t},\n\t\t\"phone\": {\n\t\t\t\"code\": 46,\n\t\t\t\"number\": \"123456789\"\n\t\t},\n\t\t\"email\": \"contact@test.com\"\n\t},\n\t\"acquirerMID\": \"PF123456\",\n\t\"multiMerchantId\": \"8132483499c658050e\",\n\t\"controlFields\": {\n\t\t\"displayProducts\": [\n\t        {\n\t\t        \"productId\": \"815db2c5adc9b00301\",\n\t\t        \"pricingPlans\": [\"816192c7efa2b0091a\"]\n\t        }\n\t\t],\n\t\t\"showProductCatalogue\": true,\n\t\t\"transactionPricingPlan\": \"816192c7efa2b0091a\",\n\t\t\"preSelectProducts\": [\n\t        {\n\t\t        \"productId\": \"815db2c5adc9b00301\",\n\t\t        \"quantity\": 2,\n\t\t        \"pricingPlanId\": \"816192c7efa2b0091a\"\n\t        }\n\t\t],\n\t\t\"store\": {\n\t\t\t\"name\": \"Test Store\",\n\t\t\t\"email\": \"test@test.com\",\n\t\t\t\"phoneNumber\": {\n\t\t\t\t\"code\": 46,\n\t\t\t\t\"number\": \"987654321\"\n\t\t\t},\n\t\t\t\"address\": {\n\t\t\t\t\"careOf\": \"Jane Doe\",\n\t\t\t\t\"addressLine1\": \"Second Street 456\",\n\t\t\t\t\"city\": \"Stockholm\",\n\t\t\t\t\"countryCode\": \"SE\",\n\t\t\t\t\"postalCode\": \"123 46\"\n\t\t\t}\n\t\t}\n\t}\n}' \\\n  -H 'Content-Type: application/json' \\\n  -H 'API-KEY: YOUR_API_KEY' \\\n  -H 'API-SECRET: YOUR_API_SECRET' \\\n  YOUR_API_URL/partners/:partnerId/merchants"}] response="{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"applicationId\": \"8268abfc4ae6900a10\",\n\t\t\"webKybUrl\": \"https://surfkyb.com\"\n\t},\n\t\"message\": \"Merchant application created successfully.\"\n}" languages=["cURL"] /%}

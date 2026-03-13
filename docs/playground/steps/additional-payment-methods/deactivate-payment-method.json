@@ -1,0 +1,36 @@
+{
+    "scenarioId": "deactivate-payment-method",
+    "scenarioName": "Deactivate Payment Method",
+    "steps": [
+        {
+            "id": "deactivate-payment-method",
+            "name": "Deactivate Payment Method",
+            "description": "Disable a specific payment method for a merchant, store, or terminal.",
+            "order": 1,
+            "method": "DELETE",
+            "endpoint": "merchants/{{merchantId}}/payment-methods/{{paymentMethodId}}",
+            "readOnly": true,
+            "response": {
+                "status": "SUCCESS",
+                "message": "Deactivated payment method successfully"
+              },
+            "guidePath": "/carbon/additional-payment-methods/deactivate-payment-method/home",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message that describes the status of the request."
+                }
+            ]
+            }
+        }
+    ]
+}

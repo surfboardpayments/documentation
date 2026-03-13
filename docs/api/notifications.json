@@ -1,0 +1,822 @@
+{
+    "title": "Notifications API",
+    "description": "The Notifications API enables merchants and partners to subscribe to event notifications via SFTP or email. It allows you to configure automated notifications for various events and manage your notification subscriptions.",
+    "endpoints": [
+        {
+            "fragment": "Subscribe to Merchant Reports",
+            "method": "POST",
+            "link": "API_URL/merchants/:merchantId/notifications/reports"
+        },
+        {
+            "fragment": "Fetch External Notifications for Merchant",
+            "method": "GET",
+            "link": "API_URL/merchants/:merchantId/notifications"
+        },
+        {
+            "fragment": "Unsubscribe Notification for Merchant",
+            "method": "DELETE",
+            "link": "API_URL/merchants/:merchantId/notifications/:notificationId"
+        },
+        {
+            "fragment": "Subscribe to Partner Notification",
+            "method": "POST",
+            "link": "API_URL/partners/:partnerId/notifications/reports"
+        },
+        {
+            "fragment": "Fetch External Notifications for Partner",
+            "method": "GET",
+            "link": "API_URL/partners/:partnerId/notifications"
+        },
+        {
+            "fragment": "Unsubscribe Notifications for Partner",
+            "method": "DELETE",
+            "link": "API_URL/partners/:partnerId/notifications/:notificationId"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Subscribe to Merchant Reports",
+            "description": "Subscribe to receive automated notifications for merchant events. You must provide at least one notification channel: email, slackUrl, or sftpInfo to create a notification subscription. This endpoint supports multiple notification channels including EMAIL, SLACK, and SFTP.",
+            "new": true,
+            "reqParams": [
+                {
+                    "name": "event",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "The event type to subscribe to for notifications",
+                    "possibleValues": [
+                        {
+                            "value": "DAILY_REPORTS",
+                            "description": "Daily merchant reports"
+                        },
+                        {
+                            "value": "MONTHLY_REPORTS",
+                            "description": "Monthly merchant reports"
+                        },
+                        {
+                            "value": "PAYMENT_COMPLETED",
+                            "description": "Payment completion notifications"
+                        },
+                        {
+                            "value": "DAILY_FILE_TRANSFER",
+                            "description": "Daily SFTP file transfers"
+                        },
+                        {
+                            "value": "WEEKLY_FILE_TRANSFER",
+                            "description": "Weekly SFTP file transfers"
+                        },
+                        {
+                            "value": "MONTHLY_FILE_TRANSFER",
+                            "description": "Monthly SFTP file transfers"
+                        }
+                    ]
+                },
+                {
+                    "name": "email",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Email address for notification delivery (optional)",
+                    "conditional": true
+                },
+                {
+                    "name": "slackUrl",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Slack webhook URL for notification delivery (optional)",
+                    "conditional": true
+                },
+                {
+                    "name": "sftpInfo",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "SFTP configuration for receiving notification reports",
+                    "conditional": true,
+                    "reqParams": [
+                        {
+                            "name": "host",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "SFTP server hostname or IP address"
+                        },
+                        {
+                            "name": "user",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Username for SFTP authentication"
+                        },
+                        {
+                            "name": "port",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "SFTP server port (default: 22)"
+                        },
+                        {
+                            "name": "hostKey",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "SFTP server host key for secure connection"
+                        },
+                        {
+                            "name": "remoteDirectory",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Remote directory path for file delivery"
+                        },
+                        {
+                            "name": "separator",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Field separator for CSV reports",
+                            "possibleValues": [
+                                {
+                                    "value": "COMMA",
+                                    "description": "Comma separator (,)"
+                                },
+                                {
+                                    "value": "SEMICOLON",
+                                    "description": "Semicolon separator (;)"
+                                },
+                                {
+                                    "value": "PIPE",
+                                    "description": "Pipe separator (|)"
+                                },
+                                {
+                                    "value": "TAB",
+                                    "description": "Tab separator"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Array of notification subscription data",
+                    "resParams": [
+                        {
+                            "name": "notificationId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unique identifier for the notification subscription"
+                        },
+                        {
+                            "name": "NotificationChannel",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Type of notification channel (e.g., SLACK, SFTP, EMAIL)"
+                        },
+                        {
+                            "name": "publicKey",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Public key for SFTP authentication (only present for SFTP channels)"
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request"
+                }
+            ],
+            "method": "POST",
+            "path": "/merchants/:merchantId/notifications/reports",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\n  \"event\": \"DAILY_FILE_TRANSFER\",\n  \"slackUrl\": \"https://surfboardworkspace.slack.com/archives/C039RL0LS8M\",\n  \"email\": \"john@gmail.com\",\n  \"sftpInfo\": {\n    \"host\": \"192.168.0.211\",\n    \"user\": \"surfboard-test\",\n    \"port\": 8080,\n    \"hostKey\": \"AAAAB3NzaC1yc2EAAAADAQABAAABgQDVjVZBKMAFE3z4m1M6xVpudb+Wcal1kAfzdpOsi64cXjBdK2VS0cuI38htYHGXhpqQ2z/XbYZ2ZfPUkzL/P0IV7Kec22ohLNSN3+r9r3jjB/EU9S46ApuHzloEFnSlPVT5xQA2d09Rs40iMjRp3hfov4pwNPwlav0ikLafSvPWZ2bUfsWq/vNdhnNGBd0au59qIAHrphkF5oyRQUjC5kssSuwZXo2GWC0zHuT06h3/t21BJMoQT4cJ2AEw5Cfvq/cUtSAUKsWaz++0wgyYBOYnYGHpxype+6c7x8gRkuAeuSyj/CdDG39CMSKLsf35CSr7bH8Tsmm6VuIPFwTr8FloGdVwthQiSOPDn15kQXeEiksmzeIMKilgpEWIxp1pgYgtrOefAXp+aoKSqNw+ccvUhiVwIpo2BXxM+l3douJMy2B7A29R+VvwOGDV1zbiYrxjbpDHqMpLjOo5vckj/YYyvHn32nnmb92Hl+A1+b9om1c/y/RN2aRgz6tgmPxhhVU=\"\n  }\n}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": [\n    {\n      \"notificationId\": \"839dd1b8113ff809f3\",\n      \"NotificationChannel\": \"EMAIL\"\n    },\n    {\n      \"notificationId\": \"839dd1b8113ff819f3\",\n      \"NotificationChannel\": \"SLACK\"\n    },\n    {\n      \"notificationId\": \"839dd1b8113ff82af3\",\n      \"NotificationChannel\": \"SFTP\",\n      \"publicKey\": \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfGfO3kOLdYji5R6GNI8lvfyI5MgpQY43OF+HwAqgF96L6hg1jG/Nu58bToPZoaf+lkqp+/MDNGTIeRfMkR+3g1Q2sgZ3jGvN3lErvfbbnYGx7qDzfyMCg7i9VneVOJb4fxoSRzbja2ZG7XxbSzBPvzGky38AKqBq5EysO8/FnA6I9SNCMPcyaEq3Rs33kGjcBthOxc3X+3dRvKt0GU77xtt0tWl7vP/DHXj9m32kcjNN2647i/oRoAiM58fhtsU3UM5TQGYn6WJ0/su7X5JnBy2+WktotJvfzF7ri2Q+R5Ac7kem5g17wdMPgICaz1sDY6haxI3TuDOe8ZVybfV6T surfboard-test@34.88.179.4\"\n    }\n  ],\n  \"message\": \"External notification for MERCHANT_ID: m_iWGri3XAyTmkbKYsYtV47 registered successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch External Notifications for Merchant",
+            "description": "Retrieves all external notifications configured for a merchant. Supports filtering by event type, notification channel, and notification ID",
+            "new": true,
+            "query": "To filter notifications by specific criteria, send <span class='font-semibold'>event</span>, <span class='font-semibold'>notificationChannel</span>, or <span class='font-semibold'>notificationId</span> as query params",
+            "reqParams": [
+                {
+                    "name": "event",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Filter by event type"
+                },
+                {
+                    "name": "notificationChannel",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Filter by notification channel",
+                    "possibleValues": [
+                        {
+                            "value": "EMAIL",
+                            "description": "Email notifications"
+                        },
+                        {
+                            "value": "SLACK",
+                            "description": "Slack notifications"
+                        },
+                        {
+                            "value": "SFTP",
+                            "description": "SFTP file transfer notifications"
+                        }
+                    ]
+                },
+                {
+                    "name": "notificationId",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Filter by notification ID"
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Array of notification objects",
+                    "resParams": [
+                        {
+                            "name": "notificationId",
+                            "type": "string",
+                            "description": "Unique identifier for the notification"
+                        },
+                        {
+                            "name": "event",
+                            "type": "string",
+                            "description": "Event type for the notification"
+                        },
+                        {
+                            "name": "notificationChannel",
+                            "type": "string",
+                            "description": "Channel used for notification delivery"
+                        },
+                        {
+                            "name": "address",
+                            "type": "object",
+                            "description": "Address configuration for the notification",
+                            "resParams": [
+                                {
+                                    "name": "url",
+                                    "type": "string",
+                                    "description": "URL for webhook notifications"
+                                },
+                                {
+                                    "name": "email",
+                                    "type": "string",
+                                    "description": "Email address for email notifications"
+                                },
+                                {
+                                    "name": "host",
+                                    "type": "string",
+                                    "description": "SFTP host address"
+                                },
+                                {
+                                    "name": "remoteDirectory",
+                                    "type": "string",
+                                    "description": "SFTP remote directory"
+                                },
+                                {
+                                    "name": "user",
+                                    "type": "string",
+                                    "description": "SFTP username"
+                                },
+                                {
+                                    "name": "port",
+                                    "type": "number",
+                                    "description": "SFTP port number"
+                                },
+                                {
+                                    "name": "publicKey",
+                                    "type": "string",
+                                    "description": "SFTP public key"
+                                },
+                                {
+                                    "name": "separator",
+                                    "type": "string",
+                                    "description": "CSV field separator"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "status",
+                            "type": "string",
+                            "description": "Status of the notification subscription"
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request"
+                }
+            ],
+            "method": "GET",
+            "path": "/merchants/:merchantId/notifications",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": [\n    {\n      \"notificationId\": \"839cfe66fe08b00bf3\",\n      \"event\": \"WEEKLY_FILE_TRANSFER\",\n      \"notificationChannel\": \"SFTP\",\n      \"address\": {\n        \"host\": \"192.168.0.211\",\n        \"user\": \"surfboard-test\",\n        \"port\": 8080,\n        \"publicKey\": \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPrhFN05QsXZPVGn3uHpRih3bJrRARfvqvyZ5RuRG78YXiVjfHszckpzcay7uF6fsMQes8ky4RGywHs7UfhWbXhu5EDE/swZzTtu8TRVmRhIL6K1o8VKFEEJat3+UgwgrkdKHpUyld3r2doNcViHDiBTiVW4O4JR98/XHrhR7Ge9EPxE/iVwyur+YREtt3RKdZV3d+NG+4WFRqaq70lM13z0u1lACP8PRl4dyRbjrpGoMGq2zDSvyerzS6fKg7jm1UBOt4wznu8pjIE+A+9xiNvzpnxG1q4GxwpRq8e8AY5WIvpngOpaiifEObAGWnauvWnenPwV/yvudTwK4bFQBV surfboard-test@192.168.0.211\",\n        \"separator\": \",\"\n      },\n      \"status\": \"REGISTERED\"\n    },\n    {\n      \"notificationId\": \"839d223b9df16805f3\",\n      \"event\": \"PAYMENT_COMPLETED\",\n      \"notificationChannel\": \"EMAIL\",\n      \"address\": {\n        \"email\": \"merchant@example.com\"\n      },\n      \"status\": \"SUBSCRIBED\"\n    }\n  ],\n  \"message\": \"External notification for MERCHANT_ID: m_iWGri3XAyTmkbKYsYtV47 fetched successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Unsubscribe Notification for Merchant",
+            "description": "Unsubscribe from a specific notification for a merchant. This endpoint removes the notification subscription identified by the notification ID",
+            "new": true,
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request"
+                }
+            ],
+            "method": "DELETE",
+            "path": "/merchants/:merchantId/notifications/:notificationId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"message\": \"External notification unsubscribed successfully for the given ID [m_iWGri3XAyTmkbKYsYtV47] and external alert ID [839d12501df1680cf3]\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Subscribe to Partner Notifications",
+            "description": "Subscribe to receive automated notifications for partner events. You must provide at least one notification channel: email, slackUrl, or sftpInfo to create a notification subscription. This endpoint supports multiple notification channels including EMAIL, SLACK, and SFTP.",
+            "new": true,
+            "reqParams": [
+                {
+                    "name": "event",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "The event type to subscribe to for notifications",
+                    "possibleValues": [
+                        {
+                            "value": "MERCHANT_ONBOARDED",
+                            "description": "Merchant onboarding notifications"
+                        },
+                        {
+                            "value": "ONLINE_STORE_ONBOARDED",
+                            "description": "Online store onboarding notifications"
+                        },
+                        {
+                            "value": "TERMINAL_REGISTERED",
+                            "description": "Terminal registration notifications"
+                        },
+                        {
+                            "value": "LOGISTICS_TERMINAL_SHIPPED",
+                            "description": "Logistics terminal shipping notifications"
+                        },
+                        {
+                            "value": "DAILY_FILE_TRANSFER",
+                            "description": "Daily SFTP file transfers"
+                        },
+                        {
+                            "value": "WEEKLY_FILE_TRANSFER",
+                            "description": "Weekly SFTP file transfers"
+                        },
+                        {
+                            "value": "MONTHLY_FILE_TRANSFER",
+                            "description": "Monthly SFTP file transfers"
+                        }
+                    ]
+                },
+                {
+                    "name": "email",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Email address for notification delivery (optional)",
+                    "conditional": true
+                },
+                {
+                    "name": "slackUrl",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Slack webhook URL for notification delivery (optional)",
+                    "conditional": true
+                },
+                {
+                    "name": "sftpInfo",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "SFTP configuration for receiving notification reports",
+                    "conditional": true,
+                    "reqParams": [
+                        {
+                            "name": "host",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "SFTP server hostname or IP address"
+                        },
+                        {
+                            "name": "user",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Username for SFTP authentication"
+                        },
+                        {
+                            "name": "port",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "SFTP server port (default: 22)"
+                        },
+                        {
+                            "name": "hostKey",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "SFTP server host key for secure connection"
+                        },
+                        {
+                            "name": "remoteDirectory",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Remote directory path for file delivery"
+                        },
+                        {
+                            "name": "separator",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Field separator for CSV reports",
+                            "possibleValues": [
+                                {
+                                    "value": "COMMA",
+                                    "description": "Comma separator (,)"
+                                },
+                                {
+                                    "value": "SEMICOLON",
+                                    "description": "Semicolon separator (;)"
+                                },
+                                {
+                                    "value": "PIPE",
+                                    "description": "Pipe separator (|)"
+                                },
+                                {
+                                    "value": "TAB",
+                                    "description": "Tab separator"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Array of notification subscription data",
+                    "resParams": [
+                        {
+                            "name": "notificationId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unique identifier for the notification subscription"
+                        },
+                        {
+                            "name": "NotificationChannel",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Type of notification channel (e.g., SLACK, SFTP, EMAIL)"
+                        },
+                        {
+                            "name": "publicKey",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Public key for SFTP authentication (only present for SFTP channels)"
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request"
+                }
+            ],
+            "method": "POST",
+            "path": "/partners/:partnerId/notifications/reports",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ],
+                    "body": "{\n  \"event\": \"DAILY_FILE_TRANSFER\",\n  \"slackUrl\": \"https://surfboardworkspace.slack.com/archives/C039RL0LS8M\",\n  \"email\": \"john@gmail.com\",\n  \"sftpInfo\": {\n    \"host\": \"192.168.0.211\",\n    \"user\": \"surfboard-test\",\n    \"port\": 8080,\n    \"hostKey\": \"AAAAB3NzaC1yc2EAAAADAQABAAABgQDVjVZBKMAFE3z4m1M6xVpudb+Wcal1kAfzdpOsi64cXjBdK2VS0cuI38htYHGXhpqQ2z/XbYZ2ZfPUkzL/P0IV7Kec22ohLNSN3+r9r3jjB/EU9S46ApuHzloEFnSlPVT5xQA2d09Rs40iMjRp3hfov4pwNPwlav0ikLafSvPWZ2bUfsWq/vNdhnNGBd0au59qIAHrphkF5oyRQUjC5kssSuwZXo2GWC0zHuT06h3/t21BJMoQT4cJ2AEw5Cfvq/cUtSAUKsWaz++0wgyYBOYnYGHpxype+6c7x8gRkuAeuSyj/CdDG39CMSKLsf35CSr7bH8Tsmm6VuIPFwTr8FloGdVwthQiSOPDn15kQXeEiksmzeIMKilgpEWIxp1pgYgtrOefAXp+aoKSqNw+ccvUhiVwIpo2BXxM+l3douJMy2B7A29R+VvwOGDV1zbiYrxjbpDHqMpLjOo5vckj/YYyvHn32nnmb92Hl+A1+b9om1c/y/RN2aRgz6tgmPxhhVU=\"\n  }\n}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": [\n    {\n      \"notificationId\": \"839dd1b8113ff809f3\",\n      \"NotificationChannel\": \"EMAIL\"\n    },\n    {\n      \"notificationId\": \"839dd1b8113ff819f3\",\n      \"NotificationChannel\": \"SLACK\"\n    },\n    {\n      \"notificationId\": \"839dd1b8113ff82af3\",\n      \"NotificationChannel\": \"SFTP\",\n      \"publicKey\": \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfGfO3kOLdYji5R6GNI8lvfyI5MgpQY43OF+HwAqgF96L6hg1jG/Nu58bToPZoaf+lkqp+/MDNGTIeRfMkR+3g1Q2sgZ3jGvN3lErvfbbnYGx7qDzfyMCg7i9VneVOJb4fxoSRzbja2ZG7XxbSzBPvzGky38AKqBq5EysO8/FnA6I9SNCMPcyaEq3Rs33kGjcBthOxc3X+3dRvKt0GU77xtt0tWl7vP/DHXj9m32kcjNN2647i/oRoAiM58fhtsU3UM5TQGYn6WJ0/su7X5JnBy2+WktotJvfzF7ri2Q+R5Ac7kem5g17wdMPgICaz1sDY6haxI3TuDOe8ZVybfV6T surfboard-test@34.88.179.4\"\n    }\n  ],\n  \"message\": \"External notification for PARTNER_ID: 8113d3f8403b380409 registered successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch External Notifications for Partner",
+            "description": "Retrieves all external notifications configured for a partner. Supports filtering by event type, notification channel, and notification ID",
+            "new": true,
+            "query": "To filter notifications by specific criteria, send <span class='font-semibold'>event</span>, <span class='font-semibold'>notificationChannel</span>, or <span class='font-semibold'>notificationId</span> as query params",
+            "reqParams": [
+                {
+                    "name": "event",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Filter by event type"
+                },
+                {
+                    "name": "notificationChannel",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Filter by notification channel",
+                    "possibleValues": [
+                        {
+                            "value": "EMAIL",
+                            "description": "Email notifications"
+                        },
+                        {
+                            "value": "SLACK",
+                            "description": "Slack notifications"
+                        },
+                        {
+                            "value": "SFTP",
+                            "description": "SFTP file transfer notifications"
+                        }
+                    ]
+                },
+                {
+                    "name": "notificationId",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Filter by notification ID"
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Array of notification objects",
+                    "resParams": [
+                        {
+                            "name": "notificationId",
+                            "type": "string",
+                            "description": "Unique identifier for the notification"
+                        },
+                        {
+                            "name": "event",
+                            "type": "string",
+                            "description": "Event type for the notification"
+                        },
+                        {
+                            "name": "notificationChannel",
+                            "type": "string",
+                            "description": "Channel used for notification delivery"
+                        },
+                        {
+                            "name": "address",
+                            "type": "object",
+                            "description": "Address configuration for the notification",
+                            "resParams": [
+                                {
+                                    "name": "url",
+                                    "type": "string",
+                                    "description": "URL for webhook notifications"
+                                },
+                                {
+                                    "name": "email",
+                                    "type": "string",
+                                    "description": "Email address for email notifications"
+                                },
+                                {
+                                    "name": "host",
+                                    "type": "string",
+                                    "description": "SFTP host address"
+                                },
+                                {
+                                    "name": "remoteDirectory",
+                                    "type": "string",
+                                    "description": "SFTP remote directory"
+                                },
+                                {
+                                    "name": "user",
+                                    "type": "string",
+                                    "description": "SFTP username"
+                                },
+                                {
+                                    "name": "port",
+                                    "type": "number",
+                                    "description": "SFTP port number"
+                                },
+                                {
+                                    "name": "publicKey",
+                                    "type": "string",
+                                    "description": "SFTP public key"
+                                },
+                                {
+                                    "name": "separator",
+                                    "type": "string",
+                                    "description": "CSV field separator"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "status",
+                            "type": "string",
+                            "description": "Status of the notification subscription"
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request"
+                }
+            ],
+            "method": "GET",
+            "path": "/partners/:partnerId/notifications",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": [\n    {\n      \"notificationId\": \"839cfe66fe08b00bf3\",\n      \"event\": \"WEEKLY_FILE_TRANSFER\",\n      \"notificationChannel\": \"SFTP\",\n      \"address\": {\n        \"host\": \"192.168.0.211\",\n        \"user\": \"surfboard-test\",\n        \"port\": 8080,\n        \"publicKey\": \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPrhFN05QsXZPVGn3uHpRih3bJrRARfvqvyZ5RuRG78YXiVjfHszckpzcay7uF6fsMQes8ky4RGywHs7UfhWbXhu5EDE/swZzTtu8TRVmRhIL6K1o8VKFEEJat3+UgwgrkdKHpUyld3r2doNcViHDiBTiVW4O4JR98/XHrhR7Ge9EPxE/iVwyur+YREtt3RKdZV3d+NG+4WFRqaq70lM13z0u1lACP8PRl4dyRbjrpGoMGq2zDSvyerzS6fKg7jm1UBOt4wznu8pjIE+A+9xiNvzpnxG1q4GxwpRq8e8AY5WIvpngOpaiifEObAGWnauvWnenPwV/yvudTwK4bFQBV surfboard-test@192.168.0.211\",\n        \"separator\": \",\"\n      },\n      \"status\": \"REGISTERED\"\n    },\n    {\n      \"notificationId\": \"839d223b9df16805f3\",\n      \"event\": \"ONLINE_STORE_ONBOARDED\",\n      \"notificationChannel\": \"EMAIL\",\n      \"address\": {\n        \"email\": \"partner@example.com\"\n      },\n      \"status\": \"SUBSCRIBED\"\n    }\n  ],\n  \"message\": \"External notification for PARTNER_ID: 8113d3f8403b380409 fetched successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Unsubscribe Notifications for Partner",
+            "description": "Unsubscribe from a specific notification for a partner. This endpoint removes the notification subscription identified by the notification ID",
+            "new": true,
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request"
+                }
+            ],
+            "method": "DELETE",
+            "path": "/partners/:partnerId/notifications/:notificationId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"message\": \"External notification unsubscribed successfully for the given ID [8113d3f8403b380409] and external alert ID [839d12501df1680cf3]\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

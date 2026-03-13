@@ -1,0 +1,2449 @@
+{
+    "title": "Merchants API",
+    "description": "A merchant is created in Surfboard with the completion of an onboarding process. Merchant creation can be initiated through ISVs who have partnered with Surfboard to offer payment solutions to their merchants in addition to their existing products.",
+    "endpoints": [
+        {
+            "fragment": "Create Merchant",
+            "method": "POST",
+            "link": "API_URL/partners/:partnerId/merchants"
+        },
+        {
+            "fragment": "Check Application Status",
+            "method": "GET",
+            "link": "API_URL/partners/:partnerId/merchants/:applicationId/status"
+        },
+        {
+            "fragment": "Create Multi-merchant Group",
+            "method": "POST",
+            "link": "API_URL/partners/:partnerId/multi-merchant"
+        },
+        {
+            "fragment": "Fetch All Merchant Applications",
+            "method": "GET",
+            "link": "API_URL/partners/:partnerId/merchants/:merchantId"
+        },
+        {
+            "fragment": "Fetch Merchant Details",
+            "method": "PUT",
+            "link": "API_URL/partners/:partnerId/merchants/:merchantId"
+        },
+        {
+            "fragment": "Fetch All Multi-Merchant Groups",
+            "method": "GET",
+            "link": "API_URL/partners/:partnerId/multi-merchants"
+        },
+        {
+            "fragment": "Update Merchant Details",
+            "method": "GET",
+            "link": "API_URL/partners/:partnerId/merchants/:merchantId/terminals"
+        },
+        {
+            "fragment": "Fetch All Merchant Terminals",
+            "method": "GET",
+            "link": "API_URL/partners/:partnerId/merchants"
+        },
+        {
+            "fragment": "Fetch All Merchants",
+            "method": "GET",
+            "link": "API_URL/partners/:partnerId/applications"
+        },
+        {
+            "fragment": "Fetch All Merchant Contracts",
+            "method": "GET",
+            "link": "API_URL/merchants/:merchantId/contracts"
+        },
+        {
+            "fragment": "Activate Terminal",
+            "method": "POST",
+            "link": "API_URL/partners/:partnerId/merchants/:merchantId/ship-hardware"
+        },
+        {
+            "fragment": "Fetch Transaction Analytics",
+            "method": "GET",
+            "link": "API_URL/merchants/:merchantId/analytics"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Create Merchant",
+            "description": "As a partner, use the Create Merchant API to onboard your sub-merchants for using Surfboard's payment solutions. You can also display products ( terminals, accessories etc. from Surfboard) for your merchants to choose, set product pricing plans for your merchant, display the product catalogue, and pre-select products for your merchants.",
+            "important": "Merchant applications in test and demo environments are configured for automatic approval.",
+            "reqParams": [
+                {
+                    "name": "country",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Two-letter ISO country code, in uppercase e.g 'SE', 'DK', 'NO'."
+                },
+                {
+                    "name": "organisation",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "Details of the organisation.",
+                    "reqParams": [
+                        {
+                            "name": "corporateId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Provide the corporate ID of the respective merchant."
+                        },
+                        {
+                            "name": "legalName",
+                            "type": "string",
+                            "mandatory": false,
+                            "conditional": true,
+                            "description": "The legal name of the organization. Mandatory for a PF partner."
+                        },
+                        {
+                            "name": "mccCode",
+                            "type": "string",
+                            "mandatory": false,
+                            "conditional": true,
+                            "description": "Merchant Category Code (MCC) of the organization. Mandatory for a PF partner."
+                        },
+                        {
+                            "name": "address",
+                            "type": "object",
+                            "mandatory": false,
+                            "conditional": true,
+                            "description": "The address of the organization. Mandatory for a PF partner.",
+                            "reqParams": [
+                                {
+                                    "name": "careOf",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Name of the addressee that is accepting the correspondence for the intended recipient."
+                                },
+                                {
+                                    "name": "addressLine1",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Address of the organisation."
+                                },
+                                {
+                                    "name": "addressLine2",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Address of the organisation."
+                                },
+                                {
+                                    "name": "addressLine3",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Address of the organisation."
+                                },
+                                {
+                                    "name": "city",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "City where the organisation is located."
+                                },
+                                {
+                                    "name": "countryCode",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Two-letter ISO country code in uppercase, representing the country where the organization is located."
+                                },
+                                {
+                                    "name": "postalCode",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Postal code of the organisation."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "phoneNumber",
+                            "type": "object",
+                            "mandatory": false,
+                            "description": "Contact number of the organisation in code and number format.",
+                            "reqParams": [
+                                {
+                                    "name": "code",
+                                    "type": "number",
+                                    "mandatory": true,
+                                    "description": "International dialing code identifying the country or region."
+                                },
+                                {
+                                    "name": "number",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Phone number."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "email",
+                            "type": "string",
+                            "mandatory": false,
+                            "conditional": true,
+                            "description": "Email address of the organization. Mandatory for a PF partner."
+                        }
+                    ]
+                },
+                {
+                    "name": "multiMerchantId",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "The multi merchant ID in case this merchant should belong to a multiMerchant setup."
+                },
+                {
+                    "name": "controlFields",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "These fields allow you to control the behavior of the API by adding additional actions or controlling the default execution path of the API call.",
+                    "reqParams": [
+                        {
+                            "name": "displayProducts",
+                            "type": "array",
+                            "mandatory": false,
+                            "description": "Allows the customization of product display for onboarding merchants. Specify a set of Product IDs (e.g. terminals, accessories) to be shown.",
+                            "reqParams": [
+                                {
+                                    "name": "productId",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Represents the product ID of a product selected for delivery to the merchant."
+                                },
+                                {
+                                    "name": "pricingPlans",
+                                    "type": "array",
+                                    "mandatory": false,
+                                    "description": "A list of strings specifying the billing plan for a merchant. This allows you to set up a plan based on the monthly price for a terminal and the duration in months. The specific plan details are provided by Surfboard."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "acquirerConfig",
+                            "type": "object",
+                            "conditional": true,
+                            "mandatory": false,
+                            "description": "Configuration for acquirer settings. This is mandatory for PF partners and Direct merchants. Now supports structured format with additional fields.",
+                            "reqParams": [
+                                {
+                                    "name": "currency",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Currency code for the acquirer configuration (e.g., 'SEK', 'EUR', 'USD')."
+                                },
+                                {
+                                    "name": "acquirer",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Name of the acquirer (e.g., 'nets', 'swedbank')."
+                                },
+                                {
+                                    "name": "acquirerMID",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Acquirer Merchant ID for transaction processing in structured format."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "showProductCatalogue",
+                            "type": "boolean",
+                            "mandatory": false,
+                            "description": "Toggles the visibility of the product catalogue during the Web KYB process. Defaults to false if not specified."
+                        },
+                        {
+                            "name": "merchantConfig",
+                            "type": "object",
+                            "mandatory": false,
+                            "description": "Configuration settings for the merchant.",
+                            "reqParams": [
+                                {
+                                    "name": "settlementFrequency",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Settlement frequency for the merchant payments.",
+                                    "possibleValues": [
+                                        {
+                                            "value": "DAILY",
+                                            "description": "Daily settlement"
+                                        },
+                                        {
+                                            "value": "WEEKLY",
+                                            "description": "Weekly settlement"
+                                        },
+                                        {
+                                            "value": "MONTHLY",
+                                            "description": "Monthly settlement"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "serviceProvider",
+                                    "type": "array",
+                                    "mandatory": false,
+                                    "description": "Array of service provider configurations for the merchant.",
+                                    "reqParams": [
+                                        {
+                                            "name": "serviceProviderId",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Unique identifier of the service provider."
+                                        },
+                                        {
+                                            "name": "deductApplicableTransactionFee",
+                                            "type": "boolean",
+                                            "mandatory": false,
+                                            "description": "Whether to deduct applicable transaction fees."
+                                        },
+                                        {
+                                            "name": "amount",
+                                            "type": "object",
+                                            "mandatory": false,
+                                            "description": "Fee structure for the service provider.",
+                                            "reqParams": [
+                                                {
+                                                    "name": "percentage",
+                                                    "type": "string",
+                                                    "mandatory": false,
+                                                    "description": "Percentage-based fee."
+                                                },
+                                                {
+                                                    "name": "fixed",
+                                                    "type": "number",
+                                                    "mandatory": false,
+                                                    "description": "Fixed fee amount."
+                                                },
+                                                {
+                                                    "name": "adjustmentTypes",
+                                                    "type": "array",
+                                                    "mandatory": false,
+                                                    "description": "Array of adjustment types for the fee structure."
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "transactionPricingPlan",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Specifies the billing plan based on which transaction cost is calculated for a merchant. If more than one billing plan exists it is mandatory to send in this value."
+                        },
+                        {
+                            "name": "paymentMethods",
+                            "type": "object",
+                            "mandatory": false,
+                            "description": "Configuration for payment methods to be enabled for the merchant.",
+                            "reqParams": [
+                                {
+                                    "name": "card",
+                                    "type": "object",
+                                    "mandatory": false,
+                                    "description": "Card payment method configuration. Can be a boolean to enable/disable or an object with specific settings.",
+                                    "reqParams": [
+                                        {
+                                            "name": "billingPlan",
+                                            "type": "string",
+                                            "mandatory": false,
+                                            "description": "Billing plan for card payments."
+                                        },
+                                        {
+                                            "name": "mId",
+                                            "type": "string",
+                                            "mandatory": false,
+                                            "description": "Merchant ID for card payments."
+                                        },
+                                        {
+                                            "name": "scheme",
+                                            "type": "array",
+                                            "mandatory": true,
+                                            "description": "Array of supported card schemes.",
+                                            "possibleValues": [
+                                                {
+                                                    "value": "visa",
+                                                    "description": "Visa card scheme"
+                                                },
+                                                {
+                                                    "value": "mastercard",
+                                                    "description": "Mastercard scheme"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "amex",
+                                    "type": "object",
+                                    "mandatory": false,
+                                    "description": "American Express payment method configuration. Can be a boolean to enable/disable or an object with specific settings.",
+                                    "reqParams": [
+                                        {
+                                            "name": "mId",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "American Express Merchant ID. Required when configuring AMEX payment method."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "swish",
+                                    "type": "object",
+                                    "mandatory": false,
+                                    "description": "Swedish mobile payment method configuration. Can be a boolean to enable/disable or an object with specific settings.",
+                                    "reqParams": [
+                                        {
+                                            "name": "billingPlan",
+                                            "type": "string",
+                                            "mandatory": false,
+                                            "description": "Billing plan for Swish payments."
+                                        },
+                                        {
+                                            "name": "swishNumber",
+                                            "type": "string",
+                                            "mandatory": false,
+                                            "description": "Optional Swish number for the payment method configuration."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "klarna",
+                                    "type": "object",
+                                    "mandatory": false,
+                                    "description": "Buy now, pay later payment method configuration. Can be a boolean to enable/disable or an object with specific settings.",
+                                    "reqParams": [
+                                        {
+                                            "name": "billingPlan",
+                                            "type": "string",
+                                            "mandatory": false,
+                                            "description": "Billing plan for Klarna payments."
+                                        },
+                                        {
+                                            "name": "mId",
+                                            "type": "string",
+                                            "mandatory": false,
+                                            "description": "Klarna Merchant ID for the payment method configuration."
+                                        },
+                                        {
+                                            "name": "klarnaPricingPlan",
+                                            "type": "string",
+                                            "mandatory": false,
+                                            "description": "Klarna pricing plan configuration."
+                                        },
+                                        {
+                                            "name": "username",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Klarna account username. Required when configuring KLARNA payment method."
+                                        },
+                                        {
+                                            "name": "password",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Klarna account password. Required when configuring KLARNA payment method."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "b2binv",
+                                    "type": "object",
+                                    "mandatory": false,
+                                    "description": "B2B invoice payment method configuration. Can be a boolean to enable/disable or an object with specific settings.",
+                                    "reqParams": [
+                                        {
+                                            "name": "billingPlan",
+                                            "type": "string",
+                                            "mandatory": false,
+                                            "description": "Billing plan for B2B invoice payments."
+                                        },
+                                        {
+                                            "name": "clientId",
+                                            "type": "string",
+                                            "mandatory": false,
+                                            "description": "Client ID for B2B invoice payment method."
+                                        },
+                                        {
+                                            "name": "clientSecretKey",
+                                            "type": "string",
+                                            "mandatory": false,
+                                            "description": "Client secret key for B2B invoice payment method."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "acc2acc",
+                                    "type": "object",
+                                    "mandatory": false,
+                                    "description": "Account to account transfer payment method configuration. Can be a boolean to enable/disable or an object with specific settings.",
+                                    "reqParams": [
+                                        {
+                                            "name": "billingPlan",
+                                            "type": "string",
+                                            "mandatory": false,
+                                            "description": "Billing plan for account-to-account payments."
+                                        },
+                                        {
+                                            "name": "mId",
+                                            "type": "string",
+                                            "mandatory": false,
+                                            "description": "Merchant ID for account to account transfers."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "vipps",
+                                    "type": "boolean",
+                                    "mandatory": false,
+                                    "description": "Norwegian mobile payment method. Set to true to enable Vipps payment method."
+                                },
+                                {
+                                    "name": "mobilepay",
+                                    "type": "boolean",
+                                    "mandatory": false,
+                                    "description": "Danish mobile payment method. Set to true to enable MobilePay payment method."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "preSelectProducts",
+                            "type": "array",
+                            "mandatory": false,
+                            "description": "A set of products that are pre-selected by you for the merchant. These products are shipped as part of the onboarding process without further input from the merchant.",
+                            "reqParams": [
+                                {
+                                    "name": "productId",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Represents the product ID of a product selected for delivery to the merchant."
+                                },
+                                {
+                                    "name": "quantity",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Quantity of the product"
+                                },
+                                {
+                                    "name": "pricingPlanId",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Specifies the billing plan for a merchant. This allows you to set up a plan based on the monthly price for a terminal and the duration in months. The specific plan details are provided by Surfboard."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "redirectUrl",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "This will be the redirect URL from the web kyb page, once the application is submitted the user can choose to redirect to the provided URL."
+                        },
+                        {
+                            "name": "generateShortLink",
+                            "type": "boolean",
+                            "description": "Set as true when you need the short URL for the web kyb page. Default is set to false.",
+                            "mandatory": false
+                        },
+                        {
+                            "name": "store",
+                            "type": "object",
+                            "mandatory": false,
+                            "conditional": true,
+                            "description": "Input the store details if you also want to create a store for the merchant.",
+                            "reqParams": [
+                                {
+                                    "name": "name",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Name of the store."
+                                },
+                                {
+                                    "name": "email",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Email address of the store."
+                                },
+                                {
+                                    "name": "phoneNumber",
+                                    "type": "object",
+                                    "mandatory": true,
+                                    "description": "Contact number of the store in code and number format.",
+                                    "reqParams": [
+                                        {
+                                            "name": "code",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "International dialing code identifying the country or region."
+                                        },
+                                        {
+                                            "name": "number",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "A string of numbers ranging from 0-9 with a length of 5-15 characters."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "address",
+                                    "type": "object",
+                                    "mandatory": true,
+                                    "description": "The address of the store.",
+                                    "reqParams": [
+                                        {
+                                            "name": "careOf",
+                                            "type": "string",
+                                            "mandatory": false,
+                                            "description": "Name of the addressee that is accepting the correspondence for the intended recipient."
+                                        },
+                                        {
+                                            "name": "addressLine1",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Address of the store."
+                                        },
+                                        {
+                                            "name": "addressLine2",
+                                            "type": "string",
+                                            "mandatory": false,
+                                            "description": "Address of the store."
+                                        },
+                                        {
+                                            "name": "addressLine3",
+                                            "type": "string",
+                                            "mandatory": false,
+                                            "description": "Address of the store."
+                                        },
+                                        {
+                                            "name": "city",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "City where the store is located."
+                                        },
+                                        {
+                                            "name": "countryCode",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Two-letter ISO country code in uppercase, representing the country where the store is located."
+                                        },
+                                        {
+                                            "name": "postalCode",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Postal code of the store."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "onlineInfo",
+                                    "type": "object",
+                                    "mandatory": false,
+                                    "description": "In order to start accepting online payments you need to create an online store which requires some additional properties such as the following.",
+                                    "reqParams": [
+                                        {
+                                            "name": "merchantWebshopURL",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "This is the web-shop URL of the merchant."
+                                        },
+                                        {
+                                            "name": "paymentPageHostURL",
+                                            "type": "string",
+                                            "mandatory": false,
+                                            "description": "This is the URL of the payment page. This is required for integrating online payments using SDK mode."
+                                        },
+                                        {
+                                            "name": "termsAndConditionsURL",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "This is the URL of the T&C of the merchant’s web-shop, it has to contain the refund policy."
+                                        },
+                                        {
+                                            "name": "privacyPolicyURL",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "This is the URL of the privacy policy of the merchant."
+                                        },
+                                        {
+                                            "name": "googlePayMerchantId",
+                                            "type": "string",
+                                            "mandatory": false,
+                                            "description": "This is the Google Pay merchant ID of the merchant."
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "preEnteredInformation",
+                            "type": "object",
+                            "mandatory": false,
+                            "description": "Use this param to pre fill the merchant application",
+                            "reqParams": [
+                                {
+                                    "name": "openingInfo",
+                                    "type": "object",
+                                    "mandatory": false,
+                                    "description": "These details helps us understand when payments are accepted for the merchant.",
+                                    "reqParams": [
+                                        {
+                                            "name": "isSeasonalOpen",
+                                            "type": "boolean",
+                                            "mandatory": true,
+                                            "description": "If they are a seasonal merchant, open only on select seasons."
+                                        },
+                                        {
+                                            "name": "monthsOpen",
+                                            "type": "array",
+                                            "mandatory": false,
+                                            "description": "If they are a seasonal merchant, mention the months they will be open for payments. e.g., Seasonal shops open only during january and map can be mentioned as [1,5]"
+                                        },
+                                        {
+                                            "name": "isOpenAllYear",
+                                            "type": "boolean",
+                                            "mandatory": true,
+                                            "description": "If merchant will be accepting payments all year round."
+                                        },
+                                        {
+                                            "name": "isStoreOpenAtNight",
+                                            "type": "boolean",
+                                            "mandatory": true,
+                                            "description": "Mention if merchant stores are open all night."
+                                        },
+                                        {
+                                            "name": "reasonForOpeningAtNight",
+                                            "type": "string",
+                                            "mandatory": false,
+                                            "conditional": true,
+                                            "description": "Provide a reason as to why they are open all night. Mandatory when 'isStoreOpenAtNight' is set to true."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "giftcards",
+                                    "type": "object",
+                                    "mandatory": false,
+                                    "description": "Gift card details of the merchant if any.",
+                                    "reqParams": [
+                                        {
+                                            "name": "amountPerYear",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Estimated amount spent using gift cards per year."
+                                        },
+                                        {
+                                            "name": "averageValidDays",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Average validity of gift card provided by merchant."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "prePayments",
+                                    "type": "object",
+                                    "mandatory": false,
+                                    "description": "Details of pre payment option provided by merchant",
+                                    "reqParams": [
+                                        {
+                                            "name": "averageDeliveryTimeInDays",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Average delivery time in days taken after pre payment."
+                                        },
+                                        {
+                                            "name": "salesPercentPerYear",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Percentage of sales revenue generated via pre payment."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "fundsInfo",
+                                    "type": "object",
+                                    "mandatory": false,
+                                    "description": "Sales information with respect to the merchant.",
+                                    "reqParams": [
+                                        {
+                                            "name": "estimatedAmountPerYear",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Estimated amount of sales per year."
+                                        },
+                                        {
+                                            "name": "priceOfMostExpensiveItemSold",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Price of most expensive item."
+                                        },
+                                        {
+                                            "name": "averageTransactionValuePerDay",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Estimated amount of sales per day."
+                                        },
+                                        {
+                                            "name": "estimatedAmountPerTransaction",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Average amount per transaction."
+                                        },
+                                        {
+                                            "name": "estimatedFrequencyOfTransactions",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Denotes how often transactions are made under merchant. Possible values are 'DAILY', 'WEEKLY', 'MONTHLY', 'YEARLY'"
+                                        },
+                                        {
+                                            "name": "estimatedNoOfDailyTransactions",
+                                            "type": "number",
+                                            "mandatory": false,
+                                            "conditional": true,
+                                            "description": "Average number of sales per day. Mandatory when 'estimatedFrequencyOfTransactions' is set to 'DAILY'"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request 'SUCCESS' | 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "applicationId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "This is the applicationId that you will use to track the status of the create merchant request."
+                        },
+                        {
+                            "name": "webKybUrl",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "This is the link for the KYC session created for the merchant."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "For PF partners, merchant is created and the merchantId is returned."
+                        },
+                        {
+                            "name": "storeId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "For PF partners, store is created and the storeId is returned."
+                        },
+                        {
+                            "name": "shortLinkUrl",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Short URL of the web kyb page if generateShortLink is set to true."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/partners/:partnerId/merchants",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ],
+                    "body": "{\n\t\"country\": \"SE\",\n\t\"organisation\": {\n\t\t\"corporateId\": \"5591631360\",\n\t\t\"legalName\": \"Year Zero Press AB\",\n\t\t\"mccCode\": \"5192\",\n\t\t\"address\": {\n\t\t\t\"careOf\": \"John Doe\",\n\t\t\t\"addressLine1\": \"Main Street 123\",\n\t\t\t\"addressLine2\": \"Building C\",\n\t\t\t\"city\": \"Stockholm\",\n\t\t\t\"countryCode\": \"SE\",\n\t\t\t\"postalCode\": \"123 45\"\n\t\t},\n\t\t\"email\": \"contact@test.com\"\n\t},\n\t\"controlFields\": {\n\t\t\"transactionPricingPlan\": \"SP_SE_Fix129\",\n\t\t\"generateShortLink\": true,\n\t\t\"acquirerConfig\": {\n\t\t\t\"acquirerMID\": \"752113\",\n\t\t\t\"acquirer\": \"nets\"\n\t\t},\n\t\t\"store\": {\n\t\t\t\"name\": \"Test Store\",\n\t\t\t\"email\": \"test@test.com\",\n\t\t\t\"acquirerMID\": \"752113\",\n\t\t\t\"phoneNumber\": {\n\t\t\t\t\"code\": \"46\",\n\t\t\t\t\"number\": \"987654321\"\n\t\t\t},\n\t\t\t\"address\": {\n\t\t\t\t\"careOf\": \"Jane Doe\",\n\t\t\t\t\"addressLine1\": \"Second Street 456\",\n\t\t\t\t\"city\": \"Stockholm\",\n\t\t\t\t\"countryCode\": \"SE\",\n\t\t\t\t\"postalCode\": \"123 46\"\n\t\t\t}\n\t\t}\n\t}\n}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"applicationId\": \"8268abfc4ae6900a10\",\n\t\t\"webKybUrl\": \"https://surfkyb.com/8268abfc4ae6900a10?pi=M703SPUzM0Rhz0f91l209KundIhf-1vZnPfSEQX7UdQBnwbkR4bZIUtHZAh4WmUAiwb2J8Rjnuus10i8QrFYncEA18qbAS6QszW641AYdymGi8-PkmZd\"\n\t},\n\t\"message\": \"Merchant application created successfully.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Check Application Status",
+            "description": "Retrieves the status of the merchant onboarding. After initiating the onboarding for the sub-merchant, use the Check Application Status API to get updates regarding the application’s progress. After the merchant is created, the Merchant ID and Store ID are also available through the webhook.",
+            "path": "/partners/:partnerId/merchants/:applicationId/status",
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "applicationId",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "The Application ID of the respective merchant returned by the Create Merchant API."
+                        },
+                        {
+                            "name": "webKybUrl",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "This is the link for the KYC session created for the merchant, which can be fetched for applications in state 'APPLICATION_INITIATED' or 'APPLICATION_PENDING_INFORMATION'. This URL will be returned for ISV(Independent Software Vendors) partners only."
+                        },
+                        {
+                            "name": "applicationStatus",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Describes the status of the application. The possible values are:",
+                            "possibleValues": [
+                                {
+                                    "value": "APPLICATION_INITIATED",
+                                    "description": "The application has been created, and the Web KYB URL has been generated. The merchant is now required to fill in necessary information through the Web KYB."
+                                },
+                                {
+                                    "value": "APPLICATION_STARTED",
+                                    "description": "The merchant has started filling in the Web KYB form but has not yet submitted it."
+                                },
+                                {
+                                    "value": "APPLICATION_SUBMITTED",
+                                    "description": "The merchant has finished filling in the Web KYB and submitted it for processing."
+                                },
+                                {
+                                    "value": "APPLICATION_PENDING_INFORMATION",
+                                    "description": "The application is still under processing, and additional data is required from the merchant."
+                                },
+                                {
+                                    "value": "APPLICATION_SIGNED",
+                                    "description": "Both the merchant signatories and UBOs have signed the application."
+                                },
+                                {
+                                    "value": "APPLICATION_REJECTED",
+                                    "description": "The application has been processed and rejected."
+                                },
+                                {
+                                    "value": "APPLICATION_COMPLETED",
+                                    "description": "The application has been processed and accepted. It is now pending merchant creation and onboarding."
+                                },
+                                {
+                                    "value": "APPLICATION_EXPIRED",
+                                    "description": "Each application is valid for 30 days. If there is no action during these 30 days, the KYB is treated as session expired."
+                                },
+                                {
+                                    "value": "MERCHANT_CREATED",
+                                    "description": "The merchant account has been created. At this stage, the Merchant ID and Store ID will be returned in the status call."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Merchant ID of the created merchant is returned when application status is 'MERCHANT_CREATED'"
+                        },
+                        {
+                            "name": "storeId",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Store ID of the store created under the merchant is returned when application status is 'MERCHANT_CREATED'"
+                        },
+                        {
+                            "name": "billingPlans",
+                            "type": "array",
+                            "mandatory": false,
+                            "description": "Array of billing plans associated with the merchant application."
+                        },
+                        {
+                            "name": "onlineOnboardingStatus",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Status of the online onboarding process for the merchant. Can be null if not applicable."
+                        },
+                        {
+                            "name": "paymentMethods",
+                            "type": "array",
+                            "mandatory": false,
+                            "description": "Array of payment methods configured for the merchant."
+                        },
+                        {
+                            "name": "acquirerOnboarding",
+                            "type": "object",
+                            "mandatory": false,
+                            "description": "Acquirer onboarding details for the merchant. Can be null if not applicable."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"applicationId\": \"81409507c1a5f00110\",\n\t\t\"webKybUrl\": \"http://partner.surfboardpayments.com/81409507c1a5f00110\",\n\t\t\"applicationStatus\": \"MERCHANT_CREATED\",\n\t\t\"merchantId\": \"81412e2e4102f80f0e\",\n\t\t\"storeId\": \"81412e3c3b1090060f\",\n\t\t\"billingPlans\": [\n\t\t\t{\n\t\t\t\t\"planId\": \"81412e3c3b1090060f\",\n\t\t\t\t\"planName\": \"Standard Transaction Plan\"\n\t\t\t}\n\t\t],\n\t\t\"onlineOnboardingStatus\": \"PENDING_VERIFICATION\",\n\t\t\"paymentMethods\": [\n\t\t\t{\n\t\t\t\t\"methodId\": \"81412e3c3b1090060f\",\n\t\t\t\t\"methodType\": \"CARD\",\n\t\t\t\t\"enabled\": true\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"methodId\": \"81412e3c3b10900610\",\n\t\t\t\t\"methodType\": \"SWISH\",\n\t\t\t\t\"enabled\": true\n\t\t\t}\n\t\t],\n\t\t\"acquirerOnboarding\": {\n\t\t\t\"acquirerId\": \"81412e3c3b10900611\",\n\t\t\t\"status\": \"ACTIVE\",\n\t\t\t\"merchantId\": \"81412e2e4102f80f0e\"\n\t\t}\n\t},\n\t\"message\": \"Application status fetched successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Create Multi-merchant Group",
+            "description": "Creates a multi-merchant group. Partners can use this API to create a multi-merchant group that enables multiple merchants to use the same terminal. Individual merchants are tagged to this group, enabling access to all the terminals registered in this group.",
+            "reqParams": [
+                {
+                    "name": "country",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Two-letter ISO country code, in uppercase e.g 'SE', 'DK', 'NO'."
+                },
+                {
+                    "name": "zipCode",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "ZIP code of the store address."
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Name of the Multi-merchant group."
+                },
+                {
+                    "name": "email",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Email address of the Multi-merchant group."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request 'SUCCESS' | 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "applicationId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "This is the applicationId that you will use to track the status of the create multi-merchant group request."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Multi-merchant ID."
+                        },
+                        {
+                            "name": "storeId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Multi-merchant store ID."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/partners/:partnerId/multi-merchant",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ],
+                    "body": "{\n\t\"country\": \"SE\",\n\t\"zipCode\": \"123456\"\n}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"applicationId\": \"81376ad8ebedf80310\",\n\t\t\"merchantId\": \"81660b596c7fd0000e\",\n\t\t\"storeId\": \"81660b59434440030f\"\n\t},\n\t\"message\": \"Multi Merchant created successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch All Merchant Applications",
+            "description": "Retrieves a list of all merchants applications with a specific partner.",
+            "pagination": true,
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "applicationId",
+                            "type": "String",
+                            "description": "The Application ID used to uniquely identify a merchant's application."
+                        },
+                        {
+                            "name": "applicationStatus",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Describes the status of the application. The possible values are:",
+                            "possibleValues": [
+                                {
+                                    "value": "APPLICATION_INITIATED",
+                                    "description": "The application has been created, and the Web KYB URL has been generated. The merchant is now required to fill in necessary information through the Web KYB."
+                                },
+                                {
+                                    "value": "APPLICATION_SUBMITTED",
+                                    "description": "The merchant has finished filling in the Web KYB and submitted it for processing."
+                                },
+                                {
+                                    "value": "APPLICATION_PENDING_INFORMATION",
+                                    "description": "The application is still under processing, and additional data is required from the merchant."
+                                },
+                                {
+                                    "value": "APPLICATION_SIGNED",
+                                    "description": "Both the merchant signatories and UBOs have signed the application."
+                                },
+                                {
+                                    "value": "APPLICATION_REJECTED",
+                                    "description": "The application has been processed and rejected."
+                                },
+                                {
+                                    "value": "APPLICATION_COMPLETED",
+                                    "description": "The application has been processed and accepted. It is now pending merchant creation and onboarding."
+                                },
+                                {
+                                    "value": "MERCHANT_CREATED",
+                                    "description": "The merchant account has been created. At this stage, the Merchant ID and Store ID will be returned in the status call."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "corporateId",
+                            "type": "Number",
+                            "description": "Corporate ID of the respective merchant."
+                        },
+                        {
+                            "name": "country",
+                            "type": "String",
+                            "description": "Two-letter ISO country code in uppercase, representing the primary location of the merchant."
+                        },
+                        {
+                            "name": "createdAt",
+                            "type": "String",
+                            "description": "Date of application creation in ISO string format"
+                        },
+                        {
+                            "name": "lastUpdatedAt",
+                            "type": "String",
+                            "description": "Date of last updation recorded with the merchant application in ISO string format"
+                        },
+                        {
+                            "name": "webKybUrl",
+                            "type": "string",
+                            "description": "The Web KYB URL generated for the application."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/partners/:partnerId/applications",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"applicationId\": \"816e0b8aabe6580310\",\n\t\t\t\"country\": \"SE\",\n\t\t\t\"corporateId\": \"1234567898\",\n\t\t\t\"applicationStatus\": \"MERCHANT_CREATED\",\n\t\t\t\"createdAt\": \"2023-07-10T07:17:41.489Z\",\n\t\t\t\"lastUpdatedAt\": \"2023-07-10T07:17:41.519Z\",\n\t\t\t\"webKybUrl\": \"https://surfkyb.com/816e0b8aabe6580310\"\n\t\t},\n\t\t{\n\t\t\t\"applicationId\": \"816e0983abe6580a10\",\n\t\t\t\"country\": \"DK\",\n\t\t\t\"applicationStatus\": \"APPLICATION_INITIATED\",\n\t\t\t\"createdAt\": \"2023-07-10T07:00:23.106Z\",\n\t\t\t\"lastUpdatedAt\": \"2023-07-10T07:00:23.106Z\",\n\t\t\t\"webKybUrl\": \"https://surfkyb.com/816e0983abe6580a10\"\n\t\t}\n\t],\n\t\"message\": \"Applications of partner fetched successfully with partnerId: 8113d3f8403b380409.\"\n}\n"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Merchant Details",
+            "description": "Retrieves information for a specific merchant. As a partner you can use this API to get information regarding your sub-merchants",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "merchantId",
+                            "type": "String",
+                            "description": "Merchant ID of the merchant."
+                        },
+                        {
+                            "name": "partnerId",
+                            "type": "String",
+                            "description": "The Partner ID of the partner with whom the merchant is affiliated."
+                        },
+                        {
+                            "name": "currencyCode",
+                            "type": "Number",
+                            "description": "Three-digit ISO currency code, representing the supported currency for the merchant. Can be any one of the following: ‘208’ | ‘978’ | ‘752’."
+                        },
+                        {
+                            "name": "merchantName",
+                            "type": "String",
+                            "description": "Name of the merchant."
+                        },
+                        {
+                            "name": "merchantLanguage",
+                            "type": "String",
+                            "description": "Preferred language selected by the merchant."
+                        },
+                        {
+                            "name": "merchantLogoUrl",
+                            "type": "String",
+                            "description": "Merchant logo URL."
+                        },
+                        {
+                            "name": "email",
+                            "type": "String",
+                            "description": "Email address of the merchant."
+                        },
+                        {
+                            "name": "companyId",
+                            "type": "String",
+                            "description": "Company ID of the merchant."
+                        },
+                        {
+                            "name": "countryCode",
+                            "type": "String",
+                            "description": "Two-letter ISO country code in uppercase, representing the primary location of the merchant."
+                        },
+                        {
+                            "name": "mccCode",
+                            "type": "String",
+                            "description": "Merchant Category Code (MCC) of the merchant."
+                        },
+                        {
+                            "name": "address",
+                            "type": "object",
+                            "description": "Physical address of the merchant.",
+                            "resParams": [
+                                {
+                                    "name": "careOf",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Name of the addressee that is accepting the correspondence for the intended recipient."
+                                },
+                                {
+                                    "name": "addressLine1",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Address of the merchant."
+                                },
+                                {
+                                    "name": "addressLine2",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Address of the merchant."
+                                },
+                                {
+                                    "name": "addressLine3",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Address of the merchant."
+                                },
+                                {
+                                    "name": "city",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "City where the merchant is located."
+                                },
+                                {
+                                    "name": "countryCode",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Two-letter ISO country code in uppercase, representing the location of the merchant."
+                                },
+                                {
+                                    "name": "postalCode",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Postal code of the merchant."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "createdAt",
+                            "type": "String",
+                            "description": "Timestamp at which the merchant was created."
+                        },
+                        {
+                            "name": "totalNumberOfTransaction",
+                            "type": "String",
+                            "description": "Total number of transactions performed by the merchant."
+                        },
+                        {
+                            "name": "totalAmountOfTransaction",
+                            "type": "String",
+                            "description": "Denotes the total monetary value of all transactions performed by the merchant."
+                        },
+                        {
+                            "name": "lastTransactionAt",
+                            "type": "String",
+                            "description": "Timestamp of the last transaction in ISO 8601 format represented as 'YYYY-MM-DDTHH:mm:ss.sssZ'."
+                        },
+                        {
+                            "name": "phoneNumber",
+                            "type": "String",
+                            "description": "Phone number of the merchant."
+                        },
+                        {
+                            "name": "acquirerMID",
+                            "type": "String",
+                            "description": "Denotes the Acquirer MID for onboarding merchants through payment institution partners(PF or Acquirer)."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/partners/:partnerId/merchants/:merchantId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"merchantId\": \"81fa6b2d8d5dc8040e\",\n\t\t\"partnerId\": \"8113d3f8403b380409\",\n\t\t\"merchantName\": \"Conroy Hane and Parker\",\n\t\t\"merchantLanguage\": \"se\",\n\t\t\"merchantLogoUrl\": \"https://firebasestorage.googleapis.com/v0/b/firebase-test-2e49.appspot.com/o/files%2F8113d3f8403b380409%2FlogoUrl_1749127943794_emoji.png?alt=media&token=61077942-b4b3-482d-bd4d-1e3526486b7e\",\n\t\t\"email\": \"ashinisb@surfboard.se\",\n\t\t\"companyId\": \"5590520507\",\n\t\t\"countryCode\": \"SE\",\n\t\t\"mccCode\": 1520,\n\t\t\"phoneNumber\": \"917676576569\",\n\t\t\"merchantType\": \"STANDARD\",\n\t\t\"currencyCode\": \"752\",\n\t\t\"acquirerMID\": \"gfprLY1dyAQO\",\n\t\t\"address\": {\n\t\t\t\"careOf\": \"chennai\",\n\t\t\t\"addressLine1\": \"Stockholm\",\n\t\t\t\"addressLine2\": \"Diya ssssssTowers\",\n\t\t\t\"addressLine3\": \"process\",\n\t\t\t\"city\": \"Sweden\",\n\t\t\t\"countryCode\": \"SE\",\n\t\t\t\"postalCode\": \"22331\"\n\t\t}\n\t},\n\t\"message\": \"Successfully fetched merchant details \"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch All Multi-Merchant Groups",
+            "pagination": true,
+            "description": "Fetch all existing multi-merchants groups under partner.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "multiMerchantId",
+                            "type": "String",
+                            "description": "Multimerchant ID of the multi-merchant group."
+                        },
+                        {
+                            "name": "multiMerchantName",
+                            "type": "String",
+                            "description": "Name of the multi-merchant group."
+                        },
+                        {
+                            "name": "countryCode",
+                            "type": "String",
+                            "description": "Two-letter ISO country code in uppercase, representing the primary location of the multi-merchant group."
+                        },
+                        {
+                            "name": "postalCode",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Postal code of the multi-merchant."
+                        },
+                        {
+                            "name": "merchants",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "List of merchants present under a multi-merchant group.",
+                            "resParams": [
+                                {
+                                    "name": "merchantId",
+                                    "type": "String",
+                                    "description": " Merchant ID of the merchant."
+                                },
+                                {
+                                    "name": "merchantName",
+                                    "type": "String",
+                                    "description": "Name of the merchant."
+                                },
+                                {
+                                    "name": "countryCode",
+                                    "type": "String",
+                                    "description": "Two-letter ISO country code in uppercase, representing the primary location of the merchant."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/partners/:partnerId/multi-merchants",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"multiMerchantId\": \"817544218dd838050e\",\n\t\t\t\"multiMerchantName\": \"Multi Merchant one\",\n\t\t\t\"countryCode\": \"SE\",\n\t\t\t\"postalCode\": \"12345\",\n\t\t\t\"merchants\": [\n\t\t\t\t{\n\t\t\t\t\t\"merchantId\": \"817544960dd838040e\",\n\t\t\t\t\t\"merchantName\": \"Test Merchant one\",\n\t\t\t\t\t\"countryCode\": \"SE\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"merchantId\": \"8175449a8dd8380d0e\",\n\t\t\t\t\t\"merchantName\": \"Test Merchant two\",\n\t\t\t\t\t\"countryCode\": \"SE\"\n\t\t\t\t}\n\t\t\t]\n\t\t},\n\t\t{\n\t\t\t\"multiMerchantId\": \"81701e32ff5690020e\",\n\t\t\t\"multiMerchantName\": \"Multi Merchant two\",\n\t\t\t\"countryCode\": \"SE\",\n\t\t\t\"postalCode\": \"12346\"\n\t\t}\n\t],\n\t\"message\": \"Multi merchant groups fetched successfully.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Update Merchant Details",
+            "description": "Updates the merchant details. You can use this API to edit the email address, merchant logo URL, and phone number of a merchant.",
+            "reqParams": [
+                {
+                    "name": "email",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Email address of the merchant."
+                },
+                {
+                    "name": "merchantLogoUrl",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Merchant logo URL."
+                },
+                {
+                    "name": "phoneNumber",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "Contact number of the merchant in code and number format",
+                    "reqParams": [
+                        {
+                            "name": "code",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "International dialing code identifying the country or region."
+                        },
+                        {
+                            "name": "number",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "A string of numbers ranging from 0-9 with a length of 5-15 characters."
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request 'SUCCESS' | 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "PUT",
+            "path": "/partners/:partnerId/merchants/:merchantId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\n\t\t\"email\": \"test@gmail.com\",\n\t\t\"phoneNumber\": {\n  \t\t\"code\": 46,\n  \t\t\"number\": \"771890089\"\n  \t\t},\n\t\t\"merchantLogoUrl\": \"https://merchant.com/image\"\n\t  }"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Successfully updated the merchant details.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch All Merchant Terminals",
+            "pagination": true,
+            "new": true,
+            "query": "To query terminals by terminal type, send in <span class='font-semibold'>terminalType</span> as query param.",
+            "description": "Retrieves a list of all terminals associated with a specific merchant. You can use this API to get information regarding all the terminals registered under a merchant.",
+            "reqParams": [
+                {
+                    "name": "terminalType",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Optional query param to filter terminals by terminal type.",
+                    "possibleValues": [
+                        {
+                            "value": "surfpad",
+                            "description": "Hardware terminal with a physical keypad."
+                        },
+                        {
+                            "value": "surftouch",
+                            "description": "Android terminal with custom payment apps, digital receipts etc."
+                        },
+                        {
+                            "value": "surfprint",
+                            "description": "Android terminal with a built-in printer."
+                        },
+                        {
+                            "value": "checkoutPro",
+                            "description": "Complete checkout solution with a customer facing screen."
+                        },
+                        {
+                            "value": "checkoutX",
+                            "description": "Software checkout solution for NFC-enabled Android devices to accept contactless card payments."
+                        },
+                        {
+                            "value": "PaymentPage",
+                            "description": "Surfboard-hosted payment page where all UI and configurations are managed by Surfboard."
+                        },
+                        {
+                            "value": "SelfHostedPage",
+                            "description": "Merchant-hosted payment page where Surfboard renders payment fields within the merchant’s environment."
+                        },
+                        {
+                            "value": "MerchantInitiated",
+                            "description": "Used for Merchant Initiated Transactions (MIT), allowing payments to be triggered by the merchant without customer interaction."
+                        },
+                        {
+                            "value": "printer",
+                            "description": "Standalone printing device."
+                        },
+                        {
+                            "value": "surftester",
+                            "description": "Surfboard Android based test terminal used during integrations."
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "terminalId",
+                            "type": "String",
+                            "description": "Terminal ID of the terminal."
+                        },
+                        {
+                            "name": "terminalType",
+                            "type": "string",
+                            "description": "Describes the type of the terminal.",
+                            "possibleValues": [
+                                {
+                                    "value": "surfpad",
+                                    "description": "Hardware terminal with a physical keypad."
+                                },
+                                {
+                                    "value": "surftouch",
+                                    "description": "Android terminal with custom payment apps, digital receipts etc."
+                                },
+                                {
+                                    "value": "surfprint",
+                                    "description": "Android terminal with a built-in printer."
+                                },
+                                {
+                                    "value": "checkoutPro",
+                                    "description": "Complete checkout solution with a customer facing screen."
+                                },
+                                {
+                                    "value": "checkoutX",
+                                    "description": "Software checkout solution for NFC-enabled Android devices to accept contactless card payments."
+                                },
+                                {
+                                    "value": "PaymentPage",
+                                    "description": "Surfboard-hosted payment page where all UI and configurations are managed by Surfboard."
+                                },
+                                {
+                                    "value": "SelfHostedPage",
+                                    "description": "Merchant-hosted payment page where Surfboard renders payment fields within the merchant’s environment."
+                                },
+                                {
+                                    "value": "MerchantInitiated",
+                                    "description": "Used for Merchant Initiated Transactions (MIT), allowing payments to be triggered by the merchant without customer interaction."
+                                },
+                                {
+                                    "value": "printer",
+                                    "description": "Standalone printing device."
+                                },
+                                {
+                                    "value": "surftester",
+                                    "description": "Surfboard Android based test terminal used during integrations."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "softwareVersion",
+                            "type": "String",
+                            "description": "Software version of the terminal."
+                        },
+                        {
+                            "name": "osType",
+                            "type": "string",
+                            "description": "Describes the type of Operating System(OS) running on the terminal.",
+                            "possibleValues": [
+                                {
+                                    "value": "android",
+                                    "description": "Android operating system."
+                                },
+                                {
+                                    "value": "ios",
+                                    "description": "Apple's operating system for iPhones."
+                                },
+                                {
+                                    "value": "sb_firmware",
+                                    "description": "Surfboard firmware."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "osVersion",
+                            "type": "String",
+                            "description": "Operating System(OS) version of the terminal."
+                        },
+                        {
+                            "name": "deviceVendor",
+                            "type": "String",
+                            "description": "Device vendor of the terminal."
+                        },
+                        {
+                            "name": "deviceModel",
+                            "type": "String",
+                            "description": "Device model of the terminal."
+                        },
+                        {
+                            "name": "serialNo",
+                            "type": "String",
+                            "description": "Serial number of the terminal."
+                        },
+                        {
+                            "name": "storeId",
+                            "type": "String",
+                            "description": "The Store ID of the store under which the terminal is registered."
+                        },
+                        {
+                            "name": "linkedTerminalId",
+                            "type": "String",
+                            "description": "The Terminal ID of another terminal to which the current terminal is linked."
+                        },
+                        {
+                            "name": "terminalStatus",
+                            "type": "String",
+                            "description": "Status of the terminal, it can be in one of these states: REGISTERED | ACTIVE | IN_ACTIVE | DE_REGISTERED."
+                        },
+                        {
+                            "name": "terminalPaymentMethods",
+                            "type": "String",
+                            "description": "Payment methods supported by the terminal."
+                        },
+                        {
+                            "name": "startDate",
+                            "type": "String",
+                            "description": "Timestamp at which the merchant was created."
+                        },
+                        {
+                            "name": "terminalName",
+                            "type": "string",
+                            "description": "Name of the terminal used as a reference for users."
+                        },
+                        {
+                            "name": "terminalPublicKey",
+                            "type": "String",
+                            "description": "Public key used while initializing SelfHostedPage Online Terminal (Online SDK)"
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/merchants/:merchantId/terminals",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"terminalId\": \"tn_vw_YyrFd33ntb7_340Ob7\",\n\t\t\t\"terminalType\": \"surfpad\",\n\t\t\t\"softwareVersion\": \"0.0.0\",\n\t\t\t\"osType\": \"sb_firmware\",\n\t\t\t\"osVersion\": \"0.0.0\",\n\t\t\t\"deviceVendor\": \"Datecs\",\n\t\t\t\"deviceModel\": \"Datecs PinPad\",\n\t\t\t\"serialNo\": \"2922000007\",\n\t\t\t\"storeId\": \"st_uCRWV56JkT6eyNXjGr5F1\",\n\t\t\t\"linkedTerminalId\": null,\n\t\t\t\"terminalStatus\": \"ACTIVE\",\n\t\t\t\"startDate\": \"2022-11-17T09:29:51.427Z\",\n\t\t\t\"terminalPaymentMethods\": [\n\t\t\t\t\"CARD\"\n\t\t\t],\n\t\t\t\"terminalName\": \"My Terminal\"\n\t\t},\n\t\t{\n\t\t\t\"terminalId\": \"81389f79f703e80105\",\n\t\t\t\"terminalType\": \"surftouch\",\n\t\t\t\"softwareVersion\": \"0.0.0\",\n\t\t\t\"osType\": \"sb_firmware\",\n\t\t\t\"osVersion\": \"0.0.0\",\n\t\t\t\"deviceVendor\": \"Datecs\",\n\t\t\t\"deviceModel\": \"Datecs BluePad 5500\",\n\t\t\t\"serialNo\": null,\n\t\t\t\"storeId\": \"st_uCRWV56JkT6eyNXjGr5F1\",\n\t\t\t\"linkedTerminalId\": null,\n\t\t\t\"terminalStatus\": \"ACTIVE\",\n\t\t\t\"startDate\": \"2022-12-15T06:50:48.746Z\",\n\t\t\t\"terminalPaymentMethods\": [\n\t\t\t\t\"SWISH\",\n\t\t\t\t\"CASH\"\n\t\t\t],\n\t\t\t\"terminalName\": \"My Test Terminal\"\n\t\t}\n\t],\n\t\"message\":\"Terminal records fetched successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch All Merchants",
+            "description": "Retrieves a list of all merchants associated with a specific partner. Partners can use this API to get information regarding all their sub-merchants.",
+            "pagination": true,
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "merchantId",
+                            "type": "String",
+                            "description": "Merchant ID of the merchant."
+                        },
+                        {
+                            "name": "partnerId",
+                            "type": "String",
+                            "description": "The Partner ID of the partner with whom the merchant is affiliated."
+                        },
+                        {
+                            "name": "merchantName",
+                            "type": "String",
+                            "description": "Name of the merchant."
+                        },
+                        {
+                            "name": "merchantLanguage",
+                            "type": "String",
+                            "description": "Preferred language selected by the merchant."
+                        },
+                        {
+                            "name": "merchantLogoUrl",
+                            "type": "String",
+                            "description": "Merchant logo URL."
+                        },
+                        {
+                            "name": "email",
+                            "type": "String",
+                            "description": "Email address of the merchant."
+                        },
+                        {
+                            "name": "companyId",
+                            "type": "String",
+                            "description": "Company ID of the merchant."
+                        },
+                        {
+                            "name": "countryCode",
+                            "type": "String",
+                            "description": "Two-letter ISO country code in uppercase, representing the primary location of the merchant."
+                        },
+                        {
+                            "name": "mccCode",
+                            "type": "String",
+                            "description": "Merchant Category Code (MCC) of the merchant."
+                        },
+                        {
+                            "name": "address",
+                            "type": "object",
+                            "description": "Physical address of the merchant.",
+                            "resParams": [
+                                {
+                                    "name": "careOf",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Name of the addressee that is accepting the correspondence for the intended recipient."
+                                },
+                                {
+                                    "name": "addressLine1",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Address of the merchant."
+                                },
+                                {
+                                    "name": "addressLine2",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Address of the merchant."
+                                },
+                                {
+                                    "name": "addressLine3",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Address of the merchant."
+                                },
+                                {
+                                    "name": "city",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "City where the merchant is located."
+                                },
+                                {
+                                    "name": "countryCode",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Two-letter ISO country code in uppercase, representing the location of the merchant."
+                                },
+                                {
+                                    "name": "postalCode",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Postal code of the merchant."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "createdAt",
+                            "type": "String",
+                            "description": "Timestamp at which the merchant was created."
+                        },
+                        {
+                            "name": "totalNumberOfTransaction",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "The total number of transactions performed."
+                        },
+                        {
+                            "name": "totalAmountOfTransaction",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "The total amount of money involved in all transactions."
+                        },
+                        {
+                            "name": "lastTransactionAt",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "The timestamp of the last transaction in ISO format."
+                        },
+                        {
+                            "name": "phoneNumber",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "The contact phone number related to the merchant."
+                        },
+                        {
+                            "name": "currencyCode",
+                            "type": "Number",
+                            "description": "Three-digit ISO currency code, representing the supported currency for the merchant. Can be any one of the following: ‘208’ | ‘978’ | ‘752’."
+                        },
+                        {
+                            "name": "acquirerMID",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Denotes the Acquirer MID for onboarding merchants through payment institution partners(PF or Acquirer)."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/partners/:partnerId/merchants",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"merchantId\": \"8248db4c5c8dd0130e\",\n\t\t\t\"partnerId\": \"8113d3f8403b380409\",\n\t\t\t\"merchantName\": \"Raynor LLC\",\n\t\t\t\"merchantLanguage\": \"sv\",\n\t\t\t\"merchantLogoUrl\": \"https://www.freepik.com/free-vector/hand-painted-watercolor-abstract.htm#query=background&position=0&from_view=keyword&\",\n\t\t\t\"email\": \"sathish@surfboard.se\",\n\t\t\t\"companyId\": \"5590890439\",\n\t\t\t\"countryCode\": \"SE\",\n\t\t\t\"mccCode\": 8021,\n\t\t\t\"createdAt\": \"2024-06-06 06:03:49.125\",\n\t\t\t\"totalNumberOfTransaction\": \"11\",\n\t\t\t\"totalAmountOfTransaction\": \"2200\",\n\t\t\t\"lastTransactionAt\": \"2024-08-22 07:58:35.310568\",\n\t\t\t\"phoneNumber\": \"4623423423\",\n\t\t\t\"currencyCode\": \"752\",\n\t\t\t\"acquirerMID\": \"gkjb4ug3KAUP\"\n\t\t},\n\t\t{\n\t\t\t\"merchantId\": \"81a25a0b304ed0070e\",\n\t\t\t\"partnerId\": \"8113d3f8403b380409\",\n\t\t\t\"merchantName\": \"Conroy, Hane\",\n\t\t\t\"merchantLanguage\": \"en\",\n\t\t\t\"merchantLogoUrl\": \"https://img.freepik.com/free-vector/cartoon-style-cafe-front-shop-view_134830-697.jpg\",\n\t\t\t\"email\": \"conroy@gmail.com\",\n\t\t\t\"countryCode\": \"SE\",\n\t\t\t\"mccCode\": 5812,\n\t\t\t\"createdAt\": \"2022-11-04 13:41:46.81\",\n\t\t\t\"totalNumberOfTransaction\": \"1877\",\n\t\t\t\"totalAmountOfTransaction\": \"774628102\",\n\t\t\t\"lastTransactionAt\": \"2024-07-15 09:23:09.816546\",\n\t\t\t\"phoneNumber\": \"+468787870484\",\n\t\t\t\"currencyCode\": \"752\",\n\t\t\t\"acquirerMID\": \"kpIy8YO3ycKyhKR\"\n\t\t}\n\t]\n\t\"message\": \"Successfully fetched merchants details\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch All Merchant Contracts",
+            "description": "Retrieves the list all contracts under the specific merchant.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "contractId",
+                            "type": "String",
+                            "description": "The contract ID used to identify a contract."
+                        },
+                        {
+                            "name": "type",
+                            "type": "String",
+                            "description": "Denotes type of the merchant contract.",
+                            "possibleValues": [
+                                {
+                                    "value": "MERCHANT_AGREEMENT",
+                                    "description": "A contract that establishes relationship and services agreed between two parties."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "status",
+                            "type": "String",
+                            "description": "Denotes the status of the merchant contract. It can be either 'ACTIVE' or 'INACTIVE'"
+                        },
+                        {
+                            "name": "contractLink",
+                            "type": "String",
+                            "description": "Link for the merchant contract."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/merchants/:merchantId/contracts",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"contractId\": \"81d9b757ea31c0013d\",\n\t\t\t\"type\": \"MERCHANT_AGREEMENT\",\n\t\t\t\"status\": \"ACTIVE\",\n\t\t\t\"contractLink\": \"https://storage.googleapis.com/test\"\n\t\t}\n\t],\n\t\"message\": \"Fetched merchant agreement contracts successfully\"\n}\n"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Activate Terminal",
+            "description": "This API is available for partners who manage their own storage and terminal delivery solution and requires a PCI compliant storage setup. The API can be used to activate terminals that are tagged to you as a partner. This API will return an error if the entered serial number is not available to you.",
+            "reqParams": [
+                {
+                    "name": "serialNo",
+                    "type": "String",
+                    "mandatory": true,
+                    "description": "Serial No of the terminal. For the SurfPad, you need to use the serial number from the back of the device. With SurfTouch, go to Settings -> Scroll down to 'About phone' -> Serial Number"
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "String",
+                    "description": "Status of the terminal activation."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the activate terminal request."
+                }
+            ],
+            "method": "POST",
+            "path": "/partners/:partnerId/merchants/:merchantId/ship-hardware",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ],
+                    "body": "{\"serialNo\":\"1234567898\"}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Manufactured hardware shipped successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Transaction Analytics",
+            "pagination": true,
+            "query": "To filter analytics by date range, send in <span class='font-semibold'>startDate</span> and <span class='font-semibold'>endDate</span> as query params. You can also use additional query parameters like storeId, terminalId, orderType, etc. Grouping the results can be controlled via the groupBy object in the query.",
+            "description": "Retrieves aggregated transaction analytics for a specific merchant. This can include analytics by store, terminal, date range, card brand, and more.",
+            "reqParams": [
+                {
+                    "name": "storeId",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Provide store ID to filter analytics for a specific store."
+                },
+                {
+                    "name": "terminalId",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Provide terminal ID to filter analytics for a specific terminal."
+                },
+                {
+                    "name": "startDate",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Start of the date range in yyyy-mm-dd format."
+                },
+                {
+                    "name": "endDate",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "End of the date range in yyyy-mm-dd format."
+                },
+                {
+                    "name": "orderType",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Type of order to filter by. Possible values are 'purchase' and 'return'."
+                },
+                {
+                    "name": "terminalType",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Type of terminal to filter results.",
+                    "possibleValues": [
+                        {
+                            "value": "surfpad",
+                            "description": "Hardware terminal with a physical keypad."
+                        },
+                        {
+                            "value": "surftouch",
+                            "description": "Android terminal with custom payment apps, digital receipts etc."
+                        },
+                        {
+                            "value": "surfprint",
+                            "description": "Android terminal with a built-in printer."
+                        },
+                        {
+                            "value": "checkoutPro",
+                            "description": "Complete checkout solution with a customer facing screen."
+                        },
+                        {
+                            "value": "checkoutX",
+                            "description": "Software checkout solution for NFC-enabled Android devices to accept contactless card payments."
+                        },
+                        {
+                            "value": "softpos",
+                            "description": "SoftPOS solution on COTS devices."
+                        },
+                        {
+                            "value": "PaymentPage",
+                            "description": "In this mode, the payment page and all associated configuration is managed by Surfboard."
+                        },
+                        {
+                            "value": "SelfHostedPage",
+                            "description": "With SelfHostedPage, Surfboard renders the fields in your page."
+                        },
+                        {
+                            "value": "MerchantInitiated",
+                            "description": "Set this type if you want to accept Merchant Initiated Transactions (MIT)."
+                        }
+                    ]
+                },
+                {
+                    "name": "paymentMethod",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Payment method to filter analytics."
+                },
+                {
+                    "name": "posEntryMode",
+                    "type": "string",
+                    "in": "query",
+                    "mandatory": false,
+                    "description": "POS entry mode to filter by."
+                },
+                {
+                    "name": "cardBrand",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Card brand to filter by."
+                },
+                {
+                    "name": "currency",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Three digit numeric or ISO code representing currency."
+                },
+                {
+                    "name": "groupBy",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "Use this object to group analytics by store, terminal, etc. For example, groupBy[storeId]=true.",
+                    "reqParams": [
+                        {
+                            "name": "storeId",
+                            "type": "boolean",
+                            "mandatory": false,
+                            "description": "Set to true to group results by store."
+                        },
+                        {
+                            "name": "terminalId",
+                            "type": "boolean",
+                            "mandatory": false,
+                            "description": "Set to true to group results by terminalId."
+                        },
+                        {
+                            "name": "orderType",
+                            "type": "boolean",
+                            "mandatory": false,
+                            "description": "Set to true to group results by orderType."
+                        },
+                        {
+                            "name": "terminalType",
+                            "type": "boolean",
+                            "mandatory": false,
+                            "description": "Set to true to group results by terminalType."
+                        },
+                        {
+                            "name": "paymentMethod",
+                            "type": "boolean",
+                            "mandatory": false,
+                            "description": "Set to true to group results by paymentMethod."
+                        },
+                        {
+                            "name": "cardBrand",
+                            "type": "boolean",
+                            "mandatory": false,
+                            "description": "Set to true to group results by cardBrand."
+                        },
+                        {
+                            "name": "posEntryMode",
+                            "type": "boolean",
+                            "mandatory": false,
+                            "description": "Set to true to group results by posEntryMode."
+                        },
+                        {
+                            "name": "timeSegments",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Segments the analytics by time. Possible values are 'DAILY', 'WEEKLY', 'MONTHLY', 'QUARTERLY', 'YEARLY'.for example groupBy[timeSegments]=DAILY."
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": false,
+                    "description": "An array of analytics objects, each containing aggregated transaction information.",
+                    "resParams": [
+                        {
+                            "name": "currency",
+                            "type": "string",
+                            "description": "The currency code for the transactions, typically a three-digit numeric code."
+                        },
+                        {
+                            "name": "terminalId",
+                            "type": "string",
+                            "description": "The terminal ID from which the transactions were made."
+                        },
+                        {
+                            "name": "terminalType",
+                            "type": "string",
+                            "description": "Specifies the type of terminal."
+                        },
+                        {
+                            "name": "orderType",
+                            "type": "string",
+                            "description": "The type of order."
+                        },
+                        {
+                            "name": "paymentMethod",
+                            "type": "string",
+                            "description": "The payment method used."
+                        },
+                        {
+                            "name": "cardBrand",
+                            "type": "string",
+                            "description": "The brand of the card, if paymentMethod is 'CARD'. This may be empty if no card brand applies."
+                        },
+                        {
+                            "name": "timeSegments",
+                            "type": "string",
+                            "description": "The date/time segment in which these transactions occurred."
+                        },
+                        {
+                            "name": "orderTransactionCount",
+                            "type": "string",
+                            "description": "Number of transactions that match this grouping or filter."
+                        },
+                        {
+                            "name": "totalTransactionAmount",
+                            "type": "number",
+                            "description": "Aggregate sum of transaction amounts (in minor currency units) for this group."
+                        },
+                        {
+                            "name": "message",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "A message describing the status or outcome of the request."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message describing the status or outcome of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "merchants/:merchantId/analytics",
+            "params": {
+                "terminalId": "YOUR_TERMINAL_ID",
+                "groupBy[terminalId]": "true",
+                "startDate": "2024-01-01",
+                "endDate": "2024-02-01"
+            },
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"status\": \"SUCCESS\",\n  \"data\": [\n    {\n      \"currency\": \"752\",\n      \"terminalId\": \"82dd3f9aad1ec80f04\",\n      \"terminalType\": \"sb_terminal_c\",\n      \"orderType\": \"PURCHASE\",\n      \"paymentMethod\": \"CARD\",\n      \"cardBrand\": \"VISA\",\n      \"timeSegments\": \"2025-01-21 00:00:00\",\n      \"orderTransactionCount\": \"1\",\n      \"totalTransactionAmount\": 150\n    },\n    {\n      \"currency\": \"752\",\n      \"terminalId\": \"82dd3f9aad1ec80f04\",\n      \"terminalType\": \"sb_terminal_c\",\n      \"orderType\": \"PURCHASE\",\n      \"paymentMethod\": \"CARD\",\n      \"cardBrand\": \"MASTERCARD\",\n      \"timeSegments\": \"2025-01-21 00:00:00\",\n      \"orderTransactionCount\": \"3\",\n      \"totalTransactionAmount\": 450\n    },\n    ...\n  ],\n  \"message\": \"Transaction Analytics Data queried successfully\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

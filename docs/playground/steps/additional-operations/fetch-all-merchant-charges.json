@@ -1,0 +1,86 @@
+{
+    "scenarioId": "fetch-all-merchant-charges",
+    "scenarioName": "Fetch All Merchant Charges",
+    "steps": [
+        {
+            "id": "fetch-all-merchant-charges",
+            "name": "Fetch All Merchant Charges",
+            "description": "Fetch All Merchant Charges",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "partners/{{partnerId}}/merchants/{{merchantId}}/charges",
+            "guidePath": "/carbon/additional-operations/fetch-all-merchant-charges",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "array",
+                        "mandatory": true,
+                        "description": "An array of merchant charges.",
+                        "resParams": [
+                            {
+                                "name": "chargeId",
+                                "type": "string",
+                                "description": "Unique identifier for the charge."
+                            },
+                            {
+                                "name": "subChargeId",
+                                "type": "string",
+                                "description": "Identifier specifically tied to the sub-charge, usually the same as 'id' for single charges."
+                            },
+                            {
+                                "name": "merchantId",
+                                "type": "string",
+                                "description": "The merchant ID to whom this charge applies."
+                            },
+                            {
+                                "name": "isSubscriptionCharge",
+                                "type": "boolean",
+                                "description": "Indicates whether this charge is part of a subscription (recurring)."
+                            },
+                            {
+                                "name": "description",
+                                "type": "string",
+                                "description": "A brief text describing the charge."
+                            },
+                            {
+                                "name": "amount",
+                                "type": "number",
+                                "description": "Charge amount in smallest currency units."
+                            },
+                            {
+                                "name": "vat",
+                                "type": "number",
+                                "description": "VAT amount applied to this charge."
+                            },
+                            {
+                                "name": "status",
+                                "type": "string",
+                                "description": "Current status of the charge, for example 'PENDING'."
+                            },
+                            {
+                                "name": "billingDate",
+                                "type": "string",
+                                "description": "Date the charge is billed, in ISO 8601 format."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message describing the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

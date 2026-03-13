@@ -1,0 +1,222 @@
+{
+    "scenarioId": "fetch-all-merchant-terminals",
+    "scenarioName": "Fetch All Merchant Terminals",
+    "steps": [
+        {
+            "id": "fetch-all-merchant-terminals",
+            "name": "Fetch All Merchant Terminals",
+            "description": "To fetch all terminals under a merchant",
+            "order": 5,
+            "method": "GET",
+            "endpoint": "merchants/{{merchantId}}/terminals",
+            "guidePath": "/carbon/merchant-functions/fetch-all-merchant-terminals/home",
+            "payload": {},
+            "specifications": {
+                "queryParams": [
+                    {
+                        "name": "terminalType",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Optional query param to filter terminals by terminal type.",
+                        "possibleValues": [
+                            {
+                                "value": "surfpad",
+                                "description": "Hardware terminal with a physical keypad."
+                            },
+                            {
+                                "value": "surftouch",
+                                "description": "Android terminal with custom payment apps, digital receipts etc."
+                            },
+                            {
+                                "value": "surfprint",
+                                "description": "Android terminal with a built-in printer."
+                            },
+                            {
+                                "value": "checkoutPro",
+                                "description": "Complete checkout solution with a customer facing screen."
+                            },
+                            {
+                                "value": "checkoutX",
+                                "description": "Software checkout solution for NFC-enabled Android devices to accept contactless card payments."
+                            },
+                            {
+                                "value": "PaymentPage",
+                                "description": "Surfboard-hosted payment page where all UI and configurations are managed by Surfboard."
+                            },
+                            {
+                                "value": "SelfHostedPage",
+                                "description": "Merchant-hosted payment page where Surfboard renders payment fields within the merchant’s environment."
+                            },
+                            {
+                                "value": "MerchantInitiated",
+                                "description": "Used for Merchant Initiated Transactions (MIT), allowing payments to be triggered by the merchant without customer interaction."
+                            },
+                            {
+                                "value": "printer",
+                                "description": "Standalone printing device."
+                            },
+                            {
+                                "value": "surftester",
+                                "description": "Surfboard Android based test terminal used during integrations."
+                            }
+                        ]
+                    }
+                ],
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                    },
+                    {
+                        "name": "data",
+                        "type": "array",
+                        "mandatory": true,
+                        "description": "Response data",
+                        "resParams": [
+                            {
+                                "name": "terminalId",
+                                "type": "String",
+                                "description": "Terminal ID of the terminal."
+                            },
+                            {
+                                "name": "terminalType",
+                                "type": "string",
+                                "description": "Describes the type of the terminal.",
+                                "possibleValues": [
+                                    {
+                                        "value": "surfpad",
+                                        "description": "Hardware terminal with a physical keypad."
+                                    },
+                                    {
+                                        "value": "surftouch",
+                                        "description": "Android terminal with custom payment apps, digital receipts etc."
+                                    },
+                                    {
+                                        "value": "surfprint",
+                                        "description": "Android terminal with a built-in printer."
+                                    },
+                                    {
+                                        "value": "checkoutPro",
+                                        "description": "Complete checkout solution with a customer facing screen."
+                                    },
+                                    {
+                                        "value": "checkoutX",
+                                        "description": "Software checkout solution for NFC-enabled Android devices to accept contactless card payments."
+                                    },
+                                    {
+                                        "value": "PaymentPage",
+                                        "description": "Surfboard-hosted payment page where all UI and configurations are managed by Surfboard."
+                                    },
+                                    {
+                                        "value": "SelfHostedPage",
+                                        "description": "Merchant-hosted payment page where Surfboard renders payment fields within the merchant’s environment."
+                                    },
+                                    {
+                                        "value": "MerchantInitiated",
+                                        "description": "Used for Merchant Initiated Transactions (MIT), allowing payments to be triggered by the merchant without customer interaction."
+                                    },
+                                    {
+                                        "value": "printer",
+                                        "description": "Standalone printing device."
+                                    },
+                                    {
+                                        "value": "surftester",
+                                        "description": "Surfboard Android based test terminal used during integrations."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "softwareVersion",
+                                "type": "String",
+                                "description": "Software version of the terminal."
+                            },
+                            {
+                                "name": "osType",
+                                "type": "string",
+                                "description": "Describes the type of Operating System(OS) running on the terminal.",
+                                "possibleValues": [
+                                    {
+                                        "value": "android",
+                                        "description": "Android operating system."
+                                    },
+                                    {
+                                        "value": "ios",
+                                        "description": "Apple's operating system for iPhones."
+                                    },
+                                    {
+                                        "value": "sb_firmware",
+                                        "description": "Surfboard firmware."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "osVersion",
+                                "type": "String",
+                                "description": "Operating System(OS) version of the terminal."
+                            },
+                            {
+                                "name": "deviceVendor",
+                                "type": "String",
+                                "description": "Device vendor of the terminal."
+                            },
+                            {
+                                "name": "deviceModel",
+                                "type": "String",
+                                "description": "Device model of the terminal."
+                            },
+                            {
+                                "name": "serialNo",
+                                "type": "String",
+                                "description": "Serial number of the terminal."
+                            },
+                            {
+                                "name": "storeId",
+                                "type": "String",
+                                "description": "The Store ID of the store under which the terminal is registered."
+                            },
+                            {
+                                "name": "linkedTerminalId",
+                                "type": "String",
+                                "description": "The Terminal ID of another terminal to which the current terminal is linked."
+                            },
+                            {
+                                "name": "terminalStatus",
+                                "type": "String",
+                                "description": "Status of the terminal, it can be in one of these states: REGISTERED | ACTIVE | IN_ACTIVE | DE_REGISTERED."
+                            },
+                            {
+                                "name": "terminalPaymentMethods",
+                                "type": "String",
+                                "description": "Payment methods supported by the terminal."
+                            },
+                            {
+                                "name": "startDate",
+                                "type": "String",
+                                "description": "Timestamp at which the merchant was created."
+                            },
+                            {
+                                "name": "terminalName",
+                                "type": "string",
+                                "description": "Name of the terminal used as a reference for users."
+                            },
+                            {
+                                "name": "terminalPublicKey",
+                                "type": "String",
+                                "description": "Public key used while initializing SelfHostedPage Online Terminal (Online SDK)"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

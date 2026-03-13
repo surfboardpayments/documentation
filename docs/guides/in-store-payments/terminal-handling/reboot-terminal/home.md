@@ -1,0 +1,1 @@
+Partners can remotely restart a terminal. This can be helpful for troubleshooting or applying updates.

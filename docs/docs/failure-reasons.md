@@ -1,0 +1,254 @@
+# Payment failure reasons
+
+In the event of payment failures, the reasons for failure are included when checking the payment status. These reasons are specific to the issuers. This section provides an overview of the payment failure reasons for various card schemes.
+
+## Mastercard failure reasons
+
+-   Refer to card issuer Call Issuer
+-   Invalid merchant
+-   Capture card
+-   Do not honor (General Decline no further info from issuer) 08
+-   Partial Approval
+-   Invalid transaction
+-   Invalid amount
+-   Invalid card number
+-   Invalid issuer
+-   Format error
+-   Lost card
+-   Stolen card
+-   Insufficient funds/over credit limit
+-   Expired card
+-   Invalid PIN
+-   Transaction not permitted to issuer/cardholder
+-   Transaction not permitted to acquirer/terminal
+-   Contact Acquirer
+-   Exceeds withdrawal amount limit
+-   Restricted card
+-   Security violation
+-   Strong customer authentication required by issuer
+-   Contact Card Issuer
+-   PIN Not Changed
+-   Allowable number of PIN tries exceeded
+-   Invalid/nonexistent “To Account” specified
+-   Invalid/nonexistent “From Account” specified
+-   Invalid/nonexistent account specified (general)
+-   Life Cycle
+-   Domestic Debit Transaction Not Allowed (Regional use only) 82
+-   Security
+-   Invalid Authorization Life Cycle
+-   Not declined Valid for all zero amount transactions.
+-   PIN Validation not possible Decline
+-   Purchase Amount Only No Cash Back Allowed
+-   Cryptographic failure
+-   Unacceptable PIN—Transaction Declined—Retry
+-   Authorization System or issuer system inoperative
+-   Unable to route transaction
+-   Duplicate transmission detected
+-   System error Decline
+
+## Visa failure reasons
+
+-   Refer to card issuer Call Issuer (not valid for an issuer to use anymore)
+-   Invalid merchant
+-   Capture card
+-   Do not honor (General Decline no further info from issuer)
+-   Error
+-   Capture Card
+-   Partial Approval
+-   V.I.P. approval
+-   Invalid transaction
+-   Invalid amount
+-   Invalid account number
+-   No such issuer
+-   Re-enter transaction
+-   No action taken unable to back out prior transaction
+-   Unable to locate record in file or Account number missing from inquiry
+-   File is temporarily unavailable
+-   No credit account
+-   Pick-up card lost card
+-   Pick-up card stolen card
+-   Insufficient funds
+-   No current account
+-   No savings account
+-   Expired card
+-   Incorrect PIN
+-   Transaction not permitted to Cardholder
+-   Transaction not allowed at terminal
+-   Suspected fraud
+-   Contact Acquirer
+-   Activity amount limit exceeded
+-   Restricted card for example listed in Country Exclusion table
+-   Security violation
+-   Transaction does not fulfil AML requirement
+-   Activity count limit exceeded
+-   Single Tap
+-   Allowable number of PIN entry tries exceeded
+-   Unable to locate previous message no match on Retrieval Reference number
+-   Previous message located for a repeat or reversal but repeat or reversal data is inconsistent with original message
+-   ‘Blocked first used’ the transaction is from a new Cardholder and the card has not been properly unblocked
+-   Transaction already reversed
+-   Visa transaction credit Issuer unavailable or Private label transaction invalid date
+-   PIN cryptographic error found error found by VIC security module during PIN decryption
+-   Negative online CAM dCVV iCVV or CVV results or Offline PIN authentication was interrupted
+-   No reason to decline
+-   Cannot verify PIN
+-   Issuer unavailable
+-   Routing not found
+-   Transaction cannot be completed; violation of law.
+-   Duplicate transaction
+-   System malfunction
+-   Verification Data failed
+-   Strong customer authentication required by issuer
+-   Surcharge amount not permitted on Visa cards (US Acquirers only)
+-   Force STIP
+-   Cash service not available
+-   Cash back request exceeds Issuer limit
+-   Decline for CVV2 failure
+-   Transaction amount exceeds pre-authorized approval amount
+-   Invalid biller information
+-   PIN change/unblock request declined
+-   Unsafe PIN
+-   Stop payment order
+-   Revocation of authorization order. Issuers receive an advice each time a transaction is stopped in VEAS by the Visa Europe Payment Stop Service
+-   Revocation of all authorizations order. Issuers receive an advice each time a transaction is stopped in VEAS by the Visa Europe Payment Stop Service.
+-   Card authentication failed or Offline PIN authentication interrupted
+
+## Discover failure reasons
+
+-   Refer to card issuer Call Issuer
+-   Invalid merchant
+-   Capture card
+-   ID certification fails
+-   Partial Approval
+-   VIP (Approved)
+-   Invalid related transaction
+-   Invalid amount
+-   Invalid card number
+-   No such Issuers
+-   Approved to update track3 (approved)
+-   Card not initialized
+-   Suspected malfunction; related transaction error
+-   Unable to locate original transaction
+-   Format Error
+-   Fraud
+-   PIN try limit exceeded
+-   Function requested not supported
+-   Lost Card
+-   Stolen Card
+-   Fallback transaction is not allowed
+-   Insufficient balance
+-   Expired Card
+-   Incorrect personal identification number
+-   Transaction not allowed to be processed by cardholder
+-   Transaction not allowed to be processed by terminal
+-   Suspected fraud
+-   Transaction amount limit exceeded
+-   Restricted card
+-   Original transaction amount error
+-   Exceeds withdrawal velocity limit
+-   Issuer response Timeout
+-   Allowable number of PIN tries exceeded
+-   Cutoff in progress
+-   Issuer not capable to process
+-   Financial institution or intermediate network facility cannot be found for routing 94
+-   Switch system malfunction
+-   ATM/POS terminal number cannot be located
+-   Issuer response not received by CUPS
+-   PIN Block Error
+-   MAC failed
+-   Successful transaction with fault (Approved)
+-   Account not found in Transfer-inside
+-   Security processing failure
+-   No arrears (transaction receipt not printed)
+-   Illegal Status of Acquirer
+-   Incorrect IIN
+-   Date Error
+-   Invalid file type
+-   File processed
+-   No such file
+-   Not supported by Receiver
+-   File locked
+-   Unsuccessful
+-   Incorrect file length
+-   File decompression error
+-   Filename error
+-   File cannot be received
+-   File record format error
+-   File record repeated
+-   File record not existing
+-   File record error
+-   Items not on Bankbook beyond limit declined
+-   The offline transaction is successful (only used for IC cards based on UICS debit/credit standard).
+-   It is unable to be online. The offline transaction is successful (only used for IC cards based on UICS debit/credit standard).
+-   It is unable to be online. The offline transaction fail s(only used for IC cards based on UICS debit/credit standard).
+
+## Other failure reasons
+
+-   DENIED
+-   DENIED_EXPIRED_CARD
+-   DENIED_SUSPECTED_FRAUD
+-   DENIED_CONTACT_ACQ
+-   DENIED_RESTRICTED_CARD
+-   DENIED_CONTACT_ACQ_SEC
+-   DENIED_PIN_LOCKED
+-   DENIED_CONTACT_ISSUER
+-   DENIED_CONTACT_ISSUER_SC
+-   DENIED_INVALID_CARD_ACCEPTOR
+-   DENIED_INVALID_AMOUNT
+-   DENIED_INVALID_PAN
+-   DENIED_PIN_REQUIRED
+-   DENIED_UNACCEPTABLE_TX
+-   DENIED_INVALID_ACCOUNT
+-   DENIED_FUNCTION_NOT_SUPPORTED
+-   DENIED_NO_FUNDS
+-   DENIED_INCORRECT_PIN DENIED_NO_CARD_RECORD
+-   DENIED_NOT_PERMITTED_TO_CARDHOLDER
+-   DENIED_NOT_PERMITTED_TO_TERMINAL
+-   DENIED_EXCEEDS_WITHDRAWAL_LIMIT
+-   DENIED_SECURITY_VIOLATION
+-   DENIED_EXCEEDS_WITHDRAWAL_FREQ
+-   DENIED_LAW_VIOLATION
+-   DENIED_CARD_NOT_EFFECTIVE
+-   DENIED_VERIFICATION_DATA_FAILED
+-   DENIED_PROCESSING_REQS_NOT_MET
+-   DENIED_SINGLE_TAP_PIN_REQUIRED
+-   DENIED_SCA_REQUIRED
+-   DENIED_INCORRECT_CVV2
+-   DENIED_TRY_AGAIN_LATER
+-   DENIED_DO_NOT_TRY_AGAIN
+-   DENIED_RECURRING_PAYMENT_CANCELLATION
+-   DENIED_3DS_MERCHANT_LIABLE
+-   DENIED_EMV_FALLBACK
+-   DENIED_UNKNOWN
+-   DENIED_TC
+-   DENIED_TC_EXPIRED_CARD
+-   DENIED_TC_SUSPECTED_FRAUD
+-   DENIED_TC_CONTACT_ACQ
+-   DENIED_TC_RESTRICTED_CARD
+-   DENIED_TC_CALL_ACQ_SEC
+-   DENIED_TC_PIN_LOCKED
+-   DENIED_TC_SC
+-   DENIED_TC_LOST_CARD
+-   DENIED_TC_STOLEN_CARD
+-   DENIED_TC_SUSPECTED_COUNTERFEIT
+-   FILE_ACTION_UNKNOWN
+-   REVERSAL_APPROVED
+-   REVERSAL_UNKNOWN
+-   RECONCILIATION_UNKNOWN
+-   ADMIN_UNKNOWN
+-   FEE_COLLECTION_UNKNOWN
+-   MGMT_ACCEPTED
+-   MGMT_UNKNOWN
+-   ERROR_INVALID_TRANSACTION
+-   ERROR_RE_ENTER
+-   ERROR_FORMAT
+-   ERROR_ACQ_NOT_SUPPORTED
+-   ERROR_CUTOVER
+-   ERROR_ISSUER_INOPERATIVE
+-   ERROR_CANNOT_ROUTE
+-   ERROR_SYSTEM
+-   ERROR_ISSUER_SIGNED_OFF
+-   ERROR_ISSUER_TIMEOUT
+-   ERROR_ISSUER_UNAVAILABLE
+
+{% docfooter relatedLinks="[{ title: 'Stores', url: '/docs/stores' },{ title: 'Orders', url: '/docs/orders' },{ title: 'In-store terminals', url: '/guides/in-store-payments/terminals/home' }]" /%}

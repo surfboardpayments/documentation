@@ -1,0 +1,4 @@
+1. Login to the merchant portal, go to **Stores** section in the side bar, simply click the required store you want to register the terminal.
+2. Goto **Terminals** section, click **Register New terminal**, Enter the **`registrationIdentiifer`** and the **`storeId`** (the terminal where it will be registered).
+
+> You only need to register the **`SelfHostedPage`** mode; the other modes, **`PaymentPage`** and **`MerchantInitiated`**, are registered automatically after the merchant completes their application.

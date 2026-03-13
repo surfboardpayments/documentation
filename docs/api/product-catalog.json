@@ -1,0 +1,2385 @@
+{
+    "title": "Product Catalog API",
+    "description": "The product catalog API allows the merchants to create a catalog and organise the products with detailed specifications under their store.",
+    "endpoints": [
+        {
+            "fragment": "Create Product Catalog",
+            "method": "POST",
+            "link": "API_URL/catalog"
+        },
+        {
+            "fragment": "Fetch Product Catalogs",
+            "method": "GET",
+            "link": "API_URL/catalog"
+        },
+        {
+            "fragment": "Create Product",
+            "method": "POST",
+            "link": "API_URL/catalog/:catalogId/products"
+        },
+        {
+            "fragment": "Fetch all products",
+            "method": "GET",
+            "link": "API_URL/catalog/:catalogId/products"
+        },
+        {
+            "fragment": "Fetch Product by Id",
+            "method": "GET",
+            "link": "API_URL/catalog/:catalogId/products/:productId"
+        },
+        {
+            "fragment": "Update Product",
+            "method": "PATCH",
+            "link": "API_URL/catalog/:catalogId/products/:productId"
+        },
+        {
+            "fragment": "Update Product Inventory",
+            "method": "PATCH",
+            "link": "API_URL/catalog/:catalogId/products/:productId/inventory"
+        },
+        {
+            "fragment": "Add Variant For Product",
+            "method": "POST",
+            "link": "API_URL/catalog/:catalogId/products/:productId/variants"
+        },
+        {
+            "fragment": "Update Variant",
+            "method": "PATCH",
+            "link": "API_URL/catalog/:catalogId/products/:productId/variants/:variantId"
+        },
+        {
+            "fragment": "Update Variant Inventory",
+            "method": "PATCH",
+            "link": "API_URL/catalog/:catalogId/products/:productId/variants/:variantId/inventory"
+        },
+        {
+            "fragment": "Add Related Products",
+            "method": "POST",
+            "link": "API_URL/catalog/:catalogId/products/:productId/related-products"
+        },
+        {
+            "fragment": "Generate Product Description",
+            "method": "POST",
+            "link": "API_URL/catalog/ai/description"
+        },
+        {
+            "fragment": "Generate Product Images",
+            "method": "POST",
+            "link": "API_URL/catalog/ai/image"
+        },
+        {
+            "fragment": "Generate Product Catalog from Images",
+            "method": "POST",
+            "link": "API_URL/catalog/ai/scan"
+        },
+        {
+            "fragment": "Get Product Statistics",
+            "method": "GET",
+            "link": "API_URL/catalog/:catalogId/products/:productId/statistics"
+        },
+        {
+            "fragment": "Get Product catalog Statistics",
+            "method": "GET",
+            "link": "API_URL/catalog/:catalogId/statistics"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Create Product Catalog",
+            "description": "This API lets you to create a product catalog for your store to make an effortless product organisation in the catalog.",
+            "new": true,
+            "reqParams": [
+                {
+                    "name": "storeId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Unique identifier of the store where the catalog will be created."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "productcatalogId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unique ID of the newly created catalog."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/catalog",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"storeId\":\"8136a645a2c2d1bb0f\"}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "\n{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"catalogId\": \"8219688f18ebb8020a\"\n  },\n  \"message\": \"Product catalog created successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Product Catalogs",
+            "description": "Retrieves all product catalogs under the store.",
+            "new": true,
+            "query": "To Fetch Catalogs under store API pass in mandatory query param <span class='font-semibold'>storeId</span> as string.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "productcatalogId",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "List of product catalogs Id's existing under store."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/catalog",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"catalogId\": [\n\t\t\t\"8187c051854a38000a\",\n\t\t\t\"818a5d4df1c258090a\",\n\t\t\t\"818bb06b93a5500b0a\",\n\t\t\t\"818f9f37bd0b58040a\"\n\t\t]\n\t},\n\t\"message\": \"Product catalog fetched for storeId: 8136a645a2c2d1bb0f\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Create Product",
+            "description": "This API allows you to create a product in the product catalog.",
+            "new": true,
+            "reqParams": [
+                {
+                    "name": "storeId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Unique identifier of the store where the product will be created."
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Name of the product."
+                },
+                {
+                    "name": "type",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A Product can exist in two ways as the following,",
+                    "possibleValues": [
+                        {
+                            "value": "PRODUCT",
+                            "description": "Its refers to tangible things sold for the exchange of a fee."
+                        },
+                        {
+                            "value": "SERVICE",
+                            "description": "Refers to action provided in exchange for a fee."
+                        }
+                    ]
+                },
+                {
+                    "name": "unitType",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "This refers to the way a product is measured or quantified.",
+                    "possibleValues": [
+                        {
+                            "value": "FIXED",
+                            "description": "Pre-packaged products sold in fixed units."
+                        },
+                        {
+                            "value": "VARIABLE",
+                            "description": "Product sold by weight or volume."
+                        },
+                        {
+                            "value": "FREE_AMOUNT",
+                            "description": "Denotes products priced at checkout."
+                        }
+                    ]
+                },
+                {
+                    "name": "costPrice",
+                    "type": "number",
+                    "mandatory": false,
+                    "description": "Cost price of the product."
+                },
+                {
+                    "name": "sellingPrice",
+                    "type": "number",
+                    "mandatory": true,
+                    "description": "Selling price of the product."
+                },
+                {
+                    "name": "currencyCode",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "It refers to the standardised code used to represent a specific currency."
+                },
+                {
+                    "name": "tax",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Array of taxes.",
+                    "reqParams": [
+                        {
+                            "name": "percentage",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Percentage of the tax for the product."
+                        },
+                        {
+                            "name": "type",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Type of the tax. Tax type supported currently is 'vat'."
+                        }
+                    ]
+                },
+                {
+                    "name": "variantCategory",
+                    "type": "array",
+                    "mandatory": false,
+                    "description": "Defines the different variants available for the product.",
+                    "reqParams": [
+                        {
+                            "name": "label",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "User defined Label for the variant category."
+                        },
+                        {
+                            "name": "Key",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Key of the variant."
+                        }
+                    ]
+                },
+                {
+                    "name": "variantCategories",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Describes the different variants available for the product.",
+                    "reqParams": [
+                        {
+                            "name": "category",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "The user defined variant category under variantCategory."
+                        },
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Name of the variant."
+                        },
+                        {
+                            "name": "value",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Value of the variant."
+                        }
+                    ]
+                },
+                {
+                    "name": "description",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Description of the product."
+                },
+                {
+                    "name": "unit",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "This refers to the metric unit of the item. The possible values are 'm' , 'mm' , 'cm' , 'km' , 'in' , 'ft' , 'mi' , 'kg' , 'g' , 'mg' , 'lb' , 'oz' , 'l' , 'ml' , 'cu. m' , 'gal' , 'pt' , 'fl oz' , 'W' , 'kW' , 'kWh' , 'sq m' , 'sq km' , 'sq ft' , 'h' , 'min' , 's' , 'days' , 'wk' , 'mn' , 'yr' , 'nos'. "
+                },
+                {
+                    "name": "category",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Category of the product."
+                },
+                {
+                    "name": "productImages",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "An array of URLs showcasing the product."
+                },
+                {
+                    "name": "hsnCode",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "A 6-digit uniform code that identifies the product."
+                },
+                {
+                    "name": "barCode",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Encoded white and black lines on the product."
+                },
+                {
+                    "name": "productProperties",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "Additional properties that help describe the product like size, origin, weight, manufacturer, etc."
+                },
+                {
+                    "name": "monthlyPlans",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "Refers to the charges of the product or service for a specific time period.",
+                    "reqParams": [
+                        {
+                            "name": "amount",
+                            "type": "number",
+                            "mandatory": true,
+                            "description": "Amount of the plan."
+                        },
+                        {
+                            "name": "currencyCode",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "It refers to the standardised code used to represent a specific currency."
+                        },
+                        {
+                            "name": "interval",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "This refers to the time period of the billing plan."
+                        },
+                        {
+                            "name": "intervalCount",
+                            "type": "number",
+                            "mandatory": true,
+                            "description": "Duration of the plan."
+                        },
+                        {
+                            "name": "recurring",
+                            "type": "boolean",
+                            "mandatory": true,
+                            "description": "Denotes if the billing plan should repeat at regular intervals."
+                        },
+                        {
+                            "name": "bindingPeriod",
+                            "type": "number",
+                            "mandatory": true,
+                            "description": "A binding period is a set timeframe for a billing plan to which the customer is expected to adhere."
+                        },
+                        {
+                            "name": "earlyTerminationPenalty",
+                            "type": "number",
+                            "mandatory": true,
+                            "description": "It is the additional amount charged in case of early termination if applicable."
+                        },
+                        {
+                            "name": "earlyTermination",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Defines the intended action to be taken if the plan is terminated early.",
+                            "possibleValues": [
+                                {
+                                    "value": "NO_PENALTY",
+                                    "description": "No penalty charged for early termination."
+                                },
+                                {
+                                    "value": "BALANCE_AMOUNT",
+                                    "description": "Customer has to pay the balance amount id terminated early."
+                                },
+                                {
+                                    "value": "BALANCE_AMOUNT_PLUS_PENALTY",
+                                    "description": "Customer has the pay the remaining amount plus a penalty amount."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "productId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unique ID of the newly added product."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/catalog/:catalogId/products",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"storeId\":\"8136a645a2c2d1bb0f\",\"name\":\"SurfPad Purple Logo\",\"type\":\"PRODUCT\",\"unitType\":\"FIXED\",\"costPrice\":20,\"sellingPrice\":45,\"currencyCode\":\"752\",\"tax\":[{\"type\":\"VAT\",\"percentage\":\"3\"}],\"description\":\"SurfPad Payment Terminal in Purple\",\"category\":\"electronics\",\"unit\":\"nos\",\"productImages\":[\"https://res.cloudinary.com/martinsurf/image/upload/v1619101937/surfboardpayments/surfboard-icon.svg\"],\"hsnCode\":\"723453\",\"barCode\":\"7812123454323\"}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "\n{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"productId\": \"81c30d16df28880301\"\n  },\n  \"message\": \"Product created successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Update Product",
+            "description": "You can use this API to modify the products.",
+            "new": true,
+            "reqParams": [
+                {
+                    "name": "storeId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Unique identifier of the store where the product exists."
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Name of the product."
+                },
+                {
+                    "name": "costPrice",
+                    "type": "number",
+                    "mandatory": false,
+                    "description": "Cost price of the product."
+                },
+                {
+                    "name": "sellingPrice",
+                    "type": "number",
+                    "mandatory": false,
+                    "description": "Selling price of the product."
+                },
+                {
+                    "name": "description",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Description of the product."
+                },
+                {
+                    "name": "category",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "This refers to a grouping of similar products that share a common characteristics."
+                },
+                {
+                    "name": "unit",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "This refers to the metric unit of the item. The possible values are 'm' , 'mm' , 'cm' , 'km' , 'in' , 'ft' , 'mi' , 'kg' , 'g' , 'mg' , 'lb' , 'oz' , 'l' , 'ml' , 'cu. m' , 'gal' , 'pt' , 'fl oz' , 'W' , 'kW' , 'kWh' , 'sq m' , 'sq km' , 'sq ft' , 'h' , 'min' , 's' , 'days' , 'wk' , 'mn' , 'yr' , 'nos'. "
+                },
+                {
+                    "name": "productImages",
+                    "type": "array",
+                    "mandatory": false,
+                    "description": "An array of URLs showcasing the product images."
+                },
+                {
+                    "name": "hsnCode",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "A 6-digit uniform code that identifies the product."
+                },
+                {
+                    "name": "barCode",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Encoded white and black lines on the products."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "PATCH",
+            "path": "/catalog/:catalogId/products/:productId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"storeId\":\"8136a645a2c2d1bb0f\",\"name\":\"SurfPad Black Logo\",\"costPrice\":0,\"sellingPrice\":15,\"description\":\"SurfPad Payment Terminal in Black\",\"category\":\"electronics\",\"unit\":\"nos\",\"productImages\":[\"https://res.cloudinary.com/martinsurf/image/upload/v1619101937/surfboardpayments/surfboard-icon.svg\"],\"hsnCode\":\"723453\",\"barCode\":\"7812123454323\"}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"status\": \"SUCCESS\",\n  \"message\": \"Product updated successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch all products",
+            "description": "This API allows you to retrieve all products associated with a product catalog.",
+            "new": true,
+            "query": "To Fetch all products API pass in mandatory query param <span class='font-semibold'>storeId</span> as string.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "products",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "Details of the products.",
+                            "resParams": [
+                                {
+                                    "name": "productId",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "ID of the product."
+                                },
+                                {
+                                    "name": "name",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Name of the product."
+                                },
+                                {
+                                    "name": "currencyCode",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "It refers to the standardised code used to represent a specific currency."
+                                },
+                                {
+                                    "name": "description",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Description of the product."
+                                },
+                                {
+                                    "name": "category",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Indicates the products in particular category."
+                                },
+                                {
+                                    "name": "unit",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "This refers to the metric unit of the item. The possible values are 'm' , 'mm' , 'cm' , 'km' , 'in' , 'ft' , 'mi' , 'kg' , 'g' , 'mg' , 'lb' , 'oz' , 'l' , 'ml' , 'cu. m' , 'gal' , 'pt' , 'fl oz' , 'W' , 'kW' , 'kWh' , 'sq m' , 'sq km' , 'sq ft' , 'h' , 'min' , 's' , 'days' , 'wk' , 'mn' , 'yr' , 'nos'."
+                                },
+                                {
+                                    "name": "productImages",
+                                    "type": "array",
+                                    "mandatory": true,
+                                    "description": "An array of URLs showcasing the product images."
+                                },
+                                {
+                                    "name": "hsnCode",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "A 6-digit uniform code that identifies the product."
+                                },
+                                {
+                                    "name": "barCode",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Encoded white and black lines on the products."
+                                },
+                                {
+                                    "name": "productProperties",
+                                    "type": "object",
+                                    "mandatory": true,
+                                    "description": "Denotes the additional variants that describe the products details which includes type, size, origin, weight, manufacturer, etc."
+                                },
+                                {
+                                    "name": "inventory",
+                                    "type": "object",
+                                    "mandatory": true,
+                                    "description": "Defines the information about the stock levels of the products listed in the catalog."
+                                },
+                                {
+                                    "name": "unitType",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "This specifies the general representation of quantity based on the product details and they have possible types.",
+                                    "possibleValues": [
+                                        {
+                                            "value": "FIXED",
+                                            "description": "Pre-packaged products sold in fixed units."
+                                        },
+                                        {
+                                            "value": "VARIABLE",
+                                            "description": "Products sold by weight or volume."
+                                        },
+                                        {
+                                            "value": "FREE_AMOUNT",
+                                            "description": "Products priced at checkout."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "relatedProducts",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "It refers  to add product with some other relatable product."
+                                },
+                                {
+                                    "name": "sellingPrice",
+                                    "type": "number",
+                                    "mandatory": true,
+                                    "description": "Selling price of the product."
+                                },
+                                {
+                                    "name": "variants",
+                                    "type": "array",
+                                    "mandatory": true,
+                                    "description": "Specifications of the product."
+                                },
+                                {
+                                    "name": "billingPlans",
+                                    "type": "array",
+                                    "mandatory": true,
+                                    "description": "Refers to schedule of individual billing dates for the products."
+                                },
+                                {
+                                    "name": "tax",
+                                    "type": "array",
+                                    "mandatory": true,
+                                    "description": "Array of taxes.",
+                                    "resParams": [
+                                        {
+                                            "name": "amount",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Amount of the tax for the items in the order created."
+                                        },
+                                        {
+                                            "name": "percentage",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Percentage of the taxes for the items in the order."
+                                        },
+                                        {
+                                            "name": "type",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Type of the tax supported currently is 'vat'."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "variantCategories",
+                                    "type": "array",
+                                    "mandatory": true,
+                                    "description": "Used to show the available variants of the products."
+                                },
+                                {
+                                    "name": "campaignInfo",
+                                    "type": "array",
+                                    "mandatory": true,
+                                    "description": "Information of campaign.",
+                                    "resParams": [
+                                        {
+                                            "name": "campaignName",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Name of the campaign."
+                                        },
+                                        {
+                                            "name": "campaignId",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "ID of the campaign."
+                                        },
+                                        {
+                                            "name": "fixedAmount",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Fixed amount of the products."
+                                        },
+                                        {
+                                            "name": "percentage",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Percentage of the products."
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "bundles",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "Refers to the products grouped together in a category."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/catalog/:catalogId/products",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"products\": [\n      {\n        \"productId\": \"823913d474de600e01\",\n        \"name\": \"SurfPad Black Logo\",\n        \"currencyCode\": \"752\",\n        \"description\": \"SurfPad Payment Terminal in Black\",\n        \"category\": \"electronics\",\n        \"unit\": \"nos\",\n        \"productImages\": [\n          \"https://res.cloudinary.com/martinsurf/image/upload/v1619101937/surfboardpayments/surfboard-icon.svg\"\n        ],\n        \"hsnCode\": \"723453\",\n        \"barCode\": \"7812123454323\",\n        \"productProperties\": {\n          \"size\": \"15x5 cm\",\n          \"origin\": \"sweden\",\n          \"weight\": \"250 g\",\n          \"manufacturer\": \"datecs\"\n        },\n        \"inventory\": {},\n        \"unitType\": \"FIXED\",\n        \"type\": \"PRODUCT\",\n        \"relatedProducts\": [],\n        \"sellingPrice\": 15,\n        \"variants\": [],\n        \"billingPlans\": [],\n        \"tax\": [\n          {\n            \"type\": \"VAT\",\n            \"percentage\": \"3\",\n            \"amount\": 0\n          }\n        ],\n        \"variantCategories\": [],\n        \"campaignInfo\": [\n          {\n            \"campaignName\": \"First campaign\",\n            \"campaignId\": \"8239b16f0a59580224\",\n            \"fixedAmount\": 20,\n            \"percentage\": null\n          }\n        ]\n      }\n    ],\n    \"bundles\": []\n  },\n  \"message\": \"Products fetched successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Product by Id",
+            "description": "This API allows you to retrieve a specific product by its ID.",
+            "new": true,
+            "query": "To Fetch Product by Id API pass in mandatory query param <span class='font-semibold'>storeId</span> as string.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data containing the product details.",
+                    "resParams": [
+                        {
+                            "name": "id",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unique identifier of the product."
+                        },
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Name of the product."
+                        },
+                        {
+                            "name": "sellingPrice",
+                            "type": "number",
+                            "mandatory": true,
+                            "description": "Selling price of the product."
+                        },
+                        {
+                            "name": "currencyCode",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Currency code for the product price."
+                        },
+                        {
+                            "name": "description",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Description of the product."
+                        },
+                        {
+                            "name": "category",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Category of the product."
+                        },
+                        {
+                            "name": "popularity",
+                            "type": "number",
+                            "mandatory": true,
+                            "description": "Popularity score of the product."
+                        },
+                        {
+                            "name": "unit",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unit of measurement for the product."
+                        },
+                        {
+                            "name": "hsnCode",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "HSN code of the product."
+                        },
+                        {
+                            "name": "barcode",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Barcode of the product."
+                        },
+                        {
+                            "name": "type",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Type of the product."
+                        },
+                        {
+                            "name": "unitType",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unit type of the product."
+                        },
+                        {
+                            "name": "attributeValues",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "Array of attribute values for the product.",
+                            "resParams": [
+                                {
+                                    "name": "attributeKey",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Key of the attribute."
+                                },
+                                {
+                                    "name": "displayName",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Display name of the attribute."
+                                },
+                                {
+                                    "name": "value",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Value of the attribute."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "tax",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "Array of tax information for the product.",
+                            "resParams": [
+                                {
+                                    "name": "type",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Type of tax."
+                                },
+                                {
+                                    "name": "percentage",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Tax percentage."
+                                },
+                                {
+                                    "name": "amount",
+                                    "type": "number",
+                                    "mandatory": true,
+                                    "description": "Tax amount."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/catalog/:catalogId/products/:productId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"id\": \"838bfc15a601800901\",\n\t\t\"name\": \"Test Product\",\n\t\t\"sellingPrice\": 149,\n\t\t\"currencyCode\": \"752\",\n\t\t\"description\": \"Sitter som en smäck\",\n\t\t\"category\": \"TERMINAL\",\n\t\t\"popularity\": 0,\n\t\t\"unit\": \"nos\",\n\t\t\"hsnCode\": \"\",\n\t\t\"barcode\": \"\",\n\t\t\"type\": \"PRODUCT\",\n\t\t\"unitType\": \"FIXED_UNIT\",\n\t\t\"attributeValues\": [\n\t\t\t{\n\t\t\t\t\"attributeKey\": \"storlek\",\n\t\t\t\t\"displayName\": \"Storlek XL\",\n\t\t\t\t\"value\": \"XL\"\n\t\t\t}\n\t\t],\n\t\t\"tax\": [\n\t\t\t{\n\t\t\t\t\"type\": \"VAT\",\n\t\t\t\t\"percentage\": \"3\",\n\t\t\t\t\"amount\": 0\n\t\t\t}\n\t\t]\n\t},\n\t\"message\": \"Products fetched successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Add Variant For Product",
+            "description": "This API allows you to add a variant to an existing product in the product catalog.",
+            "new": true,
+            "reqParams": [
+                {
+                    "name": "storeId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Unique identifier of the store where the product exists."
+                },
+                {
+                    "name": "variants",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Specifications of the product.",
+                    "reqParams": [
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Name of the variant."
+                        },
+                        {
+                            "name": "description",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Description of the variant."
+                        },
+                        {
+                            "name": "costPrice",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "Cost price of the variant."
+                        },
+                        {
+                            "name": "sellingPrice",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "Selling price of the variant."
+                        },
+                        {
+                            "name": "currencyCode",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "It refers to the standardised code used to represent a specific currency."
+                        },
+                        {
+                            "name": "hsnCode",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "A 6-digit uniform code that classifies for the known variant."
+                        },
+                        {
+                            "name": "barCode",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "A 6-digit uniform code that identifies the variant."
+                        },
+                        {
+                            "name": "productImages",
+                            "type": "array",
+                            "mandatory": false,
+                            "description": "An array of URLs showcasing the variant images."
+                        },
+                        {
+                            "name": "attributeValues",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "Use to show the available variants of the products.",
+                            "reqParams": [
+                                {
+                                    "name": "attributeKey",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "This refers to the category of the variant."
+                                },
+                                {
+                                    "name": "displayName",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Name of the variant."
+                                },
+                                {
+                                    "name": "value",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Value of the variant."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "variants",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "Unique ID of the newly added variants."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/catalog/:catalogId/products/:productId/variants",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"storeId\":\"8136a645a2c2d1bb0f\",\"variants\":[{\"name\":\"SurfPad Blue Variant\",\"description\":\"Blue variant of SurfPad\",\"costPrice\":10,\"sellingPrice\":12,\"currencyCode\":\"752\",\"productImages\":[\"https://res.cloudinary.com/martinsurf/image/upload/v1619101937/surfboardpayments/surfboard-icon.svg\"],\"hsnCode\":\"123453\",\"barCode\":\"1212123454323\",\"attributeValues\":[{\"attributeKey\":\"colour\",\"displayName\":\"blue\",\"value\":\"#0000FF\"},{\"attributeKey\":\"size\",\"displayName\":\"medium\",\"value\":\"M\"}]}]}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "\n{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"variants\": [\"81c319b6c7d2080807\"]\n  },\n  \"message\": \"Variants added successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Add Related Products",
+            "description": "This API helps you to tag the product with other relatable products in the catalog.",
+            "new": true,
+            "reqParams": [
+                {
+                    "name": "storeId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Unique identifier of the store where the product exists."
+                },
+                {
+                    "name": "relatedProducts",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "An array of product Id's."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/catalog/:catalogId/products/:productId/related-products",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"storeId\":\"8136a645a2c2d1bb0f\",\"relatedProducts\":[\"818f9fc43d0b580f01\"]}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "\n{\n  \"status\": \"SUCCESS\",\n  \"message\": \"Related Products for merchant added successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Update Product Inventory",
+            "description": "Update available stocks in the product inventory using this API.",
+            "new": true,
+            "reqParams": [
+                {
+                    "name": "storeId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Unique identifier of the store where the product exists."
+                },
+                {
+                    "name": "operation",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Defines the way in which the existing stock is modified.",
+                    "possibleValues": [
+                        {
+                            "value": "STOCK_UP",
+                            "description": "Indicates an addition to the currently available stock."
+                        },
+                        {
+                            "value": "STOCK_DOWN",
+                            "description": "Decrease the quantity in available stock."
+                        }
+                    ]
+                },
+                {
+                    "name": "quantity",
+                    "type": "number",
+                    "mandatory": true,
+                    "description": "Defines the number of units of a specific product that are available in stock."
+                },
+                {
+                    "name": "unit",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "This refers to the metric unit of the item. The possible values are 'm' , 'mm' , 'cm' , 'km' , 'in' , 'ft' , 'mi' , 'kg' , 'g' , 'mg' , 'lb' , 'oz' , 'l' , 'ml' , 'cu. m' , 'gal' , 'pt' , 'fl oz' , 'W' , 'kW' , 'kWh' , 'sq m' , 'sq km' , 'sq ft' , 'h' , 'min' , 's' , 'days' , 'wk' , 'mn' , 'yr' , 'nos'."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "PATCH",
+            "path": "/catalog/:catalogId/products/:productId/inventory",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"storeId\":\"8136a645a2c2d1bb0f\",\"operation\":\"STOCK_UP\",\"quantity\":10,\"unit\":\"nos\"}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"status\": \"SUCCESS\",\n  \"message\": \"Inventory updated successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Update Variant",
+            "description": "You can use this API to modify the product variants.",
+            "new": true,
+            "reqParams": [
+                {
+                    "name": "storeId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Unique identifier of the store where the variant exists."
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Name of the variant."
+                },
+                {
+                    "name": "costPrice",
+                    "type": "number",
+                    "mandatory": false,
+                    "description": "Cost price of the variant."
+                },
+                {
+                    "name": "sellingPrice",
+                    "type": "number",
+                    "mandatory": false,
+                    "description": "Selling price of the variant."
+                },
+                {
+                    "name": "description",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Description of the variant."
+                },
+                {
+                    "name": "category",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "This refers to a grouping of similar variants that share a common characteristics."
+                },
+                {
+                    "name": "unit",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "This refers to the metric unit of the variant. The possible values are 'm' , 'mm' , 'cm' , 'km' , 'in' , 'ft' , 'mi' , 'kg' , 'g' , 'mg' , 'lb' , 'oz' , 'l' , 'ml' , 'cu. m' , 'gal' , 'pt' , 'fl oz' , 'W' , 'kW' , 'kWh' , 'sq m' , 'sq km' , 'sq ft' , 'h' , 'min' , 's' , 'days' , 'wk' , 'mn' , 'yr' , 'nos'. "
+                },
+                {
+                    "name": "variantImages",
+                    "type": "array",
+                    "mandatory": false,
+                    "description": "An array of URLs showcasing the variant images."
+                },
+                {
+                    "name": "hsnCode",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "A 6-digit uniform code that identifies the variant."
+                },
+                {
+                    "name": "barCode",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Encoded white and black lines on the variants."
+                },
+                {
+                    "name": "variantProperties",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "Denotes the additional properties that describe the variant details which includes type, size, origin, weight, manufacturer, etc."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "PATCH",
+            "path": "/catalog/:catalogId/products/:productId/variants/:variantId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"storeId\":\"8136a645a2c2d1bb0f\",\"name\":\"SurfPad Black Logo - Large\",\"costPrice\":0,\"sellingPrice\":18,\"description\":\"SurfPad Payment Terminal in Black - Large Size\",\"category\":\"electronics\",\"unit\":\"nos\",\"productImages\":[\"https://res.cloudinary.com/martinsurf/image/upload/v1619101937/surfboardpayments/surfboard-icon.svg\"],\"hsnCode\":\"723453\",\"barCode\":\"7812123454323\"}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"status\": \"SUCCESS\",\n  \"message\": \"Variant updated successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Update Variant Inventory",
+            "description": "Update available stocks in the variant inventory using this API.",
+            "new": true,
+            "reqParams": [
+                {
+                    "name": "storeId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Unique identifier of the store where the variant exists."
+                },
+                {
+                    "name": "operation",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Defines the way in which the existing variant stock is modified.",
+                    "possibleValues": [
+                        {
+                            "value": "STOCK_UP",
+                            "description": "Indicates an addition to the currently available variant stock."
+                        },
+                        {
+                            "value": "STOCK_DOWN",
+                            "description": "Decrease the quantity in available variant stock."
+                        }
+                    ]
+                },
+                {
+                    "name": "quantity",
+                    "type": "number",
+                    "mandatory": true,
+                    "description": "Defines the number of units of a specific variant that are available in stock."
+                },
+                {
+                    "name": "unit",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "This refers to the metric unit of the variant. The possible values are 'm' , 'mm' , 'cm' , 'km' , 'in' , 'ft' , 'mi' , 'kg' , 'g' , 'mg' , 'lb' , 'oz' , 'l' , 'ml' , 'cu. m' , 'gal' , 'pt' , 'fl oz' , 'W' , 'kW' , 'kWh' , 'sq m' , 'sq km' , 'sq ft' , 'h' , 'min' , 's' , 'days' , 'wk' , 'mn' , 'yr' , 'nos'."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "PATCH",
+            "path": "/catalog/:catalogId/products/:productId/variants/:variantId/inventory",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"storeId\":\"8136a645a2c2d1bb0f\",\"operation\":\"STOCK_UP\",\"quantity\":15,\"unit\":\"nos\"}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"status\": \"SUCCESS\",\n  \"message\": \"Variant inventory updated successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Generate Product Description",
+            "description": "Generate AI-powered product descriptions based on product name, word length, and language preferences. Use this API to create compelling, professional product descriptions that enhance your product listings and improve customer engagement.",
+            "new": true,
+            "reqParams": [
+                {
+                    "name": "productName",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Name of the product for which to generate the description."
+                },
+                {
+                    "name": "maxWordLength",
+                    "type": "number",
+                    "description": "Maximum number of words for the generated description."
+                },
+                {
+                    "name": "langCode",
+                    "type": "string",
+                    "description": "Language code for the description generation (e.g., 'en' for English)."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data containing the generated description.",
+                    "resParams": [
+                        {
+                            "name": "description",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "AI-generated product description."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "catalog/ai/description",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\n\t\"productName\": \"Addidas Running Shoes\",\n\t\"maxWordLength\": 150,\n\t\"langCode\": \"en\"\n}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"description\": \"Unleash your peak performance with Adidas running shoes, meticulously engineered for speed, comfort, and endurance. Experience the revolutionary boost midsole technology that returns energy with every stride, propelling you forward effortlessly. The lightweight, breathable upper ensures optimal ventilation, keeping your feet cool and dry even during intense workouts. Designed with a precision fit, these shoes offer exceptional support and stability, reducing the risk of injury and enhancing your natural gait. Whether you're a seasoned marathoner or a casual jogger, Adidas running shoes provide the perfect blend of innovation and style. Conquer your goals and shatter your personal bests with the ultimate running companion. Step into a world of unparalleled performance and elevate your running experience with Adidas.\"\n\t},\n\t\"message\": \"Description generated successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Generate Product Images",
+            "description": "Generate AI-powered product images based on product name, custom prompts, and specifications. Use this API to create professional product images that enhance your product catalog and marketing materials.",
+            "new": true,
+            "reqParams": [
+                {
+                    "name": "productName",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Name of the product for which to generate images."
+                },
+                {
+                    "name": "prompt",
+                    "type": "string",
+                    "description": "Custom prompt describing the desired image characteristics and style."
+                },
+                {
+                    "name": "noOfImages",
+                    "type": "number",
+                    "description": "Number of images to generate for the product."
+                },
+                {
+                    "name": "langCode",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Language code for image generation context (e.g., 'en' for English)."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data containing the generated image paths.",
+                    "resParams": [
+                        {
+                            "name": "imagePath",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "Array of URLs pointing to the generated product images."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "catalog/ai/image",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\n\t\"productName\": \"Gaming Laptop\",\n\t\"prompt\": \"sleek modern design with RGB lighting\",\n\t\"noOfImages\": 3,\n\t\"langCode\": \"en\"\n}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"imagePath\": [\n\t\t\t\"https://storage.googleapis.com/sb-merchant-portal-ai-images/8113d3f8403b380409%2Fm_iWGri3XAyTmkbKYsYtV47%2Fadidas_t_shirt%2Fadidas_t_shirt_custom_prompt_09_08_2025_07_44_18_1.png\",\n\t\t\t\"https://storage.googleapis.com/sb-merchant-portal-ai-images/8113d3f8403b380409%2Fm_iWGri3XAyTmkbKYsYtV47%2Fadidas_t_shirt%2Fadidas_t_shirt_custom_prompt_09_08_2025_07_44_18_2.png\"\n\t\t]\n\t},\n\t\"message\": \"Images generated successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Generate Product Catalog from Images",
+            "description": "Generate product catalog data with images and menu information from existing image data. Use this API to extract structured product information from menu images or catalog photos, automatically creating product listings with descriptions and pricing.",
+            "new": true,
+            "reqParams": [
+                {
+                    "name": "imgData",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Array of image URLs or base64 encoded image data to process."
+                },
+                {
+                    "name": "imageType",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Array of image file types corresponding to the imgData array (e.g., 'png', 'jpg')."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data containing extracted menu and product information.",
+                    "resParams": [
+                        {
+                            "name": "menuData",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "Array of extracted product/menu items with their details.",
+                            "resParams": [
+                                {
+                                    "name": "name",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Name of the product or menu item."
+                                },
+                                {
+                                    "name": "description",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Description of the product or menu item."
+                                },
+                                {
+                                    "name": "sellingPrice",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Price of the product or menu item."
+                                },
+                                {
+                                    "name": "currencyCode",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Currency code for the price (e.g., '840' for USD)."
+                                },
+                                {
+                                    "name": "category",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Category classification of the product or menu item."
+                                },
+                                {
+                                    "name": "image",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "URL of the generated or associated product image."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "catalog/ai/scan",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\n\t\"imgData\": [\n\t\t\"https://storage.googleapis.com/sb-merchant-portal-ai-images/testMerchant/TestMenu/menu01.png\"\n\t],\n\t\"imageType\": [\n\t\t\"png\"\n\t]\n}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"menuData\": [\n\t\t\t[\n\t\t\t\t{\n\t\t\t\t\t\"name\": \"The Junior\",\n\t\t\t\t\t\"description\": \"Two eggs any way, your choice of bacon, sausage, or ham, and coffee or tea.\",\n\t\t\t\t\t\"sellingPrice\": \"8.50\",\n\t\t\t\t\t\"currencyCode\": \"840\",\n\t\t\t\t\t\"category\": \"Breakfast Mains\",\n\t\t\t\t\t\"image\": \"https://storage.googleapis.com/sb-merchant-portal-ai-images/8113d3f8403b380409%2Fm_iWGri3XAyTmkbKYsYtV47%2Fthe_junior%2Fthe_junior_custom_prompt_09_08_2025_07_45_53_1.png\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"name\": \"Buttermilk or Buckwheat Pancakes\",\n\t\t\t\t\t\"description\": \"Fluffy pancakes with a choice of bacon or maple sausage.\",\n\t\t\t\t\t\"sellingPrice\": \"8.00\",\n\t\t\t\t\t\"currencyCode\": \"840\",\n\t\t\t\t\t\"category\": \"Breakfast Mains\",\n\t\t\t\t\t\"image\": \"https://storage.googleapis.com/sb-merchant-portal-ai-images/8113d3f8403b380409%2Fm_iWGri3XAyTmkbKYsYtV47%2Fbuttermilk_or_buckwheat_pancakes%2Fbuttermilk_or_buckwheat_pancakes_custom_prompt_09_08_2025_07_45_52_1.png\"\n\t\t\t\t}\n\t\t\t]\n\t\t]\n\t},\n\t\"message\": \"Menu data extracted successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Get Product Statistics",
+            "description": "Retrieve comprehensive statistics for a specific product including sales data, inventory status, VAT breakdown, and variant performance metrics within an optional date range.",
+            "new": true,
+            "query": "Optionally pass <span class='font-semibold'>startDate</span> and <span class='font-semibold'>endDate</span> query parameters in YYYY-MM-DD format to filter statistics by date range.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data containing product statistics.",
+                    "resParams": [
+                        {
+                            "name": "productId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unique identifier of the product."
+                        },
+                        {
+                            "name": "productName",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Name of the product."
+                        },
+                        {
+                            "name": "unit",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unit of measurement for the product."
+                        },
+                        {
+                            "name": "query",
+                            "type": "object",
+                            "mandatory": true,
+                            "description": "The date range used for filtering statistics.",
+                            "resParams": [
+                                {
+                                    "name": "startDate",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Start date of the statistics period in YYYY-MM-DD format."
+                                },
+                                {
+                                    "name": "endDate",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "End date of the statistics period in YYYY-MM-DD format."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "statistics",
+                            "type": "object",
+                            "mandatory": true,
+                            "description": "Sales and performance statistics for the product.",
+                            "resParams": [
+                                {
+                                    "name": "byCurrency",
+                                    "type": "array",
+                                    "mandatory": true,
+                                    "description": "Statistics broken down by currency.",
+                                    "resParams": [
+                                        {
+                                            "name": "currency",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Currency code."
+                                        },
+                                        {
+                                            "name": "totalUnitsSold",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Total number of units sold."
+                                        },
+                                        {
+                                            "name": "totalUnitsReturned",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Total number of units returned."
+                                        },
+                                        {
+                                            "name": "totalRevenue",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Total revenue generated."
+                                        },
+                                        {
+                                            "name": "totalVat",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Total VAT collected."
+                                        },
+                                        {
+                                            "name": "totalCampaignDiscount",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Total campaign discount applied."
+                                        },
+                                        {
+                                            "name": "orderCount",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Total number of orders containing this product."
+                                        },
+                                        {
+                                            "name": "averageOrderValue",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Average order value for orders containing this product."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "netUnitsSold",
+                                    "type": "number",
+                                    "mandatory": true,
+                                    "description": "Net units sold after accounting for returns."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "inventoryStatus",
+                            "type": "object",
+                            "mandatory": true,
+                            "description": "Current inventory status of the product.",
+                            "resParams": [
+                                {
+                                    "name": "currentStock",
+                                    "type": "number",
+                                    "mandatory": true,
+                                    "description": "Current stock quantity available."
+                                },
+                                {
+                                    "name": "stockIn",
+                                    "type": "number",
+                                    "mandatory": true,
+                                    "description": "Total stock added during the period."
+                                },
+                                {
+                                    "name": "stockOut",
+                                    "type": "number",
+                                    "mandatory": true,
+                                    "description": "Total stock removed during the period."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "vatBreakdown",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "VAT breakdown by percentage.",
+                            "resParams": [
+                                {
+                                    "name": "vatPercentage",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "VAT percentage applied."
+                                },
+                                {
+                                    "name": "vatAmount",
+                                    "type": "number",
+                                    "mandatory": true,
+                                    "description": "Total VAT amount collected at this percentage."
+                                },
+                                {
+                                    "name": "taxableAmount",
+                                    "type": "number",
+                                    "mandatory": true,
+                                    "description": "Total taxable amount at this percentage."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "variants",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "Statistics for each product variant.",
+                            "resParams": [
+                                {
+                                    "name": "variantId",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Unique identifier of the variant."
+                                },
+                                {
+                                    "name": "variantName",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Name of the variant."
+                                },
+                                {
+                                    "name": "unit",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Unit of measurement for the variant."
+                                },
+                                {
+                                    "name": "byCurrency",
+                                    "type": "array",
+                                    "mandatory": true,
+                                    "description": "Variant statistics broken down by currency."
+                                },
+                                {
+                                    "name": "inventoryStatus",
+                                    "type": "object",
+                                    "mandatory": true,
+                                    "description": "Current inventory status of the variant."
+                                },
+                                {
+                                    "name": "vatBreakdown",
+                                    "type": "array",
+                                    "mandatory": true,
+                                    "description": "VAT breakdown for the variant."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/catalog/:catalogId/products/:productId/statistics",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"productId\": \"838bfc15a601800901\",\n\t\t\"productName\": \"Test Product\",\n\t\t\"unit\": \"nos\",\n\t\t\"query\": {\n\t\t\t\"startDate\": \"2025-09-17\",\n\t\t\t\"endDate\": \"2025-12-17\"\n\t\t},\n\t\t\"statistics\": {\n\t\t\t\"byCurrency\": [],\n\t\t\t\"netUnitsSold\": 0\n\t\t},\n\t\t\"inventoryStatus\": {\n\t\t\t\"currentStock\": 0,\n\t\t\t\"stockIn\": 0,\n\t\t\t\"stockOut\": 0\n\t\t},\n\t\t\"vatBreakdown\": [],\n\t\t\"variants\": []\n\t},\n\t\"message\": \"Product statistics fetched successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Get Product catalog Statistics",
+            "description": "Retrieve comprehensive statistics for an entire product catalog including summary metrics, VAT breakdown, and top-selling products within an optional date range.",
+            "new": true,
+            "query": "Optionally pass <span class='font-semibold'>startDate</span> and <span class='font-semibold'>endDate</span> query parameters in YYYY-MM-DD format to filter statistics by date range.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data containing catalog statistics.",
+                    "resParams": [
+                        {
+                            "name": "productcatalogId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unique identifier of the product catalog."
+                        },
+                        {
+                            "name": "productcatalogName",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Name of the product catalog."
+                        },
+                        {
+                            "name": "query",
+                            "type": "object",
+                            "mandatory": true,
+                            "description": "The date range used for filtering statistics.",
+                            "resParams": [
+                                {
+                                    "name": "startDate",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Start date of the statistics period in YYYY-MM-DD format."
+                                },
+                                {
+                                    "name": "endDate",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "End date of the statistics period in YYYY-MM-DD format."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "summary",
+                            "type": "object",
+                            "mandatory": true,
+                            "description": "Summary statistics for the entire catalog.",
+                            "resParams": [
+                                {
+                                    "name": "totalProducts",
+                                    "type": "number",
+                                    "mandatory": true,
+                                    "description": "Total number of products in the catalog."
+                                },
+                                {
+                                    "name": "totalVariants",
+                                    "type": "number",
+                                    "mandatory": true,
+                                    "description": "Total number of variants across all products."
+                                },
+                                {
+                                    "name": "byCurrency",
+                                    "type": "array",
+                                    "mandatory": true,
+                                    "description": "Summary statistics broken down by currency.",
+                                    "resParams": [
+                                        {
+                                            "name": "currency",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Currency code."
+                                        },
+                                        {
+                                            "name": "totalUnitsSold",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Total number of units sold."
+                                        },
+                                        {
+                                            "name": "totalUnitsReturned",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Total number of units returned."
+                                        },
+                                        {
+                                            "name": "totalRevenue",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Total revenue generated."
+                                        },
+                                        {
+                                            "name": "totalVat",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Total VAT collected."
+                                        },
+                                        {
+                                            "name": "totalCampaignDiscount",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Total campaign discount applied."
+                                        },
+                                        {
+                                            "name": "orderCount",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Total number of orders."
+                                        },
+                                        {
+                                            "name": "averageOrderValue",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Average order value."
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "vatBreakdown",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "VAT breakdown by percentage for the entire catalog.",
+                            "resParams": [
+                                {
+                                    "name": "vatPercentage",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "VAT percentage applied."
+                                },
+                                {
+                                    "name": "vatAmount",
+                                    "type": "number",
+                                    "mandatory": true,
+                                    "description": "Total VAT amount collected at this percentage."
+                                },
+                                {
+                                    "name": "taxableAmount",
+                                    "type": "number",
+                                    "mandatory": true,
+                                    "description": "Total taxable amount at this percentage."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "topSellingProducts",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "List of top-selling products in the catalog.",
+                            "resParams": [
+                                {
+                                    "name": "productId",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Unique identifier of the product."
+                                },
+                                {
+                                    "name": "productName",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Name of the product."
+                                },
+                                {
+                                    "name": "totalUnitsSold",
+                                    "type": "number",
+                                    "mandatory": true,
+                                    "description": "Total number of units sold for this product."
+                                },
+                                {
+                                    "name": "totalRevenue",
+                                    "type": "number",
+                                    "mandatory": true,
+                                    "description": "Total revenue generated by this product."
+                                },
+                                {
+                                    "name": "currencyBreakdown",
+                                    "type": "array",
+                                    "mandatory": true,
+                                    "description": "Sales breakdown by currency for this product.",
+                                    "resParams": [
+                                        {
+                                            "name": "currency",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Currency code."
+                                        },
+                                        {
+                                            "name": "totalUnitsSold",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Total units sold in this currency."
+                                        },
+                                        {
+                                            "name": "totalRevenue",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Total revenue in this currency."
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/catalog/:catalogId/statistics",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"productCatalogId\": \"8372ed4bc2c0000b0a\",\n\t\t\"productCatalogName\": \"Electronics & Accessories\",\n\t\t\"query\": {\n\t\t\t\"startDate\": \"2025-07-01\",\n\t\t\t\"endDate\": \"2025-12-01\"\n\t\t},\n\t\t\"summary\": {\n\t\t\t\"totalProducts\": 5,\n\t\t\t\"totalVariants\": 2,\n\t\t\t\"byCurrency\": [\n\t\t\t\t{\n\t\t\t\t\t\"currency\": \"666\",\n\t\t\t\t\t\"totalUnitsSold\": 17,\n\t\t\t\t\t\"totalUnitsReturned\": 0,\n\t\t\t\t\t\"totalRevenue\": 20000,\n\t\t\t\t\t\"totalVat\": 1130,\n\t\t\t\t\t\"totalCampaignDiscount\": 0,\n\t\t\t\t\t\"orderCount\": 5,\n\t\t\t\t\t\"averageOrderValue\": 4000\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"currency\": \"752\",\n\t\t\t\t\t\"totalUnitsSold\": 120,\n\t\t\t\t\t\"totalUnitsReturned\": 0,\n\t\t\t\t\t\"totalRevenue\": 120000,\n\t\t\t\t\t\"totalVat\": 6780,\n\t\t\t\t\t\"totalCampaignDiscount\": 0,\n\t\t\t\t\t\"orderCount\": 30,\n\t\t\t\t\t\"averageOrderValue\": 4000\n\t\t\t\t}\n\t\t\t]\n\t\t},\n\t\t\"vatBreakdown\": [\n\t\t\t{\n\t\t\t\t\"vatPercentage\": \"6\",\n\t\t\t\t\"vatAmount\": 7910,\n\t\t\t\t\"taxableAmount\": 140000\n\t\t\t}\n\t\t],\n\t\t\"topSellingProducts\": [\n\t\t\t{\n\t\t\t\t\"productId\": \"8372ed51c2c0000701\",\n\t\t\t\t\"productName\": \"Wireless Bluetooth Headphones\",\n\t\t\t\t\"totalUnitsSold\": 92,\n\t\t\t\t\"totalRevenue\": 92000,\n\t\t\t\t\"currencyBreakdown\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"currency\": \"752\",\n\t\t\t\t\t\t\"totalUnitsSold\": 92,\n\t\t\t\t\t\t\"totalRevenue\": 92000\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"productId\": \"8393dbb7e836b00a01\",\n\t\t\t\t\"productName\": \"USB-C Charging Cable\",\n\t\t\t\t\"totalUnitsSold\": 44,\n\t\t\t\t\"totalRevenue\": 44000,\n\t\t\t\t\"currencyBreakdown\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"currency\": \"752\",\n\t\t\t\t\t\t\"totalUnitsSold\": 28,\n\t\t\t\t\t\t\"totalRevenue\": 28000\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"currency\": \"666\",\n\t\t\t\t\t\t\"totalUnitsSold\": 16,\n\t\t\t\t\t\t\"totalRevenue\": 16000\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"productId\": \"83757823162fe00501\",\n\t\t\t\t\"productName\": \"Portable Power Bank 10000mAh\",\n\t\t\t\t\"totalUnitsSold\": 1,\n\t\t\t\t\"totalRevenue\": 4000,\n\t\t\t\t\"currencyBreakdown\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"currency\": \"666\",\n\t\t\t\t\t\t\"totalUnitsSold\": 1,\n\t\t\t\t\t\t\"totalRevenue\": 4000\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t}\n\t\t]\n\t},\n\t\"message\": \"Product catalog statistics fetched successfully\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

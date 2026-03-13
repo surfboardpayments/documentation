@@ -1,0 +1,277 @@
+{
+    "scenarioId": "create-shipment",
+    "scenarioName": "Create Shipment",
+    "steps": [
+        {
+            "id": "create-shipment",
+            "name": "Create Shipment",
+            "description": "Ordering devices (terminals and other accessories) from Surfboard after merchant onboarding",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "partners/{{partnerId}}/merchants/{{merchantId}}/shipment",
+            "readOnly": true,
+            "response": {
+                "status": "SUCCESS",
+                "data": {
+                    "orderId": "81376ad8ebedf80310"
+                },
+                "message": "Order for shipping terminal successfully created"
+            },
+            "guidePath": "/carbon/logistics/device-ordering/home",
+            "payload": {
+                "shippingAddress": {
+                    "name": "John Doe",
+                    "addressLine1": "Main Street 123",
+                    "addressLine2": "Building C",
+                    "addressLine3": "Building C",
+                    "city": "Stockholm",
+                    "countryCode": "SE",
+                    "postalCode": "123 45",
+                    "phoneNumber": {
+                        "code": 46,
+                        "number": "771890089"
+                    },
+                    "email": "developer@test.se",
+                    "deliveryInstruction": "XXX"
+                },
+                "lineItems": [
+                    {
+                        "productId": "12345",
+                        "quantity": 1
+                    }
+                ]
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "shippingAddress",
+                        "type": "object",
+                        "mandatory": false,
+                        "description": "Input the shipping address for the products. If no address is specified, the merchant's address will be used as the default shipping address.",
+                        "reqParams": [
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Full name of the receiver for the shipment."
+                            },
+                            {
+                                "name": "addressLine1",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "The first line of the receiver's address."
+                            },
+                            {
+                                "name": "addressLine2",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "The second line of the receiver's address."
+                            },
+                            {
+                                "name": "addressLine3",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "The third line of the receiver's address."
+                            },
+                            {
+                                "name": "city",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "City of the receiver"
+                            },
+                            {
+                                "name": "countryCode",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Two-letter ISO country code of the receiver, in uppercase."
+                            },
+                            {
+                                "name": "postalCode",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Postal code of the receiver."
+                            },
+                            {
+                                "name": "phoneNumber",
+                                "type": "object",
+                                "mandatory": false,
+                                "description": "Contact number of the receiver in code and number format.",
+                                "reqParams": [
+                                    {
+                                        "name": "code",
+                                        "type": "number",
+                                        "mandatory": true,
+                                        "description": "International dialing code identifying the country or region."
+                                    },
+                                    {
+                                        "name": "number",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Phone number."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "email",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Email address of the receiver."
+                            },
+                            {
+                                "name": "deliveryInstruction",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Delivery instructions for the carrier."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "lineItems",
+                        "type": "array",
+                        "mandatory": true,
+                        "description": "An array of products to be shipped.",
+                        "reqParams": [
+                            {
+                                "name": "productId",
+                                "type": "number",
+                                "mandatory": true,
+                                "description": "The SurfboardProductId of the product or group of products. This is unique to the partner."
+                            },
+                            {
+                                "name": "quantity",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Number of products or group of products to be shipped."
+                            },
+                            {
+                                "name": "billingPlanId",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Optional billing plan for the product or group of products chosen. If omitted, default plan will be chosen."
+                            },
+                            {
+                                "name": "replacementFor",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "If this line item is placed as part of a replacement for an existing device, then the terminalId of the original device needs to be specified. We will supply the merchant with a waybill to return the old device. They can reuse the box which the new terminal comes in."
+                            }
+                        ]
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'.."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data",
+                        "resParams": [
+                            {
+                                "name": "orderId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Order ID for the order."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        },
+        {
+            "id": "get-shipment-status",
+            "name": "Get Shipment Status",
+            "description": "Retrieves the shipment status of ordered terminals and other accessories.",
+            "order": 2,
+            "method": "GET",
+            "endpoint": "partners/{{partnerId}}/merchants/{{merchantId}}/shipment/{{orderId}}",
+            "guidePath": "/carbon/logistics/device-ordering/get-shipment-status",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'.."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data",
+                        "resParams": [
+                            {
+                                "name": "orderStatus",
+                                "type": "string",
+                                "description": "Describes the status of the shipment order for terminals and accessories. The possible values are: ",
+                                "possibleValues": [
+                                    {
+                                        "value": "ORDER_PLACED",
+                                        "description": "The order has been successfully placed."
+                                    },
+                                    {
+                                        "value": "ORDER_SHIPPED",
+                                        "description": "The order has been shipped and is in transit."
+                                    },
+                                    {
+                                        "value": "ORDER_COMPLETED",
+                                        "description": "The order has been successfully fulfilled and completed."
+                                    },
+                                    {
+                                        "value": "ORDER_PENDING_FOR_STOCK",
+                                        "description": "The order is pending processing due to stock availability."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "trackingUrl",
+                                "type": "string",
+                                "description": "The tracking url of the shipment."
+                            },
+                            {
+                                "name": "deliveryPartner",
+                                "type": "string",
+                                "description": "The partner or carrier responsible for delivering the shipment."
+                            },
+                            {
+                                "name": "packageDetails",
+                                "type": "array",
+                                "description": "Specifies information about the products included in the shipment.",
+                                "resParams": [
+                                    {
+                                        "name": "productId",
+                                        "type": "string",
+                                        "description": "The SurfboardProductId of the product or group of products. This is unique to the partner"
+                                    },
+                                    {
+                                        "name": "serialNumber",
+                                        "type": "string",
+                                        "description": "Serial number of the device."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

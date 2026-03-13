@@ -1,0 +1,31 @@
+{
+    "id": "merchant-creation",
+    "name": "Merchant Creation",
+    "description": "Learn how to create merchants",
+    "scenarios": [
+        {
+            "id": "instore-merchant",
+            "name": "Create Merchant",
+            "description": "Create a merchant for in-store",
+            "order": 1
+        },
+        {
+            "id": "online-merchant",
+            "name": "Create Merchant with OnlineInfo",
+            "description": "Create a merchant for online",
+            "order": 2
+        },
+        {
+            "id": "product-selection",
+            "name": "Create Merchant with Product Selection",
+            "description": "Ordering devices (terminals and other accessories) from Surfboard during merchant onboarding",
+            "order": 3
+        },
+        {
+            "id": "fetch-all-merchant-applications",
+            "name": "Fetch All Merchant Applications",
+            "description": "Fetch all merchant applications under a partner",
+            "order": 4
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+{
+    "id": "configure-tips",
+    "name": "Configure Tips",
+    "description": "Configure tips for terminals",
+    "scenarios": [
+        {
+            "id": "set-merchant-tip-configs",
+            "name": "Set Merchant Tips Config",
+            "description": "Set tips configurations for all the terminals registered to a specific merchant.",
+            "order": 1
+        },
+        {
+            "id": "set-store-tip-configs",
+            "name": "Set Store Tips Config",
+            "description": "Set tips configurations for all the terminals registered to a specific store.",
+            "order": 2
+        },
+        {
+            "id": "set-terminal-tip-configs",
+            "name": "Set Terminal Tips Config",
+            "description": "Set tips configurations for a specific terminal.",
+            "order": 3
+        }
+    ]
+}

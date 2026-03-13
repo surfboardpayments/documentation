@@ -1,0 +1,698 @@
+{
+    "title": "Payments API",
+    "description": "The Payments API enables merchants to initiate, check the status of, cancel, and void payments. The payment operations are performed for the orders created by the merchants. This ensures that each payment is associated with a specific order and has rich data associated with it.",
+    "endpoints": [
+        {
+            "fragment": "Initiate a Payment",
+            "method": "POST",
+            "link": "API_URL/payments"
+        },
+        {
+            "fragment": "Cancel a Payment",
+            "method": "DELETE",
+            "link": "API_URL/payments/:paymentId"
+        },
+        {
+            "fragment": "Void a Payment",
+            "method": "PUT",
+            "link": "API_URL/payments/:paymentId/void"
+        },
+        {
+            "fragment": "Capture Payment",
+            "method": "POST",
+            "link": "API_URL/payments/:paymentId/capture"
+        },
+        {
+            "fragment": "Check Capture Status",
+            "method": "GET",
+            "link": "API_URL/payments/:paymentId/capture"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Initiate a Payment",
+            "new": true,
+            "description": "Initiates a payment for a specific order. Use this API to initiate a payment for the order created. The default method for processing the initiated payment is via card. Additional payment methods can be enabled using the Payment Methods API.",
+            "reqParams": [
+                {
+                    "name": "paymentMethod",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Specifies the method in which the payment is to be processed.",
+                    "possibleValues": [
+                        {
+                            "value": "CARD",
+                            "description": "Use this payment method to make card transactions for the order."
+                        },
+                        {
+                            "value": "CARD_NP",
+                            "description": "Use this payment method to process card-not-present(CNP) refunds for the order."
+                        },
+                        {
+                            "value": "KLARNA",
+                            "description": "Make payments using Klarna."
+                        },
+                        {
+                            "value": "CTOKEN",
+                            "description": "Use this payment method to make payments using tokenised card if available. Used during online payments."
+                        },
+                        {
+                            "value": "GIFTCARD",
+                            "description": "Use this to make payments with gift cards/vouchers."
+                        }
+                    ]
+                },
+                {
+                    "name": "orderId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Unique identifier of order to initiate payment for."
+                },
+                {
+                    "name": "terminalId",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Unique identifier of terminal."
+                },
+                {
+                    "name": "amount",
+                    "type": "number",
+                    "mandatory": false,
+                    "description": "Use this parameter to make partial payments on the order by sending in the amount in the smallest currency unit (e.g., 10 SEK is 1000 in amount). This is only required for purchase transactions."
+                },
+                {
+                    "name": "initialOrderReference",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "initialOrderReference"
+                },
+                {
+                    "name": "paymentMethodParams",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "Method-specific parameters",
+                    "reqParams": [
+                        {
+                            "name": "tokenId",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Token ID is mandatory if CTOKEN is passed in as the payment method.",
+                            "conditional": "<span>Dependent on using <br>CTOKEN as the payment method</br></span>"
+                        },
+                        {
+                            "name": "bic",
+                            "type": "string",
+                            "mandatory": false,
+                            "conditional": true,
+                            "description": "The BIC (Bank Identifier Code) is an ISO 9362 standard that uniquely identifies a bank in cross-border transactions. It is mandatory for the ACC2ACC payment method."
+                        },
+                        {
+                            "name": "ip",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "ip"
+                        },
+                        {
+                            "name": "swishMode",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Swish mode (e.g., ECOM)"
+                        },
+                        {
+                            "name": "payeePhoneNumber",
+                            "type": "object",
+                            "mandatory": false,
+                            "description": "Mandatory phone number for SWISH payments.",
+                            "conditional": true,
+                            "reqParams": [
+                                {
+                                    "name": "code",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "International dialing code (Eg., 46 for Sweden without '+')"
+                                },
+                                {
+                                    "name": "number",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "National subscriber number (digits only)"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "giftCardId",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Gift card identifier"
+                        },
+                        {
+                            "name": "invoice",
+                            "type": "object",
+                            "mandatory": false,
+                            "description": "Invoice payment configuration",
+                            "reqParams": [
+                                {
+                                    "name": "invoiceDistribution",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Distribution channel (e.g., EMAIL)"
+                                },
+                                {
+                                    "name": "contractReference",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Contract reference identifier"
+                                },
+                                {
+                                    "name": "debtCollectionEnabled",
+                                    "type": "boolean",
+                                    "mandatory": false,
+                                    "description": "Enable debt collection"
+                                },
+                                {
+                                    "name": "dueDate",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Due date or relative duration (e.g., 30d)"
+                                },
+                                {
+                                    "name": "invoicePaymentMethods",
+                                    "type": "array",
+                                    "mandatory": true,
+                                    "description": "Specifies the payment methods available for settling an invoice.",
+                                    "possibleValues": [
+                                        {
+                                            "value": "BANK",
+                                            "description": "Standard bank transfer initiated manually by the payer."
+                                        },
+                                        {
+                                            "value": "DIRECT_BANK",
+                                            "description": "Automated account-to-account (A2A) transfer using open banking or similar mechanisms."
+                                        },
+                                        {
+                                            "value": "CARD",
+                                            "description": "Payment made via credit or debit cards through a supported card network."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "reminder",
+                                    "type": "boolean",
+                                    "mandatory": true,
+                                    "description": "Enable reminders"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "serialSplitPaymentsMode",
+                    "type": "array",
+                    "comingSoon": true,
+                    "mandatory": false,
+                    "description": "An array of amounts in smallest currency unit to split the payment. The order of the amounts in the array will determine the order of the split payments."
+                },
+                {
+                    "name": "refundProcessingParams",
+                    "type": "object",
+                    "mandatory": false,
+                    "conditional": true,
+                    "description": "Parameters for processing refunds.",
+                    "reqParams": [
+                        {
+                            "name": "purchasePaymentId",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "For SWISH, NSWISH, KLARNA and CARD_NP(card-not-present) partial refunds, it is mandatory to send in the Original Purchase Payment ID to which the refund will be initiated.",
+                            "conditional": "<span>Dependent on <br>partial CNP refund</br></span>"
+                        },
+                        {
+                            "name": "refundReason",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Indicates the reason for the return request. Mandatory for CARD_NP refunds.",
+                            "conditional": "<span>Dependent on <br>CARD_NP refunds</br></span>",
+                            "possibleValues": [
+                                {
+                                    "value": "CUSTOMER_INITIATED_RETURN",
+                                    "description": "This type of refund refers to when a customer initiates a return of a product or service they purchased."
+                                },
+                                {
+                                    "value": "SUSPECTED_MALFUNCTION",
+                                    "description": "When there is a suspected system malfunction which demands a return request, this type is used."
+                                },
+                                {
+                                    "value": "SUSPECTED_FRAUD",
+                                    "description": "When there is a suspected irregularity/fraud requiring a return request, this type is used."
+                                },
+                                {
+                                    "value": "DUPLICATE_TRANSACTION",
+                                    "description": "This type of refund request is submitted when there are duplicate transactions noticed in the system."
+                                },
+                                {
+                                    "value": "OTHER",
+                                    "description": "The \"OTHER\" refund request type encompasses any refund request that do not fit into the specific categories mentioned above."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "otherReason",
+                            "type": "string",
+                            "mandatory": false,
+                            "conditional": true,
+                            "description": "Describe the reason for the return request that do not fall into any of the predefined categories. Mandatory when \"OTHER\" is selected as the `refundReason`"
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "paymentId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "A payment ID assigned to each payment instance. Ensure that this ID is stored securely and tied to an identifiable entity until the payment completion."
+                        },
+                        {
+                            "name": "interAppJWT",
+                            "type": "string",
+                            "description": "This key can be used in the inter-app flow to be passed in as part of the app switch. This is an optional key that can improve inter-app transaction initiation performance. This is currently only functional for CARD payments."
+                        },
+                        {
+                            "name": "paymentUrl",
+                            "type": "string",
+                            "description": "Direct URL for payment processing."
+                        },
+                        {
+                            "name": "qr",
+                            "type": "string",
+                            "description": "QR code data for payment."
+                        },
+                        {
+                            "name": "qrData",
+                            "type": "string",
+                            "description": "Raw QR code data for payment processing."
+                        },
+                        {
+                            "name": "qrVisibleFor",
+                            "type": "string",
+                            "description": "Duration for which the QR code remains visible."
+                        },
+                        {
+                            "name": "qrLink",
+                            "type": "string",
+                            "description": "Link to the QR code for payment."
+                        },
+                        {
+                            "name": "klarnaClientToken",
+                            "type": "string",
+                            "description": "Client token for Klarna payment processing."
+                        },
+                        {
+                            "name": "paymentToken",
+                            "type": "string",
+                            "description": "Token for payment processing."
+                        },
+                        {
+                            "name": "sveaInitiationParams",
+                            "type": "string",
+                            "description": "Initiation parameters for Svea payment processing."
+                        },
+                        {
+                            "name": "invoiceDetails",
+                            "type": "object",
+                            "description": "Invoice details for the payment when applicable.",
+                            "resParams": [
+                                {
+                                    "name": "invoiceId",
+                                    "type": "number",
+                                    "description": "Unique identifier for the invoice."
+                                },
+                                {
+                                    "name": "invoicePdfUrl",
+                                    "type": "string",
+                                    "description": "URL to download the invoice PDF."
+                                },
+                                {
+                                    "name": "iban",
+                                    "type": "string",
+                                    "description": "International Bank Account Number for the invoice."
+                                },
+                                {
+                                    "name": "accountHolderName",
+                                    "type": "string",
+                                    "description": "Name of the account holder for the invoice."
+                                },
+                                {
+                                    "name": "bic",
+                                    "type": "string",
+                                    "description": "Bank Identifier Code for the invoice."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/payments",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"orderId\":\"838ca7fc6d7de9770b\",\"paymentMethod\":\"CARD\"}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "\n{\n\t\"status\":\"SUCCESS\",\n\t\"data\":{\n\t\t\"paymentId\": \"811f9bd48c6eb80c06\",\n\t\t\"interAppJWT\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvaWQiOiI4MzA0NDdkM2U3NGQwMDBiMGIiLCJ0aWQiOiI4MmZmN2MyNTgxNDhkODA1MDQiLCJwaWQiOiI4MzA0NGIzNzAzZmVkODAxMDYiLCJwbSI6IkNBUkQiLCJhIjoxMDAwLCJjIjoiNzUyIiwiY29udHJvbEZ1bmN0aW9uc0VuY29kZXIiOiIxIiwiaXNzdWVkQnkiOiJzYi5wcyIsImlhdCI6MTc0MjIyMTI5NDE1NH0.ftXsXUKmNl-ck47jXKPIa1WXbmH0gbiM8nUAOjBbb0U\"\n\t}\n\t\"message\":\"Payment initiated successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Cancel a Payment",
+            "description": "Cancels the initiated payment. You can use this API to cancel the payment instance created. However, you cannot cancel a completed payment. If the payment is already completed, you can use the Void a Payment API to void the specific payment.",
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "paymentStatus",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Describes the status of the payment. The possible values are:",
+                            "possibleValues": [
+                                {
+                                    "value": "PAYMENT_COMPLETED",
+                                    "description": "The payment was completed and cannot be cancelled."
+                                },
+                                {
+                                    "value": "PAYMENT_FAILED",
+                                    "description": "Cannot cancel a failed payment."
+                                },
+                                {
+                                    "value": "PAYMENT_CANCELLED",
+                                    "description": "The payment attempt has been cancelled."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "DELETE",
+            "path": "/payments/:paymentId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"paymentStatus\": \"PAYMENT_CANCELLED\"\n\t},\n\t\"message\": \"Payment cancelled successfully.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Void a Payment",
+            "description": "Voids a completed payment. If a merchant identifies an issue with a payment soon after it has been completed, use this API to promptly void the payment, thereby preventing potential issues arising from incorrect payments. Note that payment has to be in status ‘PAYMENT_COMPLETED’ and void triggered before 23:00 UTC. For orders with delayCapture set to true, void can be initiated anytime before the capture call.",
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "voidStatus",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Depicts the status of the void command.",
+                            "possibleValues": [
+                                {
+                                    "value": "VOID_INITIATED",
+                                    "description": "Void is initiated."
+                                },
+                                {
+                                    "value": "CANNOT_VOID",
+                                    "description": "The payment cannot be voided either because the transaction is not completed or the void period has exceeded. Voids need to be initiated before 23:50 CET on the same date as the transaction."
+                                },
+                                {
+                                    "value": "VOIDED",
+                                    "description": "Void is completed."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "PUT",
+            "path": "/payments/:paymentId/void",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"voidStatus\": \"VOID_INITIATED\"\n\t},\n\t\"message\": \"payment void status successfully retrieved from external API\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Capture Payment",
+            "description": "Use this API to complete the authorisation and capture a payment while using the pre-auth flow or to capture a payment when the delayCapture flag is set.",
+            "reqParams": [
+                {
+                    "name": "amount",
+                    "type": "number",
+                    "mandatory": false,
+                    "description": "This is only valid if the authMode was set to `PRE-AUTH`. This sets the final authorisation amount to the amount specified and initiates capture on the payment."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/payments/:paymentId/capture",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"amount\":200}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "\n{\n\t\"status\":\"SUCCESS\",\n\t\"message\":\"Payment captured successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Check Capture Status",
+            "description": "Retrieves the status of the capture payment request. Capture payments for delayed capture is an asynchronous request that is processed in batches. Once the initial capturePayments request is made, please make this call after approximately 30 minutes to get the response",
+            "reqParams": [
+                {
+                    "name": "paymentId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Input the payment ID received during initiate payment request in the URL."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "captureStatus",
+                            "type": "string",
+                            "description": "Denotes the status of the capture request for payment.",
+                            "possibleValues": [
+                                {
+                                    "value": "PENDING",
+                                    "description": "Payment yet to be captured."
+                                },
+                                {
+                                    "value": "SUCCESS",
+                                    "description": "Payment captured successfully."
+                                },
+                                {
+                                    "value": "ERROR",
+                                    "description": "Error encountered while processing capture request."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/payments/:paymentId/capture",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t  \"captureStatus\":\"SUCCESS\"\n\t},\n\t\"message\": \"Capture status fetched successfully.\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

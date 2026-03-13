@@ -1,0 +1,1 @@
+Sets tips configurations for all the terminals registered to a specific merchant. Use this API to configure the same tips configurations across multiple terminals associated with a specific merchant.

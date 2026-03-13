@@ -1,0 +1,29 @@
+{
+    "scenario": "nfc-reading",
+    "scenarios": [
+        {
+            "id": "create-read-session",
+            "name": "Create Read Session",
+            "description": "Create a new NFC reading session.",
+            "order": 1
+        },
+        {
+            "id": "fetch-session-status",
+            "name": "Fetch Session Status",
+            "description": "Retrieve the status of a specific NFC reading session.",
+            "order": 2
+        },
+        {
+            "id": "fetch-sessions-for-terminal",
+            "name": "Fetch Sessions for Terminal",
+            "description": "Retrieve all NFC reading sessions created for a specific terminal.",
+            "order": 3
+        },
+        {
+            "id": "fetch-tags-for-session",
+            "name": "Fetch Tags for Session",
+            "description": "Retrieve all NFC tags read within a specific session.",
+            "order": 4
+        }
+    ]
+}

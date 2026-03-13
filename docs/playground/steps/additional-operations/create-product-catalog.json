@@ -1,0 +1,97 @@
+{
+    "scenarioId": "create-product-catalog",
+    "scenarioName": "Create Product Catalog",
+    "steps": [
+        {
+            "id": "create-product-catalog",
+            "name": "Create Product Catalog",
+            "description": "Create Product Catalog",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "catalog",
+            "guidePath": "/carbon/additional-operations/create-product-catalog",
+            "payload": {
+                "storeId": "8136a645a2c2d1bb0f"
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "storeId",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Unique identifier of the store where the catalog will be created."
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data",
+                        "resParams": [
+                            {
+                                "name": "productcatalogId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Unique ID of the newly created catalog."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        },
+        {
+            "id": "fetch-product-catalogs",
+            "name": "Fetch Product Catalogs",
+            "description": "Fetch Product Catalogs",
+            "order": 2,
+            "method": "GET",
+            "endpoint": "catalog",
+            "guidePath": "/carbon/additional-operations/fetch-product-catalogs",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data",
+                        "resParams": [
+                            {
+                                "name": "productcatalogId",
+                                "type": "array",
+                                "mandatory": true,
+                                "description": "List of product catalogs Id's existing under store."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

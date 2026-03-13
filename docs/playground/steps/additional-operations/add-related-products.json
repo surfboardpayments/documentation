@@ -1,0 +1,54 @@
+{
+    "scenarioId": "add-related-products",
+    "scenarioName": "add-related-products",
+    "steps": [
+        {
+            "id": "add-related-products",
+            "name": "Add Related Products",
+            "description": "Add Related Products",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "catalog/{{catalogId}}/products/{{productId}}/related-products",
+            "guidePath": "/carbon/additional-operations/add-related-products",
+            "payload": {
+                "storeId": "8136a645a2c2d1bb0f",
+                "relatedProducts": [
+                    {
+                        "productId": "8136a645a2c2d1bb0f",
+                        "relatedProductId": "8136a645a2c2d1bb0f"
+                    }
+                ]
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "storeId",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Unique identifier of the store where the product exists."
+                    },
+                    {
+                        "name": "relatedProducts",
+                        "type": "array",
+                        "mandatory": true,
+                        "description": "An array of related product objects containing productId and relatedProductId."
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

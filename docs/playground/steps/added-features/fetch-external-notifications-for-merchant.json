@@ -1,0 +1,141 @@
+{
+    "scenarioId": "fetch-external-notifications-for-merchant",
+    "scenarioName": "Fetch External Notifications for Merchant",
+    "steps": [
+        {
+            "id": "fetch-external-notifications-for-merchant",
+            "name": "Fetch External Notifications for Merchant",
+            "description": "Fetch External Notifications for Merchant",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "merchants/{{merchantId}}/notifications",
+            "guidePath": "/carbon/added-features/fetch-external-notifications-for-merchant",
+            "payload": {},
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "event",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Filter by event type"
+                    },
+                    {
+                        "name": "notificationChannel",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Filter by notification channel",
+                        "possibleValues": [
+                            {
+                                "value": "EMAIL",
+                                "description": "Email notifications"
+                            },
+                            {
+                                "value": "SLACK",
+                                "description": "Slack notifications"
+                            },
+                            {
+                                "value": "SFTP",
+                                "description": "SFTP file transfer notifications"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "notificationId",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Filter by notification ID"
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                    },
+                    {
+                        "name": "data",
+                        "type": "array",
+                        "mandatory": true,
+                        "description": "Array of notification objects",
+                        "resParams": [
+                            {
+                                "name": "notificationId",
+                                "type": "string",
+                                "description": "Unique identifier for the notification"
+                            },
+                            {
+                                "name": "event",
+                                "type": "string",
+                                "description": "Event type for the notification"
+                            },
+                            {
+                                "name": "notificationChannel",
+                                "type": "string",
+                                "description": "Channel used for notification delivery"
+                            },
+                            {
+                                "name": "address",
+                                "type": "object",
+                                "description": "Address configuration for the notification",
+                                "resParams": [
+                                    {
+                                        "name": "url",
+                                        "type": "string",
+                                        "description": "URL for webhook notifications"
+                                    },
+                                    {
+                                        "name": "email",
+                                        "type": "string",
+                                        "description": "Email address for email notifications"
+                                    },
+                                    {
+                                        "name": "host",
+                                        "type": "string",
+                                        "description": "SFTP host address"
+                                    },
+                                    {
+                                        "name": "remoteDirectory",
+                                        "type": "string",
+                                        "description": "SFTP remote directory"
+                                    },
+                                    {
+                                        "name": "user",
+                                        "type": "string",
+                                        "description": "SFTP username"
+                                    },
+                                    {
+                                        "name": "port",
+                                        "type": "number",
+                                        "description": "SFTP port number"
+                                    },
+                                    {
+                                        "name": "publicKey",
+                                        "type": "string",
+                                        "description": "SFTP public key"
+                                    },
+                                    {
+                                        "name": "separator",
+                                        "type": "string",
+                                        "description": "CSV field separator"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "status",
+                                "type": "string",
+                                "description": "Status of the notification subscription"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request"
+                    }
+                ]
+            }
+        }
+    ]
+}

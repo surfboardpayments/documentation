@@ -1,0 +1,1115 @@
+{
+    "title": "Logistics API",
+    "description": "Partners can place orders for products (terminals and other accessories) from Surfboard. As a partner, you can provide a product catalog containing a range of product options for merchants to choose from.",
+    "endpoints": [
+        {
+            "fragment": "Create Shipment",
+            "method": "POST",
+            "link": "API_URL/partners/:partnerId/merchants/:merchantId/shipment"
+        },
+        {
+            "fragment": "Get Shipment Status",
+            "method": "GET",
+            "link": "API_URL/partners/:partnerId/merchants/:merchantId/shipment/:orderId"
+        },
+        {
+            "fragment": "Ship Terminals in Bulk",
+            "method": "POST",
+            "link": "API_URL/partners/:partnerId/logistics/orders"
+        },
+        {
+            "fragment": "Fetch Partner Orders",
+            "method": "GET",
+            "link": "API_URL/partners/:partnerId/logistics/orders"
+        },
+        {
+            "fragment": "Create Return",
+            "method": "POST",
+            "link": "API_URL/partners/:partnerId/logistics/returns"
+        },
+        {
+            "fragment": "Get Returns",
+            "method": "GET",
+            "link": "API_URL/partners/:partnerId/logistics/returns"
+        },
+        {
+            "fragment": "Fetch Merchant Orders",
+            "method": "GET",
+            "link": "API_URL/merchants/:merchantId/logistics/orders"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Create Shipment",
+            "description": "Creates a shipment order for terminals and other accessories. Use this API to initiate an order to ship terminals and other accessories to merchants.",
+            "reqParams": [
+                {
+                    "name": "shippingAddress",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "Input the shipping address for the products. If no address is specified, the merchant's address will be used as the default shipping address.",
+                    "reqParams": [
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Full name of the receiver for the shipment."
+                        },
+                        {
+                            "name": "addressLine1",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "The first line of the receiver's address."
+                        },
+                        {
+                            "name": "addressLine2",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "The second line of the receiver's address."
+                        },
+                        {
+                            "name": "addressLine3",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "The third line of the receiver's address."
+                        },
+                        {
+                            "name": "city",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "City of the receiver"
+                        },
+                        {
+                            "name": "countryCode",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Two-letter ISO country code of the receiver, in uppercase."
+                        },
+                        {
+                            "name": "postalCode",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Postal code of the receiver."
+                        },
+                        {
+                            "name": "phoneNumber",
+                            "type": "object",
+                            "mandatory": false,
+                            "description": "Contact number of the receiver in code and number format.",
+                            "reqParams": [
+                                {
+                                    "name": "code",
+                                    "type": "number",
+                                    "mandatory": true,
+                                    "description": "International dialing code identifying the country or region."
+                                },
+                                {
+                                    "name": "number",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Phone number."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "email",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Email address of the receiver."
+                        },
+                        {
+                            "name": "deliveryInstruction",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Delivery instructions for the carrier."
+                        }
+                    ]
+                },
+                {
+                    "name": "lineItems",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "An array of products to be shipped.",
+                    "reqParams": [
+                        {
+                            "name": "productId",
+                            "type": "number",
+                            "mandatory": true,
+                            "description": "The SurfboardProductId of the product or group of products. This is unique to the partner."
+                        },
+                        {
+                            "name": "quantity",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Number of products or group of products to be shipped."
+                        },
+                        {
+                            "name": "billingPlanId",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Optional billing plan for the product or group of products chosen. If omitted, default plan will be chosen."
+                        },
+                        {
+                            "name": "replacementFor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "If this line item is placed as part of a replacement for an existing device, then the terminalId of the original device needs to be specified. We will supply the merchant with a waybill to return the old device. They can reuse the box which the new terminal comes in."
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'.."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "orderId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Order ID for the order."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/partners/:partnerId/merchants/:merchantId/shipment",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\n\t\"shippingAddress\": {\n\t\t\"name\": \"John Doe\",\n\t\t\"addressLine1\": \"Main Street 123\",\n\t\t\"addressLine2\": \"Building C\",\n\t\t\"addressLine3\": \"Building C\",\n\t\t\"city\": \"Stockholm\",\n\t\t\"countryCode\": \"SE\",\n\t\t\"postalCode\": \"123 45\",\n\t\t\"phoneNumber\": {\n\t\t\t\"code\": 46,\n\t\t\t\"number\": \"771890089\"\n\t\t},\n\t\t\"email\": \"developer@test.se\",\n\t\t\"deliveryInstruction\": \"XXX\"\n\t},\n\t\"lineItems\": [\n\t\t{\n\t\t\t\"productId\": \"12345\",\n\t\t\t\"quantity\": 1\n\t\t}\n\t]\n}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"orderId\": \"81376ad8ebedf80310\"\n\t},\n\t\"message\": \"Order for shipping terminal successfully created\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Get Shipment Status",
+            "description": "Retrieves the status of the shipment order. Use this API to get the shipment status of ordered terminals and other accessories.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'.."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "orderStatus",
+                            "type": "string",
+                            "description": "Describes the status of the shipment order for terminals and accessories. The possible values are: ",
+                            "possibleValues": [
+                                {
+                                    "value": "ORDER_PLACED",
+                                    "description": "The order has been successfully placed."
+                                },
+                                {
+                                    "value": "ORDER_SHIPPED",
+                                    "description": "The order has been shipped and is in transit."
+                                },
+                                {
+                                    "value": "ORDER_COMPLETED",
+                                    "description": "The order has been successfully fulfilled and completed."
+                                },
+                                {
+                                    "value": "ORDER_PENDING_FOR_STOCK",
+                                    "description": "The order is pending processing due to stock availability."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "trackingUrl",
+                            "type": "string",
+                            "description": "The tracking url of the shipment."
+                        },
+                        {
+                            "name": "deliveryPartner",
+                            "type": "string",
+                            "description": "The partner or carrier responsible for delivering the shipment."
+                        },
+                        {
+                            "name": "packageDetails",
+                            "type": "array",
+                            "description": "Specifies information about the products included in the shipment.",
+                            "resParams": [
+                                {
+                                    "name": "productId",
+                                    "type": "string",
+                                    "description": "The SurfboardProductId of the product or group of products. This is unique to the partner"
+                                },
+                                {
+                                    "name": "serialNumber",
+                                    "type": "string",
+                                    "description": "Serial number of the device."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/partners/:partnerId/merchants/:merchantId/shipment/:orderId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"orderStatus\": \"ORDER_PENDING_FOR_STOCK\",\n\t\t\"trackingUrl\": \"\",\n\t\t\"deliveryPartner\": \"DHL\",\n\t\t\"packageDetails\": [\n\t\t\t{\n\t\t\t\t\"productId\": \"817361bb0a23400701\",\n\t\t\t\t\"serialNumber\": \"\"\n\t\t\t}\n\t\t]\n\t},\n\t\"message\": \"Order status fetched successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Ship Terminals in Bulk",
+            "description": "Creates bulk shipment orders for terminals and other accessories to partners. Use this API to initiate orders to ship multiple terminals and accessories in bulk.",
+            "reqParams": [
+                {
+                    "name": "shippingAddress",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Shipping address for the bulk order.",
+                    "reqParams": [
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Full name of the receiver for the shipment."
+                        },
+                        {
+                            "name": "addressLine1",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "The first line of the receiver's address."
+                        },
+                        {
+                            "name": "addressLine2",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "The second line of the receiver's address."
+                        },
+                        {
+                            "name": "addressLine3",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "The third line of the receiver's address."
+                        },
+                        {
+                            "name": "city",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "City of the receiver."
+                        },
+                        {
+                            "name": "countryCode",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Two-letter ISO country code of the receiver, in uppercase."
+                        },
+                        {
+                            "name": "postalCode",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Postal code of the receiver."
+                        },
+                        {
+                            "name": "phoneNumber",
+                            "type": "object",
+                            "mandatory": false,
+                            "description": "Contact number of the receiver in code and number format.",
+                            "reqParams": [
+                                {
+                                    "name": "code",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "International dialing code identifying the country or region."
+                                },
+                                {
+                                    "name": "number",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Phone number."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "email",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Email address of the receiver."
+                        },
+                        {
+                            "name": "deliveryInstruction",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Delivery instructions for the carrier."
+                        }
+                    ]
+                },
+                {
+                    "name": "lineItems",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "An array of products to be shipped in bulk.",
+                    "reqParams": [
+                        {
+                            "name": "productId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "The SurfboardProductId of the product or group of products."
+                        },
+                        {
+                            "name": "quantity",
+                            "type": "number",
+                            "mandatory": true,
+                            "description": "Number of products or group of products to be shipped."
+                        },
+                        {
+                            "name": "billingPlanId",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Optional billing plan for the product or group of products chosen."
+                        },
+                        {
+                            "name": "replacementFor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "If this line item is placed as part of a replacement for an existing device, then the terminalId of the original device needs to be specified."
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "orderId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Order ID for the bulk order."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/partners/:partnerId/logistics/orders",
+            "new": true,
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ],
+                    "body": "{\n  \"shippingAddress\": {\n    \"name\": \"Jane Smith\",\n    \"addressLine1\": \"456 Business Ave\",\n    \"addressLine2\": \"Floor 2\",\n    \"city\": \"Stockholm\",\n    \"countryCode\": \"SE\",\n    \"postalCode\": \"12345\"\n  },\n  \"lineItems\": [\n    {\n      \"productId\": \"81bddf38fa28380101\",\n      \"quantity\": 5,\n      \"billingPlanId\": \"BP_001\",\n      \"replacementFor\": \"82674cfdf77f500001\"\n    }\n  ]\n}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"orderId\": \"83992e47b219100f28\"\n  },\n  \"message\": \"Return request created successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Partner Orders",
+            "description": "Retrieves all orders placed by a partner for terminals and accessories. Use this API to get the status and details of all orders under a partner.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Array of order objects.",
+                    "resParams": [
+                        {
+                            "name": "orderId",
+                            "type": "string",
+                            "description": "Unique identifier for the order."
+                        },
+                        {
+                            "name": "trackingUrl",
+                            "type": "string",
+                            "description": "The tracking URL of the shipment."
+                        },
+                        {
+                            "name": "deliveryPartner",
+                            "type": "string",
+                            "description": "The partner or carrier responsible for delivering the shipment."
+                        },
+                        {
+                            "name": "status",
+                            "type": "string",
+                            "description": "Current status of the order."
+                        },
+                        {
+                            "name": "packages",
+                            "type": "array",
+                            "description": "Array of package details in the order.",
+                            "resParams": [
+                                {
+                                    "name": "productId",
+                                    "type": "string",
+                                    "description": "The SurfboardProductId of the product."
+                                },
+                                {
+                                    "name": "serialNumber",
+                                    "type": "string",
+                                    "description": "Serial number of the device."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/partners/:partnerId/logistics/orders",
+            "new": true,
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": [\n    {\n      \"orderId\": \"8190422d77e1400428\",\n      \"trackingUrl\": \"\",\n      \"status\": \"ORDER_CANCELLED\",\n      \"deliveryPartner\": \"DHL\",\n      \"packages\": [\n        {\n          \"productId\": \"817361bb0a23400701\",\n          \"serialNumber\": \"\"\n        }\n      ]\n    },\n    {\n      \"orderId\": \"819118d10a3d900f28\",\n      \"trackingUrl\": \"\",\n      \"status\": \"ORDER_CANCELLED\",\n      \"deliveryPartner\": \"DHL\",\n      \"packages\": [\n        {\n          \"productId\": \"817361bb0a23400701\",\n          \"serialNumber\": \"\"\n        }\n      ]\n    }\n  ],\n  \"message\": \"Orders fetched successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Create Return",
+            "description": "Creates a return request for terminals using the API. This enhanced version allows for more detailed merchant information and multiple return order lines.",
+            "reqParams": [
+                {
+                    "name": "merchantInfo",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Detailed merchant information for the return request.",
+                    "reqParams": [
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Name of the merchant."
+                        },
+                        {
+                            "name": "email",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Email address of the merchant."
+                        },
+                        {
+                            "name": "phoneNumber",
+                            "type": "object",
+                            "mandatory": true,
+                            "description": "Contact number of the merchant in code and number format.",
+                            "reqParams": [
+                                {
+                                    "name": "code",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "International dialing code identifying the country or region."
+                                },
+                                {
+                                    "name": "number",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Phone number."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "addressLine1",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "First line of the merchant's address."
+                        },
+                        {
+                            "name": "addressLine2",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Second line of the merchant's address."
+                        },
+                        {
+                            "name": "addressLine3",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Third line of the merchant's address."
+                        },
+                        {
+                            "name": "countryCode",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Two-letter ISO country code in uppercase."
+                        },
+                        {
+                            "name": "postalNumber",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Postal code of the merchant's address."
+                        },
+                        {
+                            "name": "city",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "City of the merchant's address."
+                        }
+                    ]
+                },
+                {
+                    "name": "returnOrderLines",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Array of return order line items.",
+                    "reqParams": [
+                        {
+                            "name": "serial",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Serial number of the terminal to be returned."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unique identifier of the merchant."
+                        },
+                        {
+                            "name": "terminalId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unique identifier of the terminal."
+                        },
+                        {
+                            "name": "reasonForReturn",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Reason for the return.",
+                            "possibleValues": [
+                                {
+                                    "value": "WARRANTY",
+                                    "description": "The warranty covers issues potentially related to factory defects."
+                                },
+                                {
+                                    "value": "NOT_USING_SERVICE",
+                                    "description": "Not using service applies when the merchant voluntarily leaves or their partner ends the partnership."
+                                },
+                                {
+                                    "value": "NON_WARRANTY_BROKEN",
+                                    "description": "Non-warranty broken applies when the terminal is damaged due to misuse or accident."
+                                },
+                                {
+                                    "value": "TECHNICAL_ISSUES",
+                                    "description": "Technical issues apply when the terminal's software malfunctions."
+                                },
+                                {
+                                    "value": "COMPATIBILITY_ISSUES",
+                                    "description": "Compatibility issues occur when the terminal doesn't pair with the merchant's POS system."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "stopBilling",
+                            "type": "boolean",
+                            "mandatory": false,
+                            "description": "Whether to stop billing for this terminal."
+                        },
+                        {
+                            "name": "comment",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Additional comments regarding the return."
+                        }
+                    ]
+                },
+                {
+                    "name": "deliveryInstruction",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Delivery instructions for the carrier."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "returnId",
+                            "type": "number",
+                            "mandatory": true,
+                            "description": "ID of the return request."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/partners/:partnerId/logistics/returns",
+            "new": true,
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\n  \"merchantInfo\": {\n    \"name\": \"Demo Store\",\n    \"email\": \"demo@example.com\",\n    \"phoneNumber\": {\n      \"code\": \"46\",\n      \"number\": \"123456789\"\n    },\n    \"addressLine1\": \"Demo Street 123\",\n    \"addressLine2\": \"Building A\",\n    \"addressLine3\": null,\n    \"city\": \"Stockholm\",\n    \"countryCode\": \"SE\",\n    \"postalNumber\": \"12345\"\n  },\n  \"returnOrderLines\": [\n    {\n      \"serial\": \"TERM001234567\",\n      \"terminalId\": \"816a0ff6bc0fb00404\",\n      \"reasonForReturn\": \"NOT_USING_SERVICE\",\n      \"stopBilling\": true,\n      \"comment\": \"Device not working properly\"\n    }\n  ],\n  \"deliveryInstruction\": \"Please call before delivery\"\n}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"returnId\": 80\n  },\n  \"message\": \"Return request created successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Get Returns",
+            "description": "Retrieves return requests for a specific merchant using the API. Supports filtering by status and provides detailed return information.",
+            "pagination": true,
+            "query": "To filter returns by status send in <span class='font-semibold'>filter</span> as query param",
+            "reqParams": [
+                {
+                    "name": "filter",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Filter returns by status.",
+                    "possibleValues": [
+                        {
+                            "value": "APPROVED",
+                            "description": "Returns that have been approved for processing."
+                        },
+                        {
+                            "value": "CREATED",
+                            "description": "Returns that have been created but not yet processed."
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Array of return request objects.",
+                    "resParams": [
+                        {
+                            "name": "returnId",
+                            "type": "number",
+                            "description": "Unique identifier for the return request."
+                        },
+                        {
+                            "name": "partnerId",
+                            "type": "string",
+                            "description": "Unique identifier of the partner."
+                        },
+                        {
+                            "name": "merchantName",
+                            "type": "string",
+                            "description": "Name of the merchant."
+                        },
+                        {
+                            "name": "merchantEmail",
+                            "type": "string",
+                            "description": "Email address of the merchant."
+                        },
+                        {
+                            "name": "merchantPhone",
+                            "type": "string",
+                            "description": "Phone number of the merchant."
+                        },
+                        {
+                            "name": "merchantAddressLine1",
+                            "type": "string",
+                            "description": "First line of the merchant's address."
+                        },
+                        {
+                            "name": "merchantAddressLine2",
+                            "type": "string",
+                            "description": "Second line of the merchant's address."
+                        },
+                        {
+                            "name": "merchantAddressLine3",
+                            "type": "string",
+                            "description": "Third line of the merchant's address."
+                        },
+                        {
+                            "name": "merchantCity",
+                            "type": "string",
+                            "description": "City of the merchant's address."
+                        },
+                        {
+                            "name": "merchantPostalNumber",
+                            "type": "string",
+                            "description": "Postal code of the merchant's address."
+                        },
+                        {
+                            "name": "merchantCountryCode",
+                            "type": "string",
+                            "description": "Country code of the merchant's address."
+                        },
+                        {
+                            "name": "deliveryInstruction",
+                            "type": "string",
+                            "description": "Delivery instructions for the return."
+                        },
+                        {
+                            "name": "status",
+                            "type": "string",
+                            "description": "Current status of the return request.",
+                            "possibleValues": [
+                                {
+                                    "value": "APPROVED",
+                                    "description": "The return request has been approved for processing."
+                                },
+                                {
+                                    "value": "CREATED",
+                                    "description": "The return request has been created but not yet processed."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "returnOrderLines",
+                            "type": "array",
+                            "description": "Array of return order line items.",
+                            "resParams": [
+                                {
+                                    "name": "returnOrderlineId",
+                                    "type": "number",
+                                    "description": "Unique identifier for the return order line."
+                                },
+                                {
+                                    "name": "returnId",
+                                    "type": "number",
+                                    "description": "ID of the parent return request."
+                                },
+                                {
+                                    "name": "serial",
+                                    "type": "string",
+                                    "description": "Serial number of the terminal."
+                                },
+                                {
+                                    "name": "terminalId",
+                                    "type": "string",
+                                    "description": "Unique identifier of the terminal."
+                                },
+                                {
+                                    "name": "merchantId",
+                                    "type": "string",
+                                    "description": "Unique identifier of the merchant."
+                                },
+                                {
+                                    "name": "deviceModel",
+                                    "type": "string",
+                                    "description": "Model of the device being returned."
+                                },
+                                {
+                                    "name": "reasonForReturn",
+                                    "type": "string",
+                                    "description": "Reason for the return."
+                                },
+                                {
+                                    "name": "stopBilling",
+                                    "type": "boolean",
+                                    "description": "Whether billing has been stopped for this terminal."
+                                },
+                                {
+                                    "name": "comment",
+                                    "type": "string",
+                                    "description": "Additional comments regarding the return."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                },
+                {
+                    "name": "totalCount",
+                    "type": "number",
+                    "mandatory": true,
+                    "description": "Total count of return requests matching the criteria."
+                }
+            ],
+            "method": "GET",
+            "path": "/partners/:partnerId/logistics/returns",
+            "new": true,
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": [\n    {\n      \"returnId\": 80,\n      \"partnerId\": \"8113d3f8403b380409\",\n      \"merchantName\": \"Demo Store\",\n      \"merchantEmail\": \"demo@example.com\",\n      \"merchantPhone\": \"+46123456789\",\n      \"merchantAddressLine1\": \"Demo Street 123\",\n      \"merchantAddressLine2\": \"Building A\",\n      \"merchantAddressLine3\": \"\",\n      \"merchantCity\": \"Stockholm\",\n      \"merchantPostalNumber\": \"12345\",\n      \"merchantCountryCode\": \"SE\",\n      \"deliveryInstruction\": \"Please call before delivery\",\n      \"status\": \"CREATED\",\n      \"returnOrderLines\": [\n        {\n          \"returnOrderlineId\": 78,\n          \"returnId\": 80,\n          \"serial\": \"TERM001234567\",\n          \"terminalId\": \"816a0ff6bc0fb00404\",\n          \"merchantId\": \"m_iWGri3XAyTmkbKYsYtV47\",\n          \"deviceModel\": \"Surfpad\",\n          \"reasonForReturn\": \"NOT_USING_SERVICE\",\n          \"createdAt\": \"2025-10-29T04:51:28.566Z\",\n          \"lastChanged\": \"2025-10-29T04:51:28.566Z\",\n          \"stopBilling\": true,\n          \"comment\": \"Device not working properly\"\n        }\n      ]\n    }\n  ],\n  \"message\": \"Return requests gotten successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Merchant Orders",
+            "description": "Retrieves all orders placed for a specific merchant. Use this API to get the status and details of all orders for a particular merchant.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Array of order objects for the merchant.",
+                    "resParams": [
+                        {
+                            "name": "orderId",
+                            "type": "string",
+                            "description": "Unique identifier for the order."
+                        },
+                        {
+                            "name": "trackingUrl",
+                            "type": "string",
+                            "description": "The tracking URL of the shipment."
+                        },
+                        {
+                            "name": "status",
+                            "type": "string",
+                            "description": "Current status of the order."
+                        },
+                        {
+                            "name": "deliveryPartner",
+                            "type": "string",
+                            "description": "The partner or carrier responsible for delivering the shipment."
+                        },
+                        {
+                            "name": "packages",
+                            "type": "array",
+                            "description": "Array of package details in the order.",
+                            "resParams": [
+                                {
+                                    "name": "productId",
+                                    "type": "string",
+                                    "description": "The SurfboardProductId of the product."
+                                },
+                                {
+                                    "name": "serialNumber",
+                                    "type": "string",
+                                    "description": "Serial number of the device."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/merchants/:merchantId/logistics/orders",
+            "new": true,
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": [\n    {\n      \"orderId\": \"8190422d77e1400428\",\n      \"trackingUrl\": \"\",\n      \"status\": \"ORDER_CANCELLED\",\n      \"deliveryPartner\": \"DHL\",\n      \"packages\": [\n        {\n          \"productId\": \"817361bb0a23400701\",\n          \"serialNumber\": \"\"\n        }\n      ]\n    },\n    {\n      \"orderId\": \"819118d10a3d900f28\",\n      \"trackingUrl\": \"\",\n      \"status\": \"ORDER_CANCELLED\",\n      \"deliveryPartner\": \"DHL\",\n      \"packages\": [\n        {\n          \"productId\": \"817361bb0a23400701\",\n          \"serialNumber\": \"\"\n        }\n      ]\n    }\n  ],\n  \"message\": \"Orders fetched successfully\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

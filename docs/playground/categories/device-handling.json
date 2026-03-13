@@ -1,0 +1,61 @@
+{
+    "id": "device-handling",
+    "name": "Device Handling",
+    "description": "Learn how to handle devices",
+    "scenarios": [
+        {
+            "id": "change-store",
+            "name": "Change Store",
+            "description": "Change Store",
+            "order": 1
+        },
+        {
+            "id": "delink-terminal-from-store",
+            "name": "Delink Terminal from Store",
+            "description": "Delink Terminal from Store",
+            "order": 2
+        },
+        {
+            "id": "reboot-terminal",
+            "name": "Reboot Terminal",
+            "description": "Reboot Terminal",
+            "order": 3
+        },
+        {
+            "id": "move-terminal",
+            "name": "Move Terminal",
+            "description": "Move Terminal",
+            "order": 4
+        },
+        {
+            "id": "update-terminal-name",
+            "name": "Update Terminal Name",
+            "description": "Update Terminal Name",
+            "order": 5
+        },
+        {
+            "id": "fetch-terminal-by-id",
+            "name": "Fetch Terminal by ID",
+            "description": "Fetch Terminal by ID",
+            "order": 6
+        },
+        {
+            "id": "fetch-apn-list",
+            "name": "Fetch APN List",
+            "description": "Fetch APN List",
+            "order": 7
+        },
+        {
+            "id": "get-interapp-code",
+            "name": "Get Interapp Code",
+            "description": "Get Interapp Code",
+            "order": 8
+        },
+        {
+            "id": "get-interapp-details",
+            "name": "Get Interapp Details",
+            "description": "Get Interapp Details",
+            "order": 9
+        }
+    ]
+}

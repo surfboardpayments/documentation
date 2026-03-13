@@ -1,0 +1,1 @@
+If a merchant needs additional terminals or accessories, you can order them at any time using **Create Shipment API**.

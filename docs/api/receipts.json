@@ -1,0 +1,364 @@
+{
+    "title": "Receipts API",
+    "description": "Receipts API facilitates the management and retrieval of receipts for finalized transactions.",
+    "endpoints": [
+        {
+            "fragment": "Email Receipt",
+            "method": "PUT",
+            "link": "API_URL/receipts/:id/email"
+        },
+        {
+            "fragment": "Print Receipt",
+            "method": "PUT",
+            "link": "API_URL/receipts/:id/print"
+        },
+        {
+            "fragment": "Print ESCPOS Receipt",
+            "method": "PUT",
+            "link": "API_URL/receipts/:terminalId/escpos"
+        },
+        {
+            "fragment": "Add Receipt Information",
+            "method": "PUT",
+            "link": "API_URL/receipts/:orderId"
+        },
+        {
+            "fragment": "Fetch Receipt Link",
+            "method": "GET",
+            "link": "API_URL/receipts/:id/link"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Email Receipt",
+            "type": "note",
+            "note": "The <span class='font-semibold'>:id</span> in url supports Transaction, Payment and Order ID's.",
+            "description": "Use this API to send payment receipts to the required email address.",
+            "reqParams": [
+                {
+                    "name": "email",
+                    "type": "String",
+                    "mandatory": true,
+                    "description": "Email address to which the receipt should be delivered."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the email receipt request."
+                }
+            ],
+            "method": "PUT",
+            "path": "/receipts/:id/email",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"email\":\"integrations@surfboard.se\"}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Email Sent\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Print Receipt",
+            "type": "note",
+            "note": "The <span class='font-semibold'>:id</span> in url supports Transaction, Payment and Order ID's.",
+            "description": "Use this API to print receipts from the terminals.",
+            "reqParams": [
+                {
+                    "name": "templateId",
+                    "type": "String",
+                    "comingSoon": true,
+                    "mandatory": false,
+                    "description": "Select from a default set of templates offered by Surfboard."
+                },
+                {
+                    "name": "terminalId",
+                    "type": "String",
+                    "mandatory": false,
+                    "description": "Print receipt on any printing enabled Surfboard terminal using this param."
+                },
+                {
+                    "name": "language",
+                    "type": "String",
+                    "mandatory": false,
+                    "description": "Prints the receipt in the given language. The available languages are, 'sv' , 'da' , 'fi' , 'en'. Default is the merchant language."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the print receipt request."
+                }
+            ],
+            "method": "PUT",
+            "path": "/receipts/:id/print",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"language\":\"sv\"}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"PNG Receipt printed successfully.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Print ESCPOS Receipt",
+            "description": "This API helps you print receipts on the terminal through ECS/POS commands.",
+            "reqParams": [
+                {
+                    "name": "escposCommands",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A stream of ECS/POS commands in base64 format."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "String",
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "PUT",
+            "path": "/receipts/:terminalId/escpos",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"escposCommands\":\"G0AbYQEbRQFTdXBlciBNYXJ0CjEyMyBNYWluIFN0ChtFABthAERhdGU6IDIwMjQvMTAvMDgKVGltZTogMTI6MDAgUE0KG0UBLS0tLS0tLS0tLQobRQAbYQBJdGVtIEE6IFdhdGVyClByaWNlOiAkMS4wMApJdGVtIEI6IEJyZWFkClByaWNlOiAkMi4wMAobRQEtLS0tLS0tLS0tClRvdGFsOiAkMy4wMAobRQAbYQFUaGFuayB5b3UhCgoKHVYA\"}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"ESCPOS Receipt printed successfully.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Add Receipt Information",
+            "description": "This API allows you to store cash register details for receipts.",
+            "reqParams": [
+                {
+                    "name": "sequenceNumber",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Receipt Sequence Number."
+                },
+                {
+                    "name": "cashRegisterName",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Cash Register Designation."
+                },
+                {
+                    "name": "controlUnitSerialNumber",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Control unit manufacturing number or Control System manufacturing number."
+                },
+                {
+                    "name": "cashierName",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Name of the cashier."
+                },
+                {
+                    "name": "customerName",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Name of the customer."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request 'SUCCESS' | 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status message of the request is displayed."
+                }
+            ],
+            "method": "PUT",
+            "path": "/receipts/:orderId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\n  \"sequenceNumber\": \"1234567\",\n  \"cashRegisterName\": \"Test\",\n  \"controlUnitSerialNumber\": \"1234567\",\n  \"cashierName\": \"Amanda\",\n  \"customerName\": \"Tom\"\n}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Receipt data updated successfully.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Receipt Link",
+            "type": "note",
+            "note": "The <span class='font-semibold'>:id</span> in url supports Transaction, Payment and Order ID's.",
+            "description": "This API allows you to retrieve a direct URL link to the receipt for a particular transaction.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request 'SUCCESS' | 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "receiptURL",
+                            "type": "string",
+                            "description": "This parameter provides the URL link to access the receipt for a specific transaction."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the email receipt request."
+                }
+            ],
+            "method": "GET",
+            "path": "/receipts/:id/link",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"receiptURL\": \"https://surfreceipts.com/831895dac6d240060b\"\n\t},\n\t\"message\": \"Receipt URL fetched successfully.\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

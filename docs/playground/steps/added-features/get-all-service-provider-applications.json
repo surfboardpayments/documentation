@@ -1,0 +1,96 @@
+{
+    "scenarioId": "get-all-service-provider-applications",
+    "scenarioName": "Get All Service Provider Applications",
+    "steps": [
+        {
+            "id": "get-all-service-provider-applications",
+            "name": "Get All Service Provider Applications",
+            "description": "Get All Service Provider Applications",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "partners/{{partnerId}}/service-providers/applications",
+            "guidePath": "/carbon/added-features/get-all-service-provider-applications",
+            "payload": {},
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "applicationType",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Filter applications by type. Supported values are 'ONBOARDING' and 'RENEWAL'. Can be a single value or comma-separated values like 'ONBOARDING,RENEWAL'. If not provided, defaults to fetching ONBOARDING applications. Passed as a query parameter."
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "array",
+                        "mandatory": true,
+                        "description": "Array of service provider applications.",
+                        "resParams": [
+                            {
+                                "name": "applicationId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Unique identifier of the application."
+                            },
+                            {
+                                "name": "country",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Country code where the service provider operates."
+                            },
+                            {
+                                "name": "corporateId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Corporate identification number."
+                            },
+                            {
+                                "name": "applicationStatus",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Current status of the application."
+                            },
+                            {
+                                "name": "createdAt",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "ISO timestamp when the application was created."
+                            },
+                            {
+                                "name": "lastUpdatedAt",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "ISO timestamp when the application was last updated."
+                            },
+                            {
+                                "name": "webKybUrl",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "URL for the web-based KYB process, if available."
+                            },
+                            {
+                                "name": "legalName",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Legal name of the service provider, if available."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}
