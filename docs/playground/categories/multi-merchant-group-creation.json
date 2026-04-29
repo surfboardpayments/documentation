@@ -1,0 +1,13 @@
+{
+    "id": "multi-merchant-group-creation",
+    "name": "Multi Merchant Group Creation",
+    "description": "Creating a multi merchant group",
+    "scenarios": [
+        {
+            "id": "create-multi-merchant-group",
+            "name": "Create Multi Merchant Group",
+            "description": "Creating a multi merchant group",
+            "order": 1
+        }
+    ]
+}

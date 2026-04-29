@@ -1,0 +1,103 @@
+{
+    "scenarioId": "generate-product-catalog-from-images",
+    "scenarioName": "Generate Product Catalog from Images",
+    "steps": [
+        {
+            "id": "generate-product-catalog-from-images",
+            "name": "Generate Product Catalog from Images",
+            "description": "Generate Product Catalog from Images",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "catalog/ai/scan",
+            "guidePath": "/carbon/advanced-customizations/generate-product-catalog-from-images",
+            "payload": {
+                "imgData": [
+                    "https://storage.googleapis.com/sb-merchant-portal-ai-images/testMerchant/TestMenu/menu01.png"
+                ],
+                "imageType": ["png"]
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "imgData",
+                        "type": "array",
+                        "mandatory": true,
+                        "description": "Array of image URLs or base64 encoded image data to process."
+                    },
+                    {
+                        "name": "imageType",
+                        "type": "array",
+                        "mandatory": true,
+                        "description": "Array of image file types corresponding to the imgData array (e.g., 'png', 'jpg')."
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data containing extracted menu and product information.",
+                        "resParams": [
+                            {
+                                "name": "menuData",
+                                "type": "array",
+                                "mandatory": true,
+                                "description": "Array of extracted product/menu items with their details.",
+                                "resParams": [
+                                    {
+                                        "name": "name",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Name of the product or menu item."
+                                    },
+                                    {
+                                        "name": "description",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Description of the product or menu item."
+                                    },
+                                    {
+                                        "name": "sellingPrice",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Price of the product or menu item."
+                                    },
+                                    {
+                                        "name": "currencyCode",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Currency code for the price (e.g., '840' for USD)."
+                                    },
+                                    {
+                                        "name": "category",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Category classification of the product or menu item."
+                                    },
+                                    {
+                                        "name": "image",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "URL of the generated or associated product image."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

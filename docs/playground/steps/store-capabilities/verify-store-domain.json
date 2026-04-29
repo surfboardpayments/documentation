@@ -1,0 +1,98 @@
+{
+    "scenarioId": "verify-store-domain",
+    "scenarioName": "Verify Store Domain",
+    "steps": [
+        {
+            "id": "verify-store-domain",
+            "name": "Verify Store Domain",
+            "description": "Verify store domain",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "partners/{{partnerId}}/merchants/{{merchantId}}/stores/{{storeId}}/verify",
+            "guidePath": "/carbon/store-capabilities/verify-store-domain/home",
+            "payload": {
+                "domainType": "MERCHANT_WEBSHOP_URL"
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "domainType",
+                        "type": "String",
+                        "description": "Specify the domain to be verified.",
+                        "mandatory": true,
+                        "possibleValues": [
+                            {
+                                "value": "MERCHANT_WEBSHOP_URL",
+                                "description": "Use this to verify the merchant webshop domain."
+                            },
+                            {
+                                "value": "PAYMENT_PAGE_HOST_URL",
+                                "description": "To verify the payment page host domain use this."
+                            }
+                        ]
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request."
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Message describing the status of domain verification of store."
+                    }
+                ]
+            }
+        },
+        {
+            "id": "fetch-store-domain",
+            "name": "Fetch Store Domain",
+            "description": "Fetch store domain",
+            "order": 2,
+            "method": "GET",
+            "endpoint": "partners/{{partnerId}}/merchants/{{merchantId}}/stores/{{storeId}}/online",
+            "guidePath": "/carbon/store-capabilities/fetch-store-domain/home",
+            "payload": {
+                "domainType": "MERCHANT_WEBSHOP_URL"
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "domainType",
+                        "type": "String",
+                        "description": "Specify the domain to be verified.",
+                        "mandatory": true,
+                        "possibleValues": [
+                            {
+                                "value": "MERCHANT_WEBSHOP_URL",
+                                "description": "Use this to verify the merchant webshop domain."
+                            },
+                            {
+                                "value": "PAYMENT_PAGE_HOST_URL",
+                                "description": "To verify the payment page host domain use this."
+                            }
+                        ]
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request."
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Message describing the status of domain verification of store."
+                    }
+                ]
+            }
+        }
+    ]
+}

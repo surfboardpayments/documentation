@@ -1,0 +1,46 @@
+{
+    "scenarioId": "activate-terminal",
+    "scenarioName": "Activate Terminal",
+    "steps": [
+        {
+            "id": "activate-terminal",
+            "name": "Activate Terminal",
+            "description": "To activate the terminals under the partner for all the associated merchants",
+            "order": 3,
+            "method": "POST",
+            "endpoint": "partners/{{partnerId}}/terminals/activate",
+            "readOnly": true,
+            "response": {
+                "status": "SUCCESS",
+                "message": "Manufactured hardware shipped successfully"
+              },
+            "guidePath": "/carbon/merchant-functions/activate-terminal/home",
+            "payload": {
+              "serialNo": "1234567898"
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "serialNo",
+                        "type": "String",
+                        "mandatory": true,
+                        "description": "Serial No of the terminal. For the SurfPad, you need to use the serial number from the back of the device. With SurfTouch, go to Settings -> Scroll down to 'About phone' -> Serial Number"
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "String",
+                        "description": "Status of the terminal activation."
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the activate terminal request."
+                    }
+                ]
+            }
+        }
+    ]
+}

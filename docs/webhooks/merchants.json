@@ -1,0 +1,710 @@
+{
+    "title": "Merchant Application Events",
+    "description": "The Merchant application events reference details the various events that arise during the merchant onboarding process in Surfboard. From the moment a partner initiates the onboarding by creating a merchant application, to the Know Your Business (KYB) step, theses webhooks provides real-time updates on the progress of each merchant application. By tracking these events, partners can ensure timely and accurate completion of merchant onboarding, enhancing the overall efficiency of the onboarding experience.",
+    "endpoints": [
+        {
+            "fragment": "Application Initiated"
+        },
+        {
+            "fragment": "Application Submitted"
+        },
+        {
+            "fragment": "Application Signed"
+        },
+        {
+            "fragment": "Application Started"
+        },
+        {
+            "fragment": "Application Pending Merchant Information"
+        },
+        {
+            "fragment": "Application Completed"
+        },
+        {
+            "fragment": "Application Merchant Created"
+        },
+        {
+            "fragment": "Application Expired"
+        },
+        {
+            "fragment": "Application Rejected"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Application Initiated",
+            "description": "This event is triggered when the merchant application is created, and the KYB URL is generated. At this point, the merchant needs to provide the necessary details via the Web KYB.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "applicationId",
+                            "type": "string",
+                            "description": "Unique identifier for the specific merchant application."
+                        },
+                        {
+                            "name": "applicationStatus",
+                            "type": "string",
+                            "description": "Indicates the current status of the application. For this particular event, the status is 'APPLICATION_INITIATED'."
+                        },
+                        {
+                            "name": "corporateId",
+                            "type": "string",
+                            "description": "A unique ID representing the corporate entity of the merchant in the onboarding process."
+                        },
+                        {
+                            "name": "companyName",
+                            "type": "string",
+                            "description": "The official legal name under which the merchant's organization is registered."
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"eventType\": \"application.initiated\",\n  \"metadata\": {\n    \"eventId\": \"81a214e74b107801ff\",\n    \"created\": 1695793998732,\n    \"retryAttempt\": 0,\n    \"webhookEventId\": \"81a214e7455ed01cff\"\n  },\n  \"data\": {\n    \"applicationId\": \"81376ad8ebedf80310\",\n    \"applicationStatus\": \"APPLICATION_INITIATED\",\n    \"corporateId\": \"12345678901\",\n    \"companyName\": \"Surfboard\"\n  }\n}\n   "
+                    }
+                ]
+            }
+        },
+
+        {
+            "heading": "Application Submitted",
+            "description": "This event is triggered once the merchant has completed and submitted the KYB for review.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "applicationId",
+                            "type": "string",
+                            "description": "Unique identifier for the specific merchant application."
+                        },
+                        {
+                            "name": "applicationStatus",
+                            "type": "string",
+                            "description": "Indicates the current status of the application. For this particular event, the status is 'APPLICATION_SUBMITTED'."
+                        },
+                        {
+                            "name": "corporateId",
+                            "type": "string",
+                            "description": "A unique ID representing the corporate entity of the merchant in the onboarding process."
+                        },
+                        {
+                            "name": "companyName",
+                            "type": "string",
+                            "description": "The official legal name under which the merchant's organization is registered."
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"eventType\": \"application.submitted\",\n  \"metadata\": {\n    \"eventId\": \"81a214e74b107801ff\",\n    \"created\": 1695793998732,\n    \"retryAttempt\": 0,\n    \"webhookEventId\": \"81a214e7455ed01cff\"\n  },\n  \"data\": {\n    \"applicationId\": \"81376ad8ebedf80310\",\n    \"applicationStatus\": \"APPLICATION_SUBMITTED\",\n    \"corporateId\": \"12345678901\",\n    \"companyName\": \"Surfboard\"\n  }\n}\n   "
+                    }
+                ]
+            }
+        },
+
+        {
+            "heading": "Application Signed",
+            "description": "This event is triggered when both the merchant signatories and UBOs have signed the application.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "applicationId",
+                            "type": "string",
+                            "description": "Unique identifier for the specific merchant application."
+                        },
+                        {
+                            "name": "applicationStatus",
+                            "type": "string",
+                            "description": "Indicates the current status of the application. For this particular event, the status is 'APPLICATION_SIGNED'."
+                        },
+                        {
+                            "name": "corporateId",
+                            "type": "string",
+                            "description": "A unique ID representing the corporate entity of the merchant in the onboarding process."
+                        },
+                        {
+                            "name": "companyName",
+                            "type": "string",
+                            "description": "The official legal name under which the merchant's organization is registered."
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"eventType\": \"application.signed\",\n  \"metadata\": {\n    \"eventId\": \"81a214e74b107801ff\",\n    \"created\": 1695793998732,\n    \"retryAttempt\": 0,\n    \"webhookEventId\": \"81a214e7455ed01cff\"\n  },\n  \"data\": {\n    \"applicationId\": \"81376ad8ebedf80310\",\n    \"applicationStatus\": \"APPLICATION_SIGNED\",\n    \"corporateId\": \"12345678901\",\n    \"companyName\": \"Surfboard\"\n  }\n}"
+                    }
+                ]
+            }
+        },
+
+        {
+            "heading": "Application Started",
+            "description": "This event is triggered once the merchant has started filling out the application.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "applicationId",
+                            "type": "string",
+                            "description": "Unique identifier for the specific merchant application."
+                        },
+                        {
+                            "name": "applicationStatus",
+                            "type": "string",
+                            "description": "Indicates the current status of the application. For this particular event, the status is 'APPLICATION_INITIATED'."
+                        },
+                        {
+                            "name": "corporateId",
+                            "type": "string",
+                            "description": "A unique ID representing the corporate entity of the merchant in the onboarding process."
+                        },
+                        {
+                            "name": "companyName",
+                            "type": "string",
+                            "description": "The official legal name under which the merchant's organization is registered."
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"eventType\": \"application.started\",\n  \"metadata\": {\n    \"eventId\": \"81a214e74b107801ff\",\n    \"created\": 1695793998732,\n    \"retryAttempt\": 0,\n    \"webhookEventId\": \"81a214e7455ed01cff\"\n  },\n  \"data\": {\n    \"applicationId\": \"81376ad8ebedf80310\",\n    \"applicationStatus\": \"APPLICATION_INITIATED\",\n    \"corporateId\": \"12345678901\",\n    \"companyName\": \"Surfboard\"\n  }\n}"
+                    }
+                ]
+            }
+        },
+
+        {
+            "heading": "Application Pending Merchant Information",
+            "description": "This event is triggered when the application is being processed but requires additional data from the merchant for completion.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "applicationId",
+                            "type": "string",
+                            "description": "Unique identifier for the specific merchant application."
+                        },
+                        {
+                            "name": "applicationStatus",
+                            "type": "string",
+                            "description": "Indicates the current status of the application. For this particular event, the status is 'APPLICATION_PENDING_INFORMATION'."
+                        },
+                        {
+                            "name": "corporateId",
+                            "type": "string",
+                            "description": "A unique ID representing the corporate entity of the merchant in the onboarding process."
+                        },
+                        {
+                            "name": "companyName",
+                            "type": "string",
+                            "description": "The official legal name under which the merchant's organization is registered."
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"eventType\": \"application.pendingMerchantInformation\",\n  \"metadata\": {\n    \"eventId\": \"81a214e74b107801ff\",\n    \"created\": 1695793998732,\n    \"retryAttempt\": 0,\n    \"webhookEventId\": \"81a214e7455ed01cff\"\n  },\n  \"data\": {\n    \"applicationId\": \"81376ad8ebedf80310\",\n    \"applicationStatus\": \"APPLICATION_PENDING_INFORMATION\",\n    \"corporateId\": \"12345678901\",\n    \"companyName\": \"Surfboard\"\n  }\n}\n   "
+                    }
+                ]
+            }
+        },
+
+        {
+            "heading": "Application Completed",
+            "description": "This event is triggered when the application has been processed and accepted. The next steps involve merchant creation and onboarding.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "applicationId",
+                            "type": "string",
+                            "description": "Unique identifier for the specific merchant application."
+                        },
+                        {
+                            "name": "applicationStatus",
+                            "type": "string",
+                            "description": "Indicates the current status of the application. For this particular event, the status is 'APPLICATION_COMPLETED'."
+                        },
+                        {
+                            "name": "corporateId",
+                            "type": "string",
+                            "description": "A unique ID representing the corporate entity of the merchant in the onboarding process."
+                        },
+                        {
+                            "name": "companyName",
+                            "type": "string",
+                            "description": "The official legal name under which the merchant's organization is registered."
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"eventType\": \"application.completed\",\n  \"metadata\": {\n    \"eventId\": \"81a214e74b107801ff\",\n    \"created\": 1695793998732,\n    \"retryAttempt\": 0,\n    \"webhookEventId\": \"81a214e7455ed01cff\"\n  },\n  \"data\": {\n    \"applicationId\": \"81376ad8ebedf80310\",\n    \"applicationStatus\": \"APPLICATION_COMPLETED\",\n    \"corporateId\": \"12345678901\",\n    \"companyName\": \"Surfboard\"\n  }\n}\n   "
+                    }
+                ]
+            }
+        },
+
+        {
+            "heading": "Application Merchant Created",
+            "description": "This event is triggered when the merchant is created in Surfboard. The accompanying event data will include both the Merchant ID and Store ID.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "applicationId",
+                            "type": "string",
+                            "description": "Unique identifier for the specific merchant application."
+                        },
+                        {
+                            "name": "applicationStatus",
+                            "type": "string",
+                            "description": "Indicates the current status of the application. For this particular event, the status is 'MERCHANT_CREATED'."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "description": "Unique identifier assigned to the merchant created in Surfboard. This ID serves as the primary reference for all merchant-related activities and interactions within the platform."
+                        },
+                        {
+                            "name": "storeId",
+                            "type": "string",
+                            "description": "Unique identifier for the specific store associated with the newly created merchant. This ID differentiates individual stores under a single merchant."
+                        },
+                        {
+                            "name": "corporateId",
+                            "type": "string",
+                            "description": "A unique ID representing the corporate entity of the merchant in the onboarding process."
+                        },
+                        {
+                            "name": "companyName",
+                            "type": "string",
+                            "description": "The official legal name under which the merchant's organization is registered."
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"eventType\": \"application.merchantCreated\",\n  \"metadata\": {\n    \"eventId\": \"81a214e74b107801ff\",\n    \"created\": 1695793998732,\n    \"retryAttempt\": 0,\n    \"webhookEventId\": \"81a214e7455ed01cff\"\n  },\n  \"data\": {\n    \"applicationId\": \"81376ad8ebedf80310\",\n    \"applicationStatus\": \"MERCHANT_CREATED\",\n    \"merchantId\": \"81412e2e4102f80f0e\",\n    \"storeId\": \"81412e3c3b1090060f\",\n    \"corporateId\": \"12345678901\",\n    \"companyName\": \"Surfboard\"\n  }\n}\n   "
+                    }
+                ]
+            }
+        },
+
+        {
+            "heading": "Application Expired",
+            "description": "This event is triggered when the merchant application has reached its expiration. For the continuation of the onboarding process, a new application must be created for the merchant.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "applicationId",
+                            "type": "string",
+                            "description": "Unique identifier for the specific merchant application."
+                        },
+                        {
+                            "name": "applicationStatus",
+                            "type": "string",
+                            "description": "Indicates the current status of the application. For this particular event, the status is 'APPLICATION_EXPIRED'."
+                        },
+                        {
+                            "name": "corporateId",
+                            "type": "string",
+                            "description": "A unique ID representing the corporate entity of the merchant in the onboarding process."
+                        },
+                        {
+                            "name": "companyName",
+                            "type": "string",
+                            "description": "The official legal name under which the merchant's organization is registered."
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"eventType\": \"application.expired\",\n  \"metadata\": {\n    \"eventId\": \"81a214e74b107801ff\",\n    \"created\": 1695793998732,\n    \"retryAttempt\": 0,\n    \"webhookEventId\": \"81a214e7455ed01cff\"\n  },\n  \"data\": {\n    \"applicationId\": \"81376ad8ebedf80310\",\n    \"applicationStatus\": \"APPLICATION_EXPIRED\",\n    \"corporateId\": \"12345678901\",\n    \"companyName\": \"Surfboard\"\n  }\n}\n   "
+                    }
+                ]
+            }
+        },
+
+        {
+            "heading": "Application Rejected",
+            "description": "This event is triggered  post-processing when the merchant application doesn't meet the necessary criteria and is subsequently rejected by Surfboard.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "applicationId",
+                            "type": "string",
+                            "description": "Unique identifier for the specific merchant application."
+                        },
+                        {
+                            "name": "applicationStatus",
+                            "type": "string",
+                            "description": "Indicates the current status of the application. For this particular event, the status is 'APPLICATION_REJECTED'."
+                        },
+                        {
+                            "name": "corporateId",
+                            "type": "string",
+                            "description": "A unique ID representing the corporate entity of the merchant in the onboarding process."
+                        },
+                        {
+                            "name": "companyName",
+                            "type": "string",
+                            "description": "The official legal name under which the merchant's organization is registered."
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"eventType\": \"application.rejected\",\n  \"metadata\": {\n    \"eventId\": \"81a214e74b107801ff\",\n    \"created\": 1695793998732,\n    \"retryAttempt\": 0,\n    \"webhookEventId\": \"81a214e7455ed01cff\"\n  },\n  \"data\": {\n    \"applicationId\": \"81376ad8ebedf80310\",\n    \"applicationStatus\": \"APPLICATION_REJECTED\",\n    \"corporateId\": \"12345678901\",\n    \"companyName\": \"Surfboard\"\n  }\n}\n   "
+                    }
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,98 @@
+{
+    "faq": {
+        "title": "Got Questions?",
+        "items": [
+            {
+                "id": "instore-terminals",
+                "question": "How do I integrate hardware terminals for in-store payments (attached and app switch modes)?",
+                "answer": {
+                    "text": "To accept in-store payments using hardware terminals (like SurfTouch or SurfPad), you must:",
+                    "points": [
+                        "Complete the in-store terminal setup and registration.",
+                        "For **attached mode**: Integrate SurfTouch directly with your POS or ECR system for seamless, direct payment acceptance.",
+                        "For **app switch mode**: Use the CheckoutX inter-app flow, which allows your POS or app to switch to the payment app for transaction processing, then return to your app after payment.",
+                        "Refer to the **hardware terminal guides** for step-by-step setup and integration details."
+                    ],
+                    "links": [
+                        {
+                            "text": "hardware terminal guides",
+                            "url": "/docs/hardware-terminals",
+                            "type": "internal"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "softpos",
+                "question": "How do I integrate SoftPOS (software point-of-sale) for in-store payments?",
+                "answer": {
+                    "text": "For SoftPOS (accepting payments on Android devices without dedicated hardware):",
+                    "points": [
+                        "Follow the same in-store flow as hardware terminals.",
+                        "SoftPOS uses CheckoutX as a POS, supporting both attached and app switch modes.",
+                        "No dedicated hardware is required—just install the app on a compatible Android device.",
+                        "See the **SoftPOS setup guide** for configuration and integration steps."
+                    ],
+                    "links": [
+                        {
+                            "text": "SoftPOS setup guide",
+                            "url": "/guides/in-store-payments/integrations/prebuilt-apps/checkoutX",
+                            "type": "internal"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "paymentpage",
+                "question": "How do I integrate online payments using PaymentPage?",
+                "answer": {
+                    "text": "To accept payments online with PaymentPage:",
+                    "points": [
+                        "Register an online terminal in \"PaymentPage\" mode.",
+                        "Embed the provided payment link or widget into your website or app.",
+                        "Customers are redirected to a secure, fully hosted checkout page to complete their payment.",
+                        "Monitor payment status using the Fetch Order Status API or webhooks.",
+                        "See the **PaymentPage integration guide** for details."
+                    ],
+                    "links": [
+                        {
+                            "text": "PaymentPage integration guide",
+                            "url": "/guides/online-payments/online-payment-terminals/payment-page",
+                            "type": "internal"
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "sdk",
+                "question": "How do I integrate online payments using the SDK?",
+                "answer": {
+                    "text": "For a custom online checkout experience:",
+                    "points": [
+                        "Register an online terminal in \"SelfHostedPage\" (SDK) mode.",
+                        "Use the online payments SDK to build the checkout into your app or website.",
+                        "The SDK provides APIs for order creation, payment initiation, and status tracking.",
+                        "Sample code and a React demo app are available for reference.",
+                        "See the **SDK integration guide** for implementation steps."
+                    ],
+                    "links": [
+                        {
+                            "text": "SDK integration guide",
+                            "url": "/guides/online-payments/online-payment-terminals/online-sdk-guide",
+                            "type": "internal"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "notes": {
+        "title": "Note:",
+        "items": [
+            "For all integration types, you must first create a merchant account and set up your store in the Surfboard Developer Portal.",
+            "To test each in-store payment initiation, use the Surftester app.",
+            "You can manage terminals, stores, and payment methods via the portal or APIs.",
+            "For more advanced scenarios (like recurring payments, refunds, or multi-terminal setups), you can also refer to the view full documentation by clicking on learn more in the use cases."
+        ]
+    }
+}

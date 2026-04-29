@@ -1,0 +1,2 @@
+1. Configure terminal-level settings by navigating to **Merchants**→**Terminals** → Actions for the terminal you want to configure.
+2. Fill in the required details for the Terminal-level configurations in the provided fields and click **Save Changes**.

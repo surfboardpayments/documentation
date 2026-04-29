@@ -1,0 +1,179 @@
+{
+    "scenarioId": "ship-terminals-in-bulk",
+    "scenarioName": "Ship Terminals in Bulk",
+    "steps": [
+        {
+            "id": "ship-terminals-in-bulk",
+            "name": "Ship Terminals in Bulk",
+            "description": "Ships terminals in bulk to a merchant.",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "/partners/{{partnerId}}/logistics/orders",
+            "guidePath": "/carbon/logistics/ship-terminals-in-bulk",
+            "payload": {
+                "shippingAddress": {
+                    "name": "Jane Smith",
+                    "addressLine1": "456 Business Ave",
+                    "addressLine2": "Floor 2",
+                    "city": "Stockholm",
+                    "countryCode": "SE",
+                    "postalCode": "12345"
+                },
+                "lineItems": [
+                    {
+                        "productId": "81bddf38fa28380101",
+                        "quantity": 5,
+                        "billingPlanId": "BP_001",
+                        "replacementFor": "82674cfdf77f500001"
+                    }
+                ]
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "shippingAddress",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Shipping address for the bulk order.",
+                        "reqParams": [
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Full name of the receiver for the shipment."
+                            },
+                            {
+                                "name": "addressLine1",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "The first line of the receiver's address."
+                            },
+                            {
+                                "name": "addressLine2",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "The second line of the receiver's address."
+                            },
+                            {
+                                "name": "addressLine3",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "The third line of the receiver's address."
+                            },
+                            {
+                                "name": "city",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "City of the receiver."
+                            },
+                            {
+                                "name": "countryCode",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Two-letter ISO country code of the receiver, in uppercase."
+                            },
+                            {
+                                "name": "postalCode",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Postal code of the receiver."
+                            },
+                            {
+                                "name": "phoneNumber",
+                                "type": "object",
+                                "mandatory": false,
+                                "description": "Contact number of the receiver in code and number format.",
+                                "reqParams": [
+                                    {
+                                        "name": "code",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "International dialing code identifying the country or region."
+                                    },
+                                    {
+                                        "name": "number",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Phone number."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "email",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Email address of the receiver."
+                            },
+                            {
+                                "name": "deliveryInstruction",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Delivery instructions for the carrier."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "lineItems",
+                        "type": "array",
+                        "mandatory": true,
+                        "description": "An array of products to be shipped in bulk.",
+                        "reqParams": [
+                            {
+                                "name": "productId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "The SurfboardProductId of the product or group of products."
+                            },
+                            {
+                                "name": "quantity",
+                                "type": "number",
+                                "mandatory": true,
+                                "description": "Number of products or group of products to be shipped."
+                            },
+                            {
+                                "name": "billingPlanId",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Optional billing plan for the product or group of products chosen."
+                            },
+                            {
+                                "name": "replacementFor",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "If this line item is placed as part of a replacement for an existing device, then the terminalId of the original device needs to be specified."
+                            }
+                        ]
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data",
+                        "resParams": [
+                            {
+                                "name": "orderId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Order ID for the bulk order."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

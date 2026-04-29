@@ -1,0 +1,109 @@
+{
+    "version": "1.0.0",
+    "lastUpdated": "2025-11-20T15:10:51.674Z",
+    "categories": [
+        {
+            "id": "merchant-creation",
+            "name": "Merchant Creation",
+            "description": "Learn how to create merchants",
+            "order": 1
+        },
+        {
+            "id": "device-management",
+            "name": "Device Management",
+            "description": "Learn how to manage and configure devices and terminals",
+            "order": 2
+        },
+        {
+            "id": "make-your-payments",
+            "name": "Make Your Payments",
+            "icon": "payment",
+            "description": "Learn how to create orders and process payments",
+            "order": 3
+        },
+        {
+            "id": "multi-merchant-group-creation",
+            "name": "Multi Merchant Group Creation",
+            "description": "Learn how to create multi merchant group",
+            "order": 4
+        },
+        {
+            "id": "merchant-functions",
+            "name": "Merchant Functions",
+            "description": "Learn how to use other functionality of merchant",
+            "order": 5
+        },
+        {
+            "id": "store-capabilities",
+            "name": "Store Capabilities",
+            "description": "Learn how to use other functionality of store",
+            "order": 6
+        },
+        {
+            "id": "logistics",
+            "name": "Logistics",
+            "description": "Learn how to use terminal logistics",
+            "order": 7
+        },
+        {
+            "id": "device-handling",
+            "name": "Device Handling",
+            "description": "Learn how to use device handling",
+            "order": 8
+        },
+        {
+            "id": "configure-tips",
+            "name": "Configure Tips",
+            "description": "Learn how to use configure tips",
+            "order": 9
+        },
+        {
+            "id": "configure-branding",
+            "name": "Configure Branding",
+            "description": "Learn how to use configure branding",
+            "order": 10
+        },
+        {
+            "id": "additional-payment-methods",
+            "name": "Additional Payment Methods",
+            "description": "Learn how to use additional payment methods",
+            "order": 11
+        },
+        {
+            "id": "client-auth-token",
+            "name": "Client Auth Token",
+            "description": "Learn how to use client auth token",
+            "order": 12
+        },
+        {
+            "id": "nfc-reading",
+            "name": "NFC Reading",
+            "description": "Learn how to use NFC reading",
+            "order": 13
+        },
+        {
+            "id": "receipts",
+            "name": "Receipts",
+            "description": "Learn how to use receipts",
+            "order": 14
+        },
+        {
+            "id": "additional-operations",
+            "name": "Additional Operations",
+            "description": "Learn how to use additional operations",
+            "order": 15
+        },
+        {
+            "id": "added-features",
+            "name": "Added Features",
+            "description": "Learn how to use added features",
+            "order": 16
+        },
+        {
+            "id": "advanced-customizations",
+            "name": "Advanced Customizations",
+            "description": "Learn how to use advanced customizations",
+            "order": 17
+        }
+    ]
+}

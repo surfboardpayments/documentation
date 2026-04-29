@@ -1,0 +1,114 @@
+{
+  "title": "Documentation",
+  "description": "Comprehensive documentation for Surfboard Payments platform",
+  "items": [
+    {
+      "title": "Adjustments",
+      "description": "Understanding payment adjustments and refunds",
+      "path": "/docs/adjustments.md",
+      "type": "doc"
+    },
+    {
+      "title": "Currencies",
+      "description": "Supported currencies and currency handling",
+      "path": "/docs/currencies.md",
+      "type": "doc"
+    },
+    {
+      "title": "Failure Reasons",
+      "description": "Common payment failure reasons and troubleshooting",
+      "path": "/docs/failure-reasons.md",
+      "type": "doc"
+    },
+    {
+      "title": "Google Pay",
+      "description": "Integration with Google Pay",
+      "path": "/docs/google-pay.md",
+      "type": "doc"
+    },
+    {
+      "title": "Merchants",
+      "description": "Understanding merchant accounts and management",
+      "path": "/docs/merchants.md",
+      "type": "doc"
+    },
+    {
+      "title": "Orders",
+      "description": "Understanding order management",
+      "path": "/docs/orders.md",
+      "type": "doc"
+    },
+    {
+      "title": "Partial Payments",
+      "description": "Handling partial payments and split payments",
+      "path": "/docs/partial-payments.md",
+      "type": "doc"
+    },
+    {
+      "title": "Partners",
+      "description": "Working with Surfboard partners",
+      "path": "/docs/partners.md",
+      "type": "doc"
+    },
+    {
+      "title": "Payment Lifecycle",
+      "description": "Understanding the payment lifecycle",
+      "path": "/docs/payment-lifecycle.md",
+      "type": "doc"
+    },
+    {
+      "title": "Payment Methods",
+      "description": "Overview of supported payment methods",
+      "path": "/docs/payment-methods.md",
+      "type": "doc"
+    },
+    {
+      "title": "Payments",
+      "description": "Understanding the payments system",
+      "path": "/docs/payments.md",
+      "type": "doc"
+    },
+    {
+      "title": "Receipts",
+      "description": "Managing digital and printed receipts",
+      "path": "/docs/receipts.md",
+      "type": "doc"
+    },
+    {
+      "title": "Report Components",
+      "description": "Understanding report components and structure",
+      "path": "/docs/report-components.md",
+      "type": "doc"
+    },
+    {
+      "title": "Reporting",
+      "description": "Overview of reporting capabilities",
+      "path": "/docs/reporting.md",
+      "type": "doc"
+    },
+    {
+      "title": "Settlements",
+      "description": "Understanding payment settlements",
+      "path": "/docs/settlements.md",
+      "type": "doc"
+    },
+    {
+      "title": "Stores",
+      "description": "Managing store locations",
+      "path": "/docs/stores.md",
+      "type": "doc"
+    },
+    {
+      "title": "Tips",
+      "description": "Managing tips and gratuities",
+      "path": "/docs/tips.md",
+      "type": "doc"
+    },
+    {
+      "title": "Transactions",
+      "description": "Understanding transaction processing",
+      "path": "/docs/transactions.md",
+      "type": "doc"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+1. Log in to the **Merchant Portal** and navigate to the **Terminals** section.
+2. Select the desired terminal, click **Tips → Enable Use Tips**, provide the required details, and then click **Set Tips**.

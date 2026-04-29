@@ -1,0 +1,434 @@
+{
+    "scenarioId": "create-store-instore",
+    "scenarioName": "Create Store",
+    "steps": [
+        {
+            "id": "create-store-instore",
+            "name": "Create Store",
+            "description": "A default store is often created during merchant onboarding, both merchants and partners can create additional stores as needed",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "partners/{{partnerId}}/merchants/{{merchantId}}/stores",
+            "guidePath": "/carbon/store-capabilities/create-store/instore/home",
+            "payload": {
+                "storeName": "Trial Store",
+                "email": "TS@gmail.com",
+                "phoneNumber": {
+                  "code": 91,
+                  "number": "3214576980"
+                },
+                "address": "10,",
+                "city": "Stockholm",
+                "zipCode": "103 16",
+                "country": "SE"
+              },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "storeName",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Name of the store."
+                    },
+                    {
+                        "name": "email",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Email address of the store. Email address in mandatory to support online payments."
+                    },
+                    {
+                        "name": "phoneNumber",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Contact number of the store in code and number format.",
+                        "reqParams": [
+                            {
+                                "name": "code",
+                                "type": "number",
+                                "mandatory": true,
+                                "description": "International dialing code identifying the country or region."
+                            },
+                            {
+                                "name": "number",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "A string of numbers ranging from 0-9 with a length of 5-15 characters."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "address",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Address line 1 of the store."
+                    },
+                    {
+                        "name": "careOf",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Name of the addressee that is accepting the correspondence for the intended recipient."
+                    },
+                    {
+                        "name": "city",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Name of the city where the store is located."
+                    },
+                    {
+                        "name": "zipCode",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "ZIP code of the store."
+                    },
+                    {
+                        "name": "country",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Two-letter ISO country code in uppercase, representing the location of the store."
+                    },
+                    {
+                        "name": "acquirerMID",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Acquirer Merchant ID is a mandatory parameter for PF partners who want to support a store based acquiring model.",
+                        "conditional": "<span>Dependent on supporting a <br>store-based acquiring model</br></span>"
+                    },
+                    {
+                        "name": "onlineInfo",
+                        "type": "object",
+                        "mandatory": false,
+                        "description": "In order to start accepting online payments you need to create an online store which requires some additional properties such as the following.",
+                        "reqParams": [
+                            {
+                                "name": "merchantWebshopURL",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "This is the web-shop URL of the merchant."
+                            },
+                            {
+                                "name": "paymentPageHostURL",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "This is the URL of the payment page. This is required for integrating online payments using SDK mode."
+                            },
+                            {
+                                "name": "termsAndConditionsURL",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "This is the URL of the T&C of the merchant’s web-shop, it has to contain the refund policy."
+                            },
+                            {
+                                "name": "privacyPolicyURL",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "This is the URL of the privacy policy of the merchant."
+                            }
+                        ]
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data.",
+                        "resParams": [
+                            {
+                                "name": "storeId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Store ID of the created store."
+                            },
+                            {
+                                "name": "merchantId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": " The Merchant ID of the merchant under which the store is created."
+                            },
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Name of the store."
+                            },
+                            {
+                                "name": "address",
+                                "type": "object",
+                                "mandatory": true,
+                                "description": "Address of the store.",
+                                "resParams": [
+                                    {
+                                        "name": "careOf",
+                                        "type": "string",
+                                        "mandatory": false,
+                                        "description": "Name of the addressee that is accepting the correspondence for the intended recipient."
+                                    },
+                                    {
+                                        "name": "addressLine1",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "First line of address."
+                                    },
+                                    {
+                                        "name": "addressLine2",
+                                        "type": "string",
+                                        "mandatory": false,
+                                        "description": "Second line of address."
+                                    },
+                                    {
+                                        "name": "addressLine3",
+                                        "type": "string",
+                                        "mandatory": false,
+                                        "description": "Third line of address."
+                                    },
+                                    {
+                                        "name": "city",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Name of the City where the store is located."
+                                    },
+                                    {
+                                        "name": "countryCode",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Two-letter ISO country code in uppercase, representing the location of the store."
+                                    },
+                                    {
+                                        "name": "postalCode",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Postal Code of the place where the store is located."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "phone",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Contact number of the store."
+                            },
+                            {
+                                "name": "email",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Email address of the store."
+                            },
+                            {
+                                "name": "merchantURLDomainVerficationKey",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "This is a key to set and verify that the merchant owns the domain of the URL."
+                            },
+                            {
+                                "name": "paymentPageURLDomainVerficationKey",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "This is a key to set and verify the payment page domain URL."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "description": "A message that describes the status of the request"
+                    }
+                ]
+            }
+        },
+        {
+            "id": "fetch-store-details",
+            "name": "Fetch Store Details",
+            "description": "Fetches the details of a store under the partner for a specific merchant.",
+            "order": 2,
+            "method": "GET",
+            "endpoint": "partners/{{partnerId}}/merchants/{{merchantId}}/stores/{{storeId}}",
+            "guidePath": "/carbon/store-capabilities/fetch-store-details/home",
+            "payload": {},
+            "specifications":{
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "description": "Response data.",
+                        "resParams": [
+                            {
+                                "name": "storeId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Store ID of the store."
+                            },
+                            {
+                                "name": "merchantId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "The Merchant ID of the merchant under which the store is created."
+                            },
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Name of the store."
+                            },
+                            {
+                                "name": "status",
+                                "type": "string",
+                                "description": "Status of the store.",
+                                "possibleValues": [
+                                    {
+                                        "value": "ACTIVE",
+                                        "description": "The store is active and ready for payments."
+                                    },
+                                    {
+                                        "value": "DEACTIVATED",
+                                        "description": "The store is deactivated."
+                                    },
+                                    {
+                                        "value": "BLOCKED",
+                                        "description": "The store is blocked from further activities."
+                                    },
+                                    {
+                                        "value": "INACTIVE",
+                                        "description": "The store is in verification stage."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "onlineOnboardingStatus",
+                                "type": "string",
+                                "description": "Onboarding status of the online store.",
+                                "possibleValues": [
+                                    {
+                                        "value": "APPROVED",
+                                        "description": "The store is approved for online payments."
+                                    },
+                                    {
+                                        "value": "INITIATED",
+                                        "description": "The online store verification is initiated."
+                                    },
+                                    {
+                                        "value": "FAILED",
+                                        "description": "Failed to verify the online store."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "address",
+                                "type": "object",
+                                "mandatory": true,
+                                "description": "Address of the store.",
+                                "resParams": [
+                                    {
+                                        "name": "careOf",
+                                        "type": "string",
+                                        "mandatory": false,
+                                        "description": "Name of the addressee that is accepting the correspondence for the intended recipient."
+                                    },
+                                    {
+                                        "name": "addressLine1",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "The first line of the store's address."
+                                    },
+                                    {
+                                        "name": "addressLine2",
+                                        "type": "string",
+                                        "mandatory": false,
+                                        "description": "The second line of the store's address."
+                                    },
+                                    {
+                                        "name": "addressLine3",
+                                        "type": "string",
+                                        "mandatory": false,
+                                        "description": "The third line of the store's address."
+                                    },
+                                    {
+                                        "name": "city",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Name of the City where the store is located."
+                                    },
+                                    {
+                                        "name": "countryCode",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Two-letter ISO country code in uppercase, representing the location of the store."
+                                    },
+                                    {
+                                        "name": "postalCode",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Postal Code of the place where the store is located."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "phone",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Contact number of the store. "
+                            },
+                            {
+                                "name": "email",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Email address of the store. "
+                            },
+                            {
+                                "name": "onlineInfo",
+                                "type": "object",
+                                "mandatory": false,
+                                "description": "In order to start accepting online payments you need to create an online store which requires some additional properties such as the following.",
+                                "resParams": [
+                                    {
+                                        "name": "merchantWebshopURL",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "This is the web-shop URL of the merchant."
+                                    },
+                                    {
+                                        "name": "paymentPageHostURL",
+                                        "type": "string",
+                                        "mandatory": false,
+                                        "description": "This is the URL of the payment page."
+                                    },
+                                    {
+                                        "name": "termsAndConditionsURL",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "This is the URL of the T&C of the merchant’s web-shop, it has to contain the refund policy."
+                                    },
+                                    {
+                                        "name": "privacyPolicyURL",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "This is the URL of the privacy policy of the merchant."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Message describing the status of the request."
+                    }
+                ]
+            }
+
+        }
+    ]
+}

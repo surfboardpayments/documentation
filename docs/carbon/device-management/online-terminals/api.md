@@ -1,0 +1,1 @@
+`POST` your request with **onlineTerminalMode**. Note that when the merchant completes their application during onboarding, the **PaymentPage** and **MerchantInitiated** online terminal modes are registered automatically. Therefore, when using the Register Online Terminal API, you only need to register the **SelfHostedPage** mode.

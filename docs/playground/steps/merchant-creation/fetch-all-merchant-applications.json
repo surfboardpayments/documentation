@@ -1,0 +1,108 @@
+{
+    "scenarioId": "fetch-all-merchant-applications",
+    "scenarioName": "Fetch All Merchant Applications",
+    "steps": [
+        {
+            "id": "fetch-all-merchant-applications",
+            "name": "Fetch All Merchant Applications",
+            "description": "To fetch all merchant applications under a partner",
+            "order": 4,
+            "method": "GET",
+            "endpoint": "partners/{{partnerId}}/applications",
+            "hasMerchantId": false,
+            "guidePath": "/carbon/merchant-creation/fetch-all-merchant-applications",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "applicationId",
+                            "type": "String",
+                            "description": "The Application ID used to uniquely identify a merchant's application."
+                        },
+                        {
+                            "name": "applicationStatus",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Describes the status of the application. The possible values are:",
+                            "possibleValues": [
+                                {
+                                    "value": "APPLICATION_INITIATED",
+                                    "description": "The application has been created, and the Web KYB URL has been generated. The merchant is now required to fill in necessary information through the Web KYB."
+                                },
+                                {
+                                    "value": "APPLICATION_SUBMITTED",
+                                    "description": "The merchant has finished filling in the Web KYB and submitted it for processing."
+                                },
+                                {
+                                    "value": "APPLICATION_PENDING_INFORMATION",
+                                    "description": "The application is still under processing, and additional data is required from the merchant."
+                                },
+                                {
+                                    "value": "APPLICATION_SIGNED",
+                                    "description": "Both the merchant signatories and UBOs have signed the application."
+                                },
+                                {
+                                    "value": "APPLICATION_REJECTED",
+                                    "description": "The application has been processed and rejected."
+                                },
+                                {
+                                    "value": "APPLICATION_COMPLETED",
+                                    "description": "The application has been processed and accepted. It is now pending merchant creation and onboarding."
+                                },
+                                {
+                                    "value": "MERCHANT_CREATED",
+                                    "description": "The merchant account has been created. At this stage, the Merchant ID and Store ID will be returned in the status call."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "corporateId",
+                            "type": "Number",
+                            "description": "Corporate ID of the respective merchant."
+                        },
+                        {
+                            "name": "country",
+                            "type": "String",
+                            "description": "Two-letter ISO country code in uppercase, representing the primary location of the merchant."
+                        },
+                        {
+                            "name": "createdAt",
+                            "type": "String",
+                            "description": "Date of application creation in ISO string format"
+                        },
+                        {
+                            "name": "lastUpdatedAt",
+                            "type": "String",
+                            "description": "Date of last updation recorded with the merchant application in ISO string format"
+                        },
+                        {
+                            "name": "webKybUrl",
+                            "type": "string",
+                            "description": "The Web KYB URL generated for the application."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ]
+            }
+        }
+    ]
+}

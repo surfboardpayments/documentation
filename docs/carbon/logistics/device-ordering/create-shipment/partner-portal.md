@@ -1,0 +1,2 @@
+1. Log in, go to the **Merchants** tab, select the merchant, and navigate to the **Order Hardware** section.
+2. Fill in the details and choose the **Product** and **Quantity** to be shipped. Click **Order**.

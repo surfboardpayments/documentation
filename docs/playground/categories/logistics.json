@@ -1,0 +1,37 @@
+{
+    "id": "logistics",
+    "name": "Logistics",
+    "description": "Learn how to manage devices logistics",
+    "scenarios": [
+        {
+            "id": "create-shipment",
+            "name": "Create Shipment",
+            "description": "Create Shipment",
+            "order": 1
+        },
+        {
+            "id": "create-return",
+            "name": "Create Return",
+            "description": "Create Return",
+            "order": 2
+        },
+        {
+           "id": "ship-terminals-in-bulk", 
+           "name": "Ship Terminals in Bulk",
+           "description": "Ship Terminals in Bulk",
+           "order": 3
+        },
+        {
+            "id": "fetch-partner-orders",
+            "name": "Fetch Partner Orders",
+            "description": "Fetch Partner Orders",
+            "order": 4
+        },
+        {
+            "id": "fetch-merchant-orders",
+            "name": "Fetch Merchant Orders",
+            "description": "Fetch Merchant Orders",
+            "order": 5
+        }
+    ]
+}

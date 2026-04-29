@@ -1,0 +1,73 @@
+{
+    "scenarioId": "update-variant-inventory",
+    "scenarioName": "update-variant-inventory",
+    "steps": [
+        {
+            "id": "update-variant-inventory",
+            "name": "Update Variant Inventory",
+            "description": "Update Variant Inventory",
+            "order": 1,
+            "method": "PATCH",
+            "endpoint": "catalog/{{catalogId}}/products/{{productId}}/variants/{{variantId}}/inventory",
+            "guidePath": "/carbon/additional-operations/update-variant-inventory",
+            "payload": {
+                "storeId": "8136a645a2c2d1bb0f",
+                "operation": "STOCK_UP",
+                "quantity": 15,
+                "unit": "nos"
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "storeId",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Unique identifier of the store where the variant exists."
+                    },
+                    {
+                        "name": "operation",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Defines the way in which the existing variant stock is modified.",
+                        "possibleValues": [
+                            {
+                                "value": "STOCK_UP",
+                                "description": "Indicates an addition to the currently available variant stock."
+                            },
+                            {
+                                "value": "STOCK_DOWN",
+                                "description": "Decrease the quantity in available variant stock."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "quantity",
+                        "type": "number",
+                        "mandatory": true,
+                        "description": "Defines the number of units of a specific variant that are available in stock."
+                    },
+                    {
+                        "name": "unit",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "This refers to the metric unit of the variant. The possible values are 'm' , 'mm' , 'cm' , 'km' , 'in' , 'ft' , 'mi' , 'kg' , 'g' , 'mg' , 'lb' , 'oz' , 'l' , 'ml' , 'cu. m' , 'gal' , 'pt' , 'fl oz' , 'W' , 'kW' , 'kWh' , 'sq m' , 'sq km' , 'sq ft' , 'h' , 'min' , 's' , 'days' , 'wk' , 'mn' , 'yr' , 'nos'."
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

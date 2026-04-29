@@ -1,0 +1,661 @@
+{
+    "title": "Service Providers API",
+    "description": "The Service Providers API allows partners to manage service provider applications, onboarding, and retrieve service provider information.",
+    "endpoints": [
+        {
+            "fragment": "Create Service Provider",
+            "method": "POST",
+            "link": "API_URL/partners/:partnerId/service-providers"
+        },
+        {
+            "fragment": "Fetch Service Provider for Partner",
+            "method": "GET",
+            "link": "API_URL/partners/:partnerId/service-providers"
+        },
+        {
+            "fragment": "Fetch Service Provider for Merchant",
+            "method": "GET",
+            "link": "API_URL/merchants/:merchantId/service-providers"
+        },
+        {
+            "fragment": "Get All Service Provider Applications",
+            "method": "GET",
+            "link": "API_URL/partners/:partnerId/service-providers/applications"
+        },
+        {
+            "fragment": "Fetch Service Provider Application Status",
+            "method": "GET",
+            "link": "API_URL/partners/:partnerId/service-providers/applications/:applicationId"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Create Service Provider",
+            "description": "This API allows partners to create a new service provider application with company information and control fields.",
+            "new": true,
+            "reqParams": [
+                {
+                    "name": "country",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Two-letter ISO country code where the service provider operates."
+                },
+                {
+                    "name": "organisation",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Organization details for the service provider.",
+                    "reqParams": [
+                        {
+                            "name": "corporateId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Corporate identification number of the organization."
+                        }
+                    ]
+                },
+                {
+                    "name": "controlFields",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Control fields for service provider configuration.",
+                    "reqParams": [
+                        {
+                            "name": "isServiceProvider",
+                            "type": "boolean",
+                            "mandatory": true,
+                            "description": "Flag indicating whether this entity is a service provider."
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data containing the application details.",
+                    "resParams": [
+                        {
+                            "name": "applicationId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unique identifier for the created service provider application."
+                        },
+                        {
+                            "name": "webKybUrl",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "URL for the web-based KYB (Know Your Business) process."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/partners/:partnerId/service-providers",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"country\":\"SE\",\"organisation\":{\"corporateId\":\"3532007322\"},\"controlFields\":{\"isServiceProvider\":true}}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"applicationId\": \"838ca3a7c530200810\",\n    \"webKybUrl\": \"https://web-kyb-dev.web.app/838ca3a7c530200810?pi=QGv2Kgu9q0WAdg6FjkK0iEliyh8l61yxIXnaf0M70l4psKXW_6KihWL4wcY2aL0NfI5aM69J7bYUisZ8ecrFTNMrj4KU1ZjrN5Q3O9hcqlEgc6oQACb2eLM7SwwP0006\"\n  },\n  \"message\": \"Merchant application created successfully.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Service Provider for Partner",
+            "description": "This API allows partners to retrieve all service providers associated with their partner account.",
+            "new": true,
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data containing service provider information.",
+                    "resParams": [
+                        {
+                            "name": "serviceProviders",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "Array of service provider details.",
+                            "resParams": [
+                                {
+                                    "name": "serviceProviderId",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Unique identifier of the service provider."
+                                },
+                                {
+                                    "name": "personId",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Person identifier if applicable, null otherwise."
+                                },
+                                {
+                                    "name": "corporateId",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Corporate identification number."
+                                },
+                                {
+                                    "name": "nationalId",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "National identification number if applicable, null otherwise."
+                                },
+                                {
+                                    "name": "serviceType",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Type of service provided, null if not specified."
+                                },
+                                {
+                                    "name": "name",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Name of the service provider, null if not specified."
+                                },
+                                {
+                                    "name": "address",
+                                    "type": "object",
+                                    "mandatory": true,
+                                    "description": "Address information of the service provider.",
+                                    "resParams": [
+                                        {
+                                            "name": "addressLine1",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "First line of the address."
+                                        },
+                                        {
+                                            "name": "city",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "City of the address."
+                                        },
+                                        {
+                                            "name": "countryCode",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Two-letter ISO country code."
+                                        },
+                                        {
+                                            "name": "postalCode",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Postal code of the address."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "phoneNumber",
+                                    "type": "object",
+                                    "mandatory": true,
+                                    "description": "Phone number information.",
+                                    "resParams": [
+                                        {
+                                            "name": "number",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Phone number."
+                                        },
+                                        {
+                                            "name": "code",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Country code for the phone number."
+                                        },
+                                        {
+                                            "name": "role",
+                                            "type": "string",
+                                            "mandatory": false,
+                                            "description": "Role associated with the phone number, null if not specified."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "email",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Email address of the service provider."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/partners/:partnerId/service-providers",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"serviceProviders\": [\n      {\n        \"serviceProviderId\": \"8385f437bc6d200b50\",\n        \"personId\": null,\n        \"corporateId\": \"5000008202\",\n        \"nationalId\": null,\n        \"serviceType\": null,\n        \"name\": null,\n        \"address\": {\n          \"addressLine1\": \"Pacocha - Hand\",\n          \"city\": \"Denesik Brook\",\n          \"countryCode\": \"SE\",\n          \"postalCode\": \"61050\"\n        },\n        \"phoneNumber\": {\n          \"number\": \"701208734\",\n          \"code\": \"46\",\n          \"role\": null\n        },\n        \"email\": \"harish@surfboard.se\"\n      }\n    ]\n  },\n  \"message\": \"Service providers fetched successfully.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Service Provider for Merchant",
+            "description": "This API allows merchants to retrieve all service providers associated with their merchant account.",
+            "new": true,
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data containing service provider information.",
+                    "resParams": [
+                        {
+                            "name": "serviceProviders",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "Array of service provider details.",
+                            "resParams": [
+                                {
+                                    "name": "serviceProviderId",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Unique identifier of the service provider."
+                                },
+                                {
+                                    "name": "personId",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Person identifier if applicable, null otherwise."
+                                },
+                                {
+                                    "name": "corporateId",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Corporate identification number."
+                                },
+                                {
+                                    "name": "nationalId",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "National identification number if applicable, null otherwise."
+                                },
+                                {
+                                    "name": "serviceType",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Type of service provided, null if not specified."
+                                },
+                                {
+                                    "name": "name",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Name of the service provider, null if not specified."
+                                },
+                                {
+                                    "name": "address",
+                                    "type": "object",
+                                    "mandatory": true,
+                                    "description": "Address information of the service provider.",
+                                    "resParams": [
+                                        {
+                                            "name": "addressLine1",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "First line of the address."
+                                        },
+                                        {
+                                            "name": "city",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "City of the address."
+                                        },
+                                        {
+                                            "name": "countryCode",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Two-letter ISO country code."
+                                        },
+                                        {
+                                            "name": "postalCode",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Postal code of the address."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "phoneNumber",
+                                    "type": "object",
+                                    "mandatory": true,
+                                    "description": "Phone number information.",
+                                    "resParams": [
+                                        {
+                                            "name": "number",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Phone number."
+                                        },
+                                        {
+                                            "name": "code",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Country code for the phone number."
+                                        },
+                                        {
+                                            "name": "role",
+                                            "type": "string",
+                                            "mandatory": false,
+                                            "description": "Role associated with the phone number, null if not specified."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "email",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Email address of the service provider."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/merchants/:merchantId/service-providers",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"serviceProviders\": [\n      {\n        \"serviceProviderId\": \"8385f437bc6d200b50\",\n        \"personId\": null,\n        \"corporateId\": \"5000008202\",\n        \"nationalId\": null,\n        \"serviceType\": null,\n        \"name\": null,\n        \"address\": {\n          \"addressLine1\": \"Pacocha - Hand\",\n          \"city\": \"Denesik Brook\",\n          \"countryCode\": \"SE\",\n          \"postalCode\": \"61050\"\n        },\n        \"phoneNumber\": {\n          \"number\": \"701208734\",\n          \"code\": \"46\",\n          \"role\": null\n        },\n        \"email\": \"harish@surfboard.se\"\n      }\n    ]\n  },\n  \"message\": \"Service providers fetched successfully for merchant.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Get All Service Provider Applications",
+            "description": "This API allows partners to retrieve all service provider applications with optional filtering by application type. Supported application types are ONBOARDING and RENEWAL.",
+            "new": true,
+            "query": "To Get All Service Provider Applications API pass in optional query param <span class='font-semibold'>applicationType</span> as string. Supported values: ONBOARDING, RENEWAL.",
+            "reqParams": [
+                {
+                    "name": "applicationType",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Filter applications by type. Supported values are 'ONBOARDING' and 'RENEWAL'. Can be a single value or comma-separated values like 'ONBOARDING,RENEWAL'. If not provided, defaults to fetching ONBOARDING applications. Passed as a query parameter."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Array of service provider applications.",
+                    "resParams": [
+                        {
+                            "name": "applicationId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unique identifier of the application."
+                        },
+                        {
+                            "name": "country",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Country code where the service provider operates."
+                        },
+                        {
+                            "name": "corporateId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Corporate identification number."
+                        },
+                        {
+                            "name": "applicationStatus",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Current status of the application."
+                        },
+                        {
+                            "name": "createdAt",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "ISO timestamp when the application was created."
+                        },
+                        {
+                            "name": "lastUpdatedAt",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "ISO timestamp when the application was last updated."
+                        },
+                        {
+                            "name": "webKybUrl",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "URL for the web-based KYB process, if available."
+                        },
+                        {
+                            "name": "legalName",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Legal name of the service provider, if available."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/partners/:partnerId/service-providers/applications",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": [\n    {\n      \"applicationId\": \"838ca3a7c530200810\",\n      \"country\": \"SE\",\n      \"corporateId\": \"3532007322\",\n      \"applicationStatus\": \"APPLICATION_INITIATED\",\n      \"createdAt\": \"2025-10-10T10:32:47.565Z\",\n      \"lastUpdatedAt\": \"2025-10-10T10:32:47.565Z\",\n      \"webKybUrl\": \"https://web-kyb-dev.web.app/838ca3a7c530200810?pi=QGv2Kgu9q0WAdg6FjkK0iEliyh8l61yxIXnaf0M70l4psKXW_6KihWL4wcY2aL0NfI5aM69J7bYUisZ8ecrFTNMrj4KU1ZjrN5Q3O9hcqlEgc6oQACb2eLM7SwwP0006\",\n      \"legalName\": \"Turner, Runte and Kemmer\"\n    },\n    {\n      \"applicationId\": \"838ca332c530200310\",\n      \"country\": \"SE\",\n      \"corporateId\": \"5834862013\",\n      \"applicationStatus\": \"APPLICATION_STARTED\",\n      \"createdAt\": \"2025-10-10T10:28:53.740Z\",\n      \"lastUpdatedAt\": \"2025-10-10T10:39:34.614Z\",\n      \"webKybUrl\": \"https://web-kyb-dev.web.app/838ca332c530200310?pi=rZzanQBc-0lZgNKHpPE0_ou4KDDcH1nXxKDuqS07IdTnTOQ-k62W--U2uyB21T2-ipMtS6E7iA6LLMb8T52FYHGd54jZX9nOdzM1YA9qNlZgT3n8_AZTcyC3ljNm0002\",\n      \"legalName\": \"LOCO SP OBERBRUNNER LLC\"\n    }\n  ],\n  \"message\": \"Applications of partner fetched successfully with partnerId: 8113d3f8403b380409.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Service Provider Application Status",
+            "description": "This API allows partners to retrieve the status of a specific service provider application by its ID.",
+            "new": true,
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data containing application status information.",
+                    "resParams": [
+                        {
+                            "name": "onboardingStatus",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Current onboarding status, null if not yet started."
+                        },
+                        {
+                            "name": "applicationStatus",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Current status of the application."
+                        },
+                        {
+                            "name": "serviceProviderId",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Service provider ID once approved, null if still pending."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/partners/:partnerId/service-providers/applications/:applicationId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"onboardingStatus\": null,\n    \"applicationStatus\": \"APPLICATION_INITIATED\",\n    \"serviceProviderId\": null\n  },\n  \"message\": \"Service provider application status fetched successfully\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

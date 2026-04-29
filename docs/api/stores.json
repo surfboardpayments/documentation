@@ -1,0 +1,1365 @@
+{
+    "title": "Stores API",
+    "description": "Stores represent the physical or virtual location of sales. Stores have to be created for each merchant before they can register terminals to accept payments. Onboarded merchants can have one or more stores created under them based on their business requirements.",
+    "endpoints": [
+        {
+            "fragment": "Create Store",
+            "method": "POST",
+            "link": "API_URL/partners/:partnerId/merchants/:merchantId/stores"
+        },
+        {
+            "fragment": "Deactivate a Store",
+            "method": "DELETE",
+            "link": "API_URL/partners/:partnerId/merchants/:merchantId/stores/:storeId"
+        },
+        {
+            "fragment": "Fetch One Store",
+            "method": "GET",
+            "link": "API_URL/stores/:storeId"
+        },
+        {
+            "fragment": "Fetch Store Details",
+            "method": "GET",
+            "link": "API_URL/partners/:partnerId/merchants/:merchantId/stores/:storeId"
+        },
+        {
+            "fragment": "Update Store Details",
+            "method": "PUT",
+            "link": "API_URL/partners/:partnerId/merchants/:merchantId/stores/:storeId"
+        },
+        {
+            "fragment": "Fetch All Store Terminals",
+            "method": "GET",
+            "link": "API_URL/partners/:partnerId/merchants/:merchantId/stores/:storeId/terminals"
+        },
+        {
+            "fragment": "Fetch All Stores",
+            "method": "GET",
+            "link": "API_URL/stores"
+        },
+        {
+            "fragment": "Fetch Stores",
+            "method": "GET",
+            "link": "API_URL/partners/:partnerId/merchants/:merchantId/stores"
+        },
+        {
+            "fragment": "Verify Domain for Stores",
+            "method": "POST",
+            "link": "API_URL/partners/:partnerId/merchants/:merchantId/stores/:storeId/verify"
+        },
+        {
+            "fragment": "Fetch Store Domains",
+            "method": "POST",
+            "link": "API_URL/partners/:partnerId/merchants/:merchantId/stores/:storeId/online"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Create Store",
+            "description": "Creates a store under a merchant. Use this API to create a store to which you can register your terminals. You can create a single store or multiple stores under a merchant based on your requirements.",
+            "reqParams": [
+                {
+                    "name": "storeName",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Name of the store."
+                },
+                {
+                    "name": "email",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Email address of the store. Email address in mandatory to support online payments."
+                },
+                {
+                    "name": "phoneNumber",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Contact number of the store in code and number format.",
+                    "reqParams": [
+                        {
+                            "name": "code",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "International dialing code identifying the country or region."
+                        },
+                        {
+                            "name": "number",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "A string of numbers ranging from 0-9 with a length of 5-15 characters."
+                        }
+                    ]
+                },
+                {
+                    "name": "address",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Address of the store.",
+                    "reqParams": [
+                        {
+                            "name": "addressLine1",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "First line of address."
+                        },
+                        {
+                            "name": "addressLine2",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Second line of address."
+                        },
+                        {
+                            "name": "addressLine3",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Third line of address."
+                        },
+                        {
+                            "name": "city",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Name of the city where the store is located."
+                        },
+                        {
+                            "name": "countryCode",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Two-letter ISO country code in uppercase, representing the location of the store."
+                        },
+                        {
+                            "name": "postalCode",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Postal code of the store."
+                        }
+                    ]
+                },
+                {
+                    "name": "acquirerMID",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Acquirer Merchant ID is a mandatory parameter for PF partners who want to support a store based acquiring model.",
+                    "conditional": "<span>Dependent on supporting a <br>store-based acquiring model</br></span>"
+                },
+                {
+                    "name": "onlineInfo",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "In order to start accepting online payments you need to create an online store which requires some additional properties such as the following.",
+                    "reqParams": [
+                        {
+                            "name": "merchantWebshopURL",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "This is the web-shop URL of the merchant."
+                        },
+                        {
+                            "name": "paymentPageHostURL",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "This is the URL of the payment page. This is required for integrating online payments using SDK mode."
+                        },
+                        {
+                            "name": "termsAndConditionsURL",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "This is the URL of the T&C of the merchant’s web-shop, it has to contain the refund policy."
+                        },
+                        {
+                            "name": "privacyPolicyURL",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "This is the URL of the privacy policy of the merchant."
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "storeId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Store ID of the created store."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": " The Merchant ID of the merchant under which the store is created."
+                        },
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Name of the store."
+                        },
+                        {
+                            "name": "address",
+                            "type": "object",
+                            "mandatory": true,
+                            "description": "Address of the store.",
+                            "resParams": [
+                                {
+                                    "name": "careOf",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Name of the addressee that is accepting the correspondence for the intended recipient."
+                                },
+                                {
+                                    "name": "addressLine1",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "First line of address."
+                                },
+                                {
+                                    "name": "addressLine2",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Second line of address."
+                                },
+                                {
+                                    "name": "addressLine3",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Third line of address."
+                                },
+                                {
+                                    "name": "city",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Name of the City where the store is located."
+                                },
+                                {
+                                    "name": "countryCode",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Two-letter ISO country code in uppercase, representing the location of the store."
+                                },
+                                {
+                                    "name": "postalCode",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Postal Code of the place where the store is located."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "phone",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Contact number of the store."
+                        },
+                        {
+                            "name": "email",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Email address of the store."
+                        },
+                        {
+                            "name": "merchantURLDomainVerficationKey",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "This is a key to set and verify that the merchant owns the domain of the URL."
+                        },
+                        {
+                            "name": "paymentPageURLDomainVerficationKey",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "This is a key to set and verify the payment page domain URL."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message that describes the status of the request"
+                }
+            ],
+            "method": "POST",
+            "path": "/partners/:partnerId/merchants/:merchantId/stores",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"storeName\":\"Trial Store\",\"email\":\"TS@gmail.com\",\"phoneNumber\":{\"code\":\"91\",\"number\":\"3214576980\"},\"address\":{\"addressLine1\":\"Hagmarksgatan 3\",\"addressLine2\":\"Suite 724\",\"addressLine3\":\"North\",\"city\":\"Stockholm\",\"countryCode\":\"SE\",\"postalCode\":\"103 16\"},\"onlineInfo\":{\"merchantWebshopURL\":\"https://testmerchantportal.com/home\",\"paymentPageHostURL\":\"https://testmerchantportal.com/payment\",\"termsAndConditionsURL\":\"https://testmerchantportal.com/terms\",\"privacyPolicyURL\":\"https://testmerchantportal.com/privacy\"}}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"storeId\": \"81d64e7174dcb00b0f\",\n\t\t\"merchantId\": \"818712cdbcb670070e\",\n\t\t\"name\": \"Trial Store\",\n\t\t\"address\": {\n\t\t\t\t\"addressLine1\":\"10\",\n\t\t\t\t\"addressLine2\":null ,\n\t\t\t\t\"addressLine3\":null ,\n\t\t\t\t\"city\": \"Stockholm\",\n\t\t\t\t\"countryCode\": \"SE\",\n\t\t\t\t\"postalCode\": \"103 16\"\n\t\t},\n\t\t\"phone\": \"3214576980\",\n\t\t\"email\": \"TS@gmail.com\",\n\t\t\"merchantUrlDomainVerificationKey\": \"499470649f03b53fa1175659d4389743974710260b7f410313487e6062b3d559\",\n\t    \"paymentPageUrlDomainVerificationKey\": \"2179beab4f5e8c3960615205f042939a2ccc6c51a6e5923c9c068b3d9a645590\"\n\t},\n\t\"message\": \"Store Created Successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Deactivate a Store",
+            "description": "Deactivates a store. Use this API to deactivate any store under a merchant. You can delete a store instantly or schedule it to be deleted at a later date. Stores can be deleted only if there are no terminals registered to it. If a store has terminals registered to it, you will have to delink the terminal from the store or change the terminal to another store under the same merchant.",
+            "reqParams": [
+                {
+                    "name": "deactivationDate",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Date of deactivation of the store in yyyy-mm-dd format."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Message describing the status of store deactivation."
+                }
+            ],
+            "method": "DELETE",
+            "path": "/partners/:partnerId/merchants/:merchantId/stores/:storeId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Store deactivation initiated successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Store Details",
+            "description": "Retrieves information for a specific store. Use this API to get information regarding a particular store created under a merchant.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "storeId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Store ID of the store."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "The Merchant ID of the merchant under which the store is created."
+                        },
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Name of the store."
+                        },
+                        {
+                            "name": "status",
+                            "type": "string",
+                            "description": "Status of the store.",
+                            "possibleValues": [
+                                {
+                                    "value": "ACTIVE",
+                                    "description": "The store is active and ready for payments."
+                                },
+                                {
+                                    "value": "DEACTIVATED",
+                                    "description": "The store is deactivated."
+                                },
+                                {
+                                    "value": "BLOCKED",
+                                    "description": "The store is blocked from further activities."
+                                },
+                                {
+                                    "value": "INACTIVE",
+                                    "description": "The store is in verification stage."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "onlineOnboardingStatus",
+                            "type": "string",
+                            "description": "Onboarding status of the online store.",
+                            "possibleValues": [
+                                {
+                                    "value": "APPROVED",
+                                    "description": "The store is approved for online payments."
+                                },
+                                {
+                                    "value": "INITIATED",
+                                    "description": "The online store verification is initiated."
+                                },
+                                {
+                                    "value": "FAILED",
+                                    "description": "Failed to verify the online store."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "address",
+                            "type": "object",
+                            "mandatory": true,
+                            "description": "Address of the store.",
+                            "resParams": [
+                                {
+                                    "name": "careOf",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Name of the addressee that is accepting the correspondence for the intended recipient."
+                                },
+                                {
+                                    "name": "addressLine1",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "The first line of the store's address."
+                                },
+                                {
+                                    "name": "addressLine2",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "The second line of the store's address."
+                                },
+                                {
+                                    "name": "addressLine3",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "The third line of the store's address."
+                                },
+                                {
+                                    "name": "city",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Name of the City where the store is located."
+                                },
+                                {
+                                    "name": "countryCode",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Two-letter ISO country code in uppercase, representing the location of the store."
+                                },
+                                {
+                                    "name": "postalCode",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Postal Code of the place where the store is located."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "phone",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Contact number of the store. "
+                        },
+                        {
+                            "name": "email",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Email address of the store. "
+                        },
+                        {
+                            "name": "onlineInfo",
+                            "type": "object",
+                            "mandatory": false,
+                            "description": "In order to start accepting online payments you need to create an online store which requires some additional properties such as the following.",
+                            "resParams": [
+                                {
+                                    "name": "merchantWebshopURL",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "This is the web-shop URL of the merchant."
+                                },
+                                {
+                                    "name": "paymentPageHostURL",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "This is the URL of the payment page."
+                                },
+                                {
+                                    "name": "termsAndConditionsURL",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "This is the URL of the T&C of the merchant’s web-shop, it has to contain the refund policy."
+                                },
+                                {
+                                    "name": "privacyPolicyURL",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "This is the URL of the privacy policy of the merchant."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Message describing the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/partners/:partnerId/merchants/:merchantId/stores/:storeId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"storeId\": \"824bd4a739dc200b0f\",\n\t\t\"merchantId\": \"81a641f8b3cfd0070e\",\n\t\t\"name\": \"TEST\",\n\t\t\"status\": \"ACTIVE\",\n\t\t\"onlineOnboardingStatus\": \"APPROVED\",\n\t\t\"address\": {\n\t\t\t\"careOf\": null,\n\t\t\t\"addressLine1\": \"Main Street 123\",\n\t\t\t\"addressLine2\": \"6th lane\",\n\t\t\t\"addressLine3\": \"Building C\",\n\t\t\t\"city\": \"Stockolm\",\n\t\t\t\"countryCode\": \"SE\",\n\t\t\t\"postalCode\": \"103 16\"\n\t\t},\n\t\t\"onlineInfo\": {\n\t\t\"merchantWebshopURL\": \"https://testmerchant.com\",\n\t\t\"termsAndConditionsURL\": \"https://www.termsandconditions.com\",\n\t\t\"privacyPolicyURL\": \"https://www.privacypolicy.com\"\n\t  },\n\t\t\"phone\": \"+46 23423423\",\n\t\t\"email\": \"test@gmail.com\"\n\t},\n\t\"message\": \"Fetched store by ID\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Update Store Details",
+            "description": "Updates the store details. You can use this API to edit the name, address information,  email address, and phone number of a store.",
+            "reqParams": [
+                {
+                    "name": "storeName",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Name of the store."
+                },
+                {
+                    "name": "email",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Email address of the store."
+                },
+                {
+                    "name": "phoneNumber",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "Contact number of the store in code and number format.",
+                    "reqParams": [
+                        {
+                            "name": "code",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "International dialing code identifying the country or region."
+                        },
+                        {
+                            "name": "number",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "A string of numbers ranging from 0-9 with a length of 5-15 characters"
+                        }
+                    ]
+                },
+                {
+                    "name": "address",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "Address of the store.",
+                    "reqParams": [
+                        {
+                            "name": "addressLine1",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "First line of address."
+                        },
+                        {
+                            "name": "addressLine2",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Second line of address."
+                        },
+                        {
+                            "name": "addressLine3",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Third line of address."
+                        },
+                        {
+                            "name": "city",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "City where the store is located."
+                        },
+                        {
+                            "name": "countryCode",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Two-letter ISO country code in uppercase, representing the location of the store."
+                        },
+                        {
+                            "name": "postalCode",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Postal code of the store."
+                        }
+                    ]
+                },
+                {
+                    "name": "onlineInfo",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "In order to update physical store into online store, some additional properties are required. Online Info can be updated only once.",
+                    "conditional": "<span>Dependent on supporting a <br>store</br></span>",
+                    "reqParams": [
+                        {
+                            "name": "merchantWebshopURL",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "This is the web-shop URL of the merchant."
+                        },
+                        {
+                            "name": "paymentPageHostURL",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "This is the URL of the payment page. Required for integrating online payments using SDK mode."
+                        },
+                        {
+                            "name": "termsAndConditionsURL",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "This is the URL of the T&C of the merchant’s web-shop, it has to contain the refund policy."
+                        },
+                        {
+                            "name": "privacyPolicyURL",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "This is the URL of the privacy policy of the merchant."
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request. 'SUCCESS' | 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "merchantURLDomainVerficationKey",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "This is a key to set and verify that the merchant owns the domain of the URL."
+                        },
+                        {
+                            "name": "paymentPageURLDomainVerficationKey",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "This is a key to set and verify the payment page domain URL."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Message describing the status of the request."
+                }
+            ],
+            "method": "PUT",
+            "path": "/partners/:partnerId/merchants/:merchantId/stores/:storeId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"storeName\":\"Updated Store\",\"email\":\"US@gmail.com\",\"phoneNumber\":{\"code\":\"46\",\"number\":\"7312345678\"},\"address\":{\"addressLine1\":\"Hagmarksgatan 3\",\"addressLine2\":\"Suite 724\",\"addressLine3\":\"North\",\"city\":\"Stockholm\",\"countryCode\":\"SE\",\"postalCode\":\"103 16\"}}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\":{\n\t  \"merchantUrlDomainVerificationKey\": \"499470649f03b53fa1175659d4389743974710260b7f410313487e6062b3d559\",\n\t  \"paymentPageUrlDomainVerificationKey\": \"2179beab4f5e8c3960615205f042939a2ccc6c51a6e5923c9c068b3d9a645590\"\n\t},\n\t\"message\": \"Store data updated successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch All Store Terminals",
+            "pagination": true,
+            "new": true,
+            "query": "To query terminals by terminal type, send in <span class='font-semibold'>terminalType</span> as query param.",
+            "description": "Retrieves a list of all terminals associated with a specific store. You can use this API to get information regarding all the terminals registered under a store.",
+            "reqParams": [
+                {
+                    "name": "terminalType",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Optional query param to filter terminals by terminal type.",
+                    "possibleValues": [
+                        {
+                            "value": "surfpad",
+                            "description": "Hardware terminal with a physical keypad."
+                        },
+                        {
+                            "value": "surftouch",
+                            "description": "Android terminal with custom payment apps, digital receipts etc."
+                        },
+                        {
+                            "value": "surfprint",
+                            "description": "Android terminal with a built-in printer."
+                        },
+                        {
+                            "value": "checkoutPro",
+                            "description": "Complete checkout solution with a customer facing screen."
+                        },
+                        {
+                            "value": "checkoutX",
+                            "description": "Software checkout solution for NFC-enabled Android devices to accept contactless card payments."
+                        },
+                        {
+                            "value": "PaymentPage",
+                            "description": "Surfboard-hosted payment page where all UI and configurations are managed by Surfboard."
+                        },
+                        {
+                            "value": "SelfHostedPage",
+                            "description": "Merchant-hosted payment page where Surfboard renders payment fields within the merchant’s environment."
+                        },
+                        {
+                            "value": "MerchantInitiated",
+                            "description": "Used for Merchant Initiated Transactions (MIT), allowing payments to be triggered by the merchant without customer interaction."
+                        },
+                        {
+                            "value": "printer",
+                            "description": "Standalone printing device."
+                        },
+                        {
+                            "value": "surftester",
+                            "description": "Surfboard Android based test terminal used during integrations."
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request. 'SUCCESS' | 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "terminalId",
+                            "type": "String",
+                            "description": "Store ID of the terminal."
+                        },
+                        {
+                            "name": "terminalType",
+                            "type": "string",
+                            "description": "Describes the type of the terminal.",
+                            "possibleValues": [
+                                {
+                                    "value": "surfpad",
+                                    "description": "Hardware terminal with a physical keypad."
+                                },
+                                {
+                                    "value": "surftouch",
+                                    "description": "Android terminal with custom payment apps, digital receipts etc."
+                                },
+                                {
+                                    "value": "surfprint",
+                                    "description": "Android terminal with a built-in printer."
+                                },
+                                {
+                                    "value": "checkoutPro",
+                                    "description": "Complete checkout solution with a customer facing screen."
+                                },
+                                {
+                                    "value": "checkoutX",
+                                    "description": "Software checkout solution for NFC-enabled Android devices to accept contactless card payments."
+                                },
+                                {
+                                    "value": "PaymentPage",
+                                    "description": "Surfboard-hosted payment page where all UI and configurations are managed by Surfboard."
+                                },
+                                {
+                                    "value": "SelfHostedPage",
+                                    "description": "Merchant-hosted payment page where Surfboard renders payment fields within the merchant’s environment."
+                                },
+                                {
+                                    "value": "MerchantInitiated",
+                                    "description": "Used for Merchant Initiated Transactions (MIT), allowing payments to be triggered by the merchant without customer interaction."
+                                },
+                                {
+                                    "value": "printer",
+                                    "description": "Standalone printing device."
+                                },
+                                {
+                                    "value": "surftester",
+                                    "description": "Surfboard Android based test terminal used during integrations."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "softwareVersion",
+                            "type": "String",
+                            "description": "Software version of the terminal."
+                        },
+                        {
+                            "name": "osType",
+                            "type": "string",
+                            "description": "Describes the type of operating system running on the terminals.",
+                            "possibleValues": [
+                                {
+                                    "value": "android",
+                                    "description": "Android operating system."
+                                },
+                                {
+                                    "value": "ios",
+                                    "description": "Apple's operating system for iPhones."
+                                },
+                                {
+                                    "value": "sb_firmware",
+                                    "description": "Surfboard firmware."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "osVersion",
+                            "type": "String",
+                            "description": "Operating System(OS) version of the terminal."
+                        },
+                        {
+                            "name": "deviceVendor",
+                            "type": "String",
+                            "description": "Device vendor of the terminal."
+                        },
+                        {
+                            "name": "deviceModel",
+                            "type": "String",
+                            "description": "Device model of the terminal."
+                        },
+                        {
+                            "name": "serialNo",
+                            "type": "String",
+                            "description": "Serial number of the terminal."
+                        },
+                        {
+                            "name": "storeId",
+                            "type": "String",
+                            "description": "The Store ID of the store under which the terminal is registered."
+                        },
+                        {
+                            "name": "linkedTerminalId",
+                            "type": "String",
+                            "description": "The Terminal ID of another terminal to which the current terminal is linked."
+                        },
+                        {
+                            "name": "terminalStatus",
+                            "type": "String",
+                            "description": "Status of the terminal. The terminal can be in any one of these states: 'REGISTERED' | 'ACTIVE' | 'IN_ACTIVE' | 'DE_REGISTERED’."
+                        },
+                        {
+                            "name": "terminalPaymentMethods",
+                            "type": "String",
+                            "description": "Payment methods supported by the terminal."
+                        },
+                        {
+                            "name": "startDate",
+                            "type": "String",
+                            "description": "Timestamp at which terminal was registered."
+                        },
+                        {
+                            "name": "terminalName",
+                            "type": "string",
+                            "description": "Name of the terminal used as a reference for users."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Message describing the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/merchants/:merchantId/stores/:storeId/terminals",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"terminalId\": \"81ff0cea07e4300105\",\n\t\t\t\"softwareVersion\": \"1.5.3\",\n\t\t\t\"osType\": \"android\",\n\t\t\t\"osVersion\": \"1.0.0.0\",\n\t\t\t\"deviceVendor\": \"Samsung\",\n\t\t\t\"deviceModel\": \"Galaxy N10\",\n\t\t\t\"serialNo\": null,\n\t\t\t\"storeId\": \"81fd3113680e60030f\",\n\t\t\t\"linkedTerminalId\": null,\n\t\t\t\"terminalStatus\": \"ACTIVE\",\n\t\t\t\"startDate\": \"2024-02-15T06:46:44.046Z\",\n\t\t\t\"terminalPaymentMethods\": [\n\t\t\t\t\"SWISH\",\n\t\t\t\t\"CASH\",\n\t\t\t\t\"SVEA_SWISH\"\n\t\t\t],\n\t\t\t\"terminalName\": \"surf-touch\",\n\t\t\t\"terminalType\": \"unknown\",\n\t\t\t\"batteryPercentage\": null,\n\t\t\t\"powerSource\": null,\n\t\t\t\"deviceNetwork\": null,\n\t\t\t\"turnOnTime\": null,\n\t\t\t\"terminalCurrencyCode\": \"NA\"\n\t\t},\n\t\t{\n\t\t\t\"terminalId\": \"81ff0ff487e4300b04\",\n\t\t\t\"softwareVersion\": \"4.0.12.0\",\n\t\t\t\"osType\": \"pinpad\",\n\t\t\t\"osVersion\": \"2.0.0.0\",\n\t\t\t\"deviceVendor\": \"Datecs\",\n\t\t\t\"deviceModel\": \"Datecs Bluepad 55\",\n\t\t\t\"serialNo\": \"4299989999\",\n\t\t\t\"storeId\": \"81fd3113680e60030f\",\n\t\t\t\"linkedTerminalId\": null,\n\t\t\t\"terminalStatus\": \"REGISTERED\",\n\t\t\t\"startDate\": \"2024-02-15T07:12:41.658Z\",\n\t\t\t\"terminalPaymentMethods\": [\n\t\t\t\t\"CARD\"\n\t\t\t],\n\t\t\t\"terminalName\": null,\n\t\t\t\"terminalType\": \"surfpad\",\n\t\t\t\"batteryPercentage\": null,\n\t\t\t\"powerSource\": null,\n\t\t\t\"deviceNetwork\": null,\n\t\t\t\"turnOnTime\": null,\n\t\t\t\"terminalCurrencyCode\": \"NA\"\n\t\t}\n\t],\n\t\"message\": \"Terminal records fetched successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Stores",
+            "description": "Retrieves a list of all stores associated with a specific merchant. You can use this API to get information regarding all the stores created under a particular merchant.",
+            "pagination": true,
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request. 'SUCCESS' | 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "storeId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Store ID of the store."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "The Merchant ID of the merchant under which the store is created."
+                        },
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Name of the store."
+                        },
+                        {
+                            "name": "address",
+                            "type": "object",
+                            "mandatory": true,
+                            "description": "Address of the store.",
+                            "resParams": [
+                                {
+                                    "name": "careOf",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Name of the addressee that is accepting the correspondence for the intended recipient."
+                                },
+                                {
+                                    "name": "addressLine1",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "The first line of the store's address."
+                                },
+                                {
+                                    "name": "addressLine3",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "The second line of the store's address."
+                                },
+                                {
+                                    "name": "addressLine3",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "The third line of the store's address."
+                                },
+                                {
+                                    "name": "city",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Name of the City where the store is located."
+                                },
+                                {
+                                    "name": "countryCode",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Two-letter ISO country code in uppercase, representing the location of the store."
+                                },
+                                {
+                                    "name": "postalCode",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Postal Code of the place where the store is located."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "phone",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Contact number of the store."
+                        },
+                        {
+                            "name": "email",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Email address of the store."
+                        },
+                        {
+                            "name": "onlineInfo",
+                            "type": "object",
+                            "mandatory": false,
+                            "description": "In order to start accepting online payments you need to create an online store which requires some additional properties such as the following.",
+                            "resParams": [
+                                {
+                                    "name": "merchantWebshopURL",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "This is the web-shop URL of the merchant."
+                                },
+                                {
+                                    "name": "paymentPageHostURL",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "This is the URL of the payment page."
+                                },
+                                {
+                                    "name": "termsAndConditionsURL",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "This is the URL of the T&C of the merchant’s web-shop, it has to contain the refund policy."
+                                },
+                                {
+                                    "name": "privacyPolicyURL",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "This is the URL of the privacy policy of the merchant."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Message describing the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/partners/:partnerId/merchants/:merchantId/stores",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"storeId\": \"824bd4a739dc200b0f\",\n\t\t\t\"merchantId\": \"81fa6b2d8d5dc8040e\",\n\t\t\t\"name\": \"Previous Store\",\n\t\t\t\"address\": {\n\t\t\t\t\"addressLine1\": \"No:3,10th street\",\n\t\t\t\t\"city\": \"København\",\n\t\t\t\t\"countryCode\": \"SE\",\n\t\t\t\t\"postalCode\": \"576462\"\n\t\t\t},\n\t\t\t\"phone\": \"12345678\",\n\t\t\t\"email\": \"PS@gmail.com\",\n\t\t\t\"onlineInfo\": {\n              \"merchantWebshopURL\": \"https://testmerchantportal.com/home\",\n              \"paymentPageHostURL\": \"https://testmerchantportal.com/payment\",\n              \"termsAndConditionsURL\": \"https://testmerchantportal.com/terms\",\n              \"privacyPolicyURL\": \"https://testmerchantportal.com/privacy\",\n            }\n\t\t},\n\t\t{\n\t\t\t\"storeId\": \"st_p5Hprp71IKuPGOCqkZSt5\",\n\t\t\t\"merchantId\": \"81fa6b2d8d5dc8040e\",\n\t\t\t\"name\": \"New Store\",\n\t\t\t\"address\": {\n\t\t\t\t\"addressLine1\": \"No:3,10th street\",\n\t\t\t\t\"city\": \"København\",\n\t\t\t\t\"countryCode\": \"SE\",\n\t\t\t\t\"postalCode\": \"576462\"\n\t\t\t},\n\t\t\t\"phone\": \"4775866734\",\n\t\t\t\"email\": \"NS@gmail.com\",\n\t\t\t\"onlineInfo\": {\n              \"merchantWebshopURL\": \"https://testmerchantportal.com/home\",\n              \"paymentPageHostURL\": \"https://testmerchantportal.com/payment\",\n              \"termsAndConditionsURL\": \"https://testmerchantportal.com/terms\",\n              \"privacyPolicyURL\": \"https://testmerchantportal.com/privacy\",\n            }\n\t\t}\n  ],\n  \"message\":\"Fetched stores successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Verify Store Domain",
+            "description": "Use this API to trigger a verify domain request with Surfboard.",
+            "reqParams": [
+                {
+                    "name": "domainType",
+                    "type": "String",
+                    "description": "Specify the domain to be verified.",
+                    "mandatory": true,
+                    "possibleValues": [
+                        {
+                            "value": "MERCHANT_WEBSHOP_URL",
+                            "description": "Use this to verify the merchant webshop domain."
+                        },
+                        {
+                            "value": "PAYMENT_PAGE_HOST_URL",
+                            "description": "To verify the payment page host domain use this."
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Message describing the status of domain verification of store."
+                }
+            ],
+            "method": "POST",
+            "path": "/partners/:partnerId/merchants/:merchantId/stores/:storeId/verify",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"domainType\":\"MERCHANT_WEBSHOP_URL\"}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "\n{\n  \"status\": \"SUCCESS\",\n  \"message\": \"Domain verification done successfully for store: 8254c42dc430e00e0f.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Store Domains",
+            "description": "This API retrieves the details of the store's domain.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "onlineStoreStatus",
+                            "type": "string",
+                            "description": "Status of the online store.",
+                            "possibleValues": [
+                                {
+                                    "value": "APPROVED",
+                                    "description": "The online store is approved for online payments."
+                                },
+                                {
+                                    "value": "INITIATED",
+                                    "description": "The online store verification is initiated."
+                                },
+                                {
+                                    "value": "FAILED",
+                                    "description": "Failed to verify the online store."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "domains",
+                            "type": "array",
+                            "description": "Contains the domain details.",
+                            "resParams": [
+                                {
+                                    "name": "status",
+                                    "type": "string",
+                                    "description": "The current status of the domain.",
+                                    "possibleValues": [
+                                        {
+                                            "value": "ACTIVE",
+                                            "description": "The domain is active."
+                                        },
+                                        {
+                                            "value": "DEACTIVATED",
+                                            "description": "The domain is deactivated."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "type",
+                                    "type": "string",
+                                    "description": "Refers to the type of the domain.",
+                                    "possibleValues": [
+                                        {
+                                            "value": "MERCHANT_WEBSHOP_URL",
+                                            "description": "This represents the merchant webshop domain."
+                                        },
+                                        {
+                                            "value": "PAYMENT_PAGE_HOST_URL",
+                                            "description": "This represents the payment page host."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "name",
+                                    "type": "string",
+                                    "description": "Name of the domain."
+                                },
+                                {
+                                    "name": "verificationKey",
+                                    "type": "string",
+                                    "description": "This is the key set in your domain which is used for verification."
+                                },
+                                {
+                                    "name": "isDomainVerified",
+                                    "type": "boolean",
+                                    "description": "Indicates whether the domain has been verified."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Message describing the status of domain verification of store."
+                }
+            ],
+            "method": "GET",
+            "path": "/partners/:partnerId/merchants/:merchantId/stores/:storeId/online",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"onlineStoreStatus\": \"APPROVED\",\n\t\t\"domains\": [\n\t\t\t{\n\t\t\t\t\"status\": \"ACTIVE\",\n\t\t\t\t\"type\": \"PAYMENT_PAGE_HOST_URL\",\n\t\t\t\t\"name\": \"www.surfpayapp.com\",\n\t\t\t\t\"verificationKey\": \"7fd242dd862a9f9f74ae11d62216f5729a5e5600e00b8d44300db41b4efcce68\",\n\t\t\t\t\"isDomainVerified\": true\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"status\": \"ACTIVE\",\n\t\t\t\t\"type\": \"MERCHANT_WEBSHOP_URL\",\n\t\t\t\t\"name\": \"test.surfboard.se\",\n\t\t\t\t\"verificationKey\": \"7fd242dd862a9f9f74ae11d62216f5729a5e5600e00b8d44300db41b4efcce68\",\n\t\t\t\t\"isDomainVerified\": true\n\t\t\t}\n\t\t]\n\t},\n\t\"message\": \"Online store domain details fetched successfully.\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

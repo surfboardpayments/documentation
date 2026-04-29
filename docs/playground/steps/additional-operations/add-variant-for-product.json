@@ -1,0 +1,164 @@
+{
+    "scenarioId": "add-variant-for-product",
+    "scenarioName": "Add Variant For Product",
+    "steps": [
+        {
+            "id": "add-variant-for-product",
+            "name": "Add Variant For Product",
+            "description": "Add Variant For Product",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "catalog/{{catalogId}}/products/{{productId}}/variants",
+            "guidePath": "/carbon/additional-operations/add-variant-for-product",
+            "payload": {
+                "storeId": "8136a645a2c2d1bb0f",
+                "variants": [
+                    {
+                        "name": "SurfPad Blue Variant",
+                        "description": "Blue variant of SurfPad",
+                        "costPrice": 10,
+                        "sellingPrice": 12,
+                        "currencyCode": "752",
+                        "productImages": [
+                            "https://res.cloudinary.com/martinsurf/image/upload/v1619101937/surfboardpayments/surfboard-icon.svg"
+                        ],
+                        "hsnCode": "123453",
+                        "barCode": "1212123454323",
+                        "attributeValues": [
+                            {
+                                "attributeKey": "colour",
+                                "displayName": "blue",
+                                "value": "#0000FF"
+                            },
+                            {
+                                "attributeKey": "size",
+                                "displayName": "medium",
+                                "value": "M"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "storeId",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Unique identifier of the store where the product exists."
+                    },
+                    {
+                        "name": "variants",
+                        "type": "array",
+                        "mandatory": true,
+                        "description": "Specifications of the product.",
+                        "reqParams": [
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Name of the variant."
+                            },
+                            {
+                                "name": "description",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Description of the variant."
+                            },
+                            {
+                                "name": "costPrice",
+                                "type": "number",
+                                "mandatory": false,
+                                "description": "Cost price of the variant."
+                            },
+                            {
+                                "name": "sellingPrice",
+                                "type": "number",
+                                "mandatory": false,
+                                "description": "Selling price of the variant."
+                            },
+                            {
+                                "name": "currencyCode",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "It refers to the standardised code used to represent a specific currency."
+                            },
+                            {
+                                "name": "hsnCode",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "A 6-digit uniform code that classifies for the known variant."
+                            },
+                            {
+                                "name": "barCode",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "A 6-digit uniform code that identifies the variant."
+                            },
+                            {
+                                "name": "productImages",
+                                "type": "array",
+                                "mandatory": false,
+                                "description": "An array of URLs showcasing the variant images."
+                            },
+                            {
+                                "name": "attributeValues",
+                                "type": "array",
+                                "mandatory": true,
+                                "description": "Use to show the available variants of the products.",
+                                "reqParams": [
+                                    {
+                                        "name": "attributeKey",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "This refers to the category of the variant."
+                                    },
+                                    {
+                                        "name": "displayName",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Name of the variant."
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Value of the variant."
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data.",
+                        "resParams": [
+                            {
+                                "name": "variants",
+                                "type": "array",
+                                "mandatory": true,
+                                "description": "Unique ID of the newly added variants."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

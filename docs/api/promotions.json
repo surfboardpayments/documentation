@@ -1,0 +1,693 @@
+{
+    "title": "Promotions API",
+    "description": "The Promotions API enables businesses to manage, update and retrieve promotional campaigns effectively.",
+    "endpoints": [
+        {
+            "fragment": "Create Promotion",
+            "method": "POST",
+            "link": "API_URL/merchants/:mId/stores/:sId/promotions"
+        },
+        {
+            "fragment": "Update Promotion",
+            "method": "PUT",
+            "link": "API_URL/merchants/:mId/stores/:sId/promotions/:promotionId"
+        },
+        {
+            "fragment": "Fetch Promotion by ID",
+            "method": "GET",
+            "link": "API_URL/merchants/:mId/stores/:sId/promotions/:promotionId"
+        },
+        {
+            "fragment": "Fetch Promotions",
+            "method": "GET",
+            "link": "API_URL/merchants/:mId/stores/:sId/promotions"
+        },
+        {
+            "fragment": "Delete Promotion",
+            "method": "DELETE",
+            "link": "API_URL/merchants/:mId/stores/:sId/promotions/:promotionId"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Create Promotion",
+            "comingSoon": true,
+            "description": "The Create Promotion API enables users to create new marketing promotions by defining attributes such as title, content, schedule, and priority.",
+            "reqParams": [
+                {
+                    "name": "merchantId",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "The unique identifier for the merchant creating the promotion."
+                },
+                {
+                    "name": "title",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "The title of the promotion."
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "The name of the promotion."
+                },
+                {
+                    "name": "description",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "A brief description of the promotion."
+                },
+                {
+                    "name": "assetUrl",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "URL of the promotion image."
+                },
+                {
+                    "name": "assetOpacity",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Opacity level of the promotional asset, ranging from 0 (fully transparent) to 1 (fully opaque)."
+                },
+                {
+                    "name": "backgroundColor",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Background color for the promotion, in hex format."
+                },
+                {
+                    "name": "contentTextColor",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Text color for the promotional content, in hex format."
+                },
+                {
+                    "name": "endProductUrl",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "URL of the product linked to the promotion."
+                },
+                {
+                    "name": "endProduct",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Product ID associated with the promotion."
+                },
+                {
+                    "name": "buttonLabel",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "The label for the action button in the promotion."
+                },
+                {
+                    "name": "priority",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "The priority of the promotion, where lower numbers indicate higher priority."
+                },
+                {
+                    "name": "type",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "The type of promotion.",
+                    "possibleValues": [
+                        {
+                            "value": "RECEIPT_BIG",
+                            "description": "Promotion displayed in a large spot on the receipt."
+                        },
+                        {
+                            "value": "RECEIPT_SMALL",
+                            "description": "Promotion displayed in a small spot on the receipt."
+                        },
+                        {
+                            "value": "IDLE_BIG_SPOT",
+                            "description": "Promotion displayed on the idle screen in a large spot."
+                        },
+                        {
+                            "value": "OTHER_SCREEN",
+                            "description": "Promotion displayed on other screens."
+                        }
+                    ]
+                },
+                {
+                    "name": "startDate",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "The start date of the promotion in 'MM-DD-YYYY' format."
+                },
+                {
+                    "name": "endDate",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "The end date of the promotion in 'MM-DD-YYYY' format."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "promotionId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unique identifier of the promotion."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/merchants/:mId/stores/:sId/promotions",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"title\":\"First Promotion\",\"name\":\"Slash sale\",\"description\":\"Slash sale on all fruits\",\"assetUrl\":\"https://www.surfpayapp.com/hubfs/connect/surfpay_checkout-companion.png\",\"type\":\"RECEIPT_BIG\",\"assetOpacity\":\"0\",\"backgroundColor\":\"#a1a1aa\",\"contentTextColor\":\"#78716c\",\"endProductUrl\":\"https://www.timestamp-converter.com/\",\"endProduct\":\"12345\",\"buttonLabel\":\"Click\",\"priority\":1,\"idleBigSpot\":true,\"receiptBig\":true,\"receiptSmall\":true,\"endDate\":\"05-05-2027\",\"startDate\":\"05-05-2025\"}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"promotionId\": \"ca_QvDucDKihDqNVYpia1_G0\"\n\t},\n\t\"message\": \"Promotion Created Successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Update Promotion",
+            "comingSoon": true,
+            "description": "The Update Promotion API allows users to modify existing marketing promotions by updating attributes.",
+            "reqParams": [
+                {
+                    "name": "merchantId",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "The unique identifier for the merchant updating the promotion."
+                },
+                {
+                    "name": "title",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "The title of the promotional campaign."
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "The name of the promotional campaign."
+                },
+                {
+                    "name": "description",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "A brief description of the promotion."
+                },
+                {
+                    "name": "assetUrl",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "URL of the promotion image."
+                },
+                {
+                    "name": "assetOpacity",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Opacity level of the promotional asset, ranging from 0 (fully transparent) to 1 (fully opaque)."
+                },
+                {
+                    "name": "backgroundColor",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Background color for the promotion, in hex format."
+                },
+                {
+                    "name": "contentTextColor",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Text color for the promotional content, in hex format."
+                },
+                {
+                    "name": "endProductUrl",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "URL of the product linked to the promotion."
+                },
+                {
+                    "name": "endProduct",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Product ID associated with the promotion."
+                },
+                {
+                    "name": "buttonLabel",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "The label for the action button in the promotion."
+                },
+                {
+                    "name": "priority",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "The priority of the promotion, where lower numbers indicate higher priority."
+                },
+                {
+                    "name": "campaignType",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "The type of promotion, such as 'RECEIPT_BIG' or 'RECEIPT_SMALL'."
+                },
+                {
+                    "name": "startDate",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "The start date of the promotion in 'MM-DD-YYYY' format."
+                },
+                {
+                    "name": "endDate",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "The end date of the promotion in 'MM-DD-YYYY' format."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "PUT",
+            "path": "/merchants/:mId/stores/:sId/promotions/:promotionId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Promotion Updated Successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Promotion by ID",
+            "comingSoon": true,
+            "description": "The Fetch Promotion by ID API retrieves detailed information about a specific promotion using its unique promotion ID. ",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "promotionId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unique identifier of the promotion."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unique identifier of the merchant associated with the promotion."
+                        },
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Name of the promotion."
+                        },
+                        {
+                            "name": "title",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Title of the promotion."
+                        },
+                        {
+                            "name": "description",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Description of the promotion."
+                        },
+                        {
+                            "name": "storeId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unique identifier of the store where the promotion is running."
+                        },
+                        {
+                            "name": "assetUrl",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "URL of the promotion image."
+                        },
+                        {
+                            "name": "endProduct",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Product ID associated with the promotion."
+                        },
+                        {
+                            "name": "buttonLabel",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Label for the action button in the promotion."
+                        },
+                        {
+                            "name": "startDate",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Start date of the promotion in ISO 8601 format."
+                        },
+                        {
+                            "name": "endDate",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "End date of the promotion in ISO 8601 format."
+                        },
+                        {
+                            "name": "priority",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Priority of the promotion, where lower numbers represent higher priority."
+                        },
+                        {
+                            "name": "assetOpacity",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Opacity of the promotion image, ranging from 0 (fully transparent) to 1 (fully opaque)."
+                        },
+                        {
+                            "name": "backgroundColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Background color for the promotion, in hex format."
+                        },
+                        {
+                            "name": "contentTextColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Text color for the promotion content, in hex format."
+                        },
+                        {
+                            "name": "endProductUrl",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "URL of the product linked to the promotion."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/merchants/:mId/stores/:sId/promotions/:promotionId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"promotionId\": \"ca_UROCd1qJl9RX0tqiK0Ai5\",\n\t\t\"name\": \"Slash sale\",\n\t\t\"title\": \"First Promotion - test\",\n\t\t\"description\": \"Slash sale on all fruits\",\n\t\t\"storeId\": \"82895887ae0b900e0f\",\n\t\t\"assetUrl\": \"https://www.surfpayapp.com/hubfs/connect/surfpay_checkout-companion.png\",\n\t\t\"endProduct\": \"12345\",\n\t\t\"buttonLabel\": \"Click\",\n\t\t\"startDate\": \"2025-05-05T00:00:00.000Z\",\n\t\t\"endDate\": \"2027-05-05T00:00:00.000Z\",\n\t\t\"priority\": \"1\",\n\t\t\"assetOpacity\": \"0\",\n\t\t\"backgroundColor\": \"#a1a1aa\",\n\t\t\"contentTextColor\": \"#78716c\",\n\t\t\"endProductUrl\": \"https://www.timestamp-converter.com/\"\n\t},\n\t\"message\": \"Promotion For The Given Promotion ID Fetched Successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Promotions",
+            "comingSoon": true,
+            "description": "The Fetch All Promotions API retrieves detailed information about all the camapigns.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "promotionId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unique identifier of the promotion."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unique identifier of the merchant associated with the promotion."
+                        },
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Name of the promotion."
+                        },
+                        {
+                            "name": "title",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Title of the promotion."
+                        },
+                        {
+                            "name": "description",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Description of the promotion."
+                        },
+                        {
+                            "name": "storeId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unique identifier of the store where the promotion is running."
+                        },
+                        {
+                            "name": "assetUrl",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "URL of the promotion image."
+                        },
+                        {
+                            "name": "endProduct",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Product ID associated with the promotion."
+                        },
+                        {
+                            "name": "buttonLabel",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Label for the action button in the promotion."
+                        },
+                        {
+                            "name": "startDate",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Start date of the promotion in ISO 8601 format."
+                        },
+                        {
+                            "name": "endDate",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "End date of the promotion in ISO 8601 format."
+                        },
+                        {
+                            "name": "priority",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Priority of the promotion, where lower numbers represent higher priority."
+                        },
+                        {
+                            "name": "assetOpacity",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Opacity of the promotion image, ranging from 0 (fully transparent) to 1 (fully opaque)."
+                        },
+                        {
+                            "name": "backgroundColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Background color for the promotion, in hex format."
+                        },
+                        {
+                            "name": "contentTextColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Text color for the promotion content, in hex format."
+                        },
+                        {
+                            "name": "endProductUrl",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "URL of the product linked to the promotion."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/merchants/:mId/stores/:sId/promotions",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t  {\n\t\t\"promotionId\": \"ca_UROCd1qJl9RX0tqiK0Ai5\",\n\t\t\"name\": \"Slash sale\",\n\t\t\"title\": \"First Promotion - test\",\n\t\t\"description\": \"Slash sale on all fruits\",\n\t\t\"storeId\": \"82895887ae0b900e0f\",\n\t\t\"assetUrl\": \"https://www.surfpayapp.com/hubfs/connect/surfpay_checkout-companion.png\",\n\t\t\"endProduct\": \"12345\",\n\t\t\"buttonLabel\": \"Click\",\n\t\t\"startDate\": \"2025-05-05T00:00:00.000Z\",\n\t\t\"endDate\": \"2027-05-05T00:00:00.000Z\",\n\t\t\"priority\": \"1\",\n\t\t\"assetOpacity\": \"0\",\n\t\t\"backgroundColor\": \"#a1a1aa\",\n\t\t\"contentTextColor\": \"#78716c\",\n\t\t\"endProductUrl\": \"https://www.timestamp-converter.com/\"\n\t},\n{\n\t\t\"promotionId\": \"ca_UROCd1qJl9RX0tqiK0Ai5\",\n\t\t\"name\": \"Slash sale\",\n\t\t\"title\": \"First Promotion - test\",\n\t\t\"description\": \"Slash sale on all fruits\",\n\t\t\"storeId\": \"82895887ae0b900e0f\",\n\t\t\"assetUrl\": \"https://www.surfpayapp.com/hubfs/connect/surfpay_checkout-companion.png\",\n\t\t\"endProduct\": \"12345\",\n\t\t\"buttonLabel\": \"Click\",\n\t\t\"startDate\": \"2025-05-05T00:00:00.000Z\",\n\t\t\"endDate\": \"2027-05-05T00:00:00.000Z\",\n\t\t\"priority\": \"1\",\n\t\t\"assetOpacity\": \"0\",\n\t\t\"backgroundColor\": \"#a1a1aa\",\n\t\t\"contentTextColor\": \"#78716c\",\n\t\t\"endProductUrl\": \"https://www.timestamp-converter.com/\"\n\t},\n\t ],\n\t\"message\": \"Promotions fetched successfully\"\n}\n\n\n\n\n"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Delete Promotion",
+            "comingSoon": true,
+            "description": "The Delete Promotion by ID API allows users to remove a specific promotion by its unique promotion ID. This API permanently deletes the promotion and its associated data, ensuring that it is no longer active or visible.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "DELETE",
+            "path": "/merchants/:mId/stores/:sId/promotions/:promotionId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Promotion Deleted Successfully\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

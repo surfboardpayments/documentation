@@ -1,0 +1,31 @@
+{
+    "scenarioId": "delete-promotion",
+    "scenarioName": "Delete Promotion",
+    "steps": [
+        {
+            "id": "delete-promotion",
+            "name": "Delete Promotion",
+            "description": "Delete a specific promotion.",
+            "order": 1,
+            "method": "DELETE",
+            "endpoint": "merchants/{{mId}}/stores/{{sId}}/promotions/{{promotionId}}",
+            "guidePath": "/carbon/advanced-customizations/delete-promotion",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

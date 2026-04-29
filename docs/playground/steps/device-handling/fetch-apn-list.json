@@ -1,0 +1,45 @@
+{
+    "scenarioId": "fetch-apn-list",
+    "scenarioName": "Fetch APN List",
+    "steps": [
+        {
+            "id": "fetch-apn-list",
+            "name": "Fetch APN List",
+            "description": "Retrieves a list of APNs (Access Point Names) of the terminal.",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "merchants/{{merchantId}}/stores/{{storeId}}/terminals/{{terminalId}}/apns",
+            "guidePath": "/carbon/device-handling/fetch-apn-list/fetch-apn-list",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "description": "Response data.",
+                        "resParams": [
+                            {
+                                "name": "apns",
+                                "type": "array",
+                                "description": "An array of strings depicting all APN's of the terminal."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

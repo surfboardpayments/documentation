@@ -1,0 +1,72 @@
+{
+    "scenarioId": "get-interapp-details",
+    "scenarioName": "Get Interapp Details",
+    "steps": [
+        {
+            "id": "get-interapp-details",
+            "name": "Get Interapp Details",
+            "description": "Retrieves details of registration of interapp with the terminal.",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "merchants/{{merchantId}}/stores/{{storeId}}/terminals/interapp/{{interappCode}}",
+            "readOnly": true,
+            "response": {
+                "status": "SUCCESS",
+                "data": {
+                  "registrationStatus": "REGISTERED",
+                  "terminalId": "81f878852b3a280904"
+                },
+                "message": "Registration status checked successfully"
+              },
+            "guidePath": "/carbon/device-handling/get-interapp-details/get-interapp-details",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "registrationStatus",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Denotes the registration status of the terminal.",
+                            "possibleValues": [
+                                {
+                                    "value": "REGISTERED",
+                                    "description": "Interapp registration successful."
+                                },
+                                {
+                                    "value": "NOT_REGISTERED",
+                                    "description": "Terminal not registered yet."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "terminalId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Terminal ID of the registered terminal."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ]
+            }
+        }
+    ]
+}

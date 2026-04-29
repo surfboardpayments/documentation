@@ -1,0 +1,75 @@
+{
+    "scenarioId": "fetch-sessions-for-terminal",
+    "scenarioName": "Fetch Sessions for Terminal",
+    "steps": [
+        {
+            "id": "fetch-sessions-for-terminal",
+            "name": "Fetch Sessions for Terminal",
+            "description": "Retrieve all NFC reading sessions created under the terminal.",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "terminals/{{terminalId}}/sessions",
+            "guidePath": "/carbon/nfc-reading/fetch-sessions-for-terminal",
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "array",
+                        "mandatory": true,
+                        "description": "Response data.",
+                        "resParams": [
+                            {
+                                "name": "sessionId",
+                                "type": "string",
+                                "description": "A unique identifier for the RFID reading session."
+                            },
+                            {
+                                "name": "action",
+                                "type": "string",
+                                "possibleValues": [
+                                    {
+                                        "value": "start",
+                                        "description": "NFC read session started."
+                                    },
+                                    {
+                                        "value": "end",
+                                        "description": "NFC read session ended."
+                                    }
+                                ],
+                                "description": "Denotes the stage at which the session is. The possible values are - 'start' | 'end'"
+                            },
+                            {
+                                "name": "mode",
+                                "type": "string",
+                                "possibleValues": [
+                                    {
+                                        "value": "single",
+                                        "description": "One NFC tag read."
+                                    },
+                                    {
+                                        "value": "multiple",
+                                        "description": "Multiple NFC tags read."
+                                    }
+                                ],
+                                "description": "Denotes the number of tags read under the created session. The  possible values are - 'single' | 'multiple'"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

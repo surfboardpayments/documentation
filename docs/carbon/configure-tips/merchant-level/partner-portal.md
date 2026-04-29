@@ -1,0 +1,2 @@
+1. Merchant-level settings are configured by navigating to **Merchants→ select the desired merchant→ Configurations,** .
+2. Goto **Set Merchant Tips Config** fill in the details, and click **Save Changes** to apply

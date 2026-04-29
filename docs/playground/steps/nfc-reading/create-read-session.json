@@ -1,0 +1,110 @@
+{
+    "scenarioId": "create-read-session",
+    "scenarioName": "Create Read Session",
+    "steps": [
+        {
+            "id": "create-read-session",
+            "name": "Create Read Session",
+            "description": "Create a new NFC reading session on the terminal.",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "terminals/{{terminalId}}/sessions",
+            "guidePath": "/carbon/nfc-reading/home",
+            "payload": {
+                "mode": "single"
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "mode",
+                        "type": "string",
+                        "mandatory": true,
+                        "possibleValues": [
+                            {
+                                "value": "single",
+                                "description": "Allows you to read one NFC tag"
+                            },
+                            {
+                                "value": "multiple",
+                                "description": "Allows you to read multiple NFC tags"
+                            }
+                        ],
+                        "description": "Denotes the number of tags that can be read under the created session. The possible values are - 'single' | 'multiple'"
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "description": "Response data",
+                        "resParams": [
+                            {
+                                "name": "sessionId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "A unique identifier for the NFC reading session."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        },
+        {
+            "id": "complete-nfc-reading-session",
+            "name": "Complete NFC Reading Session",
+            "description": "Complete the NFC reading session.",
+            "order": 2,
+            "method": "POST",
+            "endpoint": "terminals/{{terminalId}}/sessions/{{sessionId}}/complete",
+            "guidePath": "/carbon/nfc-reading/complete-nfc-reading-session",
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "result",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Indicates the final state of the NFC session. Default is set to 'COMPLETED'",
+                        "possibleValues": [
+                            {
+                                "value": "COMPLETED",
+                                "description": "Indicates that the NFC session was completed successfully."
+                            },
+                            {
+                                "value": "CANCELLED",
+                                "description": "Indicates that the NFC session was cancelled."
+                            },
+                            {
+                                "value": "TIMED_OUT",
+                                "description": "Indicates that the NFC session timed out without a valid result."
+                            }
+                        ]
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Describes the outcome of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

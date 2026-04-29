@@ -1,0 +1,446 @@
+{
+    "title": "Customers API",
+    "description": "The Customers API enables merchants to manage customer information including personal details, addresses, contact information, and associated payment cards. This API provides functionality to create customer profiles and retrieve detailed customer information for enhanced customer relationship management.",
+    "endpoints": [
+        {
+            "fragment": "Add Customer Details",
+            "method": "POST",
+            "link": "API_URL/customers"
+        },
+        {
+            "fragment": "Fetch Customer Details by ID",
+            "method": "GET",
+            "link": "API_URL/customers/:customerId"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Add Customer Details",
+            "new": true,
+            "description": "Creates a new customer profile with personal information, addresses, contact details, and associated payment cards. Use this API to register new customers and store their comprehensive information for future transactions and customer management.",
+            "reqParams": [
+                {
+                    "name": "firstName",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Customer's first name."
+                },
+                {
+                    "name": "middleName",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Customer's middle name."
+                },
+                {
+                    "name": "lastName",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Customer's surname or last name."
+                },
+                {
+                    "name": "birthDate",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Customer's date of birth in YYYY/MM/DD format."
+                },
+                {
+                    "name": "countryCode",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Two-letter ISO country code representing the customer's country, in uppercase."
+                },
+                {
+                    "name": "gender",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Customer's gender."
+                },
+                {
+                    "name": "address",
+                    "type": "array",
+                    "mandatory": false,
+                    "description": "Array of customer addresses for different purposes (shipping, billing, etc.).",
+                    "reqParams": [
+                        {
+                            "name": "careOf",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Care of information for the address."
+                        },
+                        {
+                            "name": "addressLine1",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "First line of the customer's address."
+                        },
+                        {
+                            "name": "addressLine2",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Second line of the customer's address."
+                        },
+                        {
+                            "name": "addressLine3",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Third line of the customer's address."
+                        },
+                        {
+                            "name": "city",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "City of the customer's address."
+                        },
+                        {
+                            "name": "countryCode",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Two-letter ISO country code for the address, in uppercase."
+                        },
+                        {
+                            "name": "postalCode",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Postal code of the customer's address."
+                        },
+                        {
+                            "name": "role",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Purpose of the address (e.g., 'shipping', 'billing')."
+                        }
+                    ]
+                },
+                {
+                    "name": "emails",
+                    "type": "array",
+                    "mandatory": false,
+                    "description": "Array of customer email addresses with their respective roles.",
+                    "reqParams": [
+                        {
+                            "name": "email",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Customer's email address."
+                        },
+                        {
+                            "name": "role",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Role or purpose of the email address."
+                        }
+                    ]
+                },
+                {
+                    "name": "phoneNumbers",
+                    "type": "array",
+                    "mandatory": false,
+                    "description": "Array of customer phone numbers with their respective roles.",
+                    "reqParams": [
+                        {
+                            "name": "phoneNumber",
+                            "type": "object",
+                            "mandatory": true,
+                            "description": "Customer's phone number details.",
+                            "reqParams": [
+                                {
+                                    "name": "code",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "International dialing code for the phone number."
+                                },
+                                {
+                                    "name": "number",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Phone number without the country code."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "role",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Role or purpose of the phone number (e.g., 'own', 'work', 'home')."
+                        }
+                    ]
+                },
+                {
+                    "name": "cardIds",
+                    "type": "array",
+                    "mandatory": false,
+                    "description": "Array of payment card identifiers associated with the customer."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data containing the created customer information.",
+                    "resParams": [
+                        {
+                            "name": "customerId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unique identifier assigned to the newly created customer."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/customers",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\n\t\"firstName\": \"John\",\n\t\"middleName\": \"Doe\",\n\t\"birthDate\": \"1940/03/04\",\n\t\"countryCode\": \"SE\",\n\t\"address\": [\n\t\t{\n\t\t\t\"careOf\": \"second address at 3:40\",\n\t\t\t\"addressLine1\": \"second address at 3:40\",\n\t\t\t\"addressLine2\": \"3rd west street\",\n\t\t\t\"addressLine3\": \"B-Block\",\n\t\t\t\"city\": \"Ølstykke Stenløse\",\n\t\t\t\"countryCode\": \"SE\",\n\t\t\t\"postalCode\": \"99 999\",\n\t\t\t\"role\": \"shipping\"\n\t\t}\n\t],\n\t\"phoneNumbers\": [\n\t\t{\n\t\t\t\"phoneNumber\": {\n\t\t\t\t\"code\": \"91\",\n\t\t\t\t\"number\": \"9876543210\"\n\t\t\t},\n\t\t\t\"role\": \"own\"\n\t\t}\n\t],\n\t\"cardIds\": [\n\t\t\"824c514bfe001805f0\",\n\t\t\"827a63468b993801f0\",\n\t\t\"827a63460b99380df0\"\n\t]\n}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"customerId\": \"83018337960e2802f7\"\n\t},\n\t\"message\": \"Added customer successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Customer Details by ID",
+            "new": true,
+            "description": "Retrieves customer information using the customer ID. Use this API to get detailed customer profile including personal information, addresses, contact details, and associated payment cards for customer management and transaction processing.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data containing comprehensive customer information.",
+                    "resParams": [
+                        {
+                            "name": "firstName",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Customer's first name."
+                        },
+                        {
+                            "name": "middleName",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Customer's middle name."
+                        },
+                        {
+                            "name": "lastName",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Customer's surname or last name."
+                        },
+                        {
+                            "name": "birthDate",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Customer's date of birth."
+                        },
+                        {
+                            "name": "gender",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Customer's gender."
+                        },
+                        {
+                            "name": "countryCode",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Two-letter ISO country code representing the customer's country."
+                        },
+                        {
+                            "name": "address",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "Array of customer addresses.",
+                            "resParams": [
+                                {
+                                    "name": "careOf",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Care of information for the address."
+                                },
+                                {
+                                    "name": "addressLine1",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "First line of the customer's address."
+                                },
+                                {
+                                    "name": "addressLine2",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Second line of the customer's address."
+                                },
+                                {
+                                    "name": "addressLine3",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Third line of the customer's address."
+                                },
+                                {
+                                    "name": "city",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "City of the customer's address."
+                                },
+                                {
+                                    "name": "countryCode",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Two-letter ISO country code for the address."
+                                },
+                                {
+                                    "name": "postalCode",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Postal code of the customer's address."
+                                },
+                                {
+                                    "name": "role",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Purpose of the address (e.g., 'shipping', 'billing')."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "emails",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "Array of customer email addresses.",
+                            "resParams": [
+                                {
+                                    "name": "email",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Customer's email address."
+                                },
+                                {
+                                    "name": "role",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Role or purpose of the email address."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "phoneNumbers",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "Array of customer phone numbers.",
+                            "resParams": [
+                                {
+                                    "name": "phoneNumber",
+                                    "type": "object",
+                                    "mandatory": true,
+                                    "description": "Customer's phone number details.",
+                                    "resParams": [
+                                        {
+                                            "name": "code",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "International dialing code for the phone number."
+                                        },
+                                        {
+                                            "name": "number",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Phone number without the country code."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "role",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Role or purpose of the phone number."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "cardIds",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "Array of payment card identifiers associated with the customer."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/customers/:customerId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"countryCode\": \"SE\",\n\t\t\"address\": [\n\t\t\t{\n\t\t\t\t\"careOf\": \"second address at 3:40\",\n\t\t\t\t\"addressLine1\": \"second address at 3:40\",\n\t\t\t\t\"addressLine2\": \"3rd west street\",\n\t\t\t\t\"addressLine3\": \"B-Block\",\n\t\t\t\t\"city\": \"Ølstykke Stenløse\",\n\t\t\t\t\"countryCode\": \"SE\",\n\t\t\t\t\"postalCode\": \"99 999\",\n\t\t\t\t\"role\": \"shipping\"\n\t\t\t}\n\t\t],\n\t\t\"emails\": [],\n\t\t\"phoneNumbers\": [\n\t\t\t{\n\t\t\t\t\"phoneNumber\": {\n\t\t\t\t\t\"code\": \"91\",\n\t\t\t\t\t\"number\": \"9876543210\"\n\t\t\t\t},\n\t\t\t\t\"role\": \"own\"\n\t\t\t}\n\t\t],\n\t\t\"cardIds\": [\n\t\t\t\"824c514bfe001805f0\",\n\t\t\t\"827a63468b993801f0\",\n\t\t\t\"827a63460b99380df0\"\n\t\t]\n\t},\n\t\"message\": \"Fetched customer details successfully\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

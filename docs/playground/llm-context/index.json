@@ -1,0 +1,798 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-01-14T09:34:34.083Z",
+  "description": "Index of all available LLM context files for the API playground",
+  "files": [
+    {
+      "categoryId": "merchant-creation",
+      "categoryName": "Merchant Creation",
+      "scenarioId": "instore-merchant",
+      "scenarioName": "Create Merchant",
+      "path": "llm-context/merchant-creation/instore-merchant.md"
+    },
+    {
+      "categoryId": "merchant-creation",
+      "categoryName": "Merchant Creation",
+      "scenarioId": "online-merchant",
+      "scenarioName": "Create Merchant with OnlineInfo",
+      "path": "llm-context/merchant-creation/online-merchant.md"
+    },
+    {
+      "categoryId": "merchant-creation",
+      "categoryName": "Merchant Creation",
+      "scenarioId": "product-selection",
+      "scenarioName": "Create Merchant with Product Selection",
+      "path": "llm-context/merchant-creation/product-selection.md"
+    },
+    {
+      "categoryId": "merchant-creation",
+      "categoryName": "Merchant Creation",
+      "scenarioId": "fetch-all-merchant-applications",
+      "scenarioName": "Fetch All Merchant Applications",
+      "path": "llm-context/merchant-creation/fetch-all-merchant-applications.md"
+    },
+    {
+      "categoryId": "device-management",
+      "categoryName": "Device Management",
+      "scenarioId": "instore-devices",
+      "scenarioName": "Register Device",
+      "path": "llm-context/device-management/instore-devices.md"
+    },
+    {
+      "categoryId": "device-management",
+      "categoryName": "Device Management",
+      "scenarioId": "online-devices",
+      "scenarioName": "Register Online Terminal",
+      "path": "llm-context/device-management/online-devices.md"
+    },
+    {
+      "categoryId": "device-management",
+      "categoryName": "Device Management",
+      "scenarioId": "set-merchant-terminal-config",
+      "scenarioName": "Set Merchant Terminal Config",
+      "path": "llm-context/device-management/set-merchant-terminal-config.md"
+    },
+    {
+      "categoryId": "device-management",
+      "categoryName": "Device Management",
+      "scenarioId": "set-store-terminal-config",
+      "scenarioName": "Set Store Terminal Config",
+      "path": "llm-context/device-management/set-store-terminal-config.md"
+    },
+    {
+      "categoryId": "device-management",
+      "categoryName": "Device Management",
+      "scenarioId": "set-terminal-config",
+      "scenarioName": "Set Terminal Config",
+      "path": "llm-context/device-management/set-terminal-config.md"
+    },
+    {
+      "categoryId": "make-your-payments",
+      "categoryName": "Make Your Payments",
+      "scenarioId": "basic-create-order",
+      "scenarioName": "Basic Create Order",
+      "path": "llm-context/make-your-payments/basic-create-order.md"
+    },
+    {
+      "categoryId": "make-your-payments",
+      "categoryName": "Make Your Payments",
+      "scenarioId": "full-create-order",
+      "scenarioName": "Full Create Order",
+      "path": "llm-context/make-your-payments/full-create-order.md"
+    },
+    {
+      "categoryId": "make-your-payments",
+      "categoryName": "Make Your Payments",
+      "scenarioId": "refund-order",
+      "scenarioName": "Refund Order",
+      "path": "llm-context/make-your-payments/refund-order.md"
+    },
+    {
+      "categoryId": "make-your-payments",
+      "categoryName": "Make Your Payments",
+      "scenarioId": "partial-payments",
+      "scenarioName": "Partial Payments",
+      "path": "llm-context/make-your-payments/partial-payments.md"
+    },
+    {
+      "categoryId": "make-your-payments",
+      "categoryName": "Make Your Payments",
+      "scenarioId": "partial-refund-order",
+      "scenarioName": "Partial Refund Order",
+      "path": "llm-context/make-your-payments/partial-refund-order.md"
+    },
+    {
+      "categoryId": "make-your-payments",
+      "categoryName": "Make Your Payments",
+      "scenarioId": "void-a-payment",
+      "scenarioName": "Void a Payment",
+      "path": "llm-context/make-your-payments/void-a-payment.md"
+    },
+    {
+      "categoryId": "make-your-payments",
+      "categoryName": "Make Your Payments",
+      "scenarioId": "cancel-a-payment",
+      "scenarioName": "Cancel a Payment",
+      "path": "llm-context/make-your-payments/cancel-a-payment.md"
+    },
+    {
+      "categoryId": "make-your-payments",
+      "categoryName": "Make Your Payments",
+      "scenarioId": "capture-a-payment",
+      "scenarioName": "Capture a Payment",
+      "path": "llm-context/make-your-payments/capture-a-payment.md"
+    },
+    {
+      "categoryId": "multi-merchant-group-creation",
+      "categoryName": "Multi Merchant Group Creation",
+      "scenarioId": "create-multi-merchant-group",
+      "scenarioName": "Create Multi Merchant Group",
+      "path": "llm-context/multi-merchant-group-creation/create-multi-merchant-group.md"
+    },
+    {
+      "categoryId": "merchant-functions",
+      "categoryName": "Merchant Functions",
+      "scenarioId": "update-merchant-details",
+      "scenarioName": "Update Merchant Details",
+      "path": "llm-context/merchant-functions/update-merchant-details.md"
+    },
+    {
+      "categoryId": "merchant-functions",
+      "categoryName": "Merchant Functions",
+      "scenarioId": "activate-terminal",
+      "scenarioName": "Activate Terminal",
+      "path": "llm-context/merchant-functions/activate-terminal.md"
+    },
+    {
+      "categoryId": "merchant-functions",
+      "categoryName": "Merchant Functions",
+      "scenarioId": "fetch-all-merchants",
+      "scenarioName": "Fetch All Merchants",
+      "path": "llm-context/merchant-functions/fetch-all-merchants.md"
+    },
+    {
+      "categoryId": "merchant-functions",
+      "categoryName": "Merchant Functions",
+      "scenarioId": "fetch-all-merchant-terminals",
+      "scenarioName": "Fetch All Merchants Terminals",
+      "path": "llm-context/merchant-functions/fetch-all-merchant-terminals.md"
+    },
+    {
+      "categoryId": "merchant-functions",
+      "categoryName": "Merchant Functions",
+      "scenarioId": "fetch-merchant-details",
+      "scenarioName": "Fetch Merchant Details",
+      "path": "llm-context/merchant-functions/fetch-merchant-details.md"
+    },
+    {
+      "categoryId": "merchant-functions",
+      "categoryName": "Merchant Functions",
+      "scenarioId": "fetch-transaction-analytics",
+      "scenarioName": "Fetch Transaction Analytics",
+      "path": "llm-context/merchant-functions/fetch-transaction-analytics.md"
+    },
+    {
+      "categoryId": "merchant-functions",
+      "categoryName": "Merchant Functions",
+      "scenarioId": "fetch-all-merchant-contracts",
+      "scenarioName": "Fetch All Merchant Contracts",
+      "path": "llm-context/merchant-functions/fetch-all-merchant-contracts.md"
+    },
+    {
+      "categoryId": "store-capabilities",
+      "categoryName": "Store Capabilities",
+      "scenarioId": "create-store-instore",
+      "scenarioName": "Create Store",
+      "path": "llm-context/store-capabilities/create-store-instore.md"
+    },
+    {
+      "categoryId": "store-capabilities",
+      "categoryName": "Store Capabilities",
+      "scenarioId": "create-store-online",
+      "scenarioName": "Create Store with Online Functions",
+      "path": "llm-context/store-capabilities/create-store-online.md"
+    },
+    {
+      "categoryId": "store-capabilities",
+      "categoryName": "Store Capabilities",
+      "scenarioId": "verify-store-domain",
+      "scenarioName": "Verify Store Domain",
+      "path": "llm-context/store-capabilities/verify-store-domain.md"
+    },
+    {
+      "categoryId": "store-capabilities",
+      "categoryName": "Store Capabilities",
+      "scenarioId": "update-store-details",
+      "scenarioName": "Update Store Details",
+      "path": "llm-context/store-capabilities/update-store-details.md"
+    },
+    {
+      "categoryId": "store-capabilities",
+      "categoryName": "Store Capabilities",
+      "scenarioId": "fetch-stores",
+      "scenarioName": "Fetch Stores",
+      "path": "llm-context/store-capabilities/fetch-stores.md"
+    },
+    {
+      "categoryId": "store-capabilities",
+      "categoryName": "Store Capabilities",
+      "scenarioId": "fetch-all-store-terminals",
+      "scenarioName": "Fetch All Store Terminals",
+      "path": "llm-context/store-capabilities/fetch-all-store-terminals.md"
+    },
+    {
+      "categoryId": "store-capabilities",
+      "categoryName": "Store Capabilities",
+      "scenarioId": "deactivate-a-store",
+      "scenarioName": "Deactivate a Store",
+      "path": "llm-context/store-capabilities/deactivate-a-store.md"
+    },
+    {
+      "categoryId": "logistics",
+      "categoryName": "Logistics",
+      "scenarioId": "create-shipment",
+      "scenarioName": "Create Shipment",
+      "path": "llm-context/logistics/create-shipment.md"
+    },
+    {
+      "categoryId": "logistics",
+      "categoryName": "Logistics",
+      "scenarioId": "create-return",
+      "scenarioName": "Create Return",
+      "path": "llm-context/logistics/create-return.md"
+    },
+    {
+      "categoryId": "logistics",
+      "categoryName": "Logistics",
+      "scenarioId": "ship-terminals-in-bulk",
+      "scenarioName": "Ship Terminals in Bulk",
+      "path": "llm-context/logistics/ship-terminals-in-bulk.md"
+    },
+    {
+      "categoryId": "logistics",
+      "categoryName": "Logistics",
+      "scenarioId": "fetch-partner-orders",
+      "scenarioName": "Fetch Partner Orders",
+      "path": "llm-context/logistics/fetch-partner-orders.md"
+    },
+    {
+      "categoryId": "logistics",
+      "categoryName": "Logistics",
+      "scenarioId": "fetch-merchant-orders",
+      "scenarioName": "Fetch Merchant Orders",
+      "path": "llm-context/logistics/fetch-merchant-orders.md"
+    },
+    {
+      "categoryId": "device-handling",
+      "categoryName": "Device Handling",
+      "scenarioId": "change-store",
+      "scenarioName": "Change Store",
+      "path": "llm-context/device-handling/change-store.md"
+    },
+    {
+      "categoryId": "device-handling",
+      "categoryName": "Device Handling",
+      "scenarioId": "delink-terminal-from-store",
+      "scenarioName": "Delink Terminal from Store",
+      "path": "llm-context/device-handling/delink-terminal-from-store.md"
+    },
+    {
+      "categoryId": "device-handling",
+      "categoryName": "Device Handling",
+      "scenarioId": "reboot-terminal",
+      "scenarioName": "Reboot Terminal",
+      "path": "llm-context/device-handling/reboot-terminal.md"
+    },
+    {
+      "categoryId": "device-handling",
+      "categoryName": "Device Handling",
+      "scenarioId": "move-terminal",
+      "scenarioName": "Move Terminal",
+      "path": "llm-context/device-handling/move-terminal.md"
+    },
+    {
+      "categoryId": "device-handling",
+      "categoryName": "Device Handling",
+      "scenarioId": "update-terminal-name",
+      "scenarioName": "Update Terminal Name",
+      "path": "llm-context/device-handling/update-terminal-name.md"
+    },
+    {
+      "categoryId": "device-handling",
+      "categoryName": "Device Handling",
+      "scenarioId": "fetch-terminal-by-id",
+      "scenarioName": "Fetch Terminal by ID",
+      "path": "llm-context/device-handling/fetch-terminal-by-id.md"
+    },
+    {
+      "categoryId": "device-handling",
+      "categoryName": "Device Handling",
+      "scenarioId": "fetch-apn-list",
+      "scenarioName": "Fetch APN List",
+      "path": "llm-context/device-handling/fetch-apn-list.md"
+    },
+    {
+      "categoryId": "device-handling",
+      "categoryName": "Device Handling",
+      "scenarioId": "get-interapp-code",
+      "scenarioName": "Get Interapp Code",
+      "path": "llm-context/device-handling/get-interapp-code.md"
+    },
+    {
+      "categoryId": "device-handling",
+      "categoryName": "Device Handling",
+      "scenarioId": "get-interapp-details",
+      "scenarioName": "Get Interapp Details",
+      "path": "llm-context/device-handling/get-interapp-details.md"
+    },
+    {
+      "categoryId": "configure-tips",
+      "categoryName": "Configure Tips",
+      "scenarioId": "set-merchant-tip-configs",
+      "scenarioName": "Set Merchant Tips Config",
+      "path": "llm-context/configure-tips/set-merchant-tip-configs.md"
+    },
+    {
+      "categoryId": "configure-tips",
+      "categoryName": "Configure Tips",
+      "scenarioId": "set-store-tip-configs",
+      "scenarioName": "Set Store Tips Config",
+      "path": "llm-context/configure-tips/set-store-tip-configs.md"
+    },
+    {
+      "categoryId": "configure-tips",
+      "categoryName": "Configure Tips",
+      "scenarioId": "set-terminal-tip-configs",
+      "scenarioName": "Set Terminal Tips Config",
+      "path": "llm-context/configure-tips/set-terminal-tip-configs.md"
+    },
+    {
+      "categoryId": "configure-branding",
+      "categoryName": "Configure Branding",
+      "scenarioId": "create-branding-for-merchant",
+      "scenarioName": "Create Branding for Merchant",
+      "path": "llm-context/configure-branding/create-branding-for-merchant.md"
+    },
+    {
+      "categoryId": "configure-branding",
+      "categoryName": "Configure Branding",
+      "scenarioId": "create-branding-for-store",
+      "scenarioName": "Create Branding for Store",
+      "path": "llm-context/configure-branding/create-branding-for-store.md"
+    },
+    {
+      "categoryId": "configure-branding",
+      "categoryName": "Configure Branding",
+      "scenarioId": "create-branding-for-terminal",
+      "scenarioName": "Create Branding for Terminal",
+      "path": "llm-context/configure-branding/create-branding-for-terminal.md"
+    },
+    {
+      "categoryId": "configure-branding",
+      "categoryName": "Configure Branding",
+      "scenarioId": "create-branding-for-partner",
+      "scenarioName": "Create Branding for Partner",
+      "path": "llm-context/configure-branding/create-branding-for-partner.md"
+    },
+    {
+      "categoryId": "configure-branding",
+      "categoryName": "Configure Branding",
+      "scenarioId": "remove-branding-for-merchant",
+      "scenarioName": "Remove Branding for Merchant",
+      "path": "llm-context/configure-branding/remove-branding-for-merchant.md"
+    },
+    {
+      "categoryId": "configure-branding",
+      "categoryName": "Configure Branding",
+      "scenarioId": "remove-branding-for-store",
+      "scenarioName": "Remove Branding for Store",
+      "path": "llm-context/configure-branding/remove-branding-for-store.md"
+    },
+    {
+      "categoryId": "configure-branding",
+      "categoryName": "Configure Branding",
+      "scenarioId": "remove-branding-for-terminal",
+      "scenarioName": "Remove Terminal Branding Config",
+      "path": "llm-context/configure-branding/remove-branding-for-terminal.md"
+    },
+    {
+      "categoryId": "configure-branding",
+      "categoryName": "Configure Branding",
+      "scenarioId": "remove-branding-for-partner",
+      "scenarioName": "Remove Branding for Partner",
+      "path": "llm-context/configure-branding/remove-branding-for-partner.md"
+    },
+    {
+      "categoryId": "additional-payment-methods",
+      "categoryName": "Additional Payment Methods",
+      "scenarioId": "activate-payment-method",
+      "scenarioName": "Activate Payment Method",
+      "path": "llm-context/additional-payment-methods/activate-payment-method.md"
+    },
+    {
+      "categoryId": "additional-payment-methods",
+      "categoryName": "Additional Payment Methods",
+      "scenarioId": "deactivate-payment-method",
+      "scenarioName": "Deactivate Payment Method",
+      "path": "llm-context/additional-payment-methods/deactivate-payment-method.md"
+    },
+    {
+      "categoryId": "additional-payment-methods",
+      "categoryName": "Additional Payment Methods",
+      "scenarioId": "fetch-all-payment-methods",
+      "scenarioName": "Fetch All Payment Methods",
+      "path": "llm-context/additional-payment-methods/fetch-all-payment-methods.md"
+    },
+    {
+      "categoryId": "client-auth-token",
+      "categoryName": "Client Auth Token",
+      "scenarioId": "create-token",
+      "scenarioName": "Create Token",
+      "path": "llm-context/client-auth-token/create-token.md"
+    },
+    {
+      "categoryId": "nfc-reading",
+      "categoryName": "NFC Reading",
+      "scenarioId": "create-read-session",
+      "scenarioName": "Create Read Session",
+      "path": "llm-context/nfc-reading/create-read-session.md"
+    },
+    {
+      "categoryId": "nfc-reading",
+      "categoryName": "NFC Reading",
+      "scenarioId": "fetch-session-status",
+      "scenarioName": "Fetch Session Status",
+      "path": "llm-context/nfc-reading/fetch-session-status.md"
+    },
+    {
+      "categoryId": "nfc-reading",
+      "categoryName": "NFC Reading",
+      "scenarioId": "fetch-sessions-for-terminal",
+      "scenarioName": "Fetch Sessions for Terminal",
+      "path": "llm-context/nfc-reading/fetch-sessions-for-terminal.md"
+    },
+    {
+      "categoryId": "nfc-reading",
+      "categoryName": "NFC Reading",
+      "scenarioId": "fetch-tags-for-session",
+      "scenarioName": "Fetch Tags for Session",
+      "path": "llm-context/nfc-reading/fetch-tags-for-session.md"
+    },
+    {
+      "categoryId": "receipts",
+      "categoryName": "Receipts",
+      "scenarioId": "email-receipt",
+      "scenarioName": "Email Receipt",
+      "path": "llm-context/receipts/email-receipt.md"
+    },
+    {
+      "categoryId": "receipts",
+      "categoryName": "Receipts",
+      "scenarioId": "print-receipt",
+      "scenarioName": "Print Receipt",
+      "path": "llm-context/receipts/print-receipt.md"
+    },
+    {
+      "categoryId": "receipts",
+      "categoryName": "Receipts",
+      "scenarioId": "print-escpos-receipt",
+      "scenarioName": "Print ESCPOS Receipt",
+      "path": "llm-context/receipts/print-escpos-receipt.md"
+    },
+    {
+      "categoryId": "receipts",
+      "categoryName": "Receipts",
+      "scenarioId": "add-receipt-information",
+      "scenarioName": "Add Receipt Information",
+      "path": "llm-context/receipts/add-receipt-information.md"
+    },
+    {
+      "categoryId": "receipts",
+      "categoryName": "Receipts",
+      "scenarioId": "fetch-receipt-link",
+      "scenarioName": "Fetch Receipt Link",
+      "path": "llm-context/receipts/fetch-receipt-link.md"
+    },
+    {
+      "categoryId": "additional-operations",
+      "categoryName": "Additional Operations",
+      "scenarioId": "fetch-settlement-reports",
+      "scenarioName": "Fetch Settlement Reports",
+      "path": "llm-context/additional-operations/fetch-settlement-reports.md"
+    },
+    {
+      "categoryId": "additional-operations",
+      "categoryName": "Additional Operations",
+      "scenarioId": "fetch-adjustments",
+      "scenarioName": "Fetch Adjustments",
+      "path": "llm-context/additional-operations/fetch-adjustments.md"
+    },
+    {
+      "categoryId": "additional-operations",
+      "categoryName": "Additional Operations",
+      "scenarioId": "create-merchant-charge",
+      "scenarioName": "Create Merchant Charge",
+      "path": "llm-context/additional-operations/create-merchant-charge.md"
+    },
+    {
+      "categoryId": "additional-operations",
+      "categoryName": "Additional Operations",
+      "scenarioId": "update-merchant-charge",
+      "scenarioName": "Update Merchant Charge",
+      "path": "llm-context/additional-operations/update-merchant-charge.md"
+    },
+    {
+      "categoryId": "additional-operations",
+      "categoryName": "Additional Operations",
+      "scenarioId": "fetch-all-merchant-charges",
+      "scenarioName": "Fetch All Merchant Charges",
+      "path": "llm-context/additional-operations/fetch-all-merchant-charges.md"
+    },
+    {
+      "categoryId": "additional-operations",
+      "categoryName": "Additional Operations",
+      "scenarioId": "add-customer-details",
+      "scenarioName": "Add Customer Details",
+      "path": "llm-context/additional-operations/add-customer-details.md"
+    },
+    {
+      "categoryId": "additional-operations",
+      "categoryName": "Additional Operations",
+      "scenarioId": "create-product-catalog",
+      "scenarioName": "Create Product Catalog",
+      "path": "llm-context/additional-operations/create-product-catalog.md"
+    },
+    {
+      "categoryId": "additional-operations",
+      "categoryName": "Additional Operations",
+      "scenarioId": "create-product",
+      "scenarioName": "Create Product",
+      "path": "llm-context/additional-operations/create-product.md"
+    },
+    {
+      "categoryId": "additional-operations",
+      "categoryName": "Additional Operations",
+      "scenarioId": "fetch-all-products",
+      "scenarioName": "Fetch All Products",
+      "path": "llm-context/additional-operations/fetch-all-products.md"
+    },
+    {
+      "categoryId": "additional-operations",
+      "categoryName": "Additional Operations",
+      "scenarioId": "update-product",
+      "scenarioName": "Update Product",
+      "path": "llm-context/additional-operations/update-product.md"
+    },
+    {
+      "categoryId": "additional-operations",
+      "categoryName": "Additional Operations",
+      "scenarioId": "update-product-inventory",
+      "scenarioName": "Update Product Inventory",
+      "path": "llm-context/additional-operations/update-product-inventory.md"
+    },
+    {
+      "categoryId": "additional-operations",
+      "categoryName": "Additional Operations",
+      "scenarioId": "add-variant-for-product",
+      "scenarioName": "Add Variant For Product",
+      "path": "llm-context/additional-operations/add-variant-for-product.md"
+    },
+    {
+      "categoryId": "additional-operations",
+      "categoryName": "Additional Operations",
+      "scenarioId": "update-variant",
+      "scenarioName": "Update Variant",
+      "path": "llm-context/additional-operations/update-variant.md"
+    },
+    {
+      "categoryId": "additional-operations",
+      "categoryName": "Additional Operations",
+      "scenarioId": "update-variant-inventory",
+      "scenarioName": "Update Variant Inventory",
+      "path": "llm-context/additional-operations/update-variant-inventory.md"
+    },
+    {
+      "categoryId": "additional-operations",
+      "categoryName": "Additional Operations",
+      "scenarioId": "add-related-products",
+      "scenarioName": "Add Related Products",
+      "path": "llm-context/additional-operations/add-related-products.md"
+    },
+    {
+      "categoryId": "additional-operations",
+      "categoryName": "Additional Operations",
+      "scenarioId": "get-product-statistics",
+      "scenarioName": "Get Product Statistics",
+      "path": "llm-context/additional-operations/get-product-statistics.md"
+    },
+    {
+      "categoryId": "additional-operations",
+      "categoryName": "Additional Operations",
+      "scenarioId": "get-product-catalog-statistics",
+      "scenarioName": "Get Product Catalog Statistics",
+      "path": "llm-context/additional-operations/get-product-catalog-statistics.md"
+    },
+    {
+      "categoryId": "added-features",
+      "categoryName": "Added Features",
+      "scenarioId": "create-merchant-account",
+      "scenarioName": "Create Merchant Account",
+      "path": "llm-context/added-features/create-merchant-account.md"
+    },
+    {
+      "categoryId": "added-features",
+      "categoryName": "Added Features",
+      "scenarioId": "create-partner-account",
+      "scenarioName": "Create Partner Account",
+      "path": "llm-context/added-features/create-partner-account.md"
+    },
+    {
+      "categoryId": "added-features",
+      "categoryName": "Added Features",
+      "scenarioId": "create-service-provider",
+      "scenarioName": "Create Service Provider",
+      "path": "llm-context/added-features/create-service-provider.md"
+    },
+    {
+      "categoryId": "added-features",
+      "categoryName": "Added Features",
+      "scenarioId": "fetch-service-provider-application-status",
+      "scenarioName": "Fetch Service Provider Application Status",
+      "path": "llm-context/added-features/fetch-service-provider-application-status.md"
+    },
+    {
+      "categoryId": "added-features",
+      "categoryName": "Added Features",
+      "scenarioId": "fetch-service-provider-for-merchant",
+      "scenarioName": "Fetch Service Provider for Merchant",
+      "path": "llm-context/added-features/fetch-service-provider-for-merchant.md"
+    },
+    {
+      "categoryId": "added-features",
+      "categoryName": "Added Features",
+      "scenarioId": "fetch-service-provider-for-partner",
+      "scenarioName": "Fetch Service Provider for Partner",
+      "path": "llm-context/added-features/fetch-service-provider-for-partner.md"
+    },
+    {
+      "categoryId": "added-features",
+      "categoryName": "Added Features",
+      "scenarioId": "get-all-service-provider-applications",
+      "scenarioName": "Get All Service Provider Applications",
+      "path": "llm-context/added-features/get-all-service-provider-applications.md"
+    },
+    {
+      "categoryId": "added-features",
+      "categoryName": "Added Features",
+      "scenarioId": "subscribe-to-merchant-reports",
+      "scenarioName": "Subscribe to Merchant Reports",
+      "path": "llm-context/added-features/subscribe-to-merchant-reports.md"
+    },
+    {
+      "categoryId": "added-features",
+      "categoryName": "Added Features",
+      "scenarioId": "fetch-external-notifications-for-merchant",
+      "scenarioName": "Fetch External Notifications for Merchant",
+      "path": "llm-context/added-features/fetch-external-notifications-for-merchant.md"
+    },
+    {
+      "categoryId": "added-features",
+      "categoryName": "Added Features",
+      "scenarioId": "subscribe-to-partner-notifications",
+      "scenarioName": "Subscribe to Partner Notifications",
+      "path": "llm-context/added-features/subscribe-to-partner-notifications.md"
+    },
+    {
+      "categoryId": "added-features",
+      "categoryName": "Added Features",
+      "scenarioId": "fetch-external-notifications-for-partner",
+      "scenarioName": "Fetch External Notifications for Partner",
+      "path": "llm-context/added-features/fetch-external-notifications-for-partner.md"
+    },
+    {
+      "categoryId": "added-features",
+      "categoryName": "Added Features",
+      "scenarioId": "unsubscribe-notification-for-merchant",
+      "scenarioName": "Unsubscribe Notification for Merchant",
+      "path": "llm-context/added-features/unsubscribe-notification-for-merchant.md"
+    },
+    {
+      "categoryId": "added-features",
+      "categoryName": "Added Features",
+      "scenarioId": "unsubscribe-notification-for-partner",
+      "scenarioName": "Unsubscribe Notification for Partner",
+      "path": "llm-context/added-features/unsubscribe-notification-for-partner.md"
+    },
+    {
+      "categoryId": "advanced-customizations",
+      "categoryName": "Advanced Customizations",
+      "scenarioId": "generate-branding-options",
+      "scenarioName": "Generate Branding Options",
+      "path": "llm-context/advanced-customizations/generate-branding-options.md"
+    },
+    {
+      "categoryId": "advanced-customizations",
+      "categoryName": "Advanced Customizations",
+      "scenarioId": "create-gift-card",
+      "scenarioName": "Create Gift Card",
+      "path": "llm-context/advanced-customizations/create-gift-card.md"
+    },
+    {
+      "categoryId": "advanced-customizations",
+      "categoryName": "Advanced Customizations",
+      "scenarioId": "get-all-gift-cards",
+      "scenarioName": "Get All Gift Cards",
+      "path": "llm-context/advanced-customizations/get-all-gift-cards.md"
+    },
+    {
+      "categoryId": "advanced-customizations",
+      "categoryName": "Advanced Customizations",
+      "scenarioId": "get-gift-card-details",
+      "scenarioName": "Get Gift Card Details",
+      "path": "llm-context/advanced-customizations/get-gift-card-details.md"
+    },
+    {
+      "categoryId": "advanced-customizations",
+      "categoryName": "Advanced Customizations",
+      "scenarioId": "get-gift-card-transactions",
+      "scenarioName": "Get Gift Card Transactions",
+      "path": "llm-context/advanced-customizations/get-gift-card-transactions.md"
+    },
+    {
+      "categoryId": "advanced-customizations",
+      "categoryName": "Advanced Customizations",
+      "scenarioId": "create-promotion",
+      "scenarioName": "Create Promotion",
+      "path": "llm-context/advanced-customizations/create-promotion.md"
+    },
+    {
+      "categoryId": "advanced-customizations",
+      "categoryName": "Advanced Customizations",
+      "scenarioId": "update-promotion",
+      "scenarioName": "Update Promotion",
+      "path": "llm-context/advanced-customizations/update-promotion.md"
+    },
+    {
+      "categoryId": "advanced-customizations",
+      "categoryName": "Advanced Customizations",
+      "scenarioId": "fetch-promotion-by-id",
+      "scenarioName": "Fetch Promotion by ID",
+      "path": "llm-context/advanced-customizations/fetch-promotion-by-id.md"
+    },
+    {
+      "categoryId": "advanced-customizations",
+      "categoryName": "Advanced Customizations",
+      "scenarioId": "fetch-promotions",
+      "scenarioName": "Fetch Promotions",
+      "path": "llm-context/advanced-customizations/fetch-promotions.md"
+    },
+    {
+      "categoryId": "advanced-customizations",
+      "categoryName": "Advanced Customizations",
+      "scenarioId": "delete-promotion",
+      "scenarioName": "Delete Promotion",
+      "path": "llm-context/advanced-customizations/delete-promotion.md"
+    },
+    {
+      "categoryId": "advanced-customizations",
+      "categoryName": "Advanced Customizations",
+      "scenarioId": "generate-product-description",
+      "scenarioName": "Generate Product Description",
+      "path": "llm-context/advanced-customizations/generate-product-description.md"
+    },
+    {
+      "categoryId": "advanced-customizations",
+      "categoryName": "Advanced Customizations",
+      "scenarioId": "generate-product-images",
+      "scenarioName": "Generate Product Images",
+      "path": "llm-context/advanced-customizations/generate-product-images.md"
+    },
+    {
+      "categoryId": "advanced-customizations",
+      "categoryName": "Advanced Customizations",
+      "scenarioId": "generate-product-catalog-from-images",
+      "scenarioName": "Generate Product Catalog from Images",
+      "path": "llm-context/advanced-customizations/generate-product-catalog-from-images.md"
+    }
+  ]
+}

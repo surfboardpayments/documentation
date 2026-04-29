@@ -1,0 +1,1257 @@
+{
+    "title": "Merchant Charge & Billing Plans",
+    "description": "This section covers the APIs used to create, update, and retrieve charges associated with a merchant, as well as manage billing plans for partners. Charges can be one-time or subscription-based, while billing plans define pricing structures for different payment methods and card brands.",
+    "endpoints": [
+        {
+            "fragment": "Create Merchant Charge",
+            "method": "POST",
+            "link": "API_URL/partners/:partnerId/merchants/:merchantId/charges"
+        },
+        {
+            "fragment": "Update Merchant Charge",
+            "method": "PUT",
+            "link": "API_URL/partners/:partnerId/merchants/:merchantId/charges/:chargeId"
+        },
+        {
+            "fragment": "Fetch Merchant Charge by ID",
+            "method": "GET",
+            "link": "API_URL/partners/:partnerId/merchants/:merchantId/charges/:chargeId"
+        },
+        {
+            "fragment": "Fetch All Merchant Charges",
+            "method": "GET",
+            "link": "API_URL/partners/:partnerId/merchants/:merchantId/charges"
+        },
+        {
+            "fragment": "Create Billing Plans",
+            "method": "POST",
+            "link": "API_URL/partners/:partnerId/billing-plans"
+        },
+        {
+            "fragment": "Fetch Billing Plans",
+            "method": "GET",
+            "link": "API_URL/partners/:partnerId/billing-plans"
+        },
+        {
+            "fragment": "Fetch Billing Plans for Merchant",
+            "method": "GET",
+            "link": "API_URL/partners/:partnerId/merchants/:merchantId/plans"
+        },
+        {
+            "fragment": "Fetch Billing Plan by ID",
+            "method": "GET",
+            "link": "API_URL/partners/:partnerId/billing-plans/:id"
+        },
+        {
+            "fragment": "Delete Billing Plan by ID",
+            "method": "DELETE",
+            "link": "API_URL/partners/:partnerId/billing-plans/:id"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Create Merchant Charge",
+            "description": "Creates a new charge for a merchant. Partners can specify the charge details.",
+            "reqParams": [
+                {
+                    "name": "description",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A brief description of the charge."
+                },
+                {
+                    "name": "currency",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Three-digit currency code"
+                },
+                {
+                    "name": "amount",
+                    "type": "number",
+                    "mandatory": true,
+                    "description": "Charge amount in smallest currency units"
+                },
+                {
+                    "name": "vat",
+                    "type": "number",
+                    "mandatory": false,
+                    "description": "Optional VAT amount."
+                },
+                {
+                    "name": "billingDate",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Date on which the charge is effective, in yyyy-mm-dd format."
+                },
+                {
+                    "name": "recurring",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "If set, defines a recurring charge schedule including frequency and optional end date.",
+                    "reqParams": [
+                        {
+                            "name": "frequency",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Specifies how frequently the charge will be billed. The possible values are:",
+                            "possibleValues": [
+                                {
+                                    "value": "daily",
+                                    "description": "Recurring charge occurs every day."
+                                },
+                                {
+                                    "value": "twiceWeekly",
+                                    "description": "Recurring charge occurs twice a week."
+                                },
+                                {
+                                    "value": "weekly",
+                                    "description": "Recurring charge occurs once per week."
+                                },
+                                {
+                                    "value": "tenDays",
+                                    "description": "Recurring charge occurs once every 10 days."
+                                },
+                                {
+                                    "value": "fortNightly",
+                                    "description": "Recurring charge occurs once every two weeks."
+                                },
+                                {
+                                    "value": "monthly",
+                                    "description": "Recurring charge occurs once per month."
+                                },
+                                {
+                                    "value": "everyTwoMonths",
+                                    "description": "Recurring charge occurs once every two months."
+                                },
+                                {
+                                    "value": "trimester",
+                                    "description": "Recurring charge occurs every three months."
+                                },
+                                {
+                                    "value": "quarterly",
+                                    "description": "Recurring charge occurs once every quarter (three months)."
+                                },
+                                {
+                                    "value": "twiceYearly",
+                                    "description": "Recurring charge occurs twice a year."
+                                },
+                                {
+                                    "value": "annually",
+                                    "description": "Recurring charge occurs once a year."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "billingEndDate",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Date in yyyy-mm-dd format specifying when to stop recurring charges."
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Indicates if the request was 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data containing information about the created charge.",
+                    "resParams": [
+                        {
+                            "name": "chargeId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unique identifier for the newly created charge."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message describing the outcome of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/partners/:partnerId/merchants/:merchantId/charges",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"description\":\"Fee\",\"currency\":\"752\",\"amount\":5000000,\"vat\":35,\"billingDate\":\"2025-02-11\",\"recurring\":{\"billingEndDate\":\"2025-02-12\",\"frequency\":\"daily\"}}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "\n{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"chargeId\": \"82eb21dbb4bcf80c46\"\n  },\n  \"message\": \"Merchant charge created successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Update Merchant Charge",
+            "description": "Updates an existing charge for a merchant. Partners can modify the amount, VAT, and optionally adjust the recurring settings.",
+            "reqParams": [
+                {
+                    "name": "amount",
+                    "type": "number",
+                    "mandatory": true,
+                    "description": "Updated amount in minor currency units."
+                },
+                {
+                    "name": "vat",
+                    "type": "number",
+                    "mandatory": false,
+                    "description": "Optional updated VAT amount."
+                },
+                {
+                    "name": "recurring",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "Updated recurring schedule. Billing end date and updateType can be specified here.",
+                    "reqParams": [
+                        {
+                            "name": "updateType",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Indicates the type of the update.The possible values are",
+                            "possibleValues": [
+                                {
+                                    "value": "onlyNext",
+                                    "description": "Applies the update to the next billing cycle only."
+                                },
+                                {
+                                    "value": "lifeTime",
+                                    "description": "Applies the update for the remaining lifetime of the subscription."
+                                },
+                                {
+                                    "value": "current",
+                                    "description": "Applies the update immediately to the current billing cycle."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "billingEndDate",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Date in yyyy-mm-dd format specifying the new end date for the recurring charge."
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Indicates if the request was 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message describing the outcome of the request."
+                }
+            ],
+            "method": "PUT",
+            "path": "/partners/:partnerId/merchants/:merchantId/charges/:chargeId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"amount\":650000,\"vat\":15,\"recurring\":{\"updateType\":\"onlyNext\",\"billingEndDate\":\"2025-10-23\"}}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"chargeId\": \"82ed1af7b38e080146\"\n  },\n  \"message\": \"Merchant charge updated successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Merchant Charge by ID",
+            "description": "Retrieves detailed information about a specific merchant charge, including subscription details, amount, VAT, frequency, and any associated sub-charges.",
+            "pagination": false,
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data containing details of the requested merchant charge",
+                    "resParams": [
+                        {
+                            "name": "isSubscriptionCharge",
+                            "type": "boolean",
+                            "description": "Specifies if this charge is subscription-based (recurring)."
+                        },
+                        {
+                            "name": "description",
+                            "type": "string",
+                            "description": "A short description of the charge."
+                        },
+                        {
+                            "name": "amount",
+                            "type": "number",
+                            "description": "Charge amount in smallest currency units."
+                        },
+                        {
+                            "name": "vat",
+                            "type": "number",
+                            "description": "The VAT amount applied to this charge."
+                        },
+                        {
+                            "name": "frequency",
+                            "type": "string",
+                            "description": "Specifies how frequently the charge will be billed. The possible values are:",
+                            "possibleValues": [
+                                {
+                                    "value": "daily",
+                                    "description": "Recurring charge occurs every day."
+                                },
+                                {
+                                    "value": "twiceWeekly",
+                                    "description": "Recurring charge occurs twice a week."
+                                },
+                                {
+                                    "value": "weekly",
+                                    "description": "Recurring charge occurs once per week."
+                                },
+                                {
+                                    "value": "tenDays",
+                                    "description": "Recurring charge occurs once every 10 days."
+                                },
+                                {
+                                    "value": "fortNightly",
+                                    "description": "Recurring charge occurs once every two weeks."
+                                },
+                                {
+                                    "value": "monthly",
+                                    "description": "Recurring charge occurs once per month."
+                                },
+                                {
+                                    "value": "everyTwoMonths",
+                                    "description": "Recurring charge occurs once every two months."
+                                },
+                                {
+                                    "value": "trimester",
+                                    "description": "Recurring charge occurs every three months."
+                                },
+                                {
+                                    "value": "quarterly",
+                                    "description": "Recurring charge occurs once every quarter (three months)."
+                                },
+                                {
+                                    "value": "twiceYearly",
+                                    "description": "Recurring charge occurs twice a year."
+                                },
+                                {
+                                    "value": "annually",
+                                    "description": "Recurring charge occurs once a year."
+                                },
+                                {
+                                    "value": "unscheduled",
+                                    "description": "Recurring charge does not follow a fixed schedule."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "billingStartDate",
+                            "type": "string",
+                            "description": "Start date of the recurring charge in ISO 8601 format."
+                        },
+                        {
+                            "name": "billingEndDate",
+                            "type": "string",
+                            "description": "End date of the recurring charge in ISO 8601 format."
+                        },
+                        {
+                            "name": "subCharges",
+                            "type": "array",
+                            "description": "Array of sub-charges associated with this main charge.",
+                            "resParams": [
+                                {
+                                    "name": "chargeId",
+                                    "type": "string",
+                                    "description": "Unique identifier for this sub-charge."
+                                },
+                                {
+                                    "name": "description",
+                                    "type": "string",
+                                    "description": "A short text describing the sub-charge."
+                                },
+                                {
+                                    "name": "amount",
+                                    "type": "number",
+                                    "description": "Charge amount in smallest currency units"
+                                },
+                                {
+                                    "name": "vat",
+                                    "type": "number",
+                                    "description": "VAT amount for this sub-charge."
+                                },
+                                {
+                                    "name": "status",
+                                    "type": "string",
+                                    "description": "Current status of the sub-charge."
+                                },
+                                {
+                                    "name": "billingDate",
+                                    "type": "string",
+                                    "description": "Date when this sub-charge was billed, in ISO 8601 format."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/partners/:partnerId/merchants/:merchantId/charges/:chargeId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t  \"chargeId\":\"82eb21dbb4bcf80c46\",\n\t\t\"isSubscriptionCharge\": true,\n\t\t\"description\": \"Fee\",\n\t\t\"amount\": 5000000,\n\t\t\"vat\": 35,\n\t\t\"frequency\": \"daily\",\n\t\t\"billingStartDate\": \"2025-02-18T00:00:00.000Z\",\n\t\t\"billingEndDate\": \"2025-02-20T00:00:00.000Z\",\n\t\t\"subCharges\": [\n\t\t\t{\n\t\t\t\t\"subChargeId\": \"82f1a47a1f97000446\",\n\t\t\t\t\"type\": \"PARTNER_FEE\",\n\t\t\t\t\"description\": \"Fee\",\n\t\t\t\t\"amount\": 650000,\n\t\t\t\t\"vat\": 15,\n\t\t\t\t\"status\": \"PENDING\",\n\t\t\t\t\"billingDate\": \"2025-02-18T00:00:00.000Z\"\n\t\t\t}\n\t\t]\n\t},\n\t\"message\": \"Merchant charge fetched successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch All Merchant Charges",
+            "description": "Retrieves a list of all charges associated with a particular merchant. This includes both one-time and subscription-based charges.",
+            "pagination": true,
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "An array of merchant charges.",
+                    "resParams": [
+                        {
+                            "name": "chargeId",
+                            "type": "string",
+                            "description": "Unique identifier for the charge."
+                        },
+                        {
+                            "name": "subChargeId",
+                            "type": "string",
+                            "description": "Identifier specifically tied to the sub-charge, usually the same as 'id' for single charges."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "description": "The merchant ID to whom this charge applies."
+                        },
+                        {
+                            "name": "isSubscriptionCharge",
+                            "type": "boolean",
+                            "description": "Indicates whether this charge is part of a subscription (recurring)."
+                        },
+                        {
+                            "name": "description",
+                            "type": "string",
+                            "description": "A brief text describing the charge."
+                        },
+                        {
+                            "name": "amount",
+                            "type": "number",
+                            "description": "Charge amount in smallest currency units."
+                        },
+                        {
+                            "name": "vat",
+                            "type": "number",
+                            "description": "VAT amount applied to this charge."
+                        },
+                        {
+                            "name": "status",
+                            "type": "string",
+                            "description": "Current status of the charge, for example 'PENDING'."
+                        },
+                        {
+                            "name": "billingDate",
+                            "type": "string",
+                            "description": "Date the charge is billed, in ISO 8601 format."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message describing the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/partners/:partnerId/merchants/:merchantId/charges",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"status\": \"SUCCESS\",\n  \"data\": [\n    {\n      \"chargeId\": \"82ed1af7b38e080146\",\n      \"subChargeId\": \"82ed1af7b38e080146\",\n      \"merchantId\": \"m_iWGri3XAyTmkbKYsYtV47\",\n      \"isSubscriptionCharge\": true,\n      \"description\": \"Fee\",\n      \"amount\": 650000,\n      \"vat\": 15,\n      \"status\": \"PENDING\",\n      \"billingDate\": \"2025-02-11T00:00:00.000Z\"\n    },\n    {\n      \"chargeId\": \"82eb21dbb4bcf80c46\",\n      \"subChargeId\": \"82ec36fee443f80f46\",\n      \"merchantId\": \"m_iWGri3XAyTmkbKYsYtV47\",\n      \"isSubscriptionCharge\": true,\n      \"description\": \"Fee\",\n      \"amount\": 5000000,\n      \"vat\": 35,\n      \"status\": \"PENDING\",\n      \"billingDate\": \"2025-02-09T00:00:00.000Z\"\n    },\n    {\n      \"chargeId\": \"82eb21dbb4bcf80c46\",\n      \"subChargeId\": \"82eb21dbb4bcf80c46\",\n      \"merchantId\": \"m_iWGri3XAyTmkbKYsYtV47\",\n      \"isSubscriptionCharge\": true,\n      \"description\": \"Fee\",\n      \"amount\": 5000000,\n      \"vat\": 35,\n      \"status\": \"PENDING\",\n      \"billingDate\": \"2025-02-08T00:00:00.000Z\"\n    }\n  ],\n  \"message\": \"Merchant charges fetched successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Create Billing Plans",
+            "description": "Creates new billing plans for a partner. Billing plans define pricing structures for different payment methods, card brands, and terminal types.",
+            "reqParams": [
+                {
+                    "name": "plans",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Array of billing plan objects to create.",
+                    "reqParams": [
+                        {
+                            "name": "id",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unique identifier for the billing plan."
+                        },
+                        {
+                            "name": "cardBrand",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Card brand for which this plan applies (e.g., VISA, MASTERCARD, DISCOVER)."
+                        },
+                        {
+                            "name": "terminalType",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Type of terminal for which this plan applies (e.g., STANDARD)."
+                        },
+                        {
+                            "name": "paymentMethod",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Payment method for which this plan applies (e.g., CARD)."
+                        },
+                        {
+                            "name": "planType",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Type of billing plan.",
+                            "possibleValues": [
+                                {
+                                    "value": "FIXED",
+                                    "description": "Fixed percentage or amount pricing."
+                                },
+                                {
+                                    "value": "VARIABLE",
+                                    "description": "Variable pricing based on transaction type."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "description",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Description of the billing plan."
+                        },
+                        {
+                            "name": "domesticDebitNonCommercial",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "Percentage rate for domestic debit non-commercial transactions."
+                        },
+                        {
+                            "name": "domesticCreditNonCommercial",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "Percentage rate for domestic credit non-commercial transactions."
+                        },
+                        {
+                            "name": "domesticDebitCommercial",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "Percentage rate for domestic debit commercial transactions."
+                        },
+                        {
+                            "name": "domesticCreditCommercial",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "Percentage rate for domestic credit commercial transactions."
+                        },
+                        {
+                            "name": "eeaDebitNonCommercial",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "Percentage rate for EEA debit non-commercial transactions."
+                        },
+                        {
+                            "name": "eeaCreditNonCommercial",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "Percentage rate for EEA credit non-commercial transactions."
+                        },
+                        {
+                            "name": "eeaDebitCommercial",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "Percentage rate for EEA debit commercial transactions."
+                        },
+                        {
+                            "name": "eeaCreditCommercial",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "Percentage rate for EEA credit commercial transactions."
+                        },
+                        {
+                            "name": "internationalDebitNonCommercial",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "Percentage rate for international debit non-commercial transactions."
+                        },
+                        {
+                            "name": "internationalCreditNonCommercial",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "Percentage rate for international credit non-commercial transactions."
+                        },
+                        {
+                            "name": "internationalDebitCommercial",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "Percentage rate for international debit commercial transactions."
+                        },
+                        {
+                            "name": "internationalCreditCommercial",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "Percentage rate for international credit commercial transactions."
+                        },
+                        {
+                            "name": "minimumCeiling",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "Minimum ceiling amount for transactions."
+                        },
+                        {
+                            "name": "fixedCost",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "Fixed cost amount per transaction."
+                        },
+                        {
+                            "name": "fixedPercentage",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "Fixed percentage rate applied to transactions."
+                        },
+                        {
+                            "name": "vatPercentage",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "VAT percentage applied to the billing plan."
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Indicates if the request was 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message describing the outcome of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/partners/:partnerId/billing-plans",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ],
+                    "body": "{\"plans\":[{\"id\":\"SP_NOK7\",\"paymentMethod\":\"CARD\",\"cardBrand\":\"DISCOVER\",\"terminalType\":\"STANDARD\",\"planType\":\"FIXED\",\"description\":\"Testing 2024\",\"fixedPercentage\":13.4}]}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"message\": \"Billing plans created successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Billing Plans",
+            "description": "Retrieves all billing plans associated with a partner. Returns detailed information about each plan including pricing structures for different transaction types. Supports pagination through page number headers.",
+            "pagination": true,
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Array of billing plan objects.",
+                    "resParams": [
+                        {
+                            "name": "billingPlanId",
+                            "type": "string",
+                            "description": "Unique identifier for the billing plan."
+                        },
+                        {
+                            "name": "cardBrand",
+                            "type": "string",
+                            "description": "Card brand for which this plan applies."
+                        },
+                        {
+                            "name": "terminalType",
+                            "type": "string",
+                            "description": "Type of terminal for which this plan applies."
+                        },
+                        {
+                            "name": "paymentMethod",
+                            "type": "string",
+                            "description": "Payment method for which this plan applies."
+                        },
+                        {
+                            "name": "planType",
+                            "type": "string",
+                            "description": "Type of billing plan (FIXED or VARIABLE)."
+                        },
+                        {
+                            "name": "description",
+                            "type": "string",
+                            "description": "Description of the billing plan."
+                        },
+                        {
+                            "name": "domesticDebitNonCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for domestic debit non-commercial transactions."
+                        },
+                        {
+                            "name": "domesticCreditNonCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for domestic credit non-commercial transactions."
+                        },
+                        {
+                            "name": "domesticDebitCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for domestic debit commercial transactions."
+                        },
+                        {
+                            "name": "domesticCreditCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for domestic credit commercial transactions."
+                        },
+                        {
+                            "name": "eeaDebitNonCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for EEA debit non-commercial transactions."
+                        },
+                        {
+                            "name": "eeaCreditNonCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for EEA credit non-commercial transactions."
+                        },
+                        {
+                            "name": "eeaDebitCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for EEA debit commercial transactions."
+                        },
+                        {
+                            "name": "eeaCreditCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for EEA credit commercial transactions."
+                        },
+                        {
+                            "name": "internationalDebitNonCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for international debit non-commercial transactions."
+                        },
+                        {
+                            "name": "internationalCreditNonCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for international credit non-commercial transactions."
+                        },
+                        {
+                            "name": "internationalDebitCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for international debit commercial transactions."
+                        },
+                        {
+                            "name": "internationalCreditCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for international credit commercial transactions."
+                        },
+                        {
+                            "name": "minimumCeiling",
+                            "type": "number",
+                            "description": "Minimum ceiling amount for transactions."
+                        },
+                        {
+                            "name": "fixedCost",
+                            "type": "number",
+                            "description": "Fixed cost amount per transaction."
+                        },
+                        {
+                            "name": "fixedPercentage",
+                            "type": "number",
+                            "description": "Fixed percentage rate applied to transactions."
+                        },
+                        {
+                            "name": "vatPercentage",
+                            "type": "number",
+                            "description": "VAT percentage applied to the billing plan."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message describing the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/partners/:partnerId/billing-plans",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "x-page-number",
+                            "value": "1"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": [\n    {\n      \"billingPlanId\": \"ANCN_POS_PREMIUM_PLUS\",\n      \"cardBrand\": \"VISA_MC\",\n      \"terminalType\": \"STANDARD\",\n      \"paymentMethod\": \"CARD\",\n      \"planType\": \"VARIABLE\",\n      \"description\": \"Billing Plan Description\",\n      \"domesticDebitNonCommercial\": 0.49,\n      \"domesticCreditNonCommercial\": 0.59,\n      \"domesticDebitCommercial\": 1.95,\n      \"domesticCreditCommercial\": 1.95,\n      \"eeaDebitNonCommercial\": 0.49,\n      \"eeaCreditNonCommercial\": 0.59,\n      \"eeaDebitCommercial\": 1.95,\n      \"eeaCreditCommercial\": 1.95,\n      \"internationalDebitNonCommercial\": 1.95,\n      \"internationalCreditNonCommercial\": 1.95,\n      \"internationalDebitCommercial\": 1.95,\n      \"internationalCreditCommercial\": 1.95,\n      \"minimumCeiling\": 0,\n      \"fixedCost\": 0.12,\n      \"fixedPercentage\": 0,\n      \"vatPercentage\": 0\n    },\n    {\n      \"billingPlanId\": \"P_DKKVK_V149M000F000\",\n      \"cardBrand\": \"VISA_MC\",\n      \"terminalType\": \"STANDARD\",\n      \"paymentMethod\": \"CARD\",\n      \"planType\": \"FIXED\",\n      \"description\": \"Billing Plan Description\",\n      \"domesticDebitNonCommercial\": 1.49,\n      \"domesticCreditNonCommercial\": 1.49,\n      \"domesticDebitCommercial\": 1.49,\n      \"domesticCreditCommercial\": 1.49,\n      \"eeaDebitNonCommercial\": 1.49,\n      \"eeaCreditNonCommercial\": 1.49,\n      \"eeaDebitCommercial\": 1.49,\n      \"eeaCreditCommercial\": 1.49,\n      \"internationalDebitNonCommercial\": 1.49,\n      \"internationalCreditNonCommercial\": 1.49,\n      \"internationalDebitCommercial\": 1.49,\n      \"internationalCreditCommercial\": 1.49,\n      \"minimumCeiling\": 0,\n      \"fixedCost\": 0,\n      \"fixedPercentage\": 0,\n      \"vatPercentage\": 0\n    }\n  ],\n  \"message\": \"Partner billing plans fetched successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Billing Plans for Merchant",
+            "description": "Retrieves billing plans specifically assigned to a merchant under a partner. This endpoint returns the billing plans that are applicable to the specified merchant.",
+            "pagination": false,
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Array of billing plan objects assigned to the merchant.",
+                    "resParams": [
+                        {
+                            "name": "billingPlanId",
+                            "type": "string",
+                            "description": "Unique identifier for the billing plan."
+                        },
+                        {
+                            "name": "cardBrand",
+                            "type": "string",
+                            "description": "Card brand for which this plan applies."
+                        },
+                        {
+                            "name": "terminalType",
+                            "type": "string",
+                            "description": "Type of terminal for which this plan applies."
+                        },
+                        {
+                            "name": "paymentMethod",
+                            "type": "string",
+                            "description": "Payment method for which this plan applies."
+                        },
+                        {
+                            "name": "planType",
+                            "type": "string",
+                            "description": "Type of billing plan (FIXED or VARIABLE)."
+                        },
+                        {
+                            "name": "description",
+                            "type": "string",
+                            "description": "Description of the billing plan."
+                        },
+                        {
+                            "name": "domesticDebitNonCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for domestic debit non-commercial transactions."
+                        },
+                        {
+                            "name": "domesticCreditNonCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for domestic credit non-commercial transactions."
+                        },
+                        {
+                            "name": "domesticDebitCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for domestic debit commercial transactions."
+                        },
+                        {
+                            "name": "domesticCreditCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for domestic credit commercial transactions."
+                        },
+                        {
+                            "name": "eeaDebitNonCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for EEA debit non-commercial transactions."
+                        },
+                        {
+                            "name": "eeaCreditNonCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for EEA credit non-commercial transactions."
+                        },
+                        {
+                            "name": "eeaDebitCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for EEA debit commercial transactions."
+                        },
+                        {
+                            "name": "eeaCreditCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for EEA credit commercial transactions."
+                        },
+                        {
+                            "name": "internationalDebitNonCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for international debit non-commercial transactions."
+                        },
+                        {
+                            "name": "internationalCreditNonCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for international credit non-commercial transactions."
+                        },
+                        {
+                            "name": "internationalDebitCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for international debit commercial transactions."
+                        },
+                        {
+                            "name": "internationalCreditCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for international credit commercial transactions."
+                        },
+                        {
+                            "name": "minimumCeiling",
+                            "type": "number",
+                            "description": "Minimum ceiling amount for transactions."
+                        },
+                        {
+                            "name": "fixedCost",
+                            "type": "number",
+                            "description": "Fixed cost amount per transaction."
+                        },
+                        {
+                            "name": "fixedPercentage",
+                            "type": "number",
+                            "description": "Fixed percentage rate applied to transactions."
+                        },
+                        {
+                            "name": "vatPercentage",
+                            "type": "number",
+                            "description": "VAT percentage applied to the billing plan."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message describing the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/partners/:partnerId/merchants/:merchantId/plans",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": [\n    {\n      \"billingPlanId\": \"SP_SE_Fix119\",\n      \"cardBrand\": \"VISA_MC\",\n      \"terminalType\": \"STANDARD\",\n      \"paymentMethod\": \"CARD\",\n      \"planType\": \"FIXED\",\n      \"description\": \"Billing Plan Description\",\n      \"domesticDebitNonCommercial\": 1.19,\n      \"domesticCreditNonCommercial\": 1.19,\n      \"domesticDebitCommercial\": 1.19,\n      \"domesticCreditCommercial\": 1.19,\n      \"eeaDebitNonCommercial\": 1.19,\n      \"eeaCreditNonCommercial\": 1.19,\n      \"eeaDebitCommercial\": 1.19,\n      \"eeaCreditCommercial\": 1.19,\n      \"internationalDebitNonCommercial\": 1.19,\n      \"internationalCreditNonCommercial\": 1.19,\n      \"internationalDebitCommercial\": 1.19,\n      \"internationalCreditCommercial\": 1.19,\n      \"minimumCeiling\": 0.99,\n      \"fixedCost\": 0,\n      \"fixedPercentage\": 0,\n      \"vatPercentage\": 0\n    }\n  ],\n  \"message\": \"Billing plans for the merchant fetched successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Billing Plan by ID",
+            "new": true,
+            "description": "Fetch detailed information for a specific billing plan using its ID.",
+            "pagination": false,
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Array containing the filtered billing plan details.",
+                    "resParams": [
+                        {
+                            "name": "billingPlanId",
+                            "type": "string",
+                            "description": "Unique identifier for the billing plan."
+                        },
+                        {
+                            "name": "paymentMethod",
+                            "type": "string",
+                            "description": "Payment method for which this plan applies."
+                        },
+                        {
+                            "name": "cardBrand",
+                            "type": "string",
+                            "description": "Card brand for which this plan applies."
+                        },
+                        {
+                            "name": "terminalType",
+                            "type": "string",
+                            "description": "Type of terminal for which this plan applies."
+                        },
+                        {
+                            "name": "planType",
+                            "type": "string",
+                            "description": "Type of billing plan (FIXED or VARIABLE)."
+                        },
+                        {
+                            "name": "description",
+                            "type": "string",
+                            "description": "Description of the billing plan."
+                        },
+                        {
+                            "name": "domesticDebitNonCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for domestic debit non-commercial transactions."
+                        },
+                        {
+                            "name": "domesticCreditNonCommercial",
+                            "type": "number",
+                            "description": "Percentage rate for domestic credit non-commercial transactions."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message describing the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/partners/:partnerId/billing-plans/:id",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": [\n    {\n      \"billingPlanId\": \"PLAN_001\",\n      \"paymentMethod\": \"CARD\",\n      \"cardBrand\": \"VISA\",\n      \"terminalType\": \"STANDARD\",\n      \"planType\": \"FIXED\",\n      \"description\": \"Standard billing plan\",\n      \"domesticDebitNonCommercial\": 1.49,\n      \"domesticCreditNonCommercial\": 1.59\n    }\n  ],\n  \"message\": \"Billing plan retrieved successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Remove Billing Plan by ID",
+            "new": true,
+            "description": "Removes one or more billing plans by their IDs for a specific partner.",
+            "pagination": false,
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message describing the outcome of the removal operation."
+                }
+            ],
+            "method": "DELETE",
+            "path": "/partners/:partnerId/billing-plans/:id",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"message\": \"Billing plans removed from the partner successfully\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

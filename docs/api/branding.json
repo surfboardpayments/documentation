@@ -1,0 +1,1141 @@
+{
+    "title": "Branding APIs",
+    "description": "Branding API’s enables you to customize all customer facing pages provided by Surfboard. The branding can be configured at various levels similar to the terminal config.",
+    "endpoints": [
+        {
+            "fragment": "Create Branding for Merchant",
+            "method": "PATCH",
+            "link": "API_URL/merchants/:merchantId/branding"
+        },
+        {
+            "fragment": "Create Branding for Store",
+            "method": "PATCH",
+            "link": "API_URL/merchants/:merchantId/stores/:storeId/branding"
+        },
+        {
+            "fragment": "Create Branding for Terminal",
+            "method": "PATCH",
+            "link": "API_URL/merchants/:merchantId/stores/:storeId/terminals/:terminalId/branding"
+        },
+        {
+            "fragment": "Create Branding for Partner",
+            "method": "PATCH",
+            "link": "API_URL/partners/:partnerId/branding "
+        },
+        {
+            "fragment": "Fetch Branding for Merchant",
+            "method": "GET",
+            "link": "API_URL/merchants/:merchantId/branding"
+        },
+        {
+            "fragment": "Fetch Branding for Store",
+            "method": "GET",
+            "link": "API_URL/merchants/:merchantId/stores/:storeId/branding"
+        },
+        {
+            "fragment": "Fetch Branding for Terminal",
+            "method": "GET",
+            "link": "API_URL/merchants/:merchantId/stores/:storeId/terminals/:terminalId/branding"
+        },
+        {
+            "fragment": "Fetch Branding for Partner",
+            "method": "GET",
+            "link": "API_URL/partners/:partnerId/branding"
+        },
+        {
+            "fragment": "Remove Branding for Merchant",
+            "method": "DELETE",
+            "link": "API_URL/merchants/:merchantId/branding"
+        },
+        {
+            "fragment": "Remove Branding for Store",
+            "method": "DELETE",
+            "link": "API_URL/merchants/:merchantId/stores/:storeId/branding"
+        },
+        {
+            "fragment": "Remove Branding for Terminal",
+            "method": "DELETE",
+            "link": "API_URL/merchants/:merchantId/stores/:storeId/terminals/:terminalId/branding"
+        },
+        {
+            "fragment": "Remove Branding for Partner",
+            "method": "DELETE",
+            "link": "API_URL/partners/:partnerId/branding"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Create Branding for Merchant",
+            "description": "Create a branding configuration for customizable pages at merchant level",
+            "reqParams": [
+                {
+                    "name": "backgroundColor",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Background color for the page."
+                },
+                {
+                    "name": "brandColor",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Primary brand color for your page."
+                },
+                {
+                    "name": "footerColor",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Footer's background color on the page."
+                },
+                {
+                    "name": "accentColor",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "This a secondary color that compliments your brand color."
+                },
+                {
+                    "name": "rectShape",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Decides the shape of the page buttons. The available shapes are 'rounded','pill' and 'edgy'."
+                },
+                {
+                    "name": "fontType",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Font family for the customizable page. The available font types are 'sans-serif','serif' and 'mono'."
+                },
+                {
+                    "name": "logoUrl",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Logo that will be displayed on the page."
+                },
+                {
+                    "name": "iconUrl",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Icon that will be displayed on the page."
+                },
+                {
+                    "name": "primaryCoverImage",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Primary cover image that will be displayed on the page."
+                },
+                {
+                    "name": "secondaryCoverImage",
+                    "comingSoon": true,
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Secondary cover image that will be displayed on the page."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "PATCH",
+            "path": "/merchants/:merchantId/branding",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"backgroundColor\":\"#667085\",\"brandColor\":\"#697085\",\"accentColor\":\"#787085\",\"rectShape\":\"rounded\",\"fontType\":\"sans-serif\",\"logoUrl\":\"https://res.cloudinary.com/image/surfboard-icon.svg\",\"iconUrl\":\"https://res.cloudinary.com/image/surfboard-icon.svg\",\"footerColor\":\"#CD5C5B\",\"primaryCoverImage\":\"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\",\"secondaryCoverImage\":\"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\"}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Branding configuration set successfully.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Create Branding for Store",
+            "description": "Create a branding configuration for customizable pages at store level",
+            "reqParams": [
+                {
+                    "name": "backgroundColor",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Background color for the page."
+                },
+                {
+                    "name": "brandColor",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Primary brand color for your page."
+                },
+                {
+                    "name": "footerColor",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Footer's background color on the page."
+                },
+                {
+                    "name": "accentColor",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "This a secondary color that compliments your brand color."
+                },
+                {
+                    "name": "rectShape",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Decides the shape of the page buttons. The available shapes are 'rounded','pill' and 'edgy'."
+                },
+                {
+                    "name": "fontType",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Font family for the customizable page. The available font types are 'sans-serif','serif' and 'mono'."
+                },
+                {
+                    "name": "logoUrl",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Logo that will be displayed on the page."
+                },
+                {
+                    "name": "iconUrl",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Icon that will be displayed on the page."
+                },
+                {
+                    "name": "primaryCoverImage",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Primary cover image that will be displayed on the page."
+                },
+                {
+                    "name": "secondaryCoverImage",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Secondary cover image that will be displayed on the page."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "PATCH",
+            "path": "/merchants/:merchantId/stores/:storeId/branding",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"backgroundColor\":\"#667085\",\"brandColor\":\"#697085\",\"accentColor\":\"#787085\",\"rectShape\":\"rounded\",\"fontType\":\"sans-serif\",\"logoUrl\":\"https://res.cloudinary.com/image/surfboard-icon.svg\",\"iconUrl\":\"https://res.cloudinary.com/image/surfboard-icon.svg\",\"footerColor\":\"#CD5C5B\",\"primaryCoverImage\":\"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\",\"secondaryCoverImage\":\"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\"}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Branding configuration set successfully.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Create Branding for Terminal",
+            "description": "Create a branding configuration for customizable pages at terminal level",
+            "reqParams": [
+                {
+                    "name": "backgroundColor",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Background color for the page."
+                },
+                {
+                    "name": "brandColor",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Primary brand color for your page."
+                },
+                {
+                    "name": "footerColor",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Footer's background color on the page."
+                },
+                {
+                    "name": "accentColor",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "This a secondary color that compliments your brand color."
+                },
+                {
+                    "name": "rectShape",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Decides the shape of the page buttons. The available shapes are 'rounded','pill' and 'edgy'."
+                },
+                {
+                    "name": "fontType",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Font family for the customizable page. The available font types are 'sans-serif','serif' and 'mono'."
+                },
+                {
+                    "name": "logoUrl",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Logo that will be displayed on the page."
+                },
+                {
+                    "name": "iconUrl",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Icon that will be displayed on the page."
+                },
+                {
+                    "name": "primaryCoverImage",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Primary cover image that will be displayed on the page."
+                },
+                {
+                    "name": "secondaryCoverImage",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Secondary cover image that will be displayed on the page."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "PATCH",
+            "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/branding",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"backgroundColor\":\"#667085\",\"brandColor\":\"#697085\",\"accentColor\":\"#787085\",\"rectShape\":\"rounded\",\"fontType\":\"sans-serif\",\"logoUrl\":\"https://res.cloudinary.com/image/surfboard-icon.svg\",\"iconUrl\":\"https://res.cloudinary.com/image/surfboard-icon.svg\",\"footerColor\":\"#CD5C5B\",\"primaryCoverImage\":\"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\",\"secondaryCoverImage\":\"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\"}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Branding configuration set successfully.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Create Branding for Partner",
+            "description": "Create a branding configuration for customizable pages at partner level",
+            "reqParams": [
+                {
+                    "name": "backgroundColor",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Background color for the page."
+                },
+                {
+                    "name": "brandColor",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Primary brand color for your page."
+                },
+                {
+                    "name": "footerColor",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Footer's background color on the page."
+                },
+                {
+                    "name": "accentColor",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "This a secondary color that compliments your brand color."
+                },
+                {
+                    "name": "rectShape",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Decides the shape of the page buttons. The available shapes are 'rounded','pill' and 'edgy'."
+                },
+                {
+                    "name": "fontType",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Font family for the customizable page. The available font types are 'sans-serif','serif' and 'mono'."
+                },
+                {
+                    "name": "logoUrl",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Logo that will be displayed on the page."
+                },
+                {
+                    "name": "iconUrl",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Icon that will be displayed on the page."
+                },
+                {
+                    "name": "primaryCoverImage",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Primary cover image that will be displayed on the page."
+                },
+                {
+                    "name": "secondaryCoverImage",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Secondary cover image that will be displayed on the page."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "PATCH",
+            "path": "/partners/:partnerId/branding",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ],
+                    "body": "{\"backgroundColor\":\"#667085\",\"brandColor\":\"#697085\",\"accentColor\":\"#787085\",\"rectShape\":\"rounded\",\"fontType\":\"sans-serif\",\"logoUrl\":\"https://res.cloudinary.com/image/surfboard-icon.svg\",\"iconUrl\":\"https://res.cloudinary.com/image/surfboard-icon.svg\",\"footerColor\":\"#CD5C5B\",\"primaryCoverImage\":\"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\",\"secondaryCoverImage\":\"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\"}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Branding configuration set successfully.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Branding for Merchant",
+            "description": "Fetch existing branding configuration at merchant level.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "backgroundColour",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Background color for the page."
+                        },
+                        {
+                            "name": "brandColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Primary brand color for your page."
+                        },
+                        {
+                            "name": "footerColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Footer's background color on the page."
+                        },
+                        {
+                            "name": "accentColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "This a secondary color that compliments your brand color."
+                        },
+                        {
+                            "name": "rectShape",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Decides the shape of the page buttons. The available shapes are 'rounded','pill' and 'edgy'."
+                        },
+                        {
+                            "name": "fontType",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Font family for the customizable page. The available font types are 'sans-serif','serif' and 'mono'."
+                        },
+                        {
+                            "name": "logoUrl",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Logo that will be displayed on the page."
+                        },
+                        {
+                            "name": "iconUrl",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Icon that will be displayed on the page."
+                        },
+                        {
+                            "name": "primaryCoverImage",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Primary cover image that will be displayed on the page."
+                        },
+                        {
+                            "name": "secondaryCoverImage",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Secondary cover image that will be displayed on the page."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/merchants/:merchantId/branding",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"backgroundColor\": \"#F08080\",\n\t\t\"brandColor\": \"#0E44E1\",\n\t\t\"rectShape\": \"ROUNDED\",\n\t\t\"fontType\": \"serif\",\n\t\t\"accentColor\": \"#F08080\",\n\t\t\"logoUrl\": \"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\",\n\t\t\"iconUrl\": \"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\",\n\t\t\"footerColor\": \"#CD5C5B\",\n\t\t\"primaryCoverImage\": \"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\",\n\t\t\"secondaryCoverImage\": \"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\"\n\t},\n\t\"message\": \"Fetched Branding successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Branding for Store",
+            "description": "Fetch existing branding configuration at store level.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "backgroundColour",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Background color for the page."
+                        },
+                        {
+                            "name": "brandColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Primary brand color for your page."
+                        },
+                        {
+                            "name": "footerColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Footer's background color on the page."
+                        },
+                        {
+                            "name": "accentColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "This a secondary color that compliments your brand color."
+                        },
+                        {
+                            "name": "rectShape",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Decides the shape of the page buttons. The available shapes are 'rounded','pill' and 'edgy'."
+                        },
+                        {
+                            "name": "fontType",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Font family for the customizable page. The available font types are 'sans-serif','serif' and 'mono'."
+                        },
+                        {
+                            "name": "logoUrl",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Logo that will be displayed on the page."
+                        },
+                        {
+                            "name": "iconUrl",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Icon that will be displayed on the page."
+                        },
+                        {
+                            "name": "primaryCoverImage",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Primary cover image that will be displayed on the page."
+                        },
+                        {
+                            "name": "secondaryCoverImage",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Secondary cover image that will be displayed on the page."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/merchants/:merchantId/stores/:storeId/branding",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"backgroundColor\": \"#F08080\",\n\t\t\"brandColor\": \"#0E44E1\",\n\t\t\"rectShape\": \"ROUNDED\",\n\t\t\"fontType\": \"serif\",\n\t\t\"accentColor\": \"#F08080\",\n\t\t\"logoUrl\": \"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\",\n\t\t\"iconUrl\": \"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\",\n\t\t\"footerColor\": \"#CD5C5B\",\n\t\t\"primaryCoverImage\": \"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\",\n\t\t\"secondaryCoverImage\": \"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\"\n\t},\n\t\"message\": \"Fetched Branding successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Branding for Terminal",
+            "description": "Fetch existing branding configuration at terminal level.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "backgroundColour",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Background color for the page."
+                        },
+                        {
+                            "name": "brandColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Primary brand color for your page."
+                        },
+                        {
+                            "name": "footerColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Footer's background color on the page."
+                        },
+                        {
+                            "name": "accentColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "This a secondary color that compliments your brand color."
+                        },
+                        {
+                            "name": "rectShape",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Decides the shape of the page buttons. The available shapes are 'rounded','pill' and 'edgy'."
+                        },
+                        {
+                            "name": "fontType",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Font family for the customizable page. The available font types are 'sans-serif','serif' and 'mono'."
+                        },
+                        {
+                            "name": "logoUrl",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Logo that will be displayed on the page."
+                        },
+                        {
+                            "name": "iconUrl",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Icon that will be displayed on the page."
+                        },
+                        {
+                            "name": "primaryCoverImage",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Primary cover image that will be displayed on the page."
+                        },
+                        {
+                            "name": "secondaryCoverImage",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Secondary cover image that will be displayed on the page."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/branding",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"backgroundColor\": \"#F08080\",\n\t\t\"brandColor\": \"#0E44E1\",\n\t\t\"rectShape\": \"ROUNDED\",\n\t\t\"fontType\": \"serif\",\n\t\t\"accentColor\": \"#F08080\",\n\t\t\"logoUrl\": \"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\",\n\t\t\"iconUrl\": \"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\",\n\t\t\"footerColor\": \"#CD5C5B\",\n\t\t\"primaryCoverImage\": \"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\",\n\t\t\"secondaryCoverImage\": \"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\"\n\t},\n\t\"message\": \"Fetched Branding successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Branding for Partner",
+            "description": "Fetch existing branding configuration at partner level.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "backgroundColour",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Background color for the page."
+                        },
+                        {
+                            "name": "brandColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Primary brand color for your page."
+                        },
+                        {
+                            "name": "footerColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Footer's background color on the page."
+                        },
+                        {
+                            "name": "accentColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "This a secondary color that compliments your brand color."
+                        },
+                        {
+                            "name": "rectShape",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Decides the shape of the page buttons. The available shapes are 'roounded','pill' and 'edgy'."
+                        },
+                        {
+                            "name": "fontType",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Font family for the customizable page. The available font types are 'sans-serif','serif' and 'mono'."
+                        },
+                        {
+                            "name": "logoUrl",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Logo that will be displayed on the page."
+                        },
+                        {
+                            "name": "iconUrl",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Icon that will be displayed on the page."
+                        },
+                        {
+                            "name": "primaryCoverImage",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Primary cover image that will be displayed on the page."
+                        },
+                        {
+                            "name": "secondaryCoverImage",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Secondary cover image that will be displayed on the page."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/partners/:partnerId/branding",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"backgroundColor\": \"#F08080\",\n\t\t\"brandColor\": \"#0E44E1\",\n\t\t\"rectShape\": \"ROUNDED\",\n\t\t\"fontType\": \"serif\",\n\t\t\"accentColor\": \"#F08080\",\n\t\t\"logoUrl\": \"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\",\n\t\t\"iconUrl\": \"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\",\n\t\t\"footerColor\": \"#CD5C5B\",\n\t\t\"primaryCoverImage\": \"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\",\n\t\t\"secondaryCoverImage\": \"https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6\"\n\t},\n\t\"message\": \"Fetched Branding successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Remove Branding for Merchant",
+            "description": "Removes the existing branding configuration at the merchant level.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message describing the outcome of the request."
+                }
+            ],
+            "method": "DELETE",
+            "path": "/merchants/:merchantId/branding",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"status\": \"SUCCESS\",\n  \"message\": \"Configuration deleted successfully for id [8113d3f8403b380409] and type MERCHANT\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Remove Branding for Store",
+            "description": "Removes the existing branding configuration at the store level.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message describing the outcome of the request."
+                }
+            ],
+            "method": "DELETE",
+            "path": "/merchants/:merchantId/stores/:storeId/branding",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"status\": \"SUCCESS\",\n  \"message\": \"Configuration deleted successfully for id [8113d3f8403b380409] and type STORE\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Remove Branding for Terminal",
+            "description": "Removes the existing branding configuration at the terminal level.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message describing the outcome of the request."
+                }
+            ],
+            "method": "DELETE",
+            "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/branding",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"status\": \"SUCCESS\",\n  \"message\": \"Configuration deleted successfully for id [833b9e1cf983580704] and type TERMINAL\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Remove Branding for Partner",
+            "description": "Removes the existing branding configuration at the partner level.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message describing the outcome of the request."
+                }
+            ],
+            "method": "DELETE",
+            "path": "/partners/:partnerId/branding",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"status\": \"SUCCESS\",\n  \"message\": \"Configuration deleted successfully for id [8113d3f8403b380409] and type PARTNER\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

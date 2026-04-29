@@ -1,0 +1,2 @@
+1. Log in, navigate to **Applications**, and click **Create Application**. 
+2. Fill in the details and toggle on the **Hardware Catalogue** to allow the merchant to order terminals during the filling of WEBKYB URL.

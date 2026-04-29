@@ -1,0 +1,1325 @@
+{
+    "resources": [
+        {
+            "id": "adjustments-api",
+            "type": "api",
+            "path": "/api/adjustments.json",
+            "title": "Adjustments API",
+            "description": "API for handling additional amounts to orders like tips, surcharges, etc.",
+            "topics": ["api", "adjustments", "tips", "transactions"],
+            "related": ["transactions-api", "tips-api", "orders-api"],
+            "importance": 4,
+            "endpoints": ["Get Adjustments List"],
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "ai-api",
+            "type": "api",
+            "path": "/api/ai.json",
+            "title": "AI API",
+            "description": "API for AI-powered features including branding generation",
+            "topics": ["api", "ai", "branding", "artificial-intelligence"],
+            "related": ["branding-api"],
+            "importance": 4,
+            "endpoints": ["Generate Branding Options"],
+            "lastUpdated": "2024-10-10"
+        },
+        {
+            "id": "auth-api",
+            "type": "api",
+            "path": "/api/auth.json",
+            "title": "Authentication API",
+            "description": "API for authentication and authorization",
+            "topics": ["api", "authentication", "security"],
+            "related": ["merchants-api"],
+            "importance": 5,
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "billing-api",
+            "type": "api",
+            "path": "/api/billing.json",
+            "title": "Billing API",
+            "description": "API for managing billing and invoices",
+            "topics": ["api", "billing", "invoices", "payments"],
+            "related": ["merchants-api", "payments-api"],
+            "importance": 4,
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "branding-api",
+            "type": "api",
+            "path": "/api/branding.json",
+            "title": "Branding API",
+            "description": "API for managing branding elements",
+            "topics": ["api", "branding", "customization"],
+            "related": ["merchants-api", "terminals-api"],
+            "importance": 3,
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "logistics-api",
+            "type": "api",
+            "path": "/api/logistics.json",
+            "title": "Logistics API",
+            "description": "API for managing logistics and shipping",
+            "topics": ["api", "logistics", "shipping"],
+            "related": ["merchants-api", "orders-api"],
+            "importance": 3,
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "merchants-api",
+            "type": "api",
+            "path": "/api/merchants.json",
+            "title": "Merchants API",
+            "description": "API for managing merchants",
+            "topics": ["api", "merchants", "onboarding"],
+            "related": ["stores-api", "terminals-api"],
+            "importance": 5,
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "nfc-reading-api",
+            "type": "api",
+            "path": "/api/nfc-reading.json",
+            "title": "NFC Reading API",
+            "description": "API for NFC reading functionality",
+            "topics": ["api", "nfc", "cards", "payments"],
+            "related": ["terminals-api", "payments-api"],
+            "importance": 3,
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "orders-api",
+            "type": "api",
+            "path": "/api/orders.json",
+            "title": "Orders API",
+            "description": "API for managing orders",
+            "topics": ["api", "orders", "transactions"],
+            "related": ["payments-api", "transactions-api"],
+            "importance": 5,
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "payment-methods-api",
+            "type": "api",
+            "path": "/api/payment-methods.json",
+            "title": "Payment Methods API",
+            "description": "API for managing payment methods",
+            "topics": ["api", "payment-methods", "cards"],
+            "related": ["payments-api", "merchants-api"],
+            "importance": 4,
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "payments-api",
+            "type": "api",
+            "path": "/api/payments.json",
+            "title": "Payments API",
+            "description": "API for processing payments",
+            "topics": ["api", "payments", "transactions"],
+            "related": ["orders-api", "transactions-api"],
+            "importance": 5,
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "product-catalogue-api",
+            "type": "api",
+            "path": "/api/product-catalog.json",
+            "title": "Product Catalogue API",
+            "description": "API for managing product catalogues",
+            "topics": ["api", "products", "catalogue"],
+            "related": ["merchants-api", "orders-api"],
+            "importance": 3,
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "promotions-api",
+            "type": "api",
+            "path": "/api/promotions.json",
+            "title": "Promotions API",
+            "description": "API for managing promotions and discounts",
+            "topics": ["api", "promotions", "discounts"],
+            "related": ["orders-api", "product-catalogue-api"],
+            "importance": 3,
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "receipts-api",
+            "type": "api",
+            "path": "/api/receipts.json",
+            "title": "Receipts API",
+            "description": "API for managing receipts",
+            "topics": ["api", "receipts", "transactions"],
+            "related": ["transactions-api", "payments-api"],
+            "importance": 4,
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "reporting-api",
+            "type": "api",
+            "path": "/api/reporting.json",
+            "title": "Reporting API",
+            "description": "API for generating reports",
+            "topics": ["api", "reporting", "analytics"],
+            "related": ["transactions-api", "payments-api"],
+            "importance": 4,
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "stores-api",
+            "type": "api",
+            "path": "/api/stores.json",
+            "title": "Stores API",
+            "description": "API for managing stores",
+            "topics": ["api", "stores", "merchants"],
+            "related": ["merchants-api", "terminals-api"],
+            "importance": 4,
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "templates-api",
+            "type": "api",
+            "path": "/api/templates.json",
+            "title": "Templates API",
+            "description": "API for managing templates",
+            "topics": ["api", "templates", "customization"],
+            "related": ["receipts-api", "branding-api"],
+            "importance": 3,
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "terminals-api",
+            "type": "api",
+            "path": "/api/terminals.json",
+            "title": "Terminals API",
+            "description": "API for managing terminals",
+            "topics": ["api", "terminals", "devices"],
+            "related": ["stores-api", "merchants-api"],
+            "importance": 5,
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "tips-api",
+            "type": "api",
+            "path": "/api/tips.json",
+            "title": "Tips API",
+            "description": "API for managing tips",
+            "topics": ["api", "tips", "payments"],
+            "related": ["adjustments-api", "payments-api"],
+            "importance": 4,
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "transactions-api",
+            "type": "api",
+            "path": "/api/transactions.json",
+            "title": "Transactions API",
+            "description": "API for managing transactions",
+            "topics": ["api", "transactions", "payments"],
+            "related": ["payments-api", "orders-api"],
+            "importance": 5,
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "changelogs",
+            "type": "reference",
+            "path": "/changelogs/changelogs.json",
+            "title": "Changelogs",
+            "description": "Released changes for publicly available interfaces and apps",
+            "topics": ["updates", "releases", "changes"],
+            "related": [],
+            "importance": 3,
+            "lastUpdated": "2024-04-01"
+        },
+
+        {
+            "id": "adjustments-doc",
+            "type": "documentation",
+            "path": "/docs/adjustments.md",
+            "title": "Adjustments",
+            "description": "Documentation on adjustments feature",
+            "topics": ["adjustments", "payments", "transactions"],
+            "related": ["adjustments-api", "tips-doc"],
+            "importance": 4,
+            "difficulty": "beginner",
+            "estimatedTime": "10 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "currencies-doc",
+            "type": "documentation",
+            "path": "/docs/currencies.md",
+            "title": "Currencies",
+            "description": "Documentation on supported currencies",
+            "topics": ["currencies", "payments", "international"],
+            "related": ["payments-doc", "payment-methods-doc"],
+            "importance": 3,
+            "difficulty": "beginner",
+            "estimatedTime": "5 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "failure-reasons-doc",
+            "type": "documentation",
+            "path": "/docs/failure-reasons.md",
+            "title": "Failure Reasons",
+            "description": "Documentation on payment failure reasons",
+            "topics": ["errors", "payments", "troubleshooting"],
+            "related": ["payments-doc", "transactions-doc"],
+            "importance": 4,
+            "difficulty": "beginner",
+            "estimatedTime": "10 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "google-pay-doc",
+            "type": "documentation",
+            "path": "/docs/google-pay.md",
+            "title": "Google Pay",
+            "description": "Documentation on Google Pay integration",
+            "topics": ["google-pay", "payments", "mobile"],
+            "related": ["payment-methods-doc", "payments-doc"],
+            "importance": 4,
+            "difficulty": "beginner",
+            "estimatedTime": "10 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "merchants-doc",
+            "type": "documentation",
+            "path": "/docs/merchants.md",
+            "title": "Merchants",
+            "description": "Documentation on merchant management",
+            "topics": ["merchants", "onboarding", "management"],
+            "related": ["merchants-api", "stores-doc"],
+            "importance": 5,
+            "difficulty": "beginner",
+            "estimatedTime": "15 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "orders-doc",
+            "type": "documentation",
+            "path": "/docs/orders.md",
+            "title": "Orders",
+            "description": "Documentation on order management",
+            "topics": ["orders", "payments", "transactions"],
+            "related": ["orders-api", "payments-doc"],
+            "importance": 5,
+            "difficulty": "beginner",
+            "estimatedTime": "10 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "partial-payments-doc",
+            "type": "documentation",
+            "path": "/docs/partial-payments.md",
+            "title": "Partial Payments",
+            "description": "Documentation on partial payment functionality",
+            "topics": ["payments", "transactions", "features"],
+            "related": ["payments-doc", "orders-doc"],
+            "importance": 3,
+            "difficulty": "intermediate",
+            "estimatedTime": "10 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "partners-doc",
+            "type": "documentation",
+            "path": "/docs/partners.md",
+            "title": "Partners",
+            "description": "Documentation on partner management",
+            "topics": ["partners", "integrations", "business"],
+            "related": ["merchants-doc"],
+            "importance": 4,
+            "difficulty": "intermediate",
+            "estimatedTime": "15 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "payment-lifecycle-doc",
+            "type": "documentation",
+            "path": "/docs/payment-lifecycle.md",
+            "title": "Payment Lifecycle",
+            "description": "Documentation on payment lifecycle in a terminal",
+            "topics": ["payments", "terminals", "process"],
+            "related": ["payments-doc", "terminals-doc"],
+            "importance": 5,
+            "difficulty": "beginner",
+            "estimatedTime": "10 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "payment-methods-doc",
+            "type": "documentation",
+            "path": "/docs/payment-methods.md",
+            "title": "Payment Methods",
+            "description": "Documentation on supported payment methods",
+            "topics": ["payments", "methods", "cards"],
+            "related": ["payments-doc", "google-pay-doc"],
+            "importance": 4,
+            "difficulty": "beginner",
+            "estimatedTime": "10 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "payments-doc",
+            "type": "documentation",
+            "path": "/docs/payments.md",
+            "title": "Payments",
+            "description": "Documentation on payment processing",
+            "topics": ["payments", "transactions", "processing"],
+            "related": ["payment-methods-doc", "payment-lifecycle-doc"],
+            "importance": 5,
+            "difficulty": "beginner",
+            "estimatedTime": "15 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "receipts-doc",
+            "type": "documentation",
+            "path": "/docs/receipts.md",
+            "title": "Receipts",
+            "description": "Documentation on receipt management",
+            "topics": ["receipts", "transactions", "payments"],
+            "related": ["receipts-api", "transactions-doc"],
+            "importance": 3,
+            "difficulty": "beginner",
+            "estimatedTime": "5 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "report-components-doc",
+            "type": "documentation",
+            "path": "/docs/report-components.md",
+            "title": "Report Components",
+            "description": "Documentation on report components",
+            "topics": ["reporting", "analytics", "components"],
+            "related": ["reporting-doc", "reporting-api"],
+            "importance": 3,
+            "difficulty": "intermediate",
+            "estimatedTime": "10 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "reporting-doc",
+            "type": "documentation",
+            "path": "/docs/reporting.md",
+            "title": "Reporting",
+            "description": "Documentation on reporting functionality",
+            "topics": ["reporting", "analytics", "data"],
+            "related": ["reporting-api", "report-components-doc"],
+            "importance": 4,
+            "difficulty": "intermediate",
+            "estimatedTime": "10 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "settlements-doc",
+            "type": "documentation",
+            "path": "/docs/settlements.md",
+            "title": "Settlements",
+            "description": "Documentation on settlement process",
+            "topics": ["settlements", "payments", "transactions"],
+            "related": ["payments-doc", "transactions-doc"],
+            "importance": 4,
+            "difficulty": "intermediate",
+            "estimatedTime": "10 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "stores-doc",
+            "type": "documentation",
+            "path": "/docs/stores.md",
+            "title": "Stores",
+            "description": "Documentation on store management",
+            "topics": ["stores", "merchants", "management"],
+            "related": ["merchants-doc", "terminals-doc"],
+            "importance": 4,
+            "difficulty": "beginner",
+            "estimatedTime": "10 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "tips-doc",
+            "type": "documentation",
+            "path": "/docs/tips.md",
+            "title": "Tips",
+            "description": "Documentation on tips functionality",
+            "topics": ["tips", "payments", "adjustments"],
+            "related": ["tips-api", "adjustments-doc"],
+            "importance": 3,
+            "difficulty": "beginner",
+            "estimatedTime": "5 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "transactions-doc",
+            "type": "documentation",
+            "path": "/docs/transactions.md",
+            "title": "Transactions",
+            "description": "Documentation on transaction management",
+            "topics": ["transactions", "payments", "orders"],
+            "related": ["transactions-api", "payments-doc"],
+            "importance": 5,
+            "difficulty": "beginner",
+            "estimatedTime": "10 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+
+        {
+            "id": "accept-partial-payments-guide",
+            "type": "guide",
+            "path": "/guides/in-store-payments/accept-payments/accept-partial-payments.md",
+            "title": "Accept Partial Payments",
+            "description": "Guide on how to accept partial payments",
+            "topics": ["partial-payments", "payments", "in-store"],
+            "related": ["create-order-guide", "initiate-payment-guide"],
+            "importance": 3,
+            "difficulty": "intermediate",
+            "estimatedTime": "10 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "check-payment-status-guide",
+            "type": "guide",
+            "path": "/guides/in-store-payments/accept-payments/check-payment-status.md",
+            "title": "Check Payment Status",
+            "description": "Guide on how to check payment status",
+            "topics": ["payments", "status", "in-store"],
+            "related": ["initiate-payment-guide", "fetch-order-status-guide"],
+            "importance": 4,
+            "difficulty": "beginner",
+            "estimatedTime": "5 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "create-order-guide",
+            "type": "guide",
+            "path": "/guides/in-store-payments/accept-payments/create-order.md",
+            "title": "Create Order",
+            "description": "Guide on how to create an order",
+            "topics": ["orders", "payments", "in-store"],
+            "related": ["initiate-payment-guide", "fetch-order-status-guide"],
+            "importance": 5,
+            "difficulty": "beginner",
+            "estimatedTime": "10 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "fetch-order-status-guide",
+            "type": "guide",
+            "path": "/guides/in-store-payments/accept-payments/fetch-order-status.md",
+            "title": "Fetch Order Status",
+            "description": "Guide on how to fetch order status",
+            "topics": ["orders", "status", "in-store"],
+            "related": ["create-order-guide", "check-payment-status-guide"],
+            "importance": 4,
+            "difficulty": "beginner",
+            "estimatedTime": "5 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "accept-payments-home",
+            "type": "guide",
+            "path": "/guides/in-store-payments/accept-payments/home.md",
+            "title": "Accept Payments Home",
+            "description": "Home page for accept payments guides",
+            "topics": ["payments", "in-store", "overview"],
+            "related": ["create-order-guide", "initiate-payment-guide"],
+            "importance": 5,
+            "difficulty": "beginner",
+            "estimatedTime": "2 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "initiate-payment-guide",
+            "type": "guide",
+            "path": "/guides/in-store-payments/accept-payments/initiate-payment.md",
+            "title": "Initiate Payment",
+            "description": "Guide on how to initiate a payment",
+            "topics": ["payments", "in-store", "process"],
+            "related": ["create-order-guide", "check-payment-status-guide"],
+            "importance": 5,
+            "difficulty": "beginner",
+            "estimatedTime": "10 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+
+        {
+            "id": "branding-guide",
+            "type": "guide",
+            "path": "/guides/in-store-payments/administration/branding.md",
+            "title": "Branding",
+            "description": "Guide on how to manage branding",
+            "topics": ["branding", "customization", "in-store"],
+            "related": ["branding-api"],
+            "importance": 3,
+            "difficulty": "intermediate",
+            "estimatedTime": "15 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "configure-tips-guide",
+            "type": "guide",
+            "path": "/guides/in-store-payments/administration/configure-tips.md",
+            "title": "Configure Tips",
+            "description": "Guide on how to configure tips",
+            "topics": ["tips", "configuration", "in-store"],
+            "related": ["tips-api", "tips-doc"],
+            "importance": 3,
+            "difficulty": "beginner",
+            "estimatedTime": "10 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "customer-identification-guide",
+            "type": "guide",
+            "path": "/guides/in-store-payments/administration/customer-identification.md",
+            "title": "Customer Identification",
+            "description": "Guide on customer identification",
+            "topics": ["customer", "identification", "in-store"],
+            "related": [],
+            "importance": 3,
+            "difficulty": "intermediate",
+            "estimatedTime": "10 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "manage-additional-terminals-guide",
+            "type": "guide",
+            "path": "/guides/in-store-payments/administration/manage-additional-terminals.md",
+            "title": "Manage Additional Terminals",
+            "description": "Guide on managing additional terminals",
+            "topics": ["terminals", "management", "in-store"],
+            "related": ["terminals-api", "terminals-doc"],
+            "importance": 3,
+            "difficulty": "intermediate",
+            "estimatedTime": "15 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "manage-merchants-guide",
+            "type": "guide",
+            "path": "/guides/in-store-payments/administration/manage-merchants.md",
+            "title": "Manage Merchants",
+            "description": "Guide on managing merchants",
+            "topics": ["merchants", "management", "in-store"],
+            "related": ["merchants-api", "merchants-doc"],
+            "importance": 4,
+            "difficulty": "intermediate",
+            "estimatedTime": "15 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "manage-your-reports-guide",
+            "type": "guide",
+            "path": "/guides/in-store-payments/administration/manage-your-reports.md",
+            "title": "Manage Your Reports",
+            "description": "Guide on managing reports",
+            "topics": ["reports", "management", "in-store"],
+            "related": ["reporting-api", "reporting-doc"],
+            "importance": 3,
+            "difficulty": "intermediate",
+            "estimatedTime": "10 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "setup-multi-merchant-terminals-guide",
+            "type": "guide",
+            "path": "/guides/in-store-payments/administration/setup-multi-merchant-terminals.md",
+            "title": "Setup Multi-Merchant Terminals",
+            "description": "Guide on setting up multi-merchant terminals",
+            "topics": ["terminals", "multi-merchant", "in-store"],
+            "related": ["terminals-api", "merchants-api"],
+            "importance": 3,
+            "difficulty": "advanced",
+            "estimatedTime": "20 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+
+        {
+            "id": "api-tab-guide",
+            "type": "guide",
+            "path": "/guides/in-store-payments/how-to-guides/onboard-merchant/api-tab.md",
+            "title": "API Tab",
+            "description": "Guide on onboarding merchants through API",
+            "topics": ["api", "onboarding", "merchants"],
+            "related": ["onboard-merchants-guide", "partner-portal-tab-guide"],
+            "importance": 4,
+            "difficulty": "beginner",
+            "estimatedTime": "10 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "onboard-merchants-guide",
+            "type": "guide",
+            "path": "/guides/in-store-payments/how-to-guides/onboard-merchant/onboard-merchants.md",
+            "title": "Onboard Merchants",
+            "description": "Guide on onboarding merchants",
+            "topics": ["onboarding", "merchants", "in-store"],
+            "related": ["api-tab-guide", "partner-portal-tab-guide"],
+            "importance": 5,
+            "difficulty": "beginner",
+            "estimatedTime": "10 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "partner-portal-tab-guide",
+            "type": "guide",
+            "path": "/guides/in-store-payments/how-to-guides/onboard-merchant/partner-portal-tab.md",
+            "title": "Partner Portal Tab",
+            "description": "Guide on onboarding merchants through Partner Portal",
+            "topics": ["partner-portal", "onboarding", "merchants"],
+            "related": ["onboard-merchants-guide", "api-tab-guide"],
+            "importance": 4,
+            "difficulty": "beginner",
+            "estimatedTime": "10 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "how-to-guides-home",
+            "type": "guide",
+            "path": "/guides/in-store-payments/how-to-guides/home.md",
+            "title": "How-to Guides Home",
+            "description": "Home page for how-to guides",
+            "topics": ["guides", "in-store", "overview"],
+            "related": ["onboard-merchants-guide", "payment-guide"],
+            "importance": 5,
+            "difficulty": "beginner",
+            "estimatedTime": "2 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "payment-guide",
+            "type": "guide",
+            "path": "/guides/in-store-payments/how-to-guides/payment-guide.md",
+            "title": "Payment Guide",
+            "description": "Guide on payment processing",
+            "topics": ["payments", "in-store", "process"],
+            "related": ["initiate-payment-guide", "check-payment-status-guide"],
+            "importance": 5,
+            "difficulty": "beginner",
+            "estimatedTime": "15 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+
+        {
+            "id": "in-store-payments-overview",
+            "type": "guide",
+            "path": "/guides/in-store-payments/overview.md",
+            "title": "In-store Payments Overview",
+            "description": "Overview of in-store payments",
+            "topics": ["in-store", "payments", "overview"],
+            "related": ["accept-payments-home", "how-to-guides-home"],
+            "importance": 5,
+            "difficulty": "beginner",
+            "estimatedTime": "5 minutes",
+            "lastUpdated": "2024-04-01"
+        },
+        {
+            "id": "online-payments-overview",
+            "type": "guide",
+            "path": "/guides/online-payments/overview.md",
+            "title": "Online Payments Overview",
+            "description": "Overview of online payments",
+            "topics": ["online", "payments", "overview"],
+            "related": [],
+            "importance": 5,
+            "difficulty": "beginner",
+            "estimatedTime": "5 minutes",
+            "lastUpdated": "2024-04-01"
+        }
+    ],
+    "categories": [
+        {
+            "id": "api-references",
+            "name": "API References",
+            "resources": [
+                "adjustments-api",
+                "ai-api",
+                "auth-api",
+                "billing-api",
+                "branding-api",
+                "logistics-api",
+                "merchants-api",
+                "nfc-reading-api",
+                "orders-api",
+                "payment-methods-api",
+                "payments-api",
+                "product-catalogue-api",
+                "promotions-api",
+                "receipts-api",
+                "reporting-api",
+                "stores-api",
+                "templates-api",
+                "terminals-api",
+                "tips-api",
+                "transactions-api"
+            ]
+        },
+        {
+            "id": "docs",
+            "name": "Documentation",
+            "resources": [
+                "adjustments-doc",
+                "currencies-doc",
+                "failure-reasons-doc",
+                "google-pay-doc",
+                "merchants-doc",
+                "orders-doc",
+                "partial-payments-doc",
+                "partners-doc",
+                "payment-lifecycle-doc",
+                "payment-methods-doc",
+                "payments-doc",
+                "receipts-doc",
+                "report-components-doc",
+                "reporting-doc",
+                "settlements-doc",
+                "stores-doc",
+                "tips-doc",
+                "transactions-doc"
+            ]
+        },
+        {
+            "id": "in-store-payment-guides",
+            "name": "In-store Payment Guides",
+            "resources": [
+                "accept-partial-payments-guide",
+                "check-payment-status-guide",
+                "create-order-guide",
+                "fetch-order-status-guide",
+                "accept-payments-home",
+                "initiate-payment-guide",
+                "branding-guide",
+                "configure-tips-guide",
+                "customer-identification-guide",
+                "manage-additional-terminals-guide",
+                "manage-merchants-guide",
+                "manage-your-reports-guide",
+                "setup-multi-merchant-terminals-guide",
+                "in-store-payments-overview"
+            ]
+        },
+        {
+            "id": "online-payment-guides",
+            "name": "Online Payment Guides",
+            "resources": ["online-payments-overview"]
+        },
+        {
+            "id": "how-to-guides",
+            "name": "How-to Guides",
+            "resources": [
+                "api-tab-guide",
+                "onboard-merchants-guide",
+                "partner-portal-tab-guide",
+                "how-to-guides-home",
+                "payment-guide"
+            ]
+        },
+        {
+            "id": "reference",
+            "name": "References",
+            "resources": ["changelogs"]
+        },
+        {
+            "id": "payments",
+            "name": "Payments",
+            "resources": [
+                "payment-lifecycle-doc",
+                "google-pay-doc",
+                "failure-reasons-doc",
+                "payments-doc",
+                "payments-api",
+                "partial-payments-doc",
+                "payment-methods-doc"
+            ]
+        },
+        {
+            "id": "terminals",
+            "name": "Terminals",
+            "resources": [
+                "terminals-api",
+                "payment-lifecycle-doc",
+                "manage-additional-terminals-guide",
+                "setup-multi-merchant-terminals-guide"
+            ]
+        },
+        {
+            "id": "transactions",
+            "name": "Transactions",
+            "resources": [
+                "transactions-api",
+                "adjustments-doc",
+                "adjustments-api",
+                "transactions-doc"
+            ]
+        },
+        {
+            "id": "merchants",
+            "name": "Merchants",
+            "resources": [
+                "merchants-doc",
+                "merchants-api",
+                "onboard-merchants-guide",
+                "api-tab-guide",
+                "partner-portal-tab-guide"
+            ]
+        },
+        {
+            "id": "onboarding",
+            "name": "Merchant Onboarding",
+            "resources": [
+                "onboard-merchants-guide",
+                "api-tab-guide",
+                "partner-portal-tab-guide"
+            ]
+        }
+    ],
+    "tags": [
+        {
+            "name": "api",
+            "resources": [
+                "api-tab-guide",
+                "adjustments-api",
+                "ai-api",
+                "auth-api",
+                "billing-api",
+                "branding-api",
+                "logistics-api",
+                "merchants-api",
+                "nfc-reading-api",
+                "orders-api",
+                "payment-methods-api",
+                "payments-api",
+                "product-catalogue-api",
+                "promotions-api",
+                "receipts-api",
+                "reporting-api",
+                "stores-api",
+                "templates-api",
+                "terminals-api",
+                "tips-api",
+                "transactions-api"
+            ]
+        },
+        {
+            "name": "payment",
+            "resources": [
+                "payment-lifecycle-doc",
+                "google-pay-doc",
+                "failure-reasons-doc",
+                "adjustments-doc",
+                "payments-doc",
+                "payments-api",
+                "payment-methods-doc",
+                "partial-payments-doc",
+                "initiate-payment-guide",
+                "check-payment-status-guide",
+                "payment-guide"
+            ]
+        },
+        {
+            "name": "transaction",
+            "resources": [
+                "transactions-api",
+                "payment-lifecycle-doc",
+                "failure-reasons-doc",
+                "transactions-doc",
+                "settlements-doc"
+            ]
+        },
+        {
+            "name": "terminal",
+            "resources": [
+                "terminals-api",
+                "payment-lifecycle-doc",
+                "failure-reasons-doc",
+                "manage-additional-terminals-guide",
+                "setup-multi-merchant-terminals-guide"
+            ]
+        },
+        {
+            "name": "card",
+            "resources": [
+                "payment-lifecycle-doc",
+                "google-pay-doc",
+                "failure-reasons-doc",
+                "payment-methods-doc"
+            ]
+        },
+        {
+            "name": "tips",
+            "resources": [
+                "tips-api",
+                "adjustments-doc",
+                "adjustments-api",
+                "tips-doc",
+                "configure-tips-guide"
+            ]
+        },
+        {
+            "name": "onboarding",
+            "resources": [
+                "onboard-merchants-guide",
+                "api-tab-guide",
+                "partner-portal-tab-guide",
+                "merchants-doc"
+            ]
+        },
+        {
+            "name": "in-store",
+            "resources": [
+                "accept-partial-payments-guide",
+                "check-payment-status-guide",
+                "create-order-guide",
+                "fetch-order-status-guide",
+                "accept-payments-home",
+                "initiate-payment-guide",
+                "in-store-payments-overview",
+                "payment-lifecycle-doc"
+            ]
+        },
+        {
+            "name": "online",
+            "resources": ["online-payments-overview", "google-pay-doc"]
+        },
+        {
+            "name": "beginner",
+            "resources": [
+                "payment-lifecycle-doc",
+                "google-pay-doc",
+                "failure-reasons-doc",
+                "adjustments-doc",
+                "onboard-merchants-guide",
+                "api-tab-guide",
+                "partner-portal-tab-guide",
+                "create-order-guide",
+                "initiate-payment-guide",
+                "check-payment-status-guide"
+            ]
+        },
+        {
+            "name": "intermediate",
+            "resources": [
+                "partial-payments-doc",
+                "partners-doc",
+                "settlements-doc",
+                "reporting-doc",
+                "report-components-doc",
+                "accept-partial-payments-guide",
+                "branding-guide",
+                "manage-additional-terminals-guide",
+                "manage-merchants-guide"
+            ]
+        },
+        {
+            "name": "advanced",
+            "resources": ["setup-multi-merchant-terminals-guide"]
+        }
+    ],
+    "structure": {
+        "root": "docs-test",
+        "folders": [
+            {
+                "path": "api",
+                "files": [
+                    "adjustments.json",
+                    "auth.json",
+                    "billing.json",
+                    "branding.json",
+                    "logistics.json",
+                    "merchants.json",
+                    "nfc-reading.json",
+                    "orders.json",
+                    "payment-methods.json",
+                    "payments.json",
+                    "product-catalogue.json",
+                    "promotions.json",
+                    "receipts.json",
+                    "reporting.json",
+                    "stores.json",
+                    "templates.json",
+                    "terminals.json",
+                    "tips.json",
+                    "transactions.json"
+                ]
+            },
+            {
+                "path": "changelogs",
+                "files": ["changelogs.json"]
+            },
+            {
+                "path": "docs",
+                "files": [
+                    "adjustments.md",
+                    "currencies.md",
+                    "failure-reasons.md",
+                    "google-pay.md",
+                    "merchants.md",
+                    "orders.md",
+                    "partial-payments.md",
+                    "partners.md",
+                    "payment-lifecycle.md",
+                    "payment-methods.md",
+                    "payments.md",
+                    "receipts.md",
+                    "report-components.md",
+                    "reporting.md",
+                    "settlements.md",
+                    "stores.md",
+                    "tips.md",
+                    "transactions.md"
+                ]
+            },
+            {
+                "path": "guides",
+                "subfolders": [
+                    {
+                        "path": "in-store-payments",
+                        "subfolders": [
+                            {
+                                "path": "accept-payments",
+                                "files": [
+                                    "accept-partial-payments.md",
+                                    "check-payment-status.md",
+                                    "create-order.md",
+                                    "fetch-order-status.md",
+                                    "home.md",
+                                    "initiate-payment.md"
+                                ]
+                            },
+                            {
+                                "path": "administration",
+                                "files": [
+                                    "branding.md",
+                                    "configure-tips.md",
+                                    "customer-identification.md",
+                                    "manage-additional-terminals.md",
+                                    "manage-merchants.md",
+                                    "manage-your-reports.md",
+                                    "setup-multi-merchant-terminals.md"
+                                ]
+                            },
+                            {
+                                "path": "how-to-guides",
+                                "subfolders": [
+                                    {
+                                        "path": "onboard-merchant",
+                                        "files": [
+                                            "api-tab.md",
+                                            "onboard-merchants.md",
+                                            "partner-portal-tab.md"
+                                        ]
+                                    }
+                                ],
+                                "files": ["home.md", "payment-guide.md"]
+                            },
+                            {
+                                "path": "integrations",
+                                "subfolders": [
+                                    {
+                                        "path": "prebuilt-apps",
+                                        "subfolders": [
+                                            {
+                                                "path": "tabs-interapp",
+                                                "files": [
+                                                    "android.md",
+                                                    "ios.md"
+                                                ]
+                                            }
+                                        ],
+                                        "files": [
+                                            "Inter-app.md",
+                                            "checkoutX.md"
+                                        ]
+                                    },
+                                    {
+                                        "path": "surfpad",
+                                        "files": [
+                                            "accept-payments.md",
+                                            "configure-surfpad.md",
+                                            "customize-surfpad.md",
+                                            "error-handling.md",
+                                            "home.md",
+                                            "initial-setup.md",
+                                            "key-functions.md"
+                                        ]
+                                    },
+                                    {
+                                        "path": "surftouch",
+                                        "files": [
+                                            "home.md",
+                                            "payment-cx.md",
+                                            "tips-cx.md"
+                                        ]
+                                    }
+                                ],
+                                "files": [
+                                    "api.md",
+                                    "client-side-tokens.md",
+                                    "database-connectivity.md",
+                                    "environments.md",
+                                    "integrate-api.md",
+                                    "pagination.md",
+                                    "surftester.md",
+                                    "webhooks.md"
+                                ]
+                            },
+                            {
+                                "path": "onboarding",
+                                "files": [
+                                    "create-merchant.md",
+                                    "home.md",
+                                    "setup-store.md"
+                                ]
+                            },
+                            {
+                                "path": "post-payments",
+                                "subfolders": [
+                                    {
+                                        "path": "manage-your-payments",
+                                        "files": [
+                                            "cancel-payment.md",
+                                            "fetch-payment.md",
+                                            "void-payment.md"
+                                        ]
+                                    },
+                                    {
+                                        "path": "manage-your-transactions",
+                                        "files": [
+                                            "fetch-all-transactions.md",
+                                            "fetch-transaction-search.md",
+                                            "fetch-transactions-by-id.md"
+                                        ]
+                                    }
+                                ],
+                                "files": [
+                                    "fetch-settlement-reports.md",
+                                    "return-refund.md"
+                                ]
+                            },
+                            {
+                                "path": "terminals",
+                                "files": [
+                                    "home.md",
+                                    "manage-terminal.md",
+                                    "order-terminals.md",
+                                    "setup-terminal-configuration.md",
+                                    "terminal-registration.md"
+                                ]
+                            }
+                        ],
+                        "files": ["overview.md"]
+                    },
+                    {
+                        "path": "online-payments",
+                        "subfolders": [
+                            {
+                                "path": "accept-payments",
+                                "files": [
+                                    "home.md",
+                                    "merchant-initiate-transactions.md",
+                                    "online-sdk-guide.md",
+                                    "payment-page.md"
+                                ]
+                            },
+                            {
+                                "path": "administration",
+                                "files": [
+                                    "branding.md",
+                                    "manage-your-merchants.md",
+                                    "multiple-currencies.md"
+                                ]
+                            },
+                            {
+                                "path": "how-to-guides",
+                                "subfolders": [
+                                    {
+                                        "path": "onboard-merchant",
+                                        "files": [
+                                            "api-tab.md",
+                                            "onboard-merchants.md",
+                                            "partner-portal-tab.md"
+                                        ]
+                                    }
+                                ],
+                                "files": ["home.md"]
+                            },
+                            {
+                                "path": "integrations",
+                                "files": [
+                                    "api.md",
+                                    "client-side-tokens.md",
+                                    "database-connectivity.md",
+                                    "environments.md",
+                                    "integrate-api.md",
+                                    "pagination.md",
+                                    "webhooks.md"
+                                ]
+                            },
+                            {
+                                "path": "onboarding",
+                                "files": [
+                                    "create-merchant.md",
+                                    "home.md",
+                                    "online-store.md"
+                                ]
+                            },
+                            {
+                                "path": "post-payments",
+                                "files": [
+                                    "delay-capture.md",
+                                    "partial-captures.md",
+                                    "refunds.md",
+                                    "tokens.md",
+                                    "void-a-payment.md"
+                                ]
+                            },
+                            {
+                                "path": "terminals",
+                                "files": ["home.md", "terminal-registration.md"]
+                            }
+                        ],
+                        "files": ["overview.md"]
+                    }
+                ]
+            },
+            {
+                "path": "images",
+                "subfolders": [
+                    { "path": "surfpad", "files": [] },
+                    { "path": "surftester", "files": [] },
+                    { "path": "surftouch", "files": [] }
+                ],
+                "files": []
+            },
+            {
+                "path": "sidebar",
+                "files": ["sidebar.json"]
+            },
+            {
+                "path": "webhooks",
+                "files": ["logistics.json", "merchants.json", "orders.json"]
+            }
+        ],
+        "files": ["index.html"]
+    },
+    "searchPaths": {
+        "api": "/api/",
+        "documentation": "/docs/",
+        "guides": "/guides/",
+        "changelogs": "/changelogs/",
+        "webhooks": "/webhooks/"
+    },
+    "indexMetadata": {
+        "version": "1.0.0",
+        "lastUpdated": "2024-04-09",
+        "resourceCount": 100,
+        "categoryCount": 13,
+        "tagCount": 12
+    }
+}

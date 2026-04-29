@@ -1,0 +1,3 @@
+Send a PATCH request to Set terminal config API as follows
+
+{% requestresponse method="POST" requests=[{language: "JSON", code: "{\n  \"serialNo\": \"123456789\",\n  \"wifiSsid\": \"wifiname\",\n  \"wifiPassword\": \"wifipassword\",\n  \"autoSleep\": 3000,\n  \"preferredNetwork\": \"WIFI\",\n  \"preferredRestartTime\": \"03:00\",\n  \"alwaysShowMinorUnits\": 1,\n  \"language\": \"en\",\n  \"showStatusBar\": true,\n  \"chipReadDelay\": 500,\n  \"showReceipt\": true\n}"}] languages=["JSON"] /%}

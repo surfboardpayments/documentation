@@ -1,0 +1,203 @@
+{
+    "scenarioId": "create-branding-for-merchant",
+    "scenarioName": "Create Branding for Merchant",
+    "steps": [
+        {
+            "id": "create-branding-for-merchant",
+            "name": "Create Branding for Merchant",
+            "description": "Set branding configurations for all the terminals registered to a specific merchant.",
+            "order": 1,
+            "method": "PATCH",
+            "endpoint": "merchants/{{merchantId}}/branding",
+            "guidePath": "/carbon/configure-branding/merchant-level/home",
+            "readOnly": true,
+            "response": {
+                "status": "SUCCESS",
+                "message": "Branding configuration set successfully."
+              },
+            "payload": {
+                "backgroundColor": "#667085",
+                "brandColor": "#697085",
+                "accentColor": "#787085",
+                "rectShape": "rounded",
+                "fontType": "sans-serif",
+                "logoUrl": "https://res.cloudinary.com/image/surfboard-icon.svg",
+                "iconUrl": "https://res.cloudinary.com/image/surfboard-icon.svg",
+                "footerColor": "#CD5C5B",
+                "primaryCoverImage": "https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6",
+                "secondaryCoverImage": "https://images.app.goo.gl/PxBcTVm4Q1xJFhCn6"
+              },
+            "specifications": {
+                "reqParams": [
+                        {
+                            "name": "backgroundColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Background color for the page."
+                        },
+                        {
+                            "name": "brandColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Primary brand color for your page."
+                        },
+                        {
+                            "name": "footerColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Footer's background color on the page."
+                        },
+                        {
+                            "name": "accentColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "This a secondary color that compliments your brand color."
+                        },
+                        {
+                            "name": "rectShape",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Decides the shape of the page buttons. The available shapes are 'rounded','pill' and 'edgy'."
+                        },
+                        {
+                            "name": "fontType",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Font family for the customizable page. The available font types are 'sans-serif','serif' and 'mono'."
+                        },
+                        {
+                            "name": "logoUrl",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Logo that will be displayed on the page."
+                        },
+                        {
+                            "name": "iconUrl",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Icon that will be displayed on the page."
+                        },
+                        {
+                            "name": "primaryCoverImage",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Primary cover image that will be displayed on the page."
+                        },
+                        {
+                            "name": "secondaryCoverImage",
+                            "comingSoon": true,
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Secondary cover image that will be displayed on the page."
+                        }
+                    ],
+                    "resParams": [
+                        {
+                            "name": "status",
+                            "type": "string",
+                            "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                        },
+                        {
+                            "name": "message",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "A message that describes the status of the request."
+                        }
+                    ]
+            }
+        },
+        {
+            "id": "fetch-branding-for-merchant",
+            "name": "Fetch Branding for Merchant",
+            "description": "Fetch branding configurations for a specific merchant.",
+            "order": 2,
+            "method": "GET",
+            "endpoint": "merchants/{{merchantId}}/branding",
+            "guidePath": "/carbon/configure-branding/fetch-branding-for-merchant",
+            "payload": {
+            },
+            "specifications": {
+                "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "backgroundColour",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Background color for the page."
+                        },
+                        {
+                            "name": "brandColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Primary brand color for your page."
+                        },
+                        {
+                            "name": "footerColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Footer's background color on the page."
+                        },
+                        {
+                            "name": "accentColor",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "This a secondary color that compliments your brand color."
+                        },
+                        {
+                            "name": "rectShape",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Decides the shape of the page buttons. The available shapes are 'rounded','pill' and 'edgy'."
+                        },
+                        {
+                            "name": "fontType",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Font family for the customizable page. The available font types are 'sans-serif','serif' and 'mono'."
+                        },
+                        {
+                            "name": "logoUrl",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Logo that will be displayed on the page."
+                        },
+                        {
+                            "name": "iconUrl",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Icon that will be displayed on the page."
+                        },
+                        {
+                            "name": "primaryCoverImage",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Primary cover image that will be displayed on the page."
+                        },
+                        {
+                            "name": "secondaryCoverImage",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Secondary cover image that will be displayed on the page."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message that describes the status of the request."
+                }
+            ]
+            }
+        }
+    ]
+}

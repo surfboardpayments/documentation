@@ -1,0 +1,49 @@
+{
+    "scenarioId": "create-partner-account",
+    "scenarioName": "Create Partner Account",
+    "steps": [
+        {
+            "id": "create-partner-account",
+            "name": "Create Partner Account",
+            "description": "Create Partner Account",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "partners/{{partnerId}}/accounts",
+            "guidePath": "/carbon/added-features/create-partner-account",
+            "payload": {
+                "email": "admin@partner.com",
+                "role": "ADMIN"
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "email",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Email address for the new partner account"
+                    },
+                    {
+                        "name": "role",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Role assigned to the account (e.g., ADMIN, SUPER_ADMIN, USER)."
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request"
+                    }
+                ]
+            }
+        }
+    ]
+}

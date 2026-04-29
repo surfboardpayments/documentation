@@ -1,0 +1,136 @@
+{
+    "scenarioId": "update-store-details",
+    "scenarioName": "Update Store Details",
+    "steps": [
+        {
+            "id": "update-store-details",
+            "name": "Update Store Details",
+            "description": "Updates the details of a store under the partner for a specific merchant.",
+            "order": 1,
+            "method": "PUT",
+            "endpoint": "partners/{{partnerId}}/merchants/{{merchantId}}/stores/{{storeId}}",
+            "guidePath": "/carbon/store-capabilities/update-store-details/home",
+            "payload": {},
+            "specifications": {
+                "reqParams": [
+                {
+                    "name": "storeName",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Name of the store."
+                },
+                {
+                    "name": "email",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Email address of the store."
+                },
+                {
+                    "name": "phoneNumber",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "Contact number of the store in code and number format.",
+                    "reqParams": [
+                        {
+                            "name": "code",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "International dialing code identifying the country or region."
+                        },
+                        {
+                            "name": "number",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "A string of numbers ranging from 0-9 with a length of 5-15 characters"
+                        }
+                    ]
+                },
+                {
+                    "name": "address",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Address line 1 of the store."
+                },
+                {
+                    "name": "careOf",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Name of the addressee that is accepting the correspondence for the intended recipient."
+                },
+                {
+                    "name": "city",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "City where the store is located."
+                },
+                {
+                    "name": "onlineInfo",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "In order to update physical store into online store, some additional properties are required. Online Info can be updated only once.",
+                    "conditional": "<span>Dependent on supporting a <br>store</br></span>",
+                    "reqParams": [
+                        {
+                            "name": "merchantWebshopURL",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "This is the web-shop URL of the merchant."
+                        },
+                        {
+                            "name": "paymentPageHostURL",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "This is the URL of the payment page. Required for integrating online payments using SDK mode."
+                        },
+                        {
+                            "name": "termsAndConditionsURL",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "This is the URL of the T&C of the merchant’s web-shop, it has to contain the refund policy."
+                        },
+                        {
+                            "name": "privacyPolicyURL",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "This is the URL of the privacy policy of the merchant."
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request. 'SUCCESS' | 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "merchantURLDomainVerficationKey",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "This is a key to set and verify that the merchant owns the domain of the URL."
+                        },
+                        {
+                            "name": "paymentPageURLDomainVerficationKey",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "This is a key to set and verify the payment page domain URL."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Message describing the status of the request."
+                }
+            ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,1071 @@
+{
+    "/api": {
+        "title": "API Reference",
+        "sections": [
+            {
+                "heading": "Orders",
+                "route": "/api/orders",
+                "links": [
+                    {
+                        "label": "Create Order",
+                        "route": "/api/orders",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Update Order",
+                        "route": "/api/orders",
+                        "method": "PUT"
+                    },
+                    {
+                        "label": "Fetch Order Status",
+                        "route": "/api/orders",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Order By Id",
+                        "route": "/api/orders",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Cancel an Order",
+                        "route": "/api/orders",
+                        "method": "DELETE"
+                    },
+                    {
+                        "label": "Add Receipt Information",
+                        "route": "/api/orders",
+                        "method": "PUT"
+                    },
+                    {
+                        "label": "Fetch Order Adjustments",
+                        "route": "/api/orders",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Tokens from Order",
+                        "route": "/api/orders",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Online Orders",
+                        "route": "/api/orders",
+                        "method": "GET"
+                    }
+                ]
+            },
+            {
+                "heading": "Payments",
+                "route": "/api/payments",
+                "links": [
+                    {
+                        "label": "Initiate a Payment",
+                        "route": "/api/payments",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Cancel a Payment",
+                        "route": "/api/payments",
+                        "method": "DELETE"
+                    },
+                    {
+                        "label": "Void a Payment",
+                        "route": "/api/payments",
+                        "method": "PUT"
+                    },
+                    {
+                        "label": "Capture Payment",
+                        "route": "/api/payments",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Check Capture Status",
+                        "route": "/api/payments",
+                        "method": "GET"
+                    }
+                ]
+            },
+            {
+                "heading": "Receipts",
+                "route": "/api/receipts",
+                "links": [
+                    {
+                        "label": "Email Receipt",
+                        "route": "/api/receipts",
+                        "method": "PUT"
+                    },
+                    {
+                        "label": "Print Receipt",
+                        "route": "/api/receipts",
+                        "method": "PUT"
+                    },
+                    {
+                        "label": "Print ESCPOS Receipt",
+                        "route": "/api/receipts",
+                        "method": "PUT"
+                    },
+                    {
+                        "label": "Add Receipt Information",
+                        "route": "/api/receipts",
+                        "method": "PUT"
+                    },
+                    {
+                        "label": "Fetch Receipt Link",
+                        "route": "/api/receipts",
+                        "method": "GET"
+                    }
+                ]
+            },
+            {
+                "heading": "Merchants",
+                "route": "/api/merchants",
+                "links": [
+                    {
+                        "label": "Create Merchant",
+                        "route": "/api/merchants",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Check Application Status",
+                        "route": "/api/merchants",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Create Multi-merchant Group",
+                        "route": "/api/merchants",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Fetch All Merchant Applications",
+                        "route": "/api/merchants",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Merchant Details",
+                        "route": "/api/merchants",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch All Multi-Merchant Groups",
+                        "route": "/api/merchants",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Update Merchant Details",
+                        "route": "/api/merchants",
+                        "method": "PUT"
+                    },
+                    {
+                        "label": "Fetch All Merchant Terminals",
+                        "route": "/api/merchants",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch All Merchants",
+                        "route": "/api/merchants",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch All Merchant Contracts",
+                        "route": "/api/merchants",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Activate Terminal",
+                        "route": "/api/merchants",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Fetch Transaction Analytics",
+                        "route": "/api/merchants",
+                        "method": "GET"
+                    }
+                ]
+            },
+            {
+                "heading": "Customers",
+                "route": "/api/customers",
+                "links": [
+                    {
+                        "label": "Add Customer Details",
+                        "route": "/api/customers",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Fetch Customer Details by ID",
+                        "route": "/api/customers",
+                        "method": "GET"
+                    }
+                ]
+            },
+            {
+                "heading": "Branding",
+                "route": "/api/branding",
+                "links": [
+                    {
+                        "label": "Create Branding for Merchant",
+                        "route": "/api/branding",
+                        "method": "PATCH"
+                    },
+                    {
+                        "label": "Create Branding for Store",
+                        "route": "/api/branding",
+                        "method": "PATCH"
+                    },
+                    {
+                        "label": "Create Branding for Terminal",
+                        "route": "/api/branding",
+                        "method": "PATCH"
+                    },
+                    {
+                        "label": "Create Branding for Partner",
+                        "route": "/api/branding",
+                        "method": "PATCH"
+                    },
+                    {
+                        "label": "Fetch Branding for Merchant",
+                        "route": "/api/branding",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Branding for Store",
+                        "route": "/api/branding",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Branding for Terminal",
+                        "route": "/api/branding",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Branding for Partner",
+                        "route": "/api/branding",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Remove Branding for Merchant",
+                        "route": "/api/branding",
+                        "method": "DELETE"
+                    },
+                    {
+                        "label": "Remove Branding for Store",
+                        "route": "/api/branding",
+                        "method": "DELETE"
+                    },
+                    {
+                        "label": "Remove Branding for Terminal",
+                        "route": "/api/branding",
+                        "method": "DELETE"
+                    },
+                    {
+                        "label": "Remove Branding for Partner",
+                        "route": "/api/branding",
+                        "method": "DELETE"
+                    }
+                ]
+            },
+            {
+                "heading": "Stores",
+                "route": "/api/stores",
+                "links": [
+                    {
+                        "label": "Create Store",
+                        "route": "/api/stores",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Deactivate a Store",
+                        "route": "/api/stores",
+                        "method": "DELETE"
+                    },
+                    {
+                        "label": "Fetch Store Details",
+                        "route": "/api/stores",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Update Store Details",
+                        "route": "/api/stores",
+                        "method": "PUT"
+                    },
+                    {
+                        "label": "Fetch All Store Terminals",
+                        "route": "/api/stores",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Stores",
+                        "route": "/api/stores",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Verify Store Domain",
+                        "route": "/api/stores",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Fetch Store Domains",
+                        "route": "/api/stores",
+                        "method": "GET"
+                    }
+                ]
+            },
+            {
+                "heading": "Terminals",
+                "route": "/api/terminals",
+                "links": [
+                    {
+                        "label": "Register Device",
+                        "route": "/api/terminals",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Get Device Registration Code",
+                        "route": "/api/terminals",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Register Online Terminal",
+                        "route": "/api/terminals",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Delink Terminal from Store",
+                        "route": "/api/terminals",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Change Store",
+                        "route": "/api/terminals",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Link Terminal",
+                        "route": "/api/terminals",
+                        "method": "PUT"
+                    },
+                    {
+                        "label": "Delink Terminal",
+                        "route": "/api/terminals",
+                        "method": "DELETE"
+                    },
+                    {
+                        "label": "Check Link Status",
+                        "route": "/api/terminals",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Update Terminal Name",
+                        "route": "/api/terminals",
+                        "method": "PUT"
+                    },
+                    {
+                        "label": "Move Terminal",
+                        "route": "/api/terminals",
+                        "method": "PUT"
+                    },
+                    {
+                        "label": "Set Merchant Terminal Config",
+                        "route": "/api/terminals",
+                        "method": "PATCH"
+                    },
+                    {
+                        "label": "Set Store Terminal Config",
+                        "route": "/api/terminals",
+                        "method": "PATCH"
+                    },
+                    {
+                        "label": "Set Terminal Config",
+                        "route": "/api/terminals",
+                        "method": "PATCH"
+                    },
+                    {
+                        "label": "Fetch Terminal Config",
+                        "route": "/api/terminals",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Merchant Terminal Config",
+                        "route": "/api/terminals",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Store Terminal Config",
+                        "route": "/api/terminals",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Terminal by ID",
+                        "route": "/api/terminals",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch APN List",
+                        "route": "/api/terminals",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Get Interapp Code",
+                        "route": "/api/terminals",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Get Interapp Details",
+                        "route": "/api/terminals",
+                        "method": "GET"
+                    }
+                ]
+            },
+            {
+                "heading": "Payment Methods",
+                "route": "/api/payment-methods",
+                "links": [
+                    {
+                        "label": "Activate Payment Method",
+                        "route": "/api/payment-methods",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Deactivate Payment Method",
+                        "route": "/api/payment-methods",
+                        "method": "DELETE"
+                    },
+                    {
+                        "label": "Fetch Payment Method Details",
+                        "route": "/api/payment-methods",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch All Payment Methods",
+                        "route": "/api/payment-methods",
+                        "method": "GET"
+                    }
+                ]
+            },
+            {
+                "heading": "Logistics",
+                "route": "/api/logistics",
+                "links": [
+                    {
+                        "label": "Create Shipment",
+                        "route": "/api/logistics",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Get Shipment Status",
+                        "route": "/api/logistics",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Ship Terminals in Bulk",
+                        "route": "/api/logistics",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Fetch Partner Orders",
+                        "route": "/api/logistics",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Create Return",
+                        "route": "/api/logistics",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Get Returns",
+                        "route": "/api/logistics",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Merchant Orders",
+                        "route": "/api/logistics",
+                        "method": "GET"
+                    }
+                ]
+            },
+            {
+                "heading": "Reporting",
+                "route": "/api/reporting",
+                "links": [
+                    {
+                        "label": "Fetch Settlement Reports",
+                        "route": "/api/reporting",
+                        "method": "GET"
+                    }
+                ]
+            },
+            {
+                "heading": "NFC Reading",
+                "route": "/api/nfc-reading",
+                "links": [
+                    {
+                        "label": "Create Read Session",
+                        "route": "/api/nfc-reading",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Fetch Sessions for Terminal",
+                        "route": "/api/nfc-reading",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Tags for Session",
+                        "route": "/api/nfc-reading",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Session Status",
+                        "route": "/api/nfc-reading",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Complete NFC Reading Session",
+                        "route": "/api/nfc-reading",
+                        "method": "POST"
+                    }
+                ]
+            },
+            {
+                "heading": "Tips",
+                "route": "/api/tips",
+                "links": [
+                    {
+                        "label": "Set Merchant Tips Config",
+                        "route": "/api/tips",
+                        "method": "PATCH"
+                    },
+                    {
+                        "label": "Set Store Tips Config",
+                        "route": "/api/tips",
+                        "method": "PATCH"
+                    },
+                    {
+                        "label": "Set Terminal Tips Config",
+                        "route": "/api/tips",
+                        "method": "PATCH"
+                    },
+                    {
+                        "label": "Fetch Merchant Tips Config",
+                        "route": "/api/tips",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Store Tips Config",
+                        "route": "/api/tips",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Terminal Tips Config",
+                        "route": "/api/tips",
+                        "method": "GET"
+                    }
+                ]
+            },
+            {
+                "heading": "Adjustments",
+                "route": "/api/adjustments",
+                "links": [
+                    {
+                        "label": "Fetch Adjustments",
+                        "route": "/api/adjustments",
+                        "method": "GET"
+                    }
+                ]
+            },
+            {
+                "heading": "Billing",
+                "route": "/api/billing",
+                "links": [
+                    {
+                        "label": "Create Merchant Charge",
+                        "route": "/api/billing",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Update Merchant Charge",
+                        "route": "/api/billing",
+                        "method": "PUT"
+                    },
+                    {
+                        "label": "Fetch Merchant Charge by ID",
+                        "route": "/api/billing",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch All Merchant Charges",
+                        "route": "/api/billing",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Create Billing Plans",
+                        "route": "/api/billing",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Fetch Billing Plans",
+                        "route": "/api/billing",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Billing Plans for Merchant",
+                        "route": "/api/billing",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Billing Plan by ID",
+                        "route": "/api/billing",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Remove Billing Plan by ID",
+                        "route": "/api/billing",
+                        "method": "DELETE"
+                    }
+                ]
+            },
+            {
+                "heading": "Promotions",
+                "route": "/api/promotions",
+                "links": [
+                    {
+                        "label": "Create Promotion",
+                        "route": "/api/promotions",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Update Promotion",
+                        "route": "/api/promotions",
+                        "method": "PUT"
+                    },
+                    {
+                        "label": "Fetch Promotion by ID",
+                        "route": "/api/promotions",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Promotions",
+                        "route": "/api/promotions",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Delete Promotion",
+                        "route": "/api/promotions",
+                        "method": "DELETE"
+                    }
+                ]
+            },
+            {
+                "heading": "Client Auth Token",
+                "route": "/api/auth",
+                "links": [
+                    {
+                        "label": "Create Token",
+                        "route": "/api/auth",
+                        "method": "POST"
+                    }
+                ]
+            },
+            {
+                "heading": "Admin Functions",
+                "route": "/api/admin-functions",
+                "links": [
+                    {
+                        "label": "Create Merchant Account",
+                        "route": "/api/admin-functions",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Create Partner Account",
+                        "route": "/api/admin-functions",
+                        "method": "POST"
+                    }
+                ]
+            },
+            {
+                "heading": "AI",
+                "route": "/api/ai",
+                "links": [
+                    {
+                        "label": "Generate Branding Options",
+                        "route": "/api/ai",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Enhance Image",
+                        "route": "/api/ai",
+                        "method": "POST"
+                    }
+                ]
+            },
+            {
+                "heading": "Product Catalog",
+                "route": "/api/product-catalog",
+                "links": [
+                    {
+                        "label": "Create Product Catalog",
+                        "route": "/api/product-catalog",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Fetch Product Catalogs",
+                        "route": "/api/product-catalog",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Create Product",
+                        "route": "/api/product-catalog",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Fetch all products",
+                        "route": "/api/product-catalog",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Product by Id",
+                        "route": "/api/product-catalog",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Update Product",
+                        "route": "/api/product-catalog",
+                        "method": "PATCH"
+                    },
+                    {
+                        "label": "Update Product Inventory",
+                        "route": "/api/product-catalog",
+                        "method": "PATCH"
+                    },
+                    {
+                        "label": "Add Variant For Product",
+                        "route": "/api/product-catalog",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Update Variant",
+                        "route": "/api/product-catalog",
+                        "method": "PATCH"
+                    },
+                    {
+                        "label": "Update Variant Inventory",
+                        "route": "/api/product-catalog",
+                        "method": "PATCH"
+                    },
+                    {
+                        "label": "Add Related Products",
+                        "route": "/api/product-catalog",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Generate Product Description",
+                        "route": "/api/product-catalog",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Generate Product Images",
+                        "route": "/api/product-catalog",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Generate Product Catalog from Images",
+                        "route": "/api/product-catalog",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Get Product Statistics",
+                        "route": "/api/product-catalog",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Get Product Catalog Statistics",
+                        "route": "/api/product-catalog",
+                        "method": "GET"
+                    }
+                ]
+            },
+            {
+                "heading": "Service Providers",
+                "route": "/api/service-providers",
+                "links": [
+                    {
+                        "label": "Create Service Provider",
+                        "route": "/api/service-providers",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Fetch Service Provider for Partner",
+                        "route": "/api/service-providers",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Service Provider for Merchant",
+                        "route": "/api/service-providers",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Get All Service Provider Applications",
+                        "route": "/api/service-providers",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Service Provider Application Status",
+                        "route": "/api/service-providers",
+                        "method": "GET"
+                    }
+                ]
+            },
+            {
+                "heading": "Gift Cards",
+                "route": "/api/gift-cards",
+                "links": [
+                    {
+                        "label": "Create Gift Card",
+                        "route": "/api/gift-cards",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Get All Gift Cards",
+                        "route": "/api/gift-cards",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Get Gift Card Details",
+                        "route": "/api/gift-cards",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Get Gift Card Transactions",
+                        "route": "/api/gift-cards",
+                        "method": "GET"
+                    }
+                ]
+            },
+            {
+                "heading": "Notifications",
+                "route": "/api/notifications",
+                "links": [
+                    {
+                        "label": "Subscribe to Merchant Reports",
+                        "route": "/api/notifications",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Fetch External Notifications for Merchant",
+                        "route": "/api/notifications",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Unsubscribe Notification for Merchant",
+                        "route": "/api/notifications",
+                        "method": "DELETE"
+                    },
+                    {
+                        "label": "Subscribe to Partner Notifications",
+                        "route": "/api/notifications",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Fetch External Notifications for Partner",
+                        "route": "/api/notifications",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Unsubscribe Notifications for Partner",
+                        "route": "/api/notifications",
+                        "method": "DELETE"
+                    }
+                ]
+            },
+            {
+                "heading": "Electronic Cash Register",
+                "route": "/api/electronic-cash-register",
+                "links": [
+                    {
+                        "label": "Subscribe to Cash Register",
+                        "route": "/api/electronic-cash-register",
+                        "method": "POST"
+                    },
+                    {
+                        "label": "Open Cash Register",
+                        "route": "/api/electronic-cash-register",
+                        "method": "PUT"
+                    },
+                    {
+                        "label": "Fetch Cash Register State",
+                        "route": "/api/electronic-cash-register",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Open Shift",
+                        "route": "/api/electronic-cash-register",
+                        "method": "PUT"
+                    },
+                    {
+                        "label": "Deposit Cash",
+                        "route": "/api/electronic-cash-register",
+                        "method": "PUT"
+                    },
+                    {
+                        "label": "Withdraw Cash",
+                        "route": "/api/electronic-cash-register",
+                        "method": "PUT"
+                    },
+                    {
+                        "label": "Close Shift",
+                        "route": "/api/electronic-cash-register",
+                        "method": "PUT"
+                    },
+                    {
+                        "label": "Close Cash Register",
+                        "route": "/api/electronic-cash-register",
+                        "method": "PUT"
+                    },
+                    {
+                        "label": "Fetch Cash Registers",
+                        "route": "/api/electronic-cash-register",
+                        "method": "GET"
+                    },
+                    {
+                        "label": "Fetch Available Cash Registers",
+                        "route": "/api/electronic-cash-register",
+                        "method": "GET"
+                    }
+                ]
+            }
+        ]
+    },
+    "/webhooks": {
+        "title": "Webhooks",
+        "sections": [
+            {
+                "heading": "Order Events",
+                "route": "/webhooks/orders",
+                "links": [
+                    {
+                        "label": "Order Updated",
+                        "route": "/webhooks/orders"
+                    },
+                    {
+                        "label": "Order Payment Initiated",
+                        "route": "/webhooks/orders"
+                    },
+                    {
+                        "label": "Order Payment Processed",
+                        "route": "/webhooks/orders"
+                    },
+                    {
+                        "label": "Order Payment Completed",
+                        "route": "/webhooks/orders"
+                    },
+                    {
+                        "label": "Order Payment Failed",
+                        "route": "/webhooks/orders"
+                    },
+                    {
+                        "label": "Order Payment Cancelled",
+                        "route": "/webhooks/orders"
+                    },
+                    {
+                        "label": "Order Cancelled",
+                        "route": "/webhooks/orders"
+                    },
+                    {
+                        "label": "Order Customer Identity",
+                        "route": "/webhooks/orders"
+                    },
+                    {
+                        "label": "Order Terminal Event",
+                        "route": "/webhooks/orders"
+                    }
+                ]
+            },
+            {
+                "heading": "Logistics Events",
+                "route": "/webhooks/logistics",
+                "links": [
+                    {
+                        "label": "Logistics Order Update",
+                        "route": "/webhooks/logistics"
+                    }
+                ]
+            },
+            {
+                "heading": "Merchant Application Events",
+                "route": "/webhooks/merchants",
+                "links": [
+                    {
+                        "label": "Application Initiated",
+                        "route": "/webhooks/merchants"
+                    },
+                    {
+                        "label": "Application Submitted",
+                        "route": "/webhooks/merchants"
+                    },
+                    {
+                        "label": "Application Signed",
+                        "route": "/webhooks/merchants"
+                    },
+                    {
+                        "label": "Application Pending Merchant Information",
+                        "route": "/webhooks/merchants"
+                    },
+                    {
+                        "label": "Application Completed",
+                        "route": "/webhooks/merchants"
+                    },
+                    {
+                        "label": "Application Merchant Created",
+                        "route": "/webhooks/merchants"
+                    },
+                    {
+                        "label": "Application Expired",
+                        "route": "/webhooks/merchants"
+                    },
+                    {
+                        "label": "Application Rejected",
+                        "route": "/webhooks/merchants",
+                        "extension": ".json"
+                    }
+                ]
+            }
+        ]
+    },
+    "/console": {
+        "title": "Console",
+        "sections": [
+            {
+                "heading": "API Keys",
+                "route": "/console/api-keys",
+                "locked": true
+            },
+            {
+                "heading": "Webhooks",
+                "route": "/console/webhooks",
+                "locked": true
+            },
+            {
+                "heading": "SDK Integrations",
+                "route": "/console/sdk-apps",
+                "locked": true
+            },
+            {
+                "heading": "My Apps",
+                "route": "/console/my-apps",
+                "locked": true
+            },
+            {
+                "heading": "Contact Us",
+                "route": "/contact",
+                "locked": true
+            },
+            {
+                "heading": "Settings",
+                "route": "/console/settings",
+                "locked": true
+            },
+            {
+                "heading": "Changelogs",
+                "route": "/console/changelogs"
+            }
+        ]
+    }
+}

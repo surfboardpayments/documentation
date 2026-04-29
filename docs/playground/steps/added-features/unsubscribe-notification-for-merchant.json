@@ -1,0 +1,33 @@
+{
+    "scenarioId": "unsubscribe-notification-for-merchant",
+    "scenarioName": "Unsubscribe Notification for Merchant",
+    "steps": [
+        {
+            "id": "unsubscribe-notification-for-merchant",
+            "name": "Unsubscribe Notification for Merchant",
+            "description": "Unsubscribe Notification for Merchant",
+            "order": 1,
+            "method": "DELETE",
+            "endpoint": "merchants/{{merchantId}}/notifications/{{notificationId}}",
+            "guidePath": "/carbon/added-features/unsubscribe-notification-for-merchant",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request"
+                    }
+                ]
+            }
+        }
+    ]
+}

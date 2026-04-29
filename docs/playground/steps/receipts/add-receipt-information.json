@@ -1,0 +1,70 @@
+{
+    "scenarioId": "add-receipt-information",
+    "scenarioName": "Add Receipt Information",
+    "steps": [
+        {
+            "id": "add-receipt-information",
+            "name": "Add Receipt Information",
+            "description": "Add and store cash register–specific details for generating accurate receipt information.",
+            "order": 1,
+            "method": "PUT",
+            "endpoint": "receipts/{{orderId}}",
+            "guidePath": "/carbon/receipts/email-receipt/home",
+            "payload": {
+                "sequenceNumber": "1234567",
+                "cashRegisterName": "Test",
+                "controlUnitSerialNumber": "1234567",
+                "cashierName": "Amanda",
+                "customerName": "Tom"
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "sequenceNumber",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Receipt Sequence Number."
+                    },
+                    {
+                        "name": "cashRegisterName",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Cash Register Designation."
+                    },
+                    {
+                        "name": "controlUnitSerialNumber",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Control unit manufacturing number or Control System manufacturing number."
+                    },
+                    {
+                        "name": "cashierName",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Name of the cashier."
+                    },
+                    {
+                        "name": "customerName",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Name of the customer."
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request 'SUCCESS' | 'ERROR'."
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status message of the request is displayed."
+                    }
+                ]
+            }
+        }
+    ]
+}

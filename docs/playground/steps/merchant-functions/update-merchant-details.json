@@ -1,0 +1,78 @@
+{
+    "scenarioId": "update-merchant-details",
+    "scenarioName": "Update Merchant Details",
+    "steps": [
+        {
+            "id": "update-merchant-details",
+            "name": "Update Merchant Details",
+            "description": "To update merchant basic details after onboarding",
+            "order": 7,
+            "method": "PUT",
+            "endpoint": "partners/{{partnerId}}/merchants/{{merchantId}}",
+            "readOnly": true,
+            "response": {
+                 "status": "SUCCESS",
+                 "message": "Successfully updated the merchant details."
+              },
+            "guidePath": "/carbon/merchant-functions/update-merchant-details/home",
+            "payload": {
+                "email": "test@gmail.com",
+                "phoneNumber": {
+                  "code": 46,
+                  "number": "771890089"
+                },
+                "merchantLogoUrl": "https://merchant.com/image"
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "email",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Email address of the merchant."
+                    },
+                    {
+                        "name": "merchantLogoUrl",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Merchant logo URL."
+                    },
+                    {
+                        "name": "phoneNumber",
+                        "type": "object",
+                        "mandatory": false,
+                        "description": "Contact number of the merchant in code and number format",
+                        "reqParams": [
+                            {
+                                "name": "code",
+                                "type": "number",
+                                "mandatory": false,
+                                "description": "International dialing code identifying the country or region."
+                            },
+                            {
+                                "name": "number",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "A string of numbers ranging from 0-9 with a length of 5-15 characters."
+                            }
+                        ]
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request 'SUCCESS' | 'ERROR'."
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

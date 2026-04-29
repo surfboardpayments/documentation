@@ -1,0 +1,1 @@
+1. Partners can configure the terminals at their level by navigating through **Settings**→ **Set Partner Branding Config**, enter the required terminal configs, and click Save Changes.

@@ -1,0 +1,68 @@
+{
+    "scenarioId": "generate-product-description",
+    "scenarioName": "Generate Product Description",
+    "steps": [
+        {
+            "id": "generate-product-description",
+            "name": "Generate Product Description",
+            "description": "Generate Product Description",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "catalog/ai/description",
+            "guidePath": "/carbon/advanced-customizations/generate-product-description",
+            "payload": {
+                "productName": "Addidas Running Shoes",
+                "maxWordLength": 150,
+                "langCode": "en"
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "productName",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Name of the product for which to generate the description."
+                    },
+                    {
+                        "name": "maxWordLength",
+                        "type": "number",
+                        "description": "Maximum number of words for the generated description."
+                    },
+                    {
+                        "name": "langCode",
+                        "type": "string",
+                        "description": "Language code for the description generation (e.g., 'en' for English)."
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data containing the generated description.",
+                        "resParams": [
+                            {
+                                "name": "description",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "AI-generated product description."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

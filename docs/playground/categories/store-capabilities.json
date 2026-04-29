@@ -1,0 +1,49 @@
+{
+    "id": "store-capabilities",
+    "name": "Store Capabilities",
+    "description": "Learn how to use other functionality of store",
+    "scenarios": [
+        {
+            "id": "create-store-instore",
+            "name": "Create Store",
+            "description": "Create store",
+            "order": 1
+        },
+        {
+            "id": "create-store-online",
+            "name": "Create Store with Online Functions",
+            "description": "Create store with online functions",
+            "order": 2
+        },
+        {
+            "id": "verify-store-domain",
+            "name": "Verify Store Domain",
+            "description": "Verify store domain",
+            "order": 3
+        },
+        {
+            "id": "update-store-details",
+            "name": "Update Store Details",
+            "description": "Update store details",
+            "order": 4
+        },
+        {
+            "id": "fetch-stores",
+            "name": "Fetch Stores",
+            "description": "Fetch stores",
+            "order": 5
+        },
+        {
+            "id": "fetch-all-store-terminals",
+            "name": "Fetch All Store Terminals",
+            "description": "Fetch all store terminals",
+            "order": 6
+        },
+        {
+            "id": "deactivate-a-store",
+            "name": "Deactivate a Store",
+            "description": "Deactivate a store",
+            "order": 7
+        }
+    ]
+}

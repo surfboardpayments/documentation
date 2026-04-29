@@ -1,0 +1,11 @@
+{
+    "scenario": "client-auth-token",
+    "scenarios": [
+        {
+            "id": "create-token",
+            "name": "Create Token",
+            "description": "Create a client auth token to authenticate directly with the Surfboard API without using sensitive API-KEY or API-SECRET.",
+            "order": 1
+        }
+    ]
+}

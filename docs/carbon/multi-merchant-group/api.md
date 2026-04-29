@@ -1,0 +1,1 @@
+When calling this Create merchant API, pass the `multiMerchantId` which links the merchant to the group. The API response will return an `applicationId` and a webKYBURL. As usual fill up the merchant application and you can create multiple merchants as much you want.
