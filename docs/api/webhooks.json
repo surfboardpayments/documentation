@@ -1,0 +1,490 @@
+{
+  "title": "Webhooks API",
+  "description": "The Webhooks API lets you register and manage HTTPS endpoints that Surfboard calls when events happen on a merchant account. Create a webhook to subscribe to the events you care about, list your configured webhooks, update a webhook's URL, name, alert email or event subscriptions, activate a webhook against your demo or live environment, and disable one you no longer need. Webhooks are managed at partner level by default, or scoped to a merchant by sending the `MERCHANT-ID` header.",
+  "endpoints": [
+    {
+      "fragment": "List Webhooks",
+      "method": "GET",
+      "link": "API_URL/webhooks"
+    },
+    {
+      "fragment": "Create Webhook",
+      "method": "POST",
+      "link": "API_URL/webhooks"
+    },
+    {
+      "fragment": "Update Webhook",
+      "method": "PUT",
+      "link": "API_URL/webhooks/:webhookId"
+    },
+    {
+      "fragment": "Activate Webhook",
+      "method": "POST",
+      "link": "API_URL/webhooks/:webhookId/activate"
+    },
+    {
+      "fragment": "Disable Webhook",
+      "method": "DELETE",
+      "link": "API_URL/webhooks/:webhookId"
+    }
+  ],
+  "apis": [
+    {
+      "heading": "List Webhooks",
+      "pagination": true,
+      "description": "Retrieve a paginated list of the webhooks configured on the authenticated account, including each webhook's URL, subscribed events, alert email, and whether it is active and has passed its delivery test. Send the `MERCHANT-ID` header to manage a specific merchant's webhooks; omit it to manage the partner's own webhooks.",
+      "query": "Page through results with the `page` query parameter, for example `?page=2`. When omitted, the first page is returned.",
+      "reqParams": [
+        {
+          "name": "page",
+          "type": "string",
+          "mandatory": false,
+          "description": "Page of results to return. Defaults to the first page when omitted or not a number."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request, either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "array",
+          "description": "The webhooks configured on the account for the current page.",
+          "resParams": [
+            {
+              "name": "webhookId",
+              "type": "string",
+              "description": "Unique identifier of the webhook."
+            },
+            {
+              "name": "webhookName",
+              "type": "string",
+              "description": "The display name you gave the webhook."
+            },
+            {
+              "name": "webhookUrl",
+              "type": "string",
+              "description": "The HTTPS endpoint Surfboard delivers events to."
+            },
+            {
+              "name": "active",
+              "type": "boolean",
+              "description": "Whether the webhook is currently active and receiving events."
+            },
+            {
+              "name": "alertEmail",
+              "type": "string",
+              "description": "Email address notified when webhook delivery repeatedly fails."
+            },
+            {
+              "name": "tested",
+              "type": "boolean",
+              "description": "Whether the webhook has passed a delivery test against its endpoint."
+            },
+            {
+              "name": "events",
+              "type": "array",
+              "description": "The event types this webhook is subscribed to."
+            },
+            {
+              "name": "createdAt",
+              "type": "string",
+              "description": "When the webhook was created, in ISO 8601 format."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/webhooks",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID",
+              "mandatory": false
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"webhookId\": \"wh_9c1f2a7b40\",\n\t\t\t\"webhookName\": \"Order events\",\n\t\t\t\"webhookUrl\": \"https://example.com/surfboard/webhook\",\n\t\t\t\"active\": true,\n\t\t\t\"alertEmail\": \"integrations@surfboard.se\",\n\t\t\t\"tested\": true,\n\t\t\t\"events\": [\"PAYMENT_SUCCEEDED\", \"PAYMENT_FAILED\"],\n\t\t\t\"createdAt\": \"2026-06-01T09:24:11.000Z\"\n\t\t}\n\t],\n\t\"message\": \"Fetched all webhooks under merchant\"\n}"
+          },
+          {
+            "code": 400,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unable to get all webhooks. Please try again later\"\n}"
+          },
+          {
+            "code": 401,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unauthorized access. Please provide valid credentials to access this endpoint.\"\n}"
+          }
+        ]
+      },
+      "params": {
+        "page": "1"
+      }
+    },
+    {
+      "heading": "Create Webhook",
+      "description": "Register a new webhook so Surfboard can deliver events to your endpoint. Supply the HTTPS URL to deliver to, a display name, the event types to subscribe to, and an email to alert on repeated delivery failures. The response returns the new webhook's identifier and the signing certificate you use to verify that incoming deliveries came from Surfboard. Send the `MERCHANT-ID` header to manage a specific merchant's webhooks; omit it to manage the partner's own webhooks.",
+      "reqParams": [
+        {
+          "name": "webhookUrl",
+          "type": "string",
+          "mandatory": true,
+          "description": "The HTTPS endpoint Surfboard should deliver events to."
+        },
+        {
+          "name": "webhookName",
+          "type": "string",
+          "mandatory": true,
+          "description": "A display name for the webhook, used to identify it in listings."
+        },
+        {
+          "name": "events",
+          "type": "array",
+          "mandatory": true,
+          "description": "The event types to subscribe this webhook to."
+        },
+        {
+          "name": "alertEmail",
+          "type": "string",
+          "mandatory": true,
+          "description": "Email address to notify when webhook delivery repeatedly fails."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request, either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "Details of the created webhook.",
+          "resParams": [
+            {
+              "name": "webhookId",
+              "type": "string",
+              "description": "Unique identifier of the newly created webhook."
+            },
+            {
+              "name": "webhookCertificate",
+              "type": "string",
+              "description": "Signing certificate used to verify that deliveries to your endpoint originated from Surfboard."
+            },
+            {
+              "name": "tested",
+              "type": "boolean",
+              "description": "Whether the webhook has passed a delivery test against its endpoint."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "POST",
+      "path": "/webhooks",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID",
+              "mandatory": false
+            }
+          ],
+          "body": "{\n  \"webhookUrl\": \"https://example.com/surfboard/webhook\",\n  \"webhookName\": \"Order events\",\n  \"events\": [\"PAYMENT_SUCCEEDED\", \"PAYMENT_FAILED\"],\n  \"alertEmail\": \"integrations@surfboard.se\"\n}"
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"webhookId\": \"wh_9c1f2a7b40\",\n\t\t\"webhookCertificate\": \"-----BEGIN CERTIFICATE-----\\nMIIB...snip...IDAQAB\\n-----END CERTIFICATE-----\",\n\t\t\"tested\": false\n\t},\n\t\"message\": \"Webhook created successfully\"\n}"
+          },
+          {
+            "code": 400,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unable to create webhook. Please try again later\"\n}"
+          },
+          {
+            "code": 401,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unauthorized access. Please provide valid credentials to access this endpoint.\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Update Webhook",
+      "description": "Update a webhook's configuration. Supply the webhook identifier in the path and include only the fields you want to change; any field you omit is left untouched. Use this to point a webhook at a new URL, rename it, change the alert email, or adjust which events it is subscribed to. Send the `MERCHANT-ID` header to manage a specific merchant's webhooks; omit it to manage the partner's own webhooks.",
+      "reqParams": [
+        {
+          "name": "webhookId",
+          "type": "string",
+          "mandatory": true,
+          "description": "Identifier of the webhook to update, supplied in the URL path."
+        },
+        {
+          "name": "webhookUrl",
+          "type": "string",
+          "mandatory": false,
+          "description": "New HTTPS endpoint to deliver events to. Omit to leave unchanged."
+        },
+        {
+          "name": "webhookName",
+          "type": "string",
+          "mandatory": false,
+          "description": "New display name for the webhook. Omit to leave unchanged."
+        },
+        {
+          "name": "alertEmail",
+          "type": "string",
+          "mandatory": false,
+          "description": "New email address to notify on repeated delivery failures. Omit to leave unchanged."
+        },
+        {
+          "name": "events",
+          "type": "array",
+          "mandatory": false,
+          "description": "New set of event types to subscribe the webhook to. Omit to leave unchanged."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request, either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "PUT",
+      "path": "/webhooks/:webhookId",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID",
+              "mandatory": false
+            }
+          ],
+          "body": "{\n  \"webhookName\": \"Order and refund events\",\n  \"events\": [\"PAYMENT_SUCCEEDED\", \"PAYMENT_FAILED\", \"REFUND_SUCCEEDED\"]\n}"
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Webhook updated successfully\"\n}"
+          },
+          {
+            "code": 400,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unable to update webhook. Please try again later\"\n}"
+          },
+          {
+            "code": 401,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unauthorized access. Please provide valid credentials to access this endpoint.\"\n}"
+          }
+        ]
+      },
+      "params": {
+        "webhookId": "wh_9c1f2a7b40"
+      }
+    },
+    {
+      "heading": "Activate Webhook",
+      "description": "Activate a webhook against a specific environment so it begins receiving events. Supply the webhook identifier in the path and the target environment in the body. Use this once your endpoint is ready to accept live deliveries. Send the `MERCHANT-ID` header to manage a specific merchant's webhooks; omit it to manage the partner's own webhooks.",
+      "reqParams": [
+        {
+          "name": "webhookId",
+          "type": "string",
+          "mandatory": true,
+          "description": "Identifier of the webhook to activate, supplied in the URL path."
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "mandatory": true,
+          "description": "Environment to activate the webhook in.",
+          "possibleValues": [
+            "DEMO",
+            "LIVE"
+          ]
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request, either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "Details of the activated webhook.",
+          "resParams": [
+            {
+              "name": "webhookId",
+              "type": "string",
+              "description": "Identifier of the activated webhook."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "POST",
+      "path": "/webhooks/:webhookId/activate",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID",
+              "mandatory": false
+            }
+          ],
+          "body": "{\n  \"type\": \"LIVE\"\n}"
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"webhookId\": \"wh_9c1f2a7b40\"\n\t},\n\t\"message\": \"Webhook activated successfully\"\n}"
+          },
+          {
+            "code": 400,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unable to activate webhook. Please try again later\"\n}"
+          },
+          {
+            "code": 401,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unauthorized access. Please provide valid credentials to access this endpoint.\"\n}"
+          }
+        ]
+      },
+      "params": {
+        "webhookId": "wh_9c1f2a7b40"
+      }
+    },
+    {
+      "heading": "Disable Webhook",
+      "description": "Disable a webhook so Surfboard stops delivering events to it. Supply the webhook identifier in the URL path. The webhook remains on the account and can be reactivated later. Send the `MERCHANT-ID` header to manage a specific merchant's webhooks; omit it to manage the partner's own webhooks.",
+      "reqParams": [
+        {
+          "name": "webhookId",
+          "type": "string",
+          "mandatory": true,
+          "description": "Identifier of the webhook to disable, supplied in the URL path."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request, either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "DELETE",
+      "path": "/webhooks/:webhookId",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID",
+              "mandatory": false
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Webhook disabled successfully\"\n}"
+          },
+          {
+            "code": 400,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unable to disable webhook. Please try again later\"\n}"
+          },
+          {
+            "code": 401,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unauthorized access. Please provide valid credentials to access this endpoint.\"\n}"
+          }
+        ]
+      },
+      "params": {
+        "webhookId": "wh_9c1f2a7b40"
+      }
+    }
+  ]
+}

@@ -1,0 +1,372 @@
+# Create Order
+
+## Overview
+The createOrder API lets you create and pay for an order in a single call—supporting purchases, returns, and multiple payment methods for faster checkout.
+
+## Prerequisites
+- An active merchant account is required.
+- Authentication is required using API Key, API Secret, and Merchant ID.
+
+## Request
+
+### HTTP Method and URL
+```
+POST /orders
+```
+
+### Headers
+| Header | Value | Required |
+|---|---|---|
+| `Content-Type` | `application/json` | Yes |
+| `API-KEY` | `YOUR_API_KEY` | Yes |
+| `API-SECRET` | `YOUR_API_SECRET` | Yes |
+| `MERCHANT-ID` | `YOUR_MERCHANT_ID` | Yes |
+
+### Request Body Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `terminal$id` | `string` | Yes | ID of the checkout or payment terminal |
+| `referenceId` | `string` | No | External reference ID for the order |
+| `comments` | `string` | No | Additional comments or notes for the order |
+| `customer` | `object` | No | Customer details for the order |
+| &nbsp;&nbsp;&nbsp;&nbsp;`customerId` | `string` | No | Unique identifier for the customer |
+| &nbsp;&nbsp;&nbsp;&nbsp;`person` | `object` | No | Personal information of the customer |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`id` | `string` | No | Person identifier. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`name` | `object` | No | Full name of the customer |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`firstName` | `string` | No | First name of the customer |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`middleName` | `string` | No | Middle name of the customer |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`lastName` | `string` | No | Last name of the customer |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`email` | `string` | No | Email address of the customer |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`phoneNumber` | `object` | No | Phone number of the customer |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`code` | `string` | Yes | International dialing code (Eg., 46 for Sweden without '+') |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`number` | `string` | Yes | National subscriber number (digits only) |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`birthDate` | `string` | No | Date of birth in YYYY-MM-DD format |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`personalNumber` | `string` | No | Personal identification number |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`coordinationNumber` | `string` | No | Coordination number |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`countryResidence` | `string` | No | Country of residence of the customer |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`gdNumber` | `string` | No | Government-issued identification number of the customer |
+| &nbsp;&nbsp;&nbsp;&nbsp;`company` | `object` | No | Company information for corporate purchases |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`id` | `string` | No | Company identifier. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`vatId` | `string` | No | VAT ID of the company |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`poDetails` | `string` | No | Purchase order details for the company |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`companyName` | `string` | No | Company display name. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`registrationNumber` | `string` | No | Company registration number. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`gln` | `string` | No | GLN of the buyer's e-invoice department, used to route e-invoices. |
+| `billing` | `object` | No | Billing contact and address |
+| &nbsp;&nbsp;&nbsp;&nbsp;`name` | `object` | No | Full name of the billing contact |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`firstName` | `string` | No | First name of the billing contact |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`middleName` | `string` | No | Middle name of the billing contact |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`lastName` | `string` | No | Last name of the billing contact |
+| &nbsp;&nbsp;&nbsp;&nbsp;`email` | `string` | No | Billing email |
+| &nbsp;&nbsp;&nbsp;&nbsp;`phoneNumber` | `object` | No | Phone number for billing |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`code` | `string` | Yes | International dialing code (Eg., 46 for Sweden without '+') |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`number` | `string` | Yes | National subscriber number (digits only) |
+| &nbsp;&nbsp;&nbsp;&nbsp;`address` | `object` | No | Billing address |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`careOf` | `string` | No | Care of / attention |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`addressLine1` | `string` | Yes | Primary address line |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`addressLine2` | `string` | No | Address line 2 |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`addressLine3` | `string` | No | Address line 3 |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`city` | `string` | Yes | City name |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`postalCode` | `string` | Yes | Postal/ZIP code |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`countryCode` | `string` | Yes | Country code (ISO 3166-1 alpha-2) |
+| `shipping` | `object` | No | Shipping contact and address |
+| &nbsp;&nbsp;&nbsp;&nbsp;`name` | `object` | No | Full name of the shipping contact |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`firstName` | `string` | No | First name of the shipping contact |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`middleName` | `string` | No | Middle name of the shipping contact |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`lastName` | `string` | No | Last name of the shipping contact |
+| &nbsp;&nbsp;&nbsp;&nbsp;`email` | `string` | No | Recipient email |
+| &nbsp;&nbsp;&nbsp;&nbsp;`phoneNumber` | `object` | No | Phone number for shipping |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`code` | `string` | Yes | International dialing code (Eg., 46 for Sweden without '+') |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`number` | `string` | Yes | National subscriber number (digits only) |
+| &nbsp;&nbsp;&nbsp;&nbsp;`address` | `object` | No | Shipping address |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`careOf` | `string` | No | Care of / attention |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`addressLine1` | `string` | Yes | Primary address line |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`addressLine2` | `string` | No | Address line 2 |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`addressLine3` | `string` | No | Address line 3 |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`city` | `string` | Yes | City name |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`postalCode` | `string` | Yes | Postal/ZIP code |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`countryCode` | `string` | Yes | Country code (ISO 3166-1 alpha-2) |
+| `orderLines` | `array` | Yes | List of items in the order |
+| &nbsp;&nbsp;&nbsp;&nbsp;`id` | `string` | Yes | Order line identifier |
+| &nbsp;&nbsp;&nbsp;&nbsp;`externalItemId` | `string` | No | External order line identifier |
+| &nbsp;&nbsp;&nbsp;&nbsp;`name` | `string` | Yes | Product name |
+| &nbsp;&nbsp;&nbsp;&nbsp;`categoryId` | `string` | No | Product category identifier |
+| &nbsp;&nbsp;&nbsp;&nbsp;`description` | `string` | No | Line item description |
+| &nbsp;&nbsp;&nbsp;&nbsp;`quantity` | `number` | Yes | Quantity ordered. A negative value indicates a refund. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`amount` | `object` | Yes | Pricing details for the line item |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`regular` | `number` | Yes | Regular price amount in the smallest currency unit (eg.,10 SEK is 1000 in amount) |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`campaign` | `number` | No | Campaign/discount amount in the smallest currency unit (eg.,10 SEK is 1000 in amount) |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`shipping` | `number` | No | Shipping amount for this item in the smallest currency unit (eg.,10 SEK is 1000 in amount) |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`total` | `number` | Yes | Total line amount in the smallest currency unit (eg.,10 SEK is 1000 in amount) |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`currency` | `string` | Yes | Currency (numeric ISO 4217 as string) |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`tax` | `array` | No | Tax breakdown |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`amount` | `number` | Yes | Tax amount |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`percentage` | `number` | Yes | Tax rate percentage |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`type` | `string` | Yes | Tax type (e.g., VAT) |
+| &nbsp;&nbsp;&nbsp;&nbsp;`unit` | `string` | No | Unit of measure. The possible values are 'm' , 'mm' , 'cm' , 'km' , 'in' , 'ft' , 'mi' , 'kg' , 'g' , 'mg' , 'lb' , 'oz' , 'l' , 'ml' , 'cu. m' , 'gal' , 'pt' , 'fl oz' , 'W' , 'kW' , 'kWh' , 'sq m' , 'sq km' , 'sq ft' , 'h' , 'min' , 's' , 'days' , 'wk' , 'mn' , 'yr' , 'nos'. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`gtin` | `string` | No | Global Trade Item Number |
+| &nbsp;&nbsp;&nbsp;&nbsp;`imageUrl` | `string` | No | Image URL for the product |
+| &nbsp;&nbsp;&nbsp;&nbsp;`brand` | `string` | No | Brand name |
+| &nbsp;&nbsp;&nbsp;&nbsp;`purchaseOrderId` | `string` | No | Mandatory purchase order identifier if it's a return item. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`promotionApplied` | `string` | No | Product promotional campaign identifier. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`metadata` | `object` | No | Arbitrary metadata for the line |
+| &nbsp;&nbsp;&nbsp;&nbsp;`storeId` | `string` | No | Store identifier |
+| &nbsp;&nbsp;&nbsp;&nbsp;`purchasePaymentId` | `string` | No | Purchase payment identifier associated with the order line |
+| `totalOrderAmount` | `object` | No | Total amount details of the order. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`regular` | `number` | Yes | Total regular order amount in the smallest currency unit (e.g., 10 SEK is represented as 1000) |
+| &nbsp;&nbsp;&nbsp;&nbsp;`campaign` | `number` | No | Total campaign or discount amount applied to the order in the smallest currency unit |
+| &nbsp;&nbsp;&nbsp;&nbsp;`total` | `number` | Yes | Overall payable order amount in the smallest currency unit (regular - campaign + shipping + tax) |
+| &nbsp;&nbsp;&nbsp;&nbsp;`currency` | `string` | Yes | Order currency represented as a numeric ISO 4217 code (e.g., '752' for SEK) |
+| &nbsp;&nbsp;&nbsp;&nbsp;`tax` | `array` | No | Order-level tax breakdown across applied tax categories |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`amount` | `number` | Yes | Total tax amount for the order in the smallest currency unit |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`percentage` | `number` | Yes | Applied tax rate percentage |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`type` | `string` | Yes | Type of tax applied (e.g., VAT, GST) |
+| `date` | `string` | No | Order date in ISO 8601 format (e.g., 2018-04-04T10:20:30+02:00). If not specified, the current date is used. |
+| `metadata` | `object` | No | Arbitrary key-value style metadata items |
+| `adjustments` | `array` | No | Order-level adjustments |
+| &nbsp;&nbsp;&nbsp;&nbsp;`type` | `string` | Yes | Adjustment type |
+| &nbsp;&nbsp;&nbsp;&nbsp;`value` | `number` | Yes | Adjustment value |
+| &nbsp;&nbsp;&nbsp;&nbsp;`metadata` | `object` | No | Arbitrary key-value style metadata items. |
+| `controlFunctions` | `object` | No | Advanced order/payment control configuration |
+| &nbsp;&nbsp;&nbsp;&nbsp;`cancelPreviousPendingOrder` | `boolean` | No | Set as true when you want to cancel all previous pending orders |
+| &nbsp;&nbsp;&nbsp;&nbsp;`orderLineLevelCalculation` | `boolean` | No | Set this to true to apply campaign and shipping at row level. The total will be calculated as total = ((regular * quantity) - campaign) + shipping. Default is set to false. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`serviceProviders` | `array` | No | External service providers participating in the transaction |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`serviceProviderId` | `string` | Yes | Service provider identifier |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`amount` | `object` | No | Share/fee configuration |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`percentage` | `number` | No | Percentage share |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixed` | `number` | No | Fixed share amount |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`adjustmentTypes` | `array` | No | Allowed adjustment types for this provider as an array of string. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`initiatePaymentsOptions` | `object` | No | Parameters for initiating payment |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`paymentMethod` | `string` | No | Payment method to use |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`amount` | `number` | No | Amount to charge in smallest currency units. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`paymentMethodParams` | `object` | No | Method-specific parameters |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`tokenId` | `string` | No | Saved payment token ID |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`bic` | `string` | No | The BIC (Bank Identifier Code) is an ISO 9362 standard that uniquely identifies a bank in cross-border transactions. It is mandatory for the ACC2ACC payment method. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`swishMode` | `string` | No | Swish mode (e.g., ECOM) |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`payeePhoneNumber` | `object` | No | Mandatory phone number for SWISH payments. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`code` | `string` | Yes | International dialing code (Eg., 46 for Sweden without '+') |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`number` | `string` | Yes | National subscriber number (digits only) |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`giftCard` | `object` | No | Gift card payment details |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`giftCardId` | `string` | No | Gift card identifier |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`giftCardRedemptionMode` | `string` | No | Redemption mode (e.g., WALLET) |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`invoice` | `object` | No | Invoice payment configuration |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`invoiceDistribution` | `string` | No | Distribution channel (e.g., EMAIL) |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`contractReference` | `string` | No | Contract reference identifier |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`debtCollectionEnabled` | `boolean` | No | Enable debt collection |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`dueDate` | `string` | No | Due date or relative duration (e.g., 30d) |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`invoicePaymentMethods` | `array` | No | Allowed payment methods for invoice |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`reminder` | `boolean` | No | Enable reminders |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`serialSplitPaymentsMode` | `array` | No | An array of amounts in smallest currency unit to split the payment. The order of the amounts in the array will determine the order of the split payments. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`refundProcessingParams` | `object` | No | Parameters for processing refunds |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`purchasePaymentId` | `string` | No | Original purchase payment ID |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`refundReason` | `string` | No | Reason for refund (as provided) |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`otherReason` | `string` | No | Other reason details |
+| &nbsp;&nbsp;&nbsp;&nbsp;`tipsMode` | `string` | No | Tips configuration (STANDARD \| ROUNDUP \| NONE) |
+| &nbsp;&nbsp;&nbsp;&nbsp;`cardStatementDescriptor` | `string` | No | Statement descriptor text |
+| &nbsp;&nbsp;&nbsp;&nbsp;`includeAdjustmentsForRefund` | `boolean` | No | Applies for return orders on whether to include the adjustments as part of the refund or not. The default value is true. For partial returns, by default the first order will have includeAdjustments set to true and for the rest as false. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`lockToPaymentMethods` | `array` | No | An array of payment methods locked in. All available payment methods are supported. For example, ['CARD', 'KLARNA'] |
+| &nbsp;&nbsp;&nbsp;&nbsp;`tapBeforeAmount` | `boolean` | No | If true, requires the customer to tap the card before the amount is entered, ensuring amount confirmation prior to payment. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`delayCapture` | `boolean` | No | Allows capture at a later time. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`delayPayout` | `string` | No | Delays the final amount paid out to the merchant after all deductions, in the format numbers + 'm' \| 'h' \| 'd' . |
+| &nbsp;&nbsp;&nbsp;&nbsp;`fulfillmentDate` | `string` | No | Planned fulfillment date in ISO 8601 format (e.g., 2018-04-04T10:20:30+02:00) |
+| &nbsp;&nbsp;&nbsp;&nbsp;`callBackUrl` | `string` | No | This is a dynamic callback URL that is used to perform webhook calls in relation to the order and payment. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`throwErrorIfTerminalInactiveFor` | `number` | No | Threshold in ms if the respective terminal has been inactive for the given time frame. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`clearingCutOff` | `string` | No | Clearing cutoff configuration in ISO 8601 format (e.g., 2018-04-04T10:20:30+02:00) |
+| &nbsp;&nbsp;&nbsp;&nbsp;`currency` | `string` | No | Order currency override |
+| &nbsp;&nbsp;&nbsp;&nbsp;`authMode` | `string` | No | It can be either PRE-AUTH or AUTH. By default it is set to AUTH. If PRE-AUTH is selected delayCapture is automatically set to true. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`receipt` | `object` | No | Receipt handling options |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`autoPrintReceipt` | `boolean` | No | Auto-print setting |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`autoSendReceiptIfEmailAvailable` | `boolean` | No | Auto-send if email present |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`sequenceNumber` | `string` | No | Receipt sequence number |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`cashRegisterName` | `string` | No | Cash register name |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`controlUnitSerialNumber` | `string` | No | Control unit serial number |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`receiptRedirectURL` | `string` | No | Receipt redirect URL |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`cashierName` | `string` | No | Cashier name |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`promotionsToDisplay` | `array<any>` | No | Promotions to display on receipt |
+| &nbsp;&nbsp;&nbsp;&nbsp;`surcharges` | `object` | No | A record of additional fees or charges applied to the transaction, keyed by unique identifiers. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`domestic` | `object` | No | Surcharges for domestic transactions (same country). |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`consumer` | `object` | No | Surcharges for consumer cards in domestic transactions. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`debit` | `object` | No | Surcharge definitions for consumer debit cards. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedAmount` | `number` | No | A flat surcharge amount in minor currency units (e.g., 100 = 1.00). |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedPercentage` | `number` | No | A percentage-based surcharge (e.g., 1.5 = 1.5%). |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`credit` | `object` | No | Surcharge definitions for consumer credit cards. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedAmount` | `number` | No | A flat surcharge amount in minor currency units. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedPercentage` | `number` | No | A percentage-based surcharge. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`corporate` | `object` | No | Surcharges for corporate cards in domestic transactions. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`debit` | `object` | No | Surcharge definitions for corporate debit cards. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedAmount` | `number` | No | A flat surcharge amount in minor currency units. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedPercentage` | `number` | No | A percentage-based surcharge. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`credit` | `object` | No | Surcharge definitions for corporate credit cards. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedAmount` | `number` | No | A flat surcharge amount in minor currency units. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedPercentage` | `number` | No | A percentage-based surcharge. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`international` | `object` | No | Surcharges for international transactions (outside the merchant’s country). |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`consumer` | `object` | No | Surcharges for consumer cards in international transactions. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`debit` | `object` | No | Surcharge definitions for consumer debit cards. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedAmount` | `number` | No | A flat surcharge amount in minor currency units. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedPercentage` | `number` | No | A percentage-based surcharge. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`credit` | `object` | No | Surcharge definitions for consumer credit cards. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedAmount` | `number` | No | A flat surcharge amount in minor currency units. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedPercentage` | `number` | No | A percentage-based surcharge. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`corporate` | `object` | No | Surcharges for corporate cards in international transactions. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`debit` | `object` | No | Surcharge definitions for corporate debit cards. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedAmount` | `number` | No | A flat surcharge amount in minor currency units. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedPercentage` | `number` | No | A percentage-based surcharge. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`credit` | `object` | No | Surcharge definitions for corporate credit cards. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedAmount` | `number` | No | A flat surcharge amount in minor currency units. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedPercentage` | `number` | No | A percentage-based surcharge. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`eea` | `object` | No | Surcharges for EEA (European Economic Area) transactions. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`consumer` | `object` | No | Surcharges for consumer cards in EEA transactions. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`debit` | `object` | No | Surcharge definitions for consumer debit cards. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedAmount` | `number` | No | A flat surcharge amount in minor currency units. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedPercentage` | `number` | No | A percentage-based surcharge. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`credit` | `object` | No | Surcharge definitions for consumer credit cards. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedAmount` | `number` | No | A flat surcharge amount in minor currency units. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedPercentage` | `number` | No | A percentage-based surcharge. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`corporate` | `object` | No | Surcharges for corporate cards in EEA transactions. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`debit` | `object` | No | Surcharge definitions for corporate debit cards. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedAmount` | `number` | No | A flat surcharge amount in minor currency units. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedPercentage` | `number` | No | A percentage-based surcharge. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`credit` | `object` | No | Surcharge definitions for corporate credit cards. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedAmount` | `number` | No | A flat surcharge amount in minor currency units. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`fixedPercentage` | `number` | No | A percentage-based surcharge. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`readTags` | `string` | No | This field denotes the type of NFC reading allowed on the terminal for the order. Possible values: `NONE`, `SINGLE`, `MULTIPLE_EDITABLE`, `MULTIPLE_NONEDITABLE`. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`ecrEnabled` | `boolean` | No | Whether ECR (electronic cash register) mode is enabled. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`online` | `object` | No | Online payment/link settings |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`enforceTokenization` | `boolean` | No | Denotes whether the card is tokenised for a future transaction or not. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`paymentPageValidFor` | `string` | No | Default validity of the payment page in format <number><unit>, where unit is 'm' \| 'h' \| 'd' (e.g., '15m', '2h', '3d'). |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`enforce3DSecure` | `boolean` | No | Force 3-D Secure authentication when available. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`relaxed3ds` | `boolean` | No | Allow relaxed 3-D Secure handling. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`addressRequirements` | `boolean` | No | Require an address on the payment page. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`redirectUrl` | `string` | No | Redirect URL after the online transaction completes successfully. The orderId will be appended as a query parameter. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`accountNameVerification` | `string` | No | Account-name verification mode applied during the payment. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`errorIfTokenizationFails` | `boolean` | No | If true, fail the flow when card tokenization cannot be completed. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`failureRedirectUrl` | `string` | No | Redirect URL when the transaction fails. The orderId will be appended as a query parameter. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`tokenisationIfPossible` | `boolean` | No | Attempts tokenization when supported, without failing the flow if tokenization is unavailable. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`subscription` | `boolean` | No | Marks this as a subscription/recurring-capable order. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`payButtonType` | `string` | No | UI pay button label/type used on the payment page. Possible values: `ADD_MONEY`, `BOOK`, `CHECKOUT`, `CONTINUE`, `CONTRIBUTE`, `DONATE`, `ORDER`, `PAY`, `RENT`, `SUPPORT`, `TIP`, `TOP_UP`. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`generateShortLink` | `boolean` | No | If true, generates a short URL for the payment page. Default is false. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`generateOnlineLinkWith` | `string` | No | The terminal identifier used to generate the online payment link. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`recurring` | `object` | No | Encompasses all controls related to recurring payments. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`subscriptionAmountType` | `string` | No | Determines the type of the subscription amount for order. Possible values: `fixed`, `variable`. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`maxAmount` | `number` | No | Maximum amount for the order in the lowest currency unit (only valid for variable subscription amounts). |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`frequency` | `string` | Yes | Frequency of the recurring collection. 'daily' \| 'twiceWeekly' \| 'weekly' \| 'tenDays' \| 'fortNightly' \| 'monthly' \| 'everyTwoMonths' \| 'trimester' \| 'quarterly' \| 'twiceYearly' \| 'annually' \| 'unscheduled'. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`numberOfPayments` | `number` | No | Total number of payments expected for this order. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`uniqueReference` | `string` | No | A unique reference for the recurring order. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`validation` | `string` | No | The validation type for the recurring order, possible values are 'validated' \| 'notValidated'. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`currency` | `string` | No | Currency as a numeric ISO 4217 code (string), e.g., '752' for SEK. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`selfCardCharging` | `boolean` | No | Allow the customer to self-charge their card. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`taxHandlingStrategy` | `object` | No | Tax calculation strategy |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`treatAmountAsTaxExclusive` | `boolean` | No | Prices exclude tax |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`taxTreatmentStrategy` | `string` | No | Rounding strategy configuration |
+
+### Request Example
+```json
+{
+  "terminal$id": "8386af3b0f71b80b04",
+  "orderLines": [
+    {
+      "id": "TERM123",
+      "name": "Nike Shoes",
+      "quantity": 1,
+      "amount": {
+        "regular": 500,
+        "campaign": 0,
+        "shipping": 0,
+        "total": 500,
+        "currency": "752",
+        "tax": [
+          {
+            "amount": 20,
+            "percentage": 20,
+            "type": "VAT"
+          }
+        ]
+      }
+    }
+  ],
+  "controlFunctions": {
+    "initiatePaymentsOptions": {
+      "paymentMethod": "CARD"
+    }
+  }
+}
+```
+
+## Response
+
+### Response Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `status` | `string` | Status of the request, indicated as either 'SUCCESS' or 'ERROR'. |
+| `data` | `object` | Response data. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`orderId` | `string` | Order ID of the order created. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`paymentId` | `string` | A payment ID assigned to each payment instance. Ensure that this ID is stored securely and tied to an identifiable entity until payment completion. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`interAppJWT` | `string` | This key can be used in the inter-app flow to be passed in as part of the app switch. This is an optional key that can improve inter-app transaction initiation performance. This is currently only functional for CARD payments. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`nonce` | `string` | The authorization key required to process online payments through a SelfHostedPage terminal. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`paymentPageLink` | `string` | This is the payment page link where payments can be made, applicable to both PaymentPage and iFrame terminals. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`shortLinkUrl` | `string` | Short link to the payment page URL when generateShortLink is set to true. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`invoiceDetails` | `object` | Invoice details for the payment when applicable. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`invoiceId` | `number` | Unique identifier for the invoice. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`invoicePdfUrl` | `string` | URL to download the invoice PDF. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`iban` | `string` | International Bank Account Number for the invoice. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`accountHolderName` | `string` | Name of the account holder for the invoice. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`bic` | `string` | Bank Identifier Code for the invoice. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`bankgiro` | `string` | Bankgiro number for the invoice. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`ocr` | `string` | OCR reference number for the invoice payment. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`paymentUrl` | `string` | Direct URL for payment processing. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`qr` | `string` | QR code data for payment. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`qrData` | `string` | Raw QR code data for payment processing. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`qrVisibleFor` | `string` | Duration for which the QR code remains visible. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`qrLink` | `string` | Link to the QR code for payment. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`klarnaClientToken` | `string` | Client token for Klarna payment processing. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`paymentToken` | `string` | Token for payment processing. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`sveaInitiationParams` | `object` | Initiation parameters for Svea payment processing. |
+| `message` | `string` | A message that describes the status of the request. |
+
+### Success Response Example
+```json
+{
+  "status": "SUCCESS",
+  "data": {
+    "orderId": "8381a26eae26f0900b",
+    "paymentId": "8381a26eae26f2af06",
+    "interAppJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvaWQiOiI4MzgxYTI2ZWFlMjZmMDkwMGIiLCJ0aWQiOiI4MzNjZWI4MjQwNGU3MDBiMDQiLCJwaWQiOiI4MzgxYTI2ZWFlMjZmMmFmMDYiLCJwbSI6IkNBU0giLCJhIjoxMDAwMCwiYyI6Ijc1MiIsImNvbnRyb2xGdW5jdGlvbnNFbmNvZGVyIjoiMCIsImlzc3VlZEJ5Ijoic2IucHMiLCJpYXQiOjE3NTg2NDk5NDk3MzN9.3pp94sCLJ_AnfkTmgcEhqv2HnGkxwXD3-ckP-TQGA94"
+  },
+  "message": "Order created successfully"
+}
+```
+
+## Error Responses
+
+### Possible Errors
+
+#### 400 - Bad Request
+```json
+{
+  "status": "ERROR",
+  "message": "Invalid request body."
+}
+```
+**Description:** The request body is malformed or missing required parameters. Check the request body against the documented schema and ensure all mandatory fields are present and of the correct type.
+
+#### 401 - Unauthorized
+```json
+{
+  "status": "ERROR",
+  "message": "Unauthorized access. Please provide valid credentials to access this endpoint."
+}
+```
+**Description:** Authentication failed. Ensure the `API-KEY`, `API-SECRET`, and `MERCHANT-ID` headers are correctly set and valid for your account.
+
+#### 500 - Internal Server Error
+```json
+{
+  "status": "ERROR",
+  "message": "An unexpected error occurred."
+}
+```
+**Description:** An unexpected error occurred on the server. Try the request again later. If the problem persists, contact support.
+
+---

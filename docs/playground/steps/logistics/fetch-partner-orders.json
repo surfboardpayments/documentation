@@ -1,0 +1,78 @@
+{
+    "scenarioId": "fetch-partner-orders",
+    "scenarioName": "Fetch Partner Orders",
+    "steps": [
+        {
+            "id": "fetch-partner-orders",
+            "name": "Fetch Partner Orders",
+            "description": "Fetches the list of orders for a specific partner.",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "partners/{{partnerId}}/logistics/orders",
+            "guidePath": "/carbon/logistics/fetch-partner-orders",
+            "payload": {},
+            "specifications": {
+               "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Array of order objects.",
+                    "resParams": [
+                        {
+                            "name": "orderId",
+                            "type": "string",
+                            "description": "Unique identifier for the order."
+                        },
+                        {
+                            "name": "trackingUrl",
+                            "type": "string",
+                            "description": "The tracking URL of the shipment."
+                        },
+                        {
+                            "name": "deliveryPartner",
+                            "type": "string",
+                            "description": "The partner or carrier responsible for delivering the shipment."
+                        },
+                        {
+                            "name": "status",
+                            "type": "string",
+                            "description": "Current status of the order."
+                        },
+                        {
+                            "name": "packages",
+                            "type": "array",
+                            "description": "Array of package details in the order.",
+                            "resParams": [
+                                {
+                                    "name": "productId",
+                                    "type": "string",
+                                    "description": "The SurfboardProductId of the product."
+                                },
+                                {
+                                    "name": "serialNumber",
+                                    "type": "string",
+                                    "description": "Serial number of the device."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ]
+            }
+        }
+    ]
+}

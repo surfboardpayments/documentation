@@ -1,0 +1,139 @@
+{
+    "scenarioId": "get-all-gift-cards",
+    "scenarioName": "Get All Gift Cards",
+    "steps": [
+        {
+            "id": "get-all-gift-cards",
+            "name": "Get All Gift Cards",
+            "description": "Get all gift cards for a merchant.",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "gift-cards",
+            "guidePath": "/carbon/advanced-customizations/get-all-gift-cards",
+            "payload": {},
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "type",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Filter gift cards by type.",
+                        "possibleValues": [
+                            {
+                                "value": "FUND",
+                                "description": "Gift cards with monetary value"
+                            },
+                            {
+                                "value": "ENTITLEMENT",
+                                "description": "Gift cards with usage-based limits"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Filter gift cards by status."
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "array",
+                        "mandatory": true,
+                        "description": "Array of gift card objects.",
+                        "resParams": [
+                            {
+                                "name": "giftCardId",
+                                "type": "string",
+                                "description": "Unique identifier for the gift card."
+                            },
+                            {
+                                "name": "pan",
+                                "type": "string",
+                                "description": "Primary Account Number for the gift card."
+                            },
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "description": "Name of the gift card."
+                            },
+                            {
+                                "name": "cardType",
+                                "type": "string",
+                                "description": "Type of the gift card (FUND or ENTITLEMENT)."
+                            },
+                            {
+                                "name": "amount",
+                                "type": "number",
+                                "description": "Original monetary amount for FUND type gift cards."
+                            },
+                            {
+                                "name": "currentAmount",
+                                "type": "number",
+                                "description": "Current remaining amount for FUND type gift cards."
+                            },
+                            {
+                                "name": "usageCount",
+                                "type": "number",
+                                "description": "Number of times the gift card has been used."
+                            },
+                            {
+                                "name": "redemptionLimit",
+                                "type": "number",
+                                "description": "Usage limit for ENTITLEMENT type gift cards."
+                            },
+                            {
+                                "name": "currency",
+                                "type": "string",
+                                "description": "Currency code for the gift card."
+                            },
+                            {
+                                "name": "accessControl",
+                                "type": "string",
+                                "description": "Access control level of the gift card."
+                            },
+                            {
+                                "name": "status",
+                                "type": "string",
+                                "description": "Current status of the gift card."
+                            },
+                            {
+                                "name": "expiryDate",
+                                "type": "string",
+                                "description": "Expiry date of the gift card."
+                            },
+                            {
+                                "name": "lastTransactionAt",
+                                "type": "string",
+                                "description": "Timestamp of the last transaction."
+                            },
+                            {
+                                "name": "transactionCount",
+                                "type": "number",
+                                "description": "Total number of transactions."
+                            },
+                            {
+                                "name": "totalRedeemed",
+                                "type": "number",
+                                "description": "Total amount redeemed from the gift card."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

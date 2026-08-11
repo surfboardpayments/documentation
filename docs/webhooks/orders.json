@@ -1,0 +1,1283 @@
+{
+    "title": "Order Events",
+    "description": "The Order events reference details the various triggers and notifications associated with order processes. These events provide real-time updates on the status and progress of orders, from initiation to completion. By monitoring order events, you can obtain insights into the payment flow, detect issues, and optimize the checkout experience. Each event is linked to specific order attributes, enabling detailed tracking, ensuring seamless order and payment management.",
+    "endpoints": [
+        {
+            "fragment": "Order Updated"
+        },
+        {
+            "fragment": "Order Payment Initiated"
+        },
+        {
+            "fragment": "Order Payment Processed"
+        },
+        {
+            "fragment": "Order Payment Completed"
+        },
+        {
+            "fragment": "Order Payment Failed"
+        },
+        {
+            "fragment": "Order Payment Cancelled"
+        },
+        {
+            "fragment": "Order Cancelled"
+        },
+        {
+            "fragment": "Order Customer Identity"
+        },
+        {
+            "fragment": "Order Terminal Event"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Order Updated",
+            "description": "This event is triggered when an order is updated.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "terminalId",
+                            "type": "string",
+                            "description": "Identifier of the terminal that triggered this event."
+                        },
+                        {
+                            "name": "originalCreated",
+                            "type": "number",
+                            "description": "Timestamp of the very first time the event was published"
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "orderId",
+                            "type": "string",
+                            "description": "Unique identifier for the order created."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "description": "Unique identifier of the merchant."
+                        },
+                        {
+                            "name": "adjustments",
+                            "type": "array",
+                            "description": "List of adjustments applied to the order.",
+                            "resParams": [
+                                {
+                                    "name": "adjustmentType",
+                                    "type": "string",
+                                    "description": "Category or reason for the adjustment."
+                                },
+                                {
+                                    "name": "amount",
+                                    "type": "string",
+                                    "description": "Amount of the adjustment in minor currency units."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "referenceId",
+                            "type": "string",
+                            "description": "External referenceId passed during order creation."
+                        },
+                        {
+                            "name": "metadata",
+                            "type": "object",
+                            "mandatory": false,
+                            "description": "Metadata passed with the order creation."
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"eventType\": \"order.updated\",\n\t\"metadata\": {\n\t\t\"eventId\": \"81a214e74b107801ff\",\n\t\t\"created\": 1695793998732,\n\t\t\"retryAttempt\": 0,\n\t\t\"terminalId\": \"830acac336f6d80b04\",\n\t\t\"originalCreated\": 1745821536443,\n\t\t\"webhookEventId\": \"81a214e7455ed01cff\"\n\t},\n\t\"data\": {\n\t\t\"orderId\": \"81a214e2ece7d00b0b\",\n\t\t\"merchantId\": \"8248db4c5c8dd0130e\",\n\t\t\"adjustments\": [\n\t\t\t{\n\t\t\t\t\"adjustmentType\": \"Discounts\",\n\t\t\t\t\"amount\": \"10\"\n\t\t\t}\n\t\t]\n\t}\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Order Payment Initiated",
+            "description": "This event is triggered when a payment is initiated for an order.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "terminalId",
+                            "type": "string",
+                            "description": "Identifier of the terminal that triggered this event."
+                        },
+                        {
+                            "name": "originalCreated",
+                            "type": "number",
+                            "description": "Timestamp of the very first time the event was published"
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "orderId",
+                            "type": "string",
+                            "description": "Unique identifier for the order for which the payment has been initiated."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "description": "Unique identifier of the merchant."
+                        },
+                        {
+                            "name": "paymentStatus",
+                            "type": "string",
+                            "description": "Provides the status of the payment. For this event, the status is 'PAYMENT_INITIATED'."
+                        },
+                        {
+                            "name": "orderStatus",
+                            "type": "string",
+                            "description": "Provides the status of the order. For this event, the status is 'PAYMENT_INITIATED'."
+                        },
+                        {
+                            "name": "paymentMethod",
+                            "type": "string",
+                            "description": "Specifies the chosen method for payment. Supported payment methods are ‘CARD’, ‘SWISH’, and ‘AMEX’."
+                        },
+
+                        {
+                            "name": "paymentId",
+                            "type": "string",
+                            "description": "Unique identifier for the payment that has been initiated."
+                        },
+                        {
+                            "name": "adjustments",
+                            "type": "array",
+                            "description": "List of adjustments applied to the order.",
+                            "resParams": [
+                                {
+                                    "name": "adjustmentType",
+                                    "type": "string",
+                                    "description": "Category or reason for the adjustment."
+                                },
+                                {
+                                    "name": "amount",
+                                    "type": "string",
+                                    "description": "Amount of the adjustment in minor currency units."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "referenceId",
+                            "type": "string",
+                            "description": "External referenceId passed during order creation."
+                        },
+                        {
+                            "name": "metadata",
+                            "type": "object",
+                            "mandatory": false,
+                            "description": "Metadata passed with the order creation."
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"eventType\": \"order.paymentinitiated\",\n\t\"metadata\": {\n\t\t\"eventId\": \"81a2189d4b107816ff\",\n\t\t\"created\": 1695795898049,\n\t\t\"retryAttempt\": 0,\n\t\t\"terminalId\": \"830acac336f6d80b04\",\n\t\t\"originalCreated\": 1745821536443,\n\t\t\"webhookEventId\": \"81a2189e455ed00bff\"\n\t},\n\t\"data\": {\n\t\t\"orderId\": \"81a2189aece7d00f0b\",\n\t\t\"merchantId\": \"8248db4c5c8dd0130e\",\n\t\t\"paymentStatus\": \"PAYMENT_INITIATED\",\n\t\t\"orderStatus\": \"PAYMENT_INITIATED\",\n\t\t\"adjustments\": [\n\t\t\t{\n\t\t\t\t\"adjustmentType\": \"Discounts\",\n\t\t\t\t\"amount\": \"10\"\n\t\t\t}\n\t\t],\n\t\t\"paymentMethod\": \"CARD\",\n\t\t\"paymentId\": \"81a2189ccb10783206\"\n\t}\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Order Payment Processed",
+            "description": "This event is triggered when a payment is processed for an order.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "terminalId",
+                            "type": "string",
+                            "description": "Identifier of the terminal that triggered this event."
+                        },
+                        {
+                            "name": "originalCreated",
+                            "type": "number",
+                            "description": "Timestamp of the very first time the event was published"
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "orderId",
+                            "type": "string",
+                            "description": "Unique identifier for the order for which the payment has been processed."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "description": "Unique identifier of the merchant."
+                        },
+                        {
+                            "name": "paymentStatus",
+                            "type": "string",
+                            "description": "Provides the status of the payment. For this event, the status is 'PAYMENT_PROCESSED'."
+                        },
+                        {
+                            "name": "orderStatus",
+                            "type": "string",
+                            "description": "Provides the status of the order. For this event, the status is 'PAYMENT_PROCESSED'."
+                        },
+                        {
+                            "name": "paymentMethod",
+                            "type": "string",
+                            "description": "Specifies the chosen method for payment. Supported payment methods are ‘CARD’, ‘SWISH’, and ‘AMEX’."
+                        },
+                        {
+                            "name": "adjustments",
+                            "type": "array",
+                            "description": "List of adjustments applied to the order.",
+                            "resParams": [
+                                {
+                                    "name": "adjustmentType",
+                                    "type": "string",
+                                    "description": "Category or reason for the adjustment."
+                                },
+                                {
+                                    "name": "amount",
+                                    "type": "string",
+                                    "description": "Amount of the adjustment in minor currency units."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "paymentId",
+                            "type": "string",
+                            "description": "Unique identifier for the payment that has been processed."
+                        },
+                        {
+                            "name": "referenceId",
+                            "type": "string",
+                            "description": "External referenceId passed during order creation."
+                        },
+                        {
+                            "name": "metadata",
+                            "type": "object",
+                            "mandatory": false,
+                            "description": "Metadata passed with the order creation."
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"eventType\": \"order.paymentprocessed\",\n\t\"metadata\": {\n\t\t\"eventId\": \"81a211564b107819ff\",\n\t\t\"created\": 1695792172665,\n\t\t\"retryAttempt\": 0,\n\t\t\"terminalId\": \"830acac336f6d80b04\",\n\t\t\"originalCreated\": 1745821536443,\n\t\t\"webhookEventId\": \"81a21156c55ed00bff\"\n\t},\n\t\"data\": {\n\t\t\"orderId\": \"81a211506ce7d00e0b\",\n\t\t\"merchantId\": \"8248db4c5c8dd0130e\",\n\t\t\"paymentStatus\": \"PAYMENT_PROCESSED\",\n\t\t\"orderStatus\": \"PAYMENT_PROCESSED\",\n\t\t\"adjustments\": [\n\t\t\t{\n\t\t\t\t\"adjustmentType\": \"Discounts\",\n\t\t\t\t\"amount\": \"10\"\n\t\t\t}\n\t\t],\n\t\t\"paymentMethod\": \"CARD\",\n\t\t\"paymentId\": \"81a211504b10783706\",\n\t\t\"truncatedPan\": \"007\"\n\t}\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Order Payment Completed",
+            "description": "This event is triggered when a payment is completed for an order.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "terminalId",
+                            "type": "string",
+                            "description": "Identifier of the terminal that triggered this event."
+                        },
+                        {
+                            "name": "originalCreated",
+                            "type": "number",
+                            "description": "Timestamp of the very first time the event was published"
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "orderId",
+                            "type": "string",
+                            "description": "Unique identifier for the order for which the payment has been completed."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "description": "Unique identifier of the merchant."
+                        },
+                        {
+                            "name": "paymentStatus",
+                            "type": "string",
+                            "description": "Provides the status of the payment. For this event, the status is 'PAYMENT_COMPLETED'."
+                        },
+                        {
+                            "name": "paymentMethod",
+                            "type": "string",
+                            "description": "Specifies the chosen method for payment. Supported payment methods are ‘CARD’, ‘SWISH’, and ‘AMEX’."
+                        },
+                        {
+                            "name": "paymentId",
+                            "type": "string",
+                            "description": "Unique identifier for the payment that has been initiated."
+                        },
+                        {
+                            "name": "referenceId",
+                            "type": "string",
+                            "description": "External referenceId passed during order creation."
+                        },
+                        {
+                            "name": "amount",
+                            "type": "string",
+                            "description": "Amount involved in the payment in minor currency units (e.g., 10 SEK is 1000 in amount)."
+                        },
+                        {
+                            "name": "type",
+                            "type": "string",
+                            "description": "Denotes the order type of the payment whether it is a 'RETURN' or 'PURCHASE' order."
+                        },
+                        {
+                            "name": "adjustments",
+                            "type": "array",
+                            "description": "List of adjustments applied to the order.",
+                            "resParams": [
+                                {
+                                    "name": "adjustmentType",
+                                    "type": "string",
+                                    "description": "Category or reason for the adjustment."
+                                },
+                                {
+                                    "name": "amount",
+                                    "type": "string",
+                                    "description": "Amount of the adjustment in minor currency units."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "metadata",
+                            "type": "object",
+                            "mandatory": false,
+                            "description": "Metadata passed with the order creation."
+                        },
+                        {
+                            "name": "transactionDetails",
+                            "type": "array",
+                            "description": "Retrieves all transaction details for the order.",
+                            "reqParams": [
+                                {
+                                    "name": "transactionId",
+                                    "type": "string",
+                                    "description": "Unique identifier for the transaction."
+                                },
+                                {
+                                    "name": "terminalId",
+                                    "type": "string",
+                                    "description": "Identifier of the payment terminal from which the transaction was made."
+                                },
+                                {
+                                    "name": "rrn",
+                                    "type": "string",
+                                    "description": "Retrieval Reference Number (RRN) used to uniquely identify a card transaction."
+                                },
+                                {
+                                    "name": "amount",
+                                    "type": "string",
+                                    "description": "Payment amount in minor currency units (e.g., 110 for 1.10 in SEK)."
+                                },
+                                {
+                                    "name": "currency",
+                                    "type": "string",
+                                    "description": "Numeric or ISO code for the currency (e.g., 752 for SEK)."
+                                },
+                                {
+                                    "name": "method",
+                                    "type": "string",
+                                    "description": "Payment method used for the transaction (e.g., CARD)."
+                                },
+                                {
+                                    "name": "truncatedPan",
+                                    "type": "string",
+                                    "description": "Last few digits of the card number."
+                                },
+                                {
+                                    "name": "cardLabel",
+                                    "type": "string",
+                                    "description": "Descriptive label of the card or application (e.g., 'Debit Mastercard')."
+                                },
+                                {
+                                    "name": "posEntryMode",
+                                    "type": "string",
+                                    "description": "Specifies how the card data was read (e.g., contact, contactless)."
+                                },
+                                {
+                                    "name": "aid",
+                                    "type": "string",
+                                    "description": "Application Identifier (AID) for the card application."
+                                },
+                                {
+                                    "name": "customerResponseCode",
+                                    "type": "string",
+                                    "description": "Two-character response code representing authorization result (e.g., '00' for approved)."
+                                },
+                                {
+                                    "name": "cvmMethod",
+                                    "type": "string",
+                                    "description": "Indicates the cardholder verification method used (e.g., '1f')."
+                                },
+                                {
+                                    "name": "authMode",
+                                    "type": "string",
+                                    "description": "Indicates the entity that authenticated the payment (e.g., ISSUER)."
+                                },
+                                {
+                                    "name": "cardBrand",
+                                    "type": "string",
+                                    "description": "Normalized brand of the card (e.g., MASTERCARD, VISA)."
+                                },
+                                {
+                                    "name": "terminalVerificationResult",
+                                    "type": "string",
+                                    "description": "Verification outcomes from the terminal (e.g., '0000000001')."
+                                },
+                                {
+                                    "name": "cvmMethodDescription",
+                                    "type": "string",
+                                    "description": "Descriptive explanation of the CVM method (e.g., 'Offline plaintext PIN')."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"eventType\": \"order.paymentcompleted\",\n\t\"metadata\": {\n\t\t\"eventId\": \"831fc2f040bf405fff\",\n\t\t\"created\": 1745821536443,\n\t\t\"retryAttempt\": 0,\n\t\t\"terminalId\": \"830acac336f6d80b04\",\n\t\t\"originalCreated\": 1745821536443,\n\t\t\"webhookEventId\": \"831fc2f02a031015ff\"\n\t},\n\t\"data\": {\n\t\t\"orderId\": \"831fc2de72fed0000b\",\n\t\t\"referenceId\": \"r_3\",\n\t\t\"adjustments\": [\n\t\t\t{\n\t\t\t\t\"adjustmentType\": \"Discounts\",\n\t\t\t\t\"amount\": \"10\"\n\t\t\t}\n\t\t],\n\t\t\"paymentStatus\": \"PAYMENT_COMPLETED\",\n\t\t\"paymentMethod\": \"CARD\",\n\t\t\"paymentId\": \"831fc2ebc0bf400a06\",\n\t\t\"truncatedPan\": \"0102\",\n\t\t\"amount\": \"310\",\n\t\t\"merchantId\": \"82e48bd833d7d80c0e\",\n\t\t\"type\": \"PURCHASE\",\n\t\t\"transactionDetails\": [\n\t\t\t{\n\t\t\t\t\"transactionId\": \"831fc2ebc0bf401419\",\n\t\t\t\t\"terminalId\": \"830acac336f6d80b04\",\n\t\t\t\t\"rrn\": \"511806000002\",\n\t\t\t\t\"amount\": \"310\",\n\t\t\t\t\"currency\": \"752\",\n\t\t\t\t\"method\": \"CARD\",\n\t\t\t\t\"voided\": false,\n\t\t\t\t\"truncatedPan\": \"0102\",\n\t\t\t\t\"cardLabel\": \"MASTERCARD DEBIT\",\n\t\t\t\t\"posEntryMode\": \"07\",\n\t\t\t\t\"aid\": \"a0000000041010\",\n\t\t\t\t\"customerResponseCode\": \"00\",\n\t\t\t\t\"cvmMethod\": \"5e\",\n\t\t\t\t\"cvmMethodDescription\": \"Signature\",\n\t\t\t\t\"authMode\": \"ISSUER\",\n\t\t\t\t\"cardBrand\": \"MASTERCARD\",\n\t\t\t\t\"terminalVerificationResult\": \"0400008001\"\n\t\t\t}\n\t\t]\n\t}\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Order Payment Failed",
+            "description": "This event is triggered when a payment for an order is failed.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "terminalId",
+                            "type": "string",
+                            "description": "Identifier of the terminal that triggered this event."
+                        },
+                        {
+                            "name": "originalCreated",
+                            "type": "number",
+                            "description": "Timestamp of the very first time the event was published"
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "orderId",
+                            "type": "string",
+                            "description": "Unique identifier for the order for which the payment has been initiated."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "description": "Unique identifier of the merchant."
+                        },
+                        {
+                            "name": "orderStatus",
+                            "type": "string",
+                            "description": "Provides the status of the order. For this event, the status is 'PAYMENT_INITIATED'."
+                        },
+                        {
+                            "name": "adjustments",
+                            "type": "array",
+                            "description": "List of adjustments applied to the order.",
+                            "resParams": [
+                                {
+                                    "name": "adjustmentType",
+                                    "type": "string",
+                                    "description": "Category or reason for the adjustment."
+                                },
+                                {
+                                    "name": "amount",
+                                    "type": "string",
+                                    "description": "Amount of the adjustment in minor currency units."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "referenceId",
+                            "type": "string",
+                            "description": "Unique identifier for the cancelled payment."
+                        },
+                        {
+                            "name": "paymentId",
+                            "type": "string",
+                            "description": "Unique identifier for the cancelled payment."
+                        },
+                        {
+                            "name": "metadata",
+                            "type": "object",
+                            "mandatory": false,
+                            "description": "Metadata passed with the order creation."
+                        },
+                        {
+                            "name": "failedTransactionDetails",
+                            "type": "object",
+                            "description": "Information about the transaction that was cancelled.",
+                            "reqParams": [
+                                {
+                                    "name": "paymentId",
+                                    "type": "string",
+                                    "description": "Unique identifier for the payment attempt that was cancelled."
+                                },
+                                {
+                                    "name": "terminalId",
+                                    "type": "string",
+                                    "description": "Identifier of the payment terminal where the transaction was initiated."
+                                },
+                                {
+                                    "name": "rrn",
+                                    "type": "string",
+                                    "description": "Retrieval Reference Number (RRN) used to uniquely identify the card transaction."
+                                },
+                                {
+                                    "name": "amount",
+                                    "type": "number",
+                                    "description": "Amount of the transaction in minor currency units (e.g., 110 for 1.10 SEK)."
+                                },
+                                {
+                                    "name": "currency",
+                                    "type": "string",
+                                    "description": "Numeric or ISO code for the currency in which the transaction was processed (e.g., '752' for SEK)."
+                                },
+                                {
+                                    "name": "method",
+                                    "type": "string",
+                                    "description": "Payment method used for the transaction (e.g., 'CARD')."
+                                },
+                                {
+                                    "name": "cardLabel",
+                                    "type": "string",
+                                    "description": "Descriptive label of the card application (e.g., 'Debit Mastercard')."
+                                },
+                                {
+                                    "name": "posEntryMode",
+                                    "type": "string",
+                                    "description": "Point-of-sale entry mode, indicating how the card data was read (e.g., '07' for contactless)."
+                                },
+                                {
+                                    "name": "aid",
+                                    "type": "string",
+                                    "description": "Application Identifier (AID) of the card application used for the transaction."
+                                },
+                                {
+                                    "name": "cardBrand",
+                                    "type": "string",
+                                    "description": "Normalized brand of the card used (e.g., 'VISA', 'MASTERCARD')."
+                                },
+                                {
+                                    "name": "terminalVerificationResult",
+                                    "type": "string",
+                                    "description": "Result code from the terminal’s EMV verification process."
+                                },
+                                {
+                                    "name": "customerResponseDescription",
+                                    "type": "string",
+                                    "description": "A message from the payment processor explaining the transaction outcome to the customer."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"eventType\": \"order.paymentfailed\",\n\t\"metadata\": {\n\t\t\"eventId\": \"831fc72840bf401fff\",\n\t\t\"created\": 1745823696789,\n\t\t\"retryAttempt\": 0,\n\t\t\"terminalId\": \"83134bb823ce380f04\",\n\t\t\"originalCreated\": 1745823696789,\n\t\t\"webhookEventId\": \"831fc728aa03100bff\"\n\t},\n\t\"data\": {\n\t\t\"metadata\": [\n\t\t\t{\n\t\t\t\t\"name\": \"Henry\"\n\t\t\t}\n\t\t],\n\t\t\"orderId\": \"831fc71d72fed00a0b\",\n\t\t\"adjustments\": [\n\t\t\t{\n\t\t\t\t\"adjustmentType\": \"test\",\n\t\t\t\t\"amount\": \"100\"\n\t\t\t}\n\t\t],\n\t\t\"orderStatus\": \"PAYMENT_FAILED\",\n\t\t\"paymentId\": \"831fc2ebc0bf400a06\",\n\t\t\"referenceId\": \"abc6\",\n\t\t\"merchantId\": \"81a641f8b3cfd0070e\",\n\t\t\"failedTransactionDetails\": {\n\t\t\t\"paymentId\": \"831fc2ebc0bf401419\",\n\t\t\t\"terminalId\": \"830acac336f6d80b04\",\n\t\t\t\"rrn\": \"511806000002\",\n\t\t\t\"amount\": 310,\n\t\t\t\"currency\": \"752\",\n\t\t\t\"method\": \"CARD\",\n\t\t\t\"cardLabel\": \"MASTERCARD DEBIT\",\n\t\t\t\"posEntryMode\": \"07\",\n\t\t\t\"aid\": \"a0000000041010\",\n\t\t\t\"cardBrand\": \"MASTERCARD\",\n\t\t\t\"terminalVerificationResult\": \"0400008001\",\n\t\t\t\"customerResponseDescription\":\"Description of the customer response code\"\n\t\t}\n\t}\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Order Payment Cancelled",
+            "description": "This event is triggered when a payment for an order is cancelled.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "terminalId",
+                            "type": "string",
+                            "description": "Identifier of the terminal that triggered this event."
+                        },
+                        {
+                            "name": "originalCreated",
+                            "type": "number",
+                            "description": "Timestamp of the very first time the event was published"
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "orderId",
+                            "type": "string",
+                            "description": "Unique identifier for the order with the cancelled payment."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "description": "Unique identifier of the merchant."
+                        },
+                        {
+                            "name": "orderStatus",
+                            "type": "string",
+                            "description": "Provides the status of the order. For this event, the status is 'PAYMENT_CANCELLED'."
+                        },
+                        {
+                            "name": "adjustments",
+                            "type": "array",
+                            "description": "List of adjustments applied to the order.",
+                            "resParams": [
+                                {
+                                    "name": "adjustmentType",
+                                    "type": "string",
+                                    "description": "Category or reason for the adjustment."
+                                },
+                                {
+                                    "name": "amount",
+                                    "type": "string",
+                                    "description": "Amount of the adjustment in minor currency units."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "paymentId",
+                            "type": "string",
+                            "description": "Unique identifier for the cancelled payment."
+                        },
+                        {
+                            "name": "referenceId",
+                            "type": "string",
+                            "description": "Unique identifier for the cancelled payment."
+                        },
+                        {
+                            "name": "metadata",
+                            "type": "object",
+                            "mandatory": false,
+                            "description": "Metadata passed with the order creation."
+                        },
+                        {
+                            "name": "cancelledTransactionDetails",
+                            "type": "object",
+                            "description": "Information about the transaction that was cancelled.",
+                            "reqParams": [
+                                {
+                                    "name": "paymentId",
+                                    "type": "string",
+                                    "description": "Unique identifier for the payment attempt that was cancelled."
+                                },
+                                {
+                                    "name": "terminalId",
+                                    "type": "string",
+                                    "description": "Identifier of the payment terminal where the transaction was initiated."
+                                },
+                                {
+                                    "name": "rrn",
+                                    "type": "string",
+                                    "description": "Retrieval Reference Number (RRN) used to uniquely identify the card transaction."
+                                },
+                                {
+                                    "name": "amount",
+                                    "type": "number",
+                                    "description": "Amount of the transaction in minor currency units (e.g., 110 for 1.10 SEK)."
+                                },
+                                {
+                                    "name": "currency",
+                                    "type": "string",
+                                    "description": "Numeric or ISO code for the currency in which the transaction was processed (e.g., '752' for SEK)."
+                                },
+                                {
+                                    "name": "method",
+                                    "type": "string",
+                                    "description": "Payment method used for the transaction (e.g., 'CARD')."
+                                },
+                                {
+                                    "name": "cardLabel",
+                                    "type": "string",
+                                    "description": "Descriptive label of the card application (e.g., 'Debit Mastercard')."
+                                },
+                                {
+                                    "name": "posEntryMode",
+                                    "type": "string",
+                                    "description": "Point-of-sale entry mode, indicating how the card data was read (e.g., '07' for contactless)."
+                                },
+                                {
+                                    "name": "aid",
+                                    "type": "string",
+                                    "description": "Application Identifier (AID) of the card application used for the transaction."
+                                },
+                                {
+                                    "name": "cardBrand",
+                                    "type": "string",
+                                    "description": "Normalized brand of the card used (e.g., 'VISA', 'MASTERCARD')."
+                                },
+                                {
+                                    "name": "terminalVerificationResult",
+                                    "type": "string",
+                                    "description": "Result code from the terminal’s EMV verification process."
+                                },
+                                {
+                                    "name": "customerResponseDescription",
+                                    "type": "string",
+                                    "description": "A message from the payment processor explaining the transaction outcome to the customer."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"eventType\": \"order.paymentcancelled\",\n\t\"metadata\": {\n\t\t\"eventId\": \"831fc72840bf401fff\",\n\t\t\"created\": 1745823696789,\n\t\t\"retryAttempt\": 0,\n\t\t\"terminalId\": \"83134bb823ce380f04\",\n\t\t\"originalCreated\": 1745823696789,\n\t\t\"webhookEventId\": \"831fc728aa03100bff\"\n\t},\n\t\"data\": {\n\t\t\"metadata\": [\n\t\t\t{\n\t\t\t\t\"name\": \"Henry\"\n\t\t\t}\n\t\t],\n\t\t\"orderId\": \"831fc71d72fed00a0b\",\n\t\t\"adjustments\": [\n\t\t\t{\n\t\t\t\t\"adjustmentType\": \"test\",\n\t\t\t\t\"amount\": \"100\"\n\t\t\t}\n\t\t],\n\t\t\"orderStatus\": \"PAYMENT_CANCELLED\",\n\t\t\"paymentId\": \"831fc72240bf400006\",\n\t\t\"referenceId\": \"abc6\",\n\t\t\"merchantId\": \"81a641f8b3cfd0070e\",\n\t\t\"cancelledTransactionDetails\": {\n\t\t\t\"paymentId\": \"831fc2ebc0bf400a06\",\n\t\t\t\"terminalId\": \"830acac336f6d80b04\",\n\t\t\t\"rrn\": \"511806000002\",\n\t\t\t\"amount\": 310,\n\t\t\t\"currency\": \"752\",\n\t\t\t\"method\": \"CARD\",\n\t\t\t\"cardLabel\": \"MASTERCARD DEBIT\",\n\t\t\t\"posEntryMode\": \"07\",\n\t\t\t\"aid\": \"a0000000041010\",\n\t\t\t\"cardBrand\": \"MASTERCARD\",\n\t\t\t\"terminalVerificationResult\": \"0400008001\",\n\t\t\t\"customerResponseDescription\":\"Description of the customer response code\"\n\t\t}\n\t}\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Order Cancelled",
+            "description": "This event is triggered when an order is cancelled.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "terminalId",
+                            "type": "string",
+                            "description": "Identifier of the terminal that triggered this event."
+                        },
+                        {
+                            "name": "originalCreated",
+                            "type": "number",
+                            "description": "Timestamp of the very first time the event was published"
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "orderId",
+                            "type": "string",
+                            "description": "Unique identifier for the order that is cancelled."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "description": "Unique identifier of the merchant."
+                        },
+                        {
+                            "name": "orderStatus",
+                            "type": "string",
+                            "description": "Provides the status of the order. For this event, the status is 'CANCELLED'."
+                        },
+                        {
+                            "name": "referenceId",
+                            "type": "string",
+                            "description": "External referenceId passed during order creation."
+                        },
+                        {
+                            "name": "adjustments",
+                            "type": "array",
+                            "description": "List of adjustments applied to the order.",
+                            "reqParams": [
+                                {
+                                    "name": "adjustmentType",
+                                    "type": "string",
+                                    "description": "Category or reason for the adjustment."
+                                },
+                                {
+                                    "name": "amount",
+                                    "type": "string",
+                                    "description": "Amount of the adjustment in minor currency units."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "metadata",
+                            "type": "object",
+                            "mandatory": false,
+                            "description": "Metadata passed with the order creation."
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"eventType\": \"order.cancelled\",\n\t\"metadata\": {\n\t\t\"eventId\": \"831fc72840bf401fff\",\n\t\t\"created\": 1745823696789,\n\t\t\"retryAttempt\": 0,\n\t\t\"terminalId\": \"83134bb823ce380f04\",\n\t\t\"originalCreated\": 1745823696789,\n\t\t\"webhookEventId\": \"831fc728aa03100bff\"\n\t},\n\t\"data\": {\n\t\t\"metadata\": [\n\t\t\t{\n\t\t\t\t\"name\": \"Henry\"\n\t\t\t}\n\t\t],\n\t\t\"orderId\": \"831fc71d72fed00a0b\",\n\t\t\"adjustments\": [\n\t\t\t{\n\t\t\t\t\"adjustmentType\": \"test\",\n\t\t\t\t\"amount\": \"100\"\n\t\t\t}\n\t\t],\n\t\t\"orderStatus\": \"PAYMENT_CANCELLED\",\n\t\t\"paymentId\": \"831fc72240bf400006\",\n\t\t\"referenceId\": \"abc6\",\n\t\t\"merchantId\": \"81a641f8b3cfd0070e\"\n\t}\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Order Customer Identity",
+            "description": "This event is triggered when a customer taps their card on the terminal, enabling you to identify the customer during a transaction and personalize the experience.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Contains metadata about the webhook delivery itself, including unique identifiers, timestamps, and retry counts.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID for this specific webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts"
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "Holds the actual event payload — details about the order and the card token used to identify the customer.",
+                    "reqParams": [
+                        {
+                            "name": "orderId",
+                            "type": "string",
+                            "description": "Unique identifier for the order associated with the identified customer."
+                        },
+                        {
+                            "name": "cardId",
+                            "type": "string",
+                            "description": "Tokenized identifier for the customer's card used to recognize or link the customer to the order."
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"eventType\": \"order.customer.identify\",\n\t\"metadata\": {\n\t\t\"eventId\": \"832cf9fe1806581dff\",\n\t\t\"created\": 1747553660038,\n\t\t\"retryAttempt\": 0,\n\t\t\"webhookEventId\": \"81a214e74b107801ff\"\n\t},\n\t\"data\": {\n\t\t\"orderId\": \"832cf9f93d2fd0410b\",\n\t\t\"cardId\": \"c550c29e80908c887a\"\n\t}\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Order Terminal Event",
+            "description": "This event is triggered for every state the terminal undergoes during a transaction.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "orderId",
+                            "type": "string",
+                            "description": "Unique identifier for the order."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "description": "Unique identifier of the merchant."
+                        },
+                        {
+                            "name": "paymentId",
+                            "type": "string",
+                            "description": "Unique identifier for the payment."
+                        },
+                        {
+                            "name": "terminalTransactionStatus",
+                            "type": "string",
+                            "description": "Indicates the terminal's current status in relation to the transaction. Some of these states are only available for an online terminal as mentioned below.",
+                            "possibleValues": [
+                                {
+                                    "description": "Transaction is initiated on the terminal.",
+                                    "value": "STARTED"
+                                },
+                                {
+                                    "description": "Tip selection screen is displayed for customer to select tip.",
+                                    "value": "SELECT_TIP"
+                                },
+                                {
+                                    "description": "Waiting for card tap/insert.",
+                                    "value": "AWAITING_CARD"
+                                },
+                                {
+                                    "description": "Customer has presented card.",
+                                    "value": "CARD_PRESENTED"
+                                },
+                                {
+                                    "description": "Application needs to select an application as card has more than one application present.",
+                                    "value": "SELECT_APPLICATION"
+                                },
+                                {
+                                    "description": "Customer needs to enter PIN",
+                                    "value": "ENTER_PIN"
+                                },
+                                {
+                                    "description": "Wrong pin entered by customer",
+                                    "value": "WRONG_PIN"
+                                },
+                                {
+                                    "description": "Payment authorization initiated from terminal",
+                                    "value": "AUTHORIZING"
+                                },
+                                {
+                                    "description": "Authorization submitted to the backend",
+                                    "value": "SUBMITTED"
+                                },
+                                {
+                                    "description": "Authorization process is complete",
+                                    "value": "AUTHORIZED"
+                                },
+                                {
+                                    "description": "[ONLINE ONLY] Payment page has fully loaded.",
+                                    "value": "PAGE_LOADED"
+                                },
+                                {
+                                    "description": "[ONLINE ONLY] The page is now ready for card details",
+                                    "value": "SECURE_CHANNEL_INITIALISED"
+                                },
+                                {
+                                    "description": "[ONLINE ONLY] Google Pay SDK is available and has been successfully mounted.",
+                                    "value": "GOOGLE_PAY_MOUNTED"
+                                },
+                                {
+                                    "description": "[ONLINE ONLY] Apple Pay SDK is available and has been successfully mounted",
+                                    "value": "APPLE_PAY_MOUNTED"
+                                },
+                                {
+                                    "description": "[ONLINE ONLY] The customer has started entering information in the online page.",
+                                    "value": "CUSTOMER_INTERACTION_IN_FORM"
+                                },
+                                {
+                                    "description": "[ONLINE ONLY] Card payment is initiated",
+                                    "value": "CARD_PAYMENT_INITIATED"
+                                },
+                                {
+                                    "description": "[ONLINE ONLY] Customer has initiated an Apple Pay attempt.",
+                                    "value": "APPLE_PAY_ATTEMPT_INITIATED"
+                                },
+                                {
+                                    "description": "[ONLINE ONLY] The customer has initiated a Google Pay attempt",
+                                    "value": "GOOGLE_PAY_ATTEMPT_INITIATED"
+                                },
+                                {
+                                    "description": "[ONLINE ONLY] The Apple Pay payment process is initiated.",
+                                    "value": "APPLE_PAY_PAYMENT_INITIATED"
+                                },
+                                {
+                                    "description": "[ONLINE ONLY] The Google Pay payment is initiated.",
+                                    "value": "GOOGLE_PAY_PAYMENT_INITIATED"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "orderStatus",
+                            "type": "string",
+                            "description": "Provides the status of the order."
+                        },
+                        {
+                            "name": "metadata",
+                            "type": "object",
+                            "mandatory": false,
+                            "description": "Metadata passed with the order creation."
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"eventType\": \"order.terminal.event\",\n  \"metadata\": {\n    \"eventId\": \"81a214e74b107801ff\",\n    \"created\": 1695793998732,\n    \"retryAttempt\": 0,\n    \"webhookEventId\": \"81a214e7455ed01cff\"\n  },\n  \"data\": {\n    \"orderId\": \"81b5f2624b16e0080b\",\n    \"merchantId\": \"8248db4c5c8dd0130e\",\n    \"paymentId\": \"81b5f26215e9583a06\",\n    \"terminalTransactionStatus\": \"STARTED\",\n    \"orderStatus\": \"PAYMENT_INITIATED\"\n  }\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

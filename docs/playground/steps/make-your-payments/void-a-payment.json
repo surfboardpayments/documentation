@@ -1,0 +1,388 @@
+{
+    "scenarioId": "void-a-payment",
+    "scenarioName": "Void a Payment",
+    "steps": [
+        {
+            "id": "void-a-payment",
+            "name": "Void a Payment",
+            "description": "Void a payment",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "/payments/{{paymentId}}/void",
+            "guidePath": "/carbon/make-your-payments/void-a-payment/void-a-payment",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data.",
+                        "resParams": [
+                            {
+                                "name": "voidStatus",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Depicts the status of the void command.",
+                                "possibleValues": [
+                                    {
+                                        "value": "VOID_INITIATED",
+                                        "description": "Void is initiated."
+                                    },
+                                    {
+                                        "value": "CANNOT_VOID",
+                                        "description": "The payment cannot be voided either because the transaction is not completed or the void period has exceeded. Voids need to be initiated before 23:50 CET on the same date as the transaction."
+                                    },
+                                    {
+                                        "value": "VOIDED",
+                                        "description": "Void is completed."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        },
+        {
+            "id": "check-order-status",
+            "name": "Check Order Status",
+            "description": "Check the status of the order",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "orders/{{orderId}}/status",
+            "guidePath": "/carbon/make-your-payments/check-order-status",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "description": "Response data.",
+                        "resParams": [
+                            {
+                                "name": "orderStatus",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Describes the status of the order. The possible values are:",
+                                "possibleValues": [
+                                    {
+                                        "value": "PENDING",
+                                        "description": "An order has been created and is waiting for payment processing."
+                                    },
+                                    {
+                                        "value": "PAYMENT_COMPLETED",
+                                        "description": "The payment has been completed for the order."
+                                    },
+                                    {
+                                        "value": "PAYMENT_CANCELLED",
+                                        "description": "The payment attempt has been cancelled for the order."
+                                    },
+                                    {
+                                        "value": "PARTIAL_PAYMENT_COMPLETED",
+                                        "description": "A partial payment was completed for the order"
+                                    },
+                                    {
+                                        "value": "PAYMENT_PROCESSED",
+                                        "description": "The payment has been authorized."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "payments",
+                                "type": "array",
+                                "mandatory": true,
+                                "description": "Retrieves the status of all payments related to the order.",
+                                "resParams": [
+                                    {
+                                        "name": "paymentId",
+                                        "type": "String",
+                                        "description": "Unique identifier of the payment"
+                                    },
+                                    {
+                                        "name": "paymentStatus",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Describes the status of the payment. The possible values are:",
+                                        "possibleValues": [
+                                            {
+                                                "value": "PAYMENT_INITIATED",
+                                                "description": "A payment attempt has been initiated."
+                                            },
+                                            {
+                                                "value": "PAYMENT_PROCESSING",
+                                                "description": "The payment is being authorized."
+                                            },
+                                            {
+                                                "value": "PAYMENT_PROCESSED",
+                                                "description": "The payment has been authorized."
+                                            },
+                                            {
+                                                "value": "PAYMENT_COMPLETED",
+                                                "description": "The payment has been completed."
+                                            },
+                                            {
+                                                "value": "PAYMENT_FAILED",
+                                                "description": "The payment attempt has failed."
+                                            },
+                                            {
+                                                "value": "PAYMENT_CANCELLED",
+                                                "description": "The payment attempt has been cancelled."
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "failureReason",
+                                        "type": "string",
+                                        "mandatory": false,
+                                        "description": "Indicates the reason of the payment failure if it is available. You can refer to Concepts → Payments for a complete list of payment failure reasons."
+                                    },
+                                    {
+                                        "name": "paymentMethod",
+                                        "type": "String",
+                                        "description": "Denotes the payment method used."
+                                    },
+                                    {
+                                        "name": "amount",
+                                        "type": "number",
+                                        "description": "Amount involved with the payment attempt."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "paymentIds",
+                                "type": "array",
+                                "description": "An array of successful Payment Id(s) related to an order. Payment Ids are available once order reaches 'PAYMENT_COMPLETED' or 'PARTIAL_PAYMENT_COMPLETED' state."
+                            },
+                            {
+                                "name": "transactions",
+                                "type": "array",
+                                "description": "Retrieves all transaction details for the order. This information is only available when orderStatus is 'PAYMENT_COMPLETED' or 'PARTIAL_PAYMENT_COMPLETED'",
+                                "resParams": [
+                                    {
+                                        "name": "transactionId",
+                                        "type": "String",
+                                        "description": "Transaction ID of the transaction."
+                                    },
+                                    {
+                                        "name": "merchantId",
+                                        "type": "String",
+                                        "description": "Merchant ID of the merchant who performed the transaction."
+                                    },
+                                    {
+                                        "name": "storeId",
+                                        "type": "String",
+                                        "description": "Store ID of the store in which the transaction was performed"
+                                    },
+                                    {
+                                        "name": "terminalId",
+                                        "type": "String",
+                                        "description": "Terminal ID of the checkout or payment terminal from which the transaction was performed."
+                                    },
+                                    {
+                                        "name": "orderId",
+                                        "type": "String",
+                                        "description": "Order ID of the order for which the transaction was performed."
+                                    },
+                                    {
+                                        "name": "paymentId",
+                                        "type": "String",
+                                        "description": "Payment ID of the transaction."
+                                    },
+                                    {
+                                        "name": "referenceId",
+                                        "type": "String",
+                                        "description": "Reference ID of the transaction."
+                                    },
+                                    {
+                                        "name": "rrn",
+                                        "type": "String",
+                                        "description": "Displays the Retrieval Reference Number(RRN) of the transaction. RRN is a key to uniquely identify a card transaction based on the ISO 8583 standard."
+                                    },
+                                    {
+                                        "name": "amount",
+                                        "type": "String",
+                                        "description": "Amount involved in the transaction, either received or refunded by the merchant, in the minor unit of the currency. For example, 10 SEK is 1000 in amount."
+                                    },
+                                    {
+                                        "name": "currency",
+                                        "type": "String",
+                                        "description": "Three digit numeric code representing the currency of the transaction."
+                                    },
+                                    {
+                                        "name": "method",
+                                        "type": "String",
+                                        "description": "The method in which the transaction was carried out. Payment method supported currently is 'CARD’."
+                                    },
+                                    {
+                                        "name": "type",
+                                        "type": "String",
+                                        "description": "Type of the transaction. It can be either 'purchase' or 'return’."
+                                    },
+                                    {
+                                        "name": "orderSummary",
+                                        "type": "String",
+                                        "description": "Specifies a short summary of the order. Usually contains the initial line items included in the order."
+                                    },
+                                    {
+                                        "name": "timestamp",
+                                        "type": "String",
+                                        "description": "Timestamp of the transaction in ISO 8601 format represented as 'YYYY-MM-DDTHH:mm:ss.sssZ'."
+                                    },
+                                    {
+                                        "name": "voided",
+                                        "type": "boolean",
+                                        "description": "A boolean value that denotes if the transaction has been voided or not."
+                                    },
+                                    {
+                                        "name": "issuerCountry",
+                                        "type": "string",
+                                        "description": "Country of the card issuer."
+                                    },
+                                    {
+                                        "name": "interchangeDomain",
+                                        "type": "string",
+                                        "description": "Interchange domain of the transaction. It can be Domestic | Intraregional-EEA | Interregional-Non-EEA."
+                                    },
+                                    {
+                                        "name": "cardCategory",
+                                        "type": "string",
+                                        "description": "Denotes the card category, which can be Consumer | Commercial."
+                                    },
+                                    {
+                                        "name": "cardUsage",
+                                        "type": "string",
+                                        "description": "Denotes the card type, whether it is Debit, Credit or Prepaid."
+                                    },
+                                    {
+                                        "name": "fee",
+                                        "type": "String",
+                                        "description": "The fee collected for each transaction. Fee associated with your settlements are determined by the billing plan you have chosen. These costs may include transaction fees, processing charges, and any additional fees specified in your subscription plan."
+                                    },
+                                    {
+                                        "name": "settlementStatus",
+                                        "type": "String",
+                                        "description": "Denotes the status of the settlement.",
+                                        "possibleValues": [
+                                            {
+                                                "value": "PROCESSED",
+                                                "description": "Settlement processed. Waiting on amount to be credited to merchant's bank account."
+                                            },
+                                            {
+                                                "value": "SETTLED",
+                                                "description": "The transaction was settled."
+                                            },
+                                            {
+                                                "value": "NOT_SETTLED",
+                                                "description": "The transaction is not settled."
+                                            },
+                                            {
+                                                "value": "ERROR",
+                                                "description": "Error occurred during the settlement process."
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "payout",
+                                        "type": "String",
+                                        "description": "Payout is the final amount Surfboard credits to the merchant's bank account. This represents the merchant's actual earnings, which are then transferred to their bank account."
+                                    },
+                                    {
+                                        "name": "settlementRef",
+                                        "type": "String",
+                                        "description": "Reference Id for the payout which includes this transaction."
+                                    },
+                                    {
+                                        "name": "settlementDate",
+                                        "type": "String",
+                                        "description": "Date of the settlement for the transaction. Date in ISO string format."
+                                    },
+                                    {
+                                        "name": "truncatedPan",
+                                        "type": "String",
+                                        "description": "The last four digits of the PAN (Primary Account Number) from the card used for the transaction."
+                                    },
+                                    {
+                                        "name": "cardLabel",
+                                        "type": "String",
+                                        "description": "The designated label of the card brand for the transaction, often referred to as the AID (Application Identifier) Label."
+                                    },
+                                    {
+                                        "name": "posEntryMode",
+                                        "type": "String",
+                                        "description": "Indicates the mode of entry for the card during the transaction, which is based on EMV specifications. This determines whether the card was used in a contact or contactless manner."
+                                    },
+                                    {
+                                        "name": "issuerApplication",
+                                        "type": "String",
+                                        "description": "Specifies the payment application used in the transaction. Usually present when cards with both Debit and Credit facility are used."
+                                    },
+                                    {
+                                        "name": "terminalVerificationResult",
+                                        "type": "String",
+                                        "description": " Specifies the additional results if the transaction underwent EMV terminal verification."
+                                    },
+                                    {
+                                        "name": "aid",
+                                        "type": "String",
+                                        "description": "Specifies the Application Identifier (AID) associated with the card used for the transaction."
+                                    },
+                                    {
+                                        "name": "customerResponseCode",
+                                        "type": "String",
+                                        "description": "A two-character response code of the transaction. For all approved transactions, this code is '00'."
+                                    },
+                                    {
+                                        "name": "cvmMethod",
+                                        "type": "String",
+                                        "description": "Indicates the Card Holder Verification Method (CVM) used in the transaction."
+                                    },
+                                    {
+                                        "name": "cvmMethodDescription",
+                                        "type": "String",
+                                        "description": "Specifies the cvmMethod applied for the provided CARD transaction."
+                                    },
+                                    {
+                                        "name": "authMode",
+                                        "type": "String",
+                                        "description": "Indicates the authentication mode of the payment. This can be either 'ISSUER' or 'CARD'."
+                                    },
+                                    {
+                                        "name": "cardBrand",
+                                        "type": "String",
+                                        "description": "Denotes the brand of card used for the transaction. This is an optional normalized field available only for CARD payments. Eg., VISA, MASTERCARD, AMEX."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

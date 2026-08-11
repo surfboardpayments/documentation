@@ -1,0 +1,2 @@
+1. Merchant-level settings are configured by navigating to **Merchants** → select the desired merchant→ **Terminals**. Then, in the top-right corner, select **Set Merchant Terminal Config**.
+2. Fill in the required details for merchant-level configurations, click **Save Changes** to apply them.

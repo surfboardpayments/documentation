@@ -1,0 +1,45 @@
+{
+    "scenarioId": "deactivate-a-store",
+    "scenarioName": "Deactivate a Store",
+    "steps": [
+        {
+            "id": "deactivate-a-store",
+            "name": "Deactivate a Store",
+            "description": "Deactivates a store under the partner for a specific merchant.",
+            "order": 1,
+            "method": "DELETE",
+            "endpoint": "partners/{{partnerId}}/merchants/{{merchantId}}/stores/{{storeId}}",
+            "readOnly": true,
+            "response": {
+                "status": "SUCCESS",
+                "message": "Store deactivation initiated successfully"
+              },
+            "guidePath": "/carbon/store-capabilities/deactivate-a-store/home",
+            "payload": {},
+            "specifications": {
+               "reqParams": [
+                {
+                    "name": "deactivationDate",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Date of deactivation of the store in yyyy-mm-dd format."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Message describing the status of store deactivation."
+                }
+            ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,41 @@
+{
+    "scenarioId": "print-escpos-receipt",
+    "scenarioName": "Print ESCPOS Receipt",
+    "steps": [
+        {
+            "id": "print-escpos-receipt",
+            "name": "Print ESCPOS Receipt",
+            "description": "Print receipts using your own template with ESC/POS commands.",
+            "order": 1,
+            "method": "PUT",
+            "endpoint": "receipts/{{terminalId}}/escpos",
+            "guidePath": "/carbon/receipts/print-escpos-receipt/home",
+            "payload": {
+                "escposCommands": "G0AbYQEbRQFTdXBlciBNYXJ0CjEyMyBNYWluIFN0ChtFABthAERhdGU6IDIwMjQvMTAvMDgKVGltZTogMTI6MDAgUE0KG0UBLS0tLS0tLS0tLQobRQAbYQBJdGVtIEE6IFdhdGVyClByaWNlOiAkMS4wMApJdGVtIEI6IEJyZWFkClByaWNlOiAkMi4wMAobRQEtLS0tLS0tLS0tClRvdGFsOiAkMy4wMAobRQAbYQFUaGFuayB5b3UhCgoKHVYA"
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "escposCommands",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A stream of ECS/POS commands in base64 format."
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "String",
+                        "description": "Status of the request."
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

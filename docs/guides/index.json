@@ -1,0 +1,124 @@
+{
+  "title": "Guides",
+  "description": "Implementation guides and tutorials for Surfboard Payments",
+  "items": [
+    {
+      "title": "In-Store Payments",
+      "description": "Guides for implementing in-store payment solutions",
+      "path": "/guides/in-store-payments",
+      "type": "section",
+      "items": [
+        {
+          "title": "Overview",
+          "description": "Overview of in-store payment solutions",
+          "path": "/guides/in-store-payments/overview.md",
+          "type": "guide"
+        },
+        {
+          "title": "Accept Payments",
+          "description": "Guides for accepting different types of payments",
+          "path": "/guides/in-store-payments/accept-payments",
+          "type": "section"
+        },
+        {
+          "title": "Administration",
+          "description": "Guides for administrative tasks and management",
+          "path": "/guides/in-store-payments/administration",
+          "type": "section"
+        },
+        {
+          "title": "How-to Guides",
+          "description": "Step-by-step guides for common tasks",
+          "path": "/guides/in-store-payments/how-to-guides",
+          "type": "section"
+        },
+        {
+          "title": "Integrations",
+          "description": "Guides for integrating with various systems and platforms",
+          "path": "/guides/in-store-payments/integrations",
+          "type": "section"
+        },
+        {
+          "title": "Onboarding",
+          "description": "Guides for onboarding merchants and partners",
+          "path": "/guides/in-store-payments/onboarding",
+          "type": "section"
+        },
+        {
+          "title": "Post-Payments",
+          "description": "Guides for post-payment processes and operations",
+          "path": "/guides/in-store-payments/post-payments",
+          "type": "section"
+        },
+        {
+          "title": "Terminals",
+          "description": "Guides for setting up and managing payment terminals",
+          "path": "/guides/in-store-payments/terminals",
+          "type": "section"
+        },
+        {
+          "title": "SDKs",
+          "description": "Guides for integrating Surfboard SoftPOS SDKs on Android and iOS",
+          "path": "/guides/in-store-payments/SDKs",
+          "type": "section"
+        }
+      ]
+    },
+    {
+      "title": "Online Payments",
+      "description": "Guides for implementing online payment solutions",
+      "path": "/guides/online-payments",
+      "type": "section",
+      "items": [
+        {
+          "title": "Overview",
+          "description": "Overview of online payment solutions",
+          "path": "/guides/online-payments/overview.md",
+          "type": "guide"
+        },
+        {
+          "title": "Accept Payments",
+          "description": "Guides for accepting online payments",
+          "path": "/guides/online-payments/online-payment-terminals",
+          "type": "section"
+        },
+        {
+          "title": "Administration",
+          "description": "Guides for administrative tasks in online payments",
+          "path": "/guides/online-payments/administration",
+          "type": "section"
+        },
+        {
+          "title": "How-to Guides",
+          "description": "Step-by-step guides for online payment tasks",
+          "path": "/guides/online-payments/how-to-guides",
+          "type": "section"
+        },
+        {
+          "title": "Integrations",
+          "description": "Guides for integrating online payment systems",
+          "path": "/guides/online-payments/integrations",
+          "type": "section"
+        },
+        {
+          "title": "Onboarding",
+          "description": "Guides for onboarding to online payments",
+          "path": "/guides/online-payments/onboarding",
+          "type": "section"
+        },
+        {
+          "title": "Post-Payments",
+          "description": "Guides for post-payment processes in online payments",
+          "path": "/guides/online-payments/post-payments",
+          "type": "section"
+        },
+        {
+          "title": "Terminals",
+          "description": "Guides for online payment terminals",
+          "path": "/guides/online-payments/terminals",
+          "type": "section"
+        }
+      ]
+    }
+  ]
+}

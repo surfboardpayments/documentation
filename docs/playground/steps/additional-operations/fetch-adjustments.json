@@ -1,0 +1,66 @@
+{
+    "scenarioId": "fetch-adjustments",
+    "scenarioName": "Fetch Adjustments",
+    "steps": [
+        {
+            "id": "fetch-adjustments",
+            "name": "Fetch Adjustments",
+            "description": "Fetch Adjustments",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "partners/{{partnerId}}/merchants/{{merchantId}}/adjustments",
+            "guidePath": "/carbon/additional-operations/fetch-adjustments",
+            "payload": {},
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "startDate",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Start date of the range in yyyy-mm-dd format."
+                    },
+                    {
+                        "name": "endDate",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "End date of the range in yyyy-mm-dd format."
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "array",
+                        "description": "Response data",
+                        "resParams": [
+                            {
+                                "name": "adjustmentId",
+                                "type": "String",
+                                "description": "Adjustment ID of the adjustment."
+                            },
+                            {
+                                "name": "adjustmentType",
+                                "type": "String",
+                                "description": "Type of the adjustment."
+                            },
+                            {
+                                "name": "amount",
+                                "type": "String",
+                                "description": "Amount of the adjustment."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

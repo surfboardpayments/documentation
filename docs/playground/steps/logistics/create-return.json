@@ -1,0 +1,415 @@
+{
+    "scenarioId": "create-return",
+    "scenarioName": "Create Return",
+    "steps": [
+        {
+            "id": "create-return",
+            "name": "Create Return",
+            "description": "Returns devices (terminals and other accessories) to Surfboard once its malfunctioning or damaged",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "partners/{{partnerId}}/logistics/returns",
+            "readOnly": true,
+            "response": {
+                "status": "SUCCESS",
+                "data": {
+                    "returnId": 80
+                },
+                "message": "Return request created successfully"
+            },
+            "guidePath": "/carbon/logistics/device-returning/create-return/home",
+            "payload": {
+                "merchantInfo": {
+                    "name": "Demo Store",
+                    "email": "demo@example.com",
+                    "phoneNumber": {
+                        "code": "46",
+                        "number": "123456789"
+                    },
+                    "addressLine1": "Demo Street 123",
+                    "addressLine2": "Building A",
+                    "addressLine3": null,
+                    "city": "Stockholm",
+                    "countryCode": "SE",
+                    "postalNumber": "12345"
+                },
+                "returnOrderLines": [
+                    {
+                        "serial": "TERM001234567",
+                        "terminalId": "816a0ff6bc0fb00404",
+                        "reasonForReturn": "NOT_USING_SERVICE",
+                        "stopBilling": true,
+                        "comment": "Device not working properly"
+                    }
+                ],
+                "deliveryInstruction": "Please call before delivery"
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "merchantInfo",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Detailed merchant information for the return request.",
+                        "reqParams": [
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Name of the merchant."
+                            },
+                            {
+                                "name": "email",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Email address of the merchant."
+                            },
+                            {
+                                "name": "phoneNumber",
+                                "type": "object",
+                                "mandatory": true,
+                                "description": "Contact number of the merchant in code and number format.",
+                                "reqParams": [
+                                    {
+                                        "name": "code",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "International dialing code identifying the country or region."
+                                    },
+                                    {
+                                        "name": "number",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Phone number."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "addressLine1",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "First line of the merchant's address."
+                            },
+                            {
+                                "name": "addressLine2",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Second line of the merchant's address."
+                            },
+                            {
+                                "name": "addressLine3",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Third line of the merchant's address."
+                            },
+                            {
+                                "name": "countryCode",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Two-letter ISO country code in uppercase."
+                            },
+                            {
+                                "name": "postalNumber",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Postal code of the merchant's address."
+                            },
+                            {
+                                "name": "city",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "City of the merchant's address."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "returnOrderLines",
+                        "type": "array",
+                        "mandatory": true,
+                        "description": "Array of return order line items.",
+                        "reqParams": [
+                            {
+                                "name": "serial",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Serial number of the terminal to be returned."
+                            },
+                            {
+                                "name": "merchantId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Unique identifier of the merchant."
+                            },
+                            {
+                                "name": "terminalId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Unique identifier of the terminal."
+                            },
+                            {
+                                "name": "reasonForReturn",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Reason for the return.",
+                                "possibleValues": [
+                                    {
+                                        "value": "WARRANTY",
+                                        "description": "The warranty covers issues potentially related to factory defects."
+                                    },
+                                    {
+                                        "value": "NOT_USING_SERVICE",
+                                        "description": "Not using service applies when the merchant voluntarily leaves or their partner ends the partnership."
+                                    },
+                                    {
+                                        "value": "NON_WARRANTY_BROKEN",
+                                        "description": "Non-warranty broken applies when the terminal is damaged due to misuse or accident."
+                                    },
+                                    {
+                                        "value": "TECHNICAL_ISSUES",
+                                        "description": "Technical issues apply when the terminal's software malfunctions."
+                                    },
+                                    {
+                                        "value": "COMPATIBILITY_ISSUES",
+                                        "description": "Compatibility issues occur when the terminal doesn't pair with the merchant's POS system."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "stopBilling",
+                                "type": "boolean",
+                                "mandatory": false,
+                                "description": "Whether to stop billing for this terminal."
+                            },
+                            {
+                                "name": "comment",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Additional comments regarding the return."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "deliveryInstruction",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Delivery instructions for the carrier."
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data",
+                        "resParams": [
+                            {
+                                "name": "returnId",
+                                "type": "number",
+                                "mandatory": true,
+                                "description": "ID of the return request."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        },
+        {
+            "id": "get-return",
+            "name": "Get Return",
+            "description": "Retrieves the list of returns of the devices (terminals and other accessories) under the partner.",
+            "order": 2,
+            "method": "GET",
+            "endpoint": "partners/{{partnerId}}/logistics/returns",
+            "guidePath": "/carbon/logistics/device-returning/get-return/home",
+            "payload": {},
+            "specifications": {
+                "queryParams": [
+                    {
+                        "name": "filter",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Filter returns by status.",
+                        "possibleValues": [
+                            {
+                                "value": "APPROVED",
+                                "description": "Returns that have been approved for processing."
+                            },
+                            {
+                                "value": "CREATED",
+                                "description": "Returns that have been created but not yet processed."
+                            }
+                        ]
+                    }
+                ],
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "array",
+                        "mandatory": true,
+                        "description": "Array of return request objects.",
+                        "resParams": [
+                            {
+                                "name": "returnId",
+                                "type": "number",
+                                "description": "Unique identifier for the return request."
+                            },
+                            {
+                                "name": "partnerId",
+                                "type": "string",
+                                "description": "Unique identifier of the partner."
+                            },
+                            {
+                                "name": "merchantName",
+                                "type": "string",
+                                "description": "Name of the merchant."
+                            },
+                            {
+                                "name": "merchantEmail",
+                                "type": "string",
+                                "description": "Email address of the merchant."
+                            },
+                            {
+                                "name": "merchantPhone",
+                                "type": "string",
+                                "description": "Phone number of the merchant."
+                            },
+                            {
+                                "name": "merchantAddressLine1",
+                                "type": "string",
+                                "description": "First line of the merchant's address."
+                            },
+                            {
+                                "name": "merchantAddressLine2",
+                                "type": "string",
+                                "description": "Second line of the merchant's address."
+                            },
+                            {
+                                "name": "merchantAddressLine3",
+                                "type": "string",
+                                "description": "Third line of the merchant's address."
+                            },
+                            {
+                                "name": "merchantCity",
+                                "type": "string",
+                                "description": "City of the merchant's address."
+                            },
+                            {
+                                "name": "merchantPostalNumber",
+                                "type": "string",
+                                "description": "Postal code of the merchant's address."
+                            },
+                            {
+                                "name": "merchantCountryCode",
+                                "type": "string",
+                                "description": "Country code of the merchant's address."
+                            },
+                            {
+                                "name": "deliveryInstruction",
+                                "type": "string",
+                                "description": "Delivery instructions for the return."
+                            },
+                            {
+                                "name": "status",
+                                "type": "string",
+                                "description": "Current status of the return request.",
+                                "possibleValues": [
+                                    {
+                                        "value": "APPROVED",
+                                        "description": "The return request has been approved for processing."
+                                    },
+                                    {
+                                        "value": "CREATED",
+                                        "description": "The return request has been created but not yet processed."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "returnOrderLines",
+                                "type": "array",
+                                "description": "Array of return order line items.",
+                                "resParams": [
+                                    {
+                                        "name": "returnOrderlineId",
+                                        "type": "number",
+                                        "description": "Unique identifier for the return order line."
+                                    },
+                                    {
+                                        "name": "returnId",
+                                        "type": "number",
+                                        "description": "ID of the parent return request."
+                                    },
+                                    {
+                                        "name": "serial",
+                                        "type": "string",
+                                        "description": "Serial number of the terminal."
+                                    },
+                                    {
+                                        "name": "terminalId",
+                                        "type": "string",
+                                        "description": "Unique identifier of the terminal."
+                                    },
+                                    {
+                                        "name": "merchantId",
+                                        "type": "string",
+                                        "description": "Unique identifier of the merchant."
+                                    },
+                                    {
+                                        "name": "deviceModel",
+                                        "type": "string",
+                                        "description": "Model of the device being returned."
+                                    },
+                                    {
+                                        "name": "reasonForReturn",
+                                        "type": "string",
+                                        "description": "Reason for the return."
+                                    },
+                                    {
+                                        "name": "stopBilling",
+                                        "type": "boolean",
+                                        "description": "Whether billing has been stopped for this terminal."
+                                    },
+                                    {
+                                        "name": "comment",
+                                        "type": "string",
+                                        "description": "Additional comments regarding the return."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    },
+                    {
+                        "name": "totalCount",
+                        "type": "number",
+                        "mandatory": true,
+                        "description": "Total count of return requests matching the criteria."
+                    }
+                ]
+            }
+        }
+    ]
+}

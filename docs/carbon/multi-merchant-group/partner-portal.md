@@ -1,0 +1,2 @@
+1. Log in to your **Partner Portal** and navigate to the **Applications** section.
+2. Click **Create Application**, enable the **MultiMerchant** toggle, select the **MultiMerchantId or name** from the dropdown, fill in the required fields, and click **Create Application**. A WebKYB link will then be generated for you to share with the merchant.

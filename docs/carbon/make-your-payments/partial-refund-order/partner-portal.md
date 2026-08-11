@@ -1,0 +1,2 @@
+1. Log in to the **Partner Portal** → **Merchants** → select the desired merchant, then navigate to **Transactions** → choose the transaction to refund.
+2. Click **Create Refund** → Select **Partial Refund** →In the Partial Refund You can choose from the options either **Select Line Items** or **Enter Custom Amount** → **Process Refund with refund reason** in the pop-up panel on the right.

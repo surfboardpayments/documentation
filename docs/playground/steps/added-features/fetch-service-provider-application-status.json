@@ -1,0 +1,59 @@
+{
+    "scenarioId": "fetch-service-provider-application-status",
+    "scenarioName": "Fetch Service Provider Application Status",
+    "steps": [
+        {
+            "id": "fetch-service-provider-application-status",
+            "name": "Fetch Service Provider Application Status",
+            "description": "Fetch Service Provider Application Status",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "partners/{{partnerId}}/service-providers/applications/{{applicationId}}",
+            "guidePath": "/carbon/added-features/fetch-service-provider-application-status",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data containing application status information.",
+                        "resParams": [
+                            {
+                                "name": "onboardingStatus",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Current onboarding status, null if not yet started."
+                            },
+                            {
+                                "name": "applicationStatus",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Current status of the application."
+                            },
+                            {
+                                "name": "serviceProviderId",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Service provider ID once approved, null if still pending."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

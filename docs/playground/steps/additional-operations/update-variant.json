@@ -1,0 +1,113 @@
+{
+    "scenarioId": "update-variant",
+    "scenarioName": "Update Variant",
+    "steps": [
+        {
+            "id": "update-variant",
+            "name": "Update Variant",
+            "description": "Update Variant",
+            "order": 1,
+            "method": "PATCH",
+            "endpoint": "catalog/{{catalogId}}/products/{{productId}}/variants/{{variantId}}",
+            "guidePath": "/carbon/additional-operations/update-variant",
+            "payload": {
+        "storeId": "8136a645a2c2d1bb0f",
+        "name": "SurfPad Black Logo - Large",
+        "costPrice": 0,
+        "sellingPrice": 18,
+        "description": "SurfPad Payment Terminal in Black - Large Size",
+        "category": "electronics",
+        "unit": "nos",
+        "productImages": [
+            "https://res.cloudinary.com/martinsurf/image/upload/v1619101937/surfboardpayments/surfboard-icon.svg"
+        ],
+        "hsnCode": "723453",
+        "barCode": "7812123454323"
+    },
+    "specifications": {
+        "reqParams": [
+            {
+                "name": "storeId",
+                "type": "string",
+                "mandatory": true,
+                "description": "Unique identifier of the store where the variant exists."
+            },
+            {
+                "name": "name",
+                "type": "string",
+                "mandatory": false,
+                "description": "Name of the variant."
+            },
+            {
+                "name": "costPrice",
+                "type": "number",
+                "mandatory": false,
+                "description": "Cost price of the variant."
+            },
+            {
+                "name": "sellingPrice",
+                "type": "number",
+                "mandatory": false,
+                "description": "Selling price of the variant."
+            },
+            {
+                "name": "description",
+                "type": "string",
+                "mandatory": false,
+                "description": "Description of the variant."
+            },
+            {
+                "name": "category",
+                "type": "string",
+                "mandatory": false,
+                "description": "This refers to a grouping of similar variants that share a common characteristics."
+            },
+            {
+                "name": "unit",
+                "type": "string",
+                "mandatory": false,
+                "description": "This refers to the metric unit of the variant. The possible values are 'm' , 'mm' , 'cm' , 'km' , 'in' , 'ft' , 'mi' , 'kg' , 'g' , 'mg' , 'lb' , 'oz' , 'l' , 'ml' , 'cu. m' , 'gal' , 'pt' , 'fl oz' , 'W' , 'kW' , 'kWh' , 'sq m' , 'sq km' , 'sq ft' , 'h' , 'min' , 's' , 'days' , 'wk' , 'mn' , 'yr' , 'nos'. "
+            },
+            {
+                "name": "variantImages",
+                "type": "array",
+                "mandatory": false,
+                "description": "An array of URLs showcasing the variant images."
+            },
+            {
+                "name": "hsnCode",
+                "type": "string",
+                "mandatory": false,
+                "description": "A 6-digit uniform code that identifies the variant."
+            },
+            {
+                "name": "barCode",
+                "type": "string",
+                "mandatory": false,
+                "description": "Encoded white and black lines on the variants."
+            },
+            {
+                "name": "variantProperties",
+                "type": "object",
+                "mandatory": false,
+                "description": "Denotes the additional properties that describe the variant details which includes type, size, origin, weight, manufacturer, etc."
+            }
+        ],
+        "resParams": [
+            {
+                "name": "status",
+                "type": "string",
+                "mandatory": true,
+                "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+            },
+            {
+                "name": "message",
+                "type": "string",
+                "mandatory": true,
+                "description": "A message that describes the status of the request."
+            }
+        ]
+            }
+        }
+    ]
+}

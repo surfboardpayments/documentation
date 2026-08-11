@@ -1,0 +1,24 @@
+{
+  "title": "Webhooks",
+  "description": "Webhook reference for Surfboard Payments platform",
+  "items": [
+    {
+      "title": "Logistics Webhooks",
+      "description": "Webhooks for logistics and shipping events",
+      "path": "/webhooks/logistics.json",
+      "type": "webhook"
+    },
+    {
+      "title": "Merchants Webhooks",
+      "description": "Webhooks for merchant account events",
+      "path": "/webhooks/merchants.json",
+      "type": "webhook"
+    },
+    {
+      "title": "Orders Webhooks",
+      "description": "Webhooks for order management events",
+      "path": "/webhooks/orders.json",
+      "type": "webhook"
+    }
+  ]
+}

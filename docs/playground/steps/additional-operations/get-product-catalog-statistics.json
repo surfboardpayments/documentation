@@ -1,0 +1,233 @@
+{
+    "scenarioId": "get-product-catalog-statistics",
+    "scenarioName": "Get Product Catalog Statistics",
+    "steps": [
+        {
+            "id": "get-product-catalog-statistics",
+            "name": "Get Product Catalog Statistics",
+            "description": "Get Product Catalog Statistics",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "catalog/{{catalogId}}/products/statistics",
+            "guidePath": "/carbon/additional-operations/get-product-catalog-statistics",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data containing catalog statistics.",
+                        "resParams": [
+                            {
+                                "name": "productcatalogId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Unique identifier of the product catalog."
+                            },
+                            {
+                                "name": "productcatalogName",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Name of the product catalog."
+                            },
+                            {
+                                "name": "query",
+                                "type": "object",
+                                "mandatory": true,
+                                "description": "The date range used for filtering statistics.",
+                                "resParams": [
+                                    {
+                                        "name": "startDate",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Start date of the statistics period in YYYY-MM-DD format."
+                                    },
+                                    {
+                                        "name": "endDate",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "End date of the statistics period in YYYY-MM-DD format."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "summary",
+                                "type": "object",
+                                "mandatory": true,
+                                "description": "Summary statistics for the entire catalog.",
+                                "resParams": [
+                                    {
+                                        "name": "totalProducts",
+                                        "type": "number",
+                                        "mandatory": true,
+                                        "description": "Total number of products in the catalog."
+                                    },
+                                    {
+                                        "name": "totalVariants",
+                                        "type": "number",
+                                        "mandatory": true,
+                                        "description": "Total number of variants across all products."
+                                    },
+                                    {
+                                        "name": "byCurrency",
+                                        "type": "array",
+                                        "mandatory": true,
+                                        "description": "Summary statistics broken down by currency.",
+                                        "resParams": [
+                                            {
+                                                "name": "currency",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "Currency code."
+                                            },
+                                            {
+                                                "name": "totalUnitsSold",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Total number of units sold."
+                                            },
+                                            {
+                                                "name": "totalUnitsReturned",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Total number of units returned."
+                                            },
+                                            {
+                                                "name": "totalRevenue",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Total revenue generated."
+                                            },
+                                            {
+                                                "name": "totalVat",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Total VAT collected."
+                                            },
+                                            {
+                                                "name": "totalCampaignDiscount",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Total campaign discount applied."
+                                            },
+                                            {
+                                                "name": "orderCount",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Total number of orders."
+                                            },
+                                            {
+                                                "name": "averageOrderValue",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Average order value."
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "vatBreakdown",
+                                "type": "array",
+                                "mandatory": true,
+                                "description": "VAT breakdown by percentage for the entire catalog.",
+                                "resParams": [
+                                    {
+                                        "name": "vatPercentage",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "VAT percentage applied."
+                                    },
+                                    {
+                                        "name": "vatAmount",
+                                        "type": "number",
+                                        "mandatory": true,
+                                        "description": "Total VAT amount collected at this percentage."
+                                    },
+                                    {
+                                        "name": "taxableAmount",
+                                        "type": "number",
+                                        "mandatory": true,
+                                        "description": "Total taxable amount at this percentage."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "topSellingProducts",
+                                "type": "array",
+                                "mandatory": true,
+                                "description": "List of top-selling products in the catalog.",
+                                "resParams": [
+                                    {
+                                        "name": "productId",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Unique identifier of the product."
+                                    },
+                                    {
+                                        "name": "productName",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Name of the product."
+                                    },
+                                    {
+                                        "name": "totalUnitsSold",
+                                        "type": "number",
+                                        "mandatory": true,
+                                        "description": "Total number of units sold for this product."
+                                    },
+                                    {
+                                        "name": "totalRevenue",
+                                        "type": "number",
+                                        "mandatory": true,
+                                        "description": "Total revenue generated by this product."
+                                    },
+                                    {
+                                        "name": "currencyBreakdown",
+                                        "type": "array",
+                                        "mandatory": true,
+                                        "description": "Sales breakdown by currency for this product.",
+                                        "resParams": [
+                                            {
+                                                "name": "currency",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "Currency code."
+                                            },
+                                            {
+                                                "name": "totalUnitsSold",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Total units sold in this currency."
+                                            },
+                                            {
+                                                "name": "totalRevenue",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Total revenue in this currency."
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

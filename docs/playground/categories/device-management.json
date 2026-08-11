@@ -1,0 +1,37 @@
+{
+    "id": "device-management",
+    "name": "Device Management",
+    "description": "Managing and configuring devices and terminals",
+    "scenarios": [
+        {
+            "id": "instore-devices",
+            "name": "Register Device",
+            "description": "Managing in-store terminals and devices",
+            "order": 1
+        },
+        {
+            "id": "online-devices",
+            "name": "Register Online Terminal",
+            "description": "Managing online terminals and configurations",
+            "order": 2
+        },
+        {
+            "id": "set-merchant-terminal-config",
+            "name": "Set Merchant Terminal Config",
+            "description": "Configuring the terminals",
+            "order": 3
+        },
+        {
+            "id": "set-store-terminal-config",
+            "name": "Set Store Terminal Config",
+            "description": "Configuring the terminals",
+            "order": 4
+        },
+        {
+            "id": "set-terminal-config",
+            "name": "Set Terminal Config",
+            "description": "Configuring the terminals",
+            "order": 5
+        }
+    ]
+}

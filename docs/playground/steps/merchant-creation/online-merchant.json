@@ -1,0 +1,944 @@
+{
+    "scenarioId": "online-merchant",
+    "scenarioName": "Create Merchant",
+    "steps": [
+        {
+            "id": "online-merchant",
+            "name": "Create Merchant",
+            "description": "Create a merchant for online",
+            "order": 1,
+            "method": "POST",
+            "hasMerchantId": false,
+            "endpoint": "partners/{{partnerId}}/merchants",
+            "guidePath": "/carbon/merchant-creation/create-merchant-online/home",
+            "payload": {
+                "country": "SE",
+                "organisation": {
+                    "corporateId": "1234567812",
+                    "legalName": "Legal Name",
+                    "mccCode": "5192",
+                    "address": {
+                        "careOf": "John Doe",
+                        "addressLine1": "Main Street 123",
+                        "addressLine2": "Building C",
+                        "city": "Stockholm",
+                        "countryCode": "SE",
+                        "postalCode": "123 45"
+                    },
+                    "phone": {
+                        "code": "46",
+                        "number": "123456789"
+                    },
+                    "email": "contact@test.com"
+                },
+                "controlFields": {
+                    "store": {
+                        "name": "Test Store",
+                        "email": "test@test.com",
+                        "phoneNumber": {
+                            "code": "46",
+                            "number": "123456789"
+                        },
+                        "address": {
+                            "careOf": "John Doe",
+                            "addressLine1": "Main Street 123",
+                            "addressLine2": "Building C",
+                            "city": "Stockholm",
+                            "countryCode": "SE",
+                            "postalCode": "123 45"
+                        },
+                        "onlineInfo": {
+                            "merchantWebshopURL": "https://merchant-shop.com",
+                            "paymentPageHostURL": "https://payments.merchant-shop.com",
+                            "termsAndConditionsURL": "https://merchant-shop.com/terms",
+                            "privacyPolicyURL": "https://merchant-shop.com/privacy",
+                            "googlePayMerchantId": "WEFGTY324"
+                        }
+                    }
+                }
+            },
+
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "country",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Two-letter ISO country code, in uppercase e.g 'SE', 'DK', 'NO'."
+                    },
+                    {
+                        "name": "organisation",
+                        "type": "object",
+                        "mandatory": false,
+                        "description": "Details of the organisation.",
+                        "reqParams": [
+                            {
+                                "name": "corporateId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Provide the corporate ID of the respective merchant."
+                            },
+                            {
+                                "name": "legalName",
+                                "type": "string",
+                                "mandatory": false,
+                                "conditional": true,
+                                "description": "The legal name of the organization. Mandatory for a PF partner."
+                            },
+                            {
+                                "name": "mccCode",
+                                "type": "string",
+                                "mandatory": false,
+                                "conditional": true,
+                                "description": "Merchant Category Code (MCC) of the organization. Mandatory for a PF partner."
+                            },
+                            {
+                                "name": "address",
+                                "type": "object",
+                                "mandatory": false,
+                                "conditional": true,
+                                "description": "The address of the organization. Mandatory for a PF partner.",
+                                "reqParams": [
+                                    {
+                                        "name": "careOf",
+                                        "type": "string",
+                                        "mandatory": false,
+                                        "description": "Name of the addressee that is accepting the correspondence for the intended recipient."
+                                    },
+                                    {
+                                        "name": "addressLine1",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Address of the organisation."
+                                    },
+                                    {
+                                        "name": "addressLine2",
+                                        "type": "string",
+                                        "mandatory": false,
+                                        "description": "Address of the organisation."
+                                    },
+                                    {
+                                        "name": "addressLine3",
+                                        "type": "string",
+                                        "mandatory": false,
+                                        "description": "Address of the organisation."
+                                    },
+                                    {
+                                        "name": "city",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "City where the organisation is located."
+                                    },
+                                    {
+                                        "name": "countryCode",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Two-letter ISO country code in uppercase, representing the country where the organization is located."
+                                    },
+                                    {
+                                        "name": "postalCode",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Postal code of the organisation."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "phoneNumber",
+                                "type": "object",
+                                "mandatory": false,
+                                "description": "Contact number of the organisation in code and number format.",
+                                "reqParams": [
+                                    {
+                                        "name": "code",
+                                        "type": "number",
+                                        "mandatory": true,
+                                        "description": "International dialing code identifying the country or region."
+                                    },
+                                    {
+                                        "name": "number",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Phone number."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "email",
+                                "type": "string",
+                                "mandatory": false,
+                                "conditional": true,
+                                "description": "Email address of the organization. Mandatory for a PF partner."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "multiMerchantId",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "The multi merchant ID in case this merchant should belong to a multiMerchant setup."
+                    },
+                    {
+                        "name": "controlFields",
+                        "type": "object",
+                        "mandatory": false,
+                        "description": "These fields allow you to control the behavior of the API by adding additional actions or controlling the default execution path of the API call.",
+                        "reqParams": [
+                            {
+                                "name": "displayProducts",
+                                "type": "array",
+                                "mandatory": false,
+                                "description": "Allows the customization of product display for onboarding merchants. Specify a set of Product IDs (e.g. terminals, accessories) to be shown.",
+                                "reqParams": [
+                                    {
+                                        "name": "productId",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Represents the product ID of a product selected for delivery to the merchant."
+                                    },
+                                    {
+                                        "name": "pricingPlans",
+                                        "type": "array",
+                                        "mandatory": false,
+                                        "description": "A list of strings specifying the billing plan for a merchant. This allows you to set up a plan based on the monthly price for a terminal and the duration in months. The specific plan details are provided by Surfboard."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "acquirerConfig",
+                                "type": "object",
+                                "conditional": true,
+                                "mandatory": false,
+                                "description": "Configuration for acquirer settings. This is mandatory for PF partners and Direct merchants.",
+                                "reqParams": [
+                                    {
+                                        "name": "acquirer",
+                                        "type": "string",
+                                        "mandatory": false,
+                                        "description": "Name of the acquirer (e.g., 'nets', 'swedbank')."
+                                    },
+                                    {
+                                        "name": "acquirerMID",
+                                        "type": "string",
+                                        "mandatory": false,
+                                        "description": "Acquirer Merchant ID for transaction processing."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "showProductCatalogue",
+                                "type": "boolean",
+                                "mandatory": false,
+                                "description": "Toggles the visibility of the product catalogue during the Web KYB process. Defaults to false if not specified."
+                            },
+                            {
+                                "name": "merchantConfig",
+                                "type": "object",
+                                "mandatory": false,
+                                "description": "Configuration settings for the merchant.",
+                                "reqParams": [
+                                    {
+                                        "name": "settlementFrequency",
+                                        "type": "string",
+                                        "mandatory": false,
+                                        "description": "Settlement frequency for the merchant payments.",
+                                        "possibleValues": [
+                                            {
+                                                "value": "DAILY",
+                                                "description": "Daily settlement"
+                                            },
+                                            {
+                                                "value": "WEEKLY",
+                                                "description": "Weekly settlement"
+                                            },
+                                            {
+                                                "value": "MONTHLY",
+                                                "description": "Monthly settlement"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "serviceProvider",
+                                        "type": "array",
+                                        "mandatory": false,
+                                        "description": "Array of service provider configurations for the merchant.",
+                                        "reqParams": [
+                                            {
+                                                "name": "serviceProviderId",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "Unique identifier of the service provider."
+                                            },
+                                            {
+                                                "name": "deductApplicableTransactionFee",
+                                                "type": "boolean",
+                                                "mandatory": false,
+                                                "description": "Whether to deduct applicable transaction fees."
+                                            },
+                                            {
+                                                "name": "amount",
+                                                "type": "object",
+                                                "mandatory": false,
+                                                "description": "Fee structure for the service provider.",
+                                                "reqParams": [
+                                                    {
+                                                        "name": "percentage",
+                                                        "type": "string",
+                                                        "mandatory": false,
+                                                        "description": "Percentage-based fee."
+                                                    },
+                                                    {
+                                                        "name": "fixed",
+                                                        "type": "number",
+                                                        "mandatory": false,
+                                                        "description": "Fixed fee amount."
+                                                    },
+                                                    {
+                                                        "name": "adjustmentTypes",
+                                                        "type": "array",
+                                                        "mandatory": false,
+                                                        "description": "Array of adjustment types for the fee structure."
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "transactionPricingPlan",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Specifies the billing plan based on which transaction cost is calculated for a merchant. If more than one billing plan exists it is mandatory to send in this value."
+                            },
+                            {
+                                "name": "paymentMethods",
+                                "type": "object",
+                                "mandatory": false,
+                                "description": "Configuration for payment methods to be enabled for the merchant.",
+                                "reqParams": [
+                                    {
+                                        "name": "card",
+                                        "type": "object",
+                                        "mandatory": false,
+                                        "description": "Card payment method configuration. Can be a boolean to enable/disable or an object with specific settings.",
+                                        "reqParams": [
+                                            {
+                                                "name": "billingPlan",
+                                                "type": "string",
+                                                "mandatory": false,
+                                                "description": "Billing plan for card payments."
+                                            },
+                                            {
+                                                "name": "mId",
+                                                "type": "string",
+                                                "mandatory": false,
+                                                "description": "Merchant ID for card payments."
+                                            },
+                                            {
+                                                "name": "scheme",
+                                                "type": "array",
+                                                "mandatory": true,
+                                                "description": "Array of supported card schemes.",
+                                                "possibleValues": [
+                                                    {
+                                                        "value": "visa",
+                                                        "description": "Visa card scheme"
+                                                    },
+                                                    {
+                                                        "value": "mastercard",
+                                                        "description": "Mastercard scheme"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "amex",
+                                        "type": "object",
+                                        "mandatory": false,
+                                        "description": "American Express payment method configuration. Can be a boolean to enable/disable or an object with specific settings.",
+                                        "reqParams": [
+                                            {
+                                                "name": "mId",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "American Express Merchant ID. Required when configuring AMEX payment method."
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "swish",
+                                        "type": "object",
+                                        "mandatory": false,
+                                        "description": "Swedish mobile payment method configuration. Can be a boolean to enable/disable or an object with specific settings.",
+                                        "reqParams": [
+                                            {
+                                                "name": "billingPlan",
+                                                "type": "string",
+                                                "mandatory": false,
+                                                "description": "Billing plan for Swish payments."
+                                            },
+                                            {
+                                                "name": "swishNumber",
+                                                "type": "string",
+                                                "mandatory": false,
+                                                "description": "Optional Swish number for the payment method configuration."
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "klarna",
+                                        "type": "object",
+                                        "mandatory": false,
+                                        "description": "Buy now, pay later payment method configuration. Can be a boolean to enable/disable or an object with specific settings.",
+                                        "reqParams": [
+                                            {
+                                                "name": "billingPlan",
+                                                "type": "string",
+                                                "mandatory": false,
+                                                "description": "Billing plan for Klarna payments."
+                                            },
+                                            {
+                                                "name": "mId",
+                                                "type": "string",
+                                                "mandatory": false,
+                                                "description": "Klarna Merchant ID for the payment method configuration."
+                                            },
+                                            {
+                                                "name": "klarnaPricingPlan",
+                                                "type": "string",
+                                                "mandatory": false,
+                                                "description": "Klarna pricing plan configuration."
+                                            },
+                                            {
+                                                "name": "username",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "Klarna account username. Required when configuring KLARNA payment method."
+                                            },
+                                            {
+                                                "name": "password",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "Klarna account password. Required when configuring KLARNA payment method."
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "b2binv",
+                                        "type": "object",
+                                        "mandatory": false,
+                                        "description": "B2B invoice payment method configuration. Can be a boolean to enable/disable or an object with specific settings.",
+                                        "reqParams": [
+                                            {
+                                                "name": "billingPlan",
+                                                "type": "string",
+                                                "mandatory": false,
+                                                "description": "Billing plan for B2B invoice payments."
+                                            },
+                                            {
+                                                "name": "clientId",
+                                                "type": "string",
+                                                "mandatory": false,
+                                                "description": "Client ID for B2B invoice payment method."
+                                            },
+                                            {
+                                                "name": "clientSecretKey",
+                                                "type": "string",
+                                                "mandatory": false,
+                                                "description": "Client secret key for B2B invoice payment method."
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "acc2acc",
+                                        "type": "object",
+                                        "mandatory": false,
+                                        "description": "Account to account transfer payment method configuration. Can be a boolean to enable/disable or an object with specific settings.",
+                                        "reqParams": [
+                                            {
+                                                "name": "billingPlan",
+                                                "type": "string",
+                                                "mandatory": false,
+                                                "description": "Billing plan for account-to-account payments."
+                                            },
+                                            {
+                                                "name": "mId",
+                                                "type": "string",
+                                                "mandatory": false,
+                                                "description": "Merchant ID for account to account transfers."
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "svipps",
+                                        "type": "boolean",
+                                        "mandatory": false,
+                                        "description": "Norwegian mobile payment method. Set to true to enable Vipps payment method."
+                                    },
+                                    {
+                                        "name": "smobilepay",
+                                        "type": "boolean",
+                                        "mandatory": false,
+                                        "description": "Danish mobile payment method. Set to true to enable MobilePay payment method."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "preSelectProducts",
+                                "type": "array",
+                                "mandatory": false,
+                                "description": "A set of products that are pre-selected by you for the merchant. These products are shipped as part of the onboarding process without further input from the merchant.",
+                                "reqParams": [
+                                    {
+                                        "name": "productId",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Represents the product ID of a product selected for delivery to the merchant."
+                                    },
+                                    {
+                                        "name": "quantity",
+                                        "type": "string",
+                                        "mandatory": false,
+                                        "description": "Quantity of the product"
+                                    },
+                                    {
+                                        "name": "pricingPlanId",
+                                        "type": "string",
+                                        "mandatory": false,
+                                        "description": "Specifies the billing plan for a merchant. This allows you to set up a plan based on the monthly price for a terminal and the duration in months. The specific plan details are provided by Surfboard."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "redirectUrl",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "This will be the redirect URL from the web kyb page, once the application is submitted the user can choose to redirect to the provided URL."
+                            },
+                            {
+                                "name": "generateShortLink",
+                                "type": "boolean",
+                                "description": "Set as true when you need the short URL for the web kyb page. Default is set to false.",
+                                "mandatory": false
+                            },
+                            {
+                                "name": "store",
+                                "type": "object",
+                                "mandatory": false,
+                                "conditional": true,
+                                "description": "Input the store details if you also want to create a store for the merchant.",
+                                "reqParams": [
+                                    {
+                                        "name": "name",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Name of the store."
+                                    },
+                                    {
+                                        "name": "email",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Email address of the store."
+                                    },
+                                    {
+                                        "name": "phoneNumber",
+                                        "type": "object",
+                                        "mandatory": true,
+                                        "description": "Contact number of the store in code and number format.",
+                                        "reqParams": [
+                                            {
+                                                "name": "code",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "International dialing code identifying the country or region."
+                                            },
+                                            {
+                                                "name": "number",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "A string of numbers ranging from 0-9 with a length of 5-15 characters."
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "address",
+                                        "type": "object",
+                                        "mandatory": true,
+                                        "description": "The address of the store.",
+                                        "reqParams": [
+                                            {
+                                                "name": "careOf",
+                                                "type": "string",
+                                                "mandatory": false,
+                                                "description": "Name of the addressee that is accepting the correspondence for the intended recipient."
+                                            },
+                                            {
+                                                "name": "addressLine1",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "Address of the store."
+                                            },
+                                            {
+                                                "name": "addressLine2",
+                                                "type": "string",
+                                                "mandatory": false,
+                                                "description": "Address of the store."
+                                            },
+                                            {
+                                                "name": "addressLine3",
+                                                "type": "string",
+                                                "mandatory": false,
+                                                "description": "Address of the store."
+                                            },
+                                            {
+                                                "name": "city",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "City where the store is located."
+                                            },
+                                            {
+                                                "name": "countryCode",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "Two-letter ISO country code in uppercase, representing the country where the store is located."
+                                            },
+                                            {
+                                                "name": "postalCode",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "Postal code of the store."
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "onlineInfo",
+                                        "type": "object",
+                                        "mandatory": false,
+                                        "description": "In order to start accepting online payments you need to create an online store which requires some additional properties such as the following.",
+                                        "reqParams": [
+                                            {
+                                                "name": "merchantWebshopURL",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "This is the web-shop URL of the merchant."
+                                            },
+                                            {
+                                                "name": "paymentPageHostURL",
+                                                "type": "string",
+                                                "mandatory": false,
+                                                "description": "This is the URL of the payment page. This is required for integrating online payments using SDK mode."
+                                            },
+                                            {
+                                                "name": "termsAndConditionsURL",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "This is the URL of the T&C of the merchant’s web-shop, it has to contain the refund policy."
+                                            },
+                                            {
+                                                "name": "privacyPolicyURL",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "This is the URL of the privacy policy of the merchant."
+                                            },
+                                            {
+                                                "name": "googlePayMerchantId",
+                                                "type": "string",
+                                                "mandatory": false,
+                                                "description": "This is the Google Pay merchant ID of the merchant."
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "preEnteredInformation",
+                                "type": "object",
+                                "mandatory": false,
+                                "description": "Use this param to pre fill the merchant application",
+                                "reqParams": [
+                                    {
+                                        "name": "openingInfo",
+                                        "type": "object",
+                                        "mandatory": false,
+                                        "description": "These details helps us understand when payments are accepted for the merchant.",
+                                        "reqParams": [
+                                            {
+                                                "name": "isSeasonalOpen",
+                                                "type": "boolean",
+                                                "mandatory": true,
+                                                "description": "If they are a seasonal merchant, open only on select seasons."
+                                            },
+                                            {
+                                                "name": "monthsOpen",
+                                                "type": "array",
+                                                "mandatory": false,
+                                                "description": "If they are a seasonal merchant, mention the months they will be open for payments. e.g., Seasonal shops open only during january and map can be mentioned as [1,5]"
+                                            },
+                                            {
+                                                "name": "isOpenAllYear",
+                                                "type": "boolean",
+                                                "mandatory": true,
+                                                "description": "If merchant will be accepting payments all year round."
+                                            },
+                                            {
+                                                "name": "isStoreOpenAtNight",
+                                                "type": "boolean",
+                                                "mandatory": true,
+                                                "description": "Mention if merchant stores are open all night."
+                                            },
+                                            {
+                                                "name": "reasonForOpeningAtNight",
+                                                "type": "string",
+                                                "mandatory": false,
+                                                "conditional": true,
+                                                "description": "Provide a reason as to why they are open all night. Mandatory when 'isStoreOpenAtNight' is set to true."
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "giftcards",
+                                        "type": "object",
+                                        "mandatory": false,
+                                        "description": "Gift card details of the merchant if any.",
+                                        "reqParams": [
+                                            {
+                                                "name": "amountPerYear",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Estimated amount spent using gift cards per year."
+                                            },
+                                            {
+                                                "name": "averageValidDays",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Average validity of gift card provided by merchant."
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "prePayments",
+                                        "type": "object",
+                                        "mandatory": false,
+                                        "description": "Details of pre payment option provided by merchant",
+                                        "reqParams": [
+                                            {
+                                                "name": "averageDeliveryTimeInDays",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Average delivery time in days taken after pre payment."
+                                            },
+                                            {
+                                                "name": "salesPercentPerYear",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Percentage of sales revenue generated via pre payment."
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "fundsInfo",
+                                        "type": "object",
+                                        "mandatory": false,
+                                        "description": "Sales information with respect to the merchant.",
+                                        "reqParams": [
+                                            {
+                                                "name": "estimatedAmountPerYear",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Estimated amount of sales per year."
+                                            },
+                                            {
+                                                "name": "priceOfMostExpensiveItemSold",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Price of most expensive item."
+                                            },
+                                            {
+                                                "name": "averageTransactionValuePerDay",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Estimated amount of sales per day."
+                                            },
+                                            {
+                                                "name": "estimatedAmountPerTransaction",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Average amount per transaction."
+                                            },
+                                            {
+                                                "name": "estimatedFrequencyOfTransactions",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "Denotes how often transactions are made under merchant. Possible values are 'DAILY', 'WEEKLY', 'MONTHLY', 'YEARLY'"
+                                            },
+                                            {
+                                                "name": "estimatedNoOfDailyTransactions",
+                                                "type": "number",
+                                                "mandatory": false,
+                                                "conditional": true,
+                                                "description": "Average number of sales per day. Mandatory when 'estimatedFrequencyOfTransactions' is set to 'DAILY'"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request 'SUCCESS' | 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data",
+                        "resParams": [
+                            {
+                                "name": "applicationId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "This is the applicationId that you will use to track the status of the create merchant request."
+                            },
+                            {
+                                "name": "webKybUrl",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "This is the link for the KYC session created for the merchant."
+                            },
+                            {
+                                "name": "merchantId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "For PF partners, merchant is created and the merchantId is returned."
+                            },
+                            {
+                                "name": "storeId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "For PF partners, store is created and the storeId is returned."
+                            },
+                            {
+                                "name": "shortLinkUrl",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Short URL of the web kyb page if generateShortLink is set to true."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        },
+        {
+            "id": "check-application-status",
+            "name": "Check Application Status",
+            "description": "Check the status of the application",
+            "order": 2,
+            "method": "GET",
+            "endpoint": "partners/{{partnerId}}/merchants/{{applicationId}}/status",
+            "guidePath": "/carbon/merchant-creation/check-application-status",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data",
+                        "resParams": [
+                            {
+                                "name": "applicationId",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "The Application ID of the respective merchant returned by the Create Merchant API."
+                            },
+                            {
+                                "name": "webKybUrl",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "This is the link for the KYC session created for the merchant, which can be fetched for applications in state 'APPLICATION_INITIATED' or 'APPLICATION_PENDING_INFORMATION'. This URL will be returned for ISV(Independent Software Vendors) partners only."
+                            },
+                            {
+                                "name": "applicationStatus",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Describes the status of the application. The possible values are:",
+                                "possibleValues": [
+                                    {
+                                        "value": "APPLICATION_INITIATED",
+                                        "description": "The application has been created, and the Web KYB URL has been generated. The merchant is now required to fill in necessary information through the Web KYB."
+                                    },
+                                    {
+                                        "value": "APPLICATION_SUBMITTED",
+                                        "description": "The merchant has finished filling in the Web KYB and submitted it for processing."
+                                    },
+                                    {
+                                        "value": "APPLICATION_PENDING_INFORMATION",
+                                        "description": "The application is still under processing, and additional data is required from the merchant."
+                                    },
+                                    {
+                                        "value": "APPLICATION_SIGNED",
+                                        "description": "Both the merchant signatories and UBOs have signed the application."
+                                    },
+                                    {
+                                        "value": "APPLICATION_REJECTED",
+                                        "description": "The application has been processed and rejected."
+                                    },
+                                    {
+                                        "value": "APPLICATION_COMPLETED",
+                                        "description": "The application has been processed and accepted. It is now pending merchant creation and onboarding."
+                                    },
+                                    {
+                                        "value": "APPLICATION_EXPIRED",
+                                        "description": "Each application is valid for 30 days. If there is no action during these 30 days, the KYB is treated as session expired."
+                                    },
+                                    {
+                                        "value": "MERCHANT_CREATED",
+                                        "description": "The merchant account has been created. At this stage, the Merchant ID and Store ID will be returned in the status call."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "merchantId",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Merchant ID of the created merchant is returned when application status is 'MERCHANT_CREATED'"
+                            },
+                            {
+                                "name": "storeId",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Store ID of the store created under the merchant is returned when application status is 'MERCHANT_CREATED'"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

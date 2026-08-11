@@ -1,0 +1,1 @@
+Create a branding configuration for customizable pages at merchant level at which you wish to configure and include the optional parameters as needed.

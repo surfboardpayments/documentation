@@ -1,0 +1,53 @@
+{
+    "scenario": "configure-branding",
+    "scenarios": [
+        {
+            "id": "create-branding-for-merchant",
+            "name": "Create Branding for Merchant",
+            "description": "Set branding configurations for all the terminals registered to a specific merchant.",
+            "order": 1
+        },
+        {
+            "id": "create-branding-for-store",
+            "name": "Create Branding for Store",
+            "description": "Set branding configurations for all the terminals registered to a specific store.",
+            "order": 2
+        },
+        {
+            "id": "create-branding-for-terminal",
+            "name": "Create Branding for Terminal",
+            "description": "Set branding configurations for a specific terminal.",
+            "order": 3
+        },
+        {
+            "id": "create-branding-for-partner",
+            "name": "Create Branding for Partner",
+            "description": "Set branding configurations for all the terminals registered to a specific partner.",
+            "order": 4
+        },
+        {
+            "id": "remove-branding-for-merchant",
+            "name": "Remove Branding for Merchant",
+            "description": "Remove branding configurations for all the terminals registered to a specific merchant.",
+            "order": 5
+        },
+        {
+            "id": "remove-branding-for-store",
+            "name": "Remove Branding for Store",
+            "description": "Remove branding configurations for all the terminals registered to a specific store.",
+            "order": 6
+        },
+        {
+            "id": "remove-branding-for-terminal",
+            "name": "Remove Terminal Branding Config",
+            "description": "Remove branding configurations for a specific terminal.",
+            "order": 7
+        },
+        {
+            "id": "remove-branding-for-partner",
+            "name": "Remove Branding for Partner",
+            "description": "Remove branding configurations for all the terminals registered to a specific partner.",
+            "order": 8
+        }
+    ]
+}

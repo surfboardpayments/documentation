@@ -1,0 +1,521 @@
+{
+  "title": "RFID API",
+  "description": "APIs for managing RFID reading sessions on a terminal. Start a reading session, query its status, list sessions, read the captured tags, and complete a session.",
+  "endpoints": [
+    {
+      "fragment": "Start RFID Session",
+      "method": "POST",
+      "link": "API_URL/terminals/:terminalId/sessions"
+    },
+    {
+      "fragment": "Fetch RFID Session Status",
+      "method": "GET",
+      "link": "API_URL/terminals/:terminalId/sessions/:sessionId/status"
+    },
+    {
+      "fragment": "Fetch All RFID Sessions",
+      "method": "GET",
+      "link": "API_URL/terminals/:terminalId/sessions"
+    },
+    {
+      "fragment": "Get RFID Session Details",
+      "method": "GET",
+      "link": "API_URL/terminals/:terminalId/sessions/:sessionId"
+    },
+    {
+      "fragment": "Fetch RFID Tags",
+      "method": "GET",
+      "link": "API_URL/terminals/:terminalId/sessions/:sessionId/tags"
+    },
+    {
+      "fragment": "Complete RFID Session",
+      "method": "POST",
+      "link": "API_URL/terminals/:terminalId/sessions/:sessionId/complete"
+    }
+  ],
+  "apis": [
+    {
+      "heading": "Start RFID Session",
+      "new": true,
+      "method": "POST",
+      "path": "/terminals/:terminalId/sessions",
+      "description": "Starts a new RFID reading session on the specified terminal. The terminal reads RFID tags in the selected mode until the session is completed.",
+      "reqParams": [
+        {
+          "name": "mode",
+          "type": "string",
+          "mandatory": true,
+          "description": "The RFID tag read mode for the session.",
+          "possibleValues": [
+            {
+              "value": "single",
+              "description": "Read a single RFID tag and then stop."
+            },
+            {
+              "value": "multiple",
+              "description": "Continuously read multiple RFID tags until the session is completed."
+            }
+          ]
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Outcome of the request."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "mandatory": true,
+          "description": "The started session.",
+          "resParams": [
+            {
+              "name": "sessionId",
+              "type": "string",
+              "mandatory": true,
+              "description": "Unique identifier of the RFID reading session."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "Human-readable result message."
+        }
+      ],
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ],
+          "body": "{\n    \"mode\": \"single\"\n}"
+        },
+        "response": [
+          {
+            "code": 201,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"sessionId\": \"rfid_8267defa6150700b48\"\n\t},\n\t\"message\": \"NFC reading session started successfully.\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Fetch RFID Session Status",
+      "new": true,
+      "method": "GET",
+      "path": "/terminals/:terminalId/sessions/:sessionId/status",
+      "description": "Retrieves the current status of an RFID reading session, including the RFID tags read so far.",
+      "reqParams": [],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Outcome of the request."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "mandatory": true,
+          "description": "Current session status.",
+          "resParams": [
+            {
+              "name": "sessionStatus",
+              "type": "string",
+              "mandatory": true,
+              "description": "Current status of the reading session. One of PENDING, COMPLETED, CANCELLED, TIMED_OUT, NOT_FOUND.",
+              "possibleValues": [
+                {
+                  "value": "PENDING",
+                  "description": "The session is awaiting tag reads."
+                },
+                {
+                  "value": "COMPLETED",
+                  "description": "The session completed successfully."
+                },
+                {
+                  "value": "CANCELLED",
+                  "description": "The session was cancelled."
+                },
+                {
+                  "value": "TIMED_OUT",
+                  "description": "The session timed out before completing."
+                },
+                {
+                  "value": "NOT_FOUND",
+                  "description": "No session was found for the given identifier."
+                }
+              ]
+            },
+            {
+              "name": "nfcTags",
+              "type": "array",
+              "mandatory": false,
+              "description": "NFC/RFID tag identifiers read in the session so far."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "Human-readable result message."
+        }
+      ],
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"sessionStatus\": \"PENDING\",\n\t\t\"nfcTags\": [\n\t\t\t\"E280117000000123456789AB\"\n\t\t]\n\t},\n\t\"message\": \"Fetched NFC session status.\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Fetch All RFID Sessions",
+      "new": true,
+      "method": "GET",
+      "path": "/terminals/:terminalId/sessions",
+      "pagination": true,
+      "description": "Retrieves all RFID reading sessions for the specified terminal.",
+      "query": "This endpoint is paginated using request and response headers, not query parameters. Send the x-page-number request header to select the page (defaults to 1 when omitted). Each response returns the x-total-items header (total number of sessions) and the x-page-number header (the page that was served).",
+      "reqParams": [],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Outcome of the request."
+        },
+        {
+          "name": "data",
+          "type": "array",
+          "mandatory": true,
+          "description": "List of RFID reading sessions.",
+          "resParams": [
+            {
+              "name": "sessionId",
+              "type": "string",
+              "mandatory": true,
+              "description": "Unique identifier of the RFID reading session."
+            },
+            {
+              "name": "action",
+              "type": "string",
+              "mandatory": true,
+              "description": "The action the session performed."
+            },
+            {
+              "name": "mode",
+              "type": "string",
+              "mandatory": true,
+              "description": "The read mode used for the session."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "Human-readable result message."
+        }
+      ],
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            },
+            {
+              "name": "X-Page-Number",
+              "value": "1",
+              "mandatory": false
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"sessionId\": \"rfid_8267defa6150700b48\",\n\t\t\t\"action\": \"start\",\n\t\t\t\"mode\": \"single\"\n\t\t}\n\t],\n\t\"message\": \"Fetched all NFC reading sessions under terminal.\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Get RFID Session Details",
+      "new": true,
+      "method": "GET",
+      "path": "/terminals/:terminalId/sessions/:sessionId",
+      "description": "Retrieves the details of a specific RFID reading session.",
+      "query": "This endpoint returns a single session object, so it is not paginated. For consistency with the session-list route it still emits the x-total-items and x-page-number response headers; both describe the underlying lookup and can be ignored for this single-record fetch.",
+      "reqParams": [],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Outcome of the request."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "mandatory": true,
+          "description": "The RFID reading session.",
+          "resParams": [
+            {
+              "name": "sessionId",
+              "type": "string",
+              "mandatory": true,
+              "description": "Unique identifier of the RFID reading session."
+            },
+            {
+              "name": "action",
+              "type": "string",
+              "mandatory": true,
+              "description": "The action the session performed."
+            },
+            {
+              "name": "mode",
+              "type": "string",
+              "mandatory": true,
+              "description": "The read mode used for the session."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "Human-readable result message."
+        }
+      ],
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"sessionId\": \"rfid_8267defa6150700b48\",\n\t\t\"action\": \"start\",\n\t\t\"mode\": \"single\"\n\t},\n\t\"message\": \"Fetched all NFC reading sessions under terminal.\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Fetch RFID Tags",
+      "new": true,
+      "method": "GET",
+      "path": "/terminals/:terminalId/sessions/:sessionId/tags",
+      "pagination": true,
+      "description": "Retrieves all RFID tags read during the specified session.",
+      "query": "This endpoint is paginated using request and response headers, not query parameters. Send the x-page-number request header to select the page (defaults to 1 when omitted). Each response returns the x-total-items header (total number of tags) and the x-page-number header (the page that was served).",
+      "reqParams": [],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Outcome of the request."
+        },
+        {
+          "name": "data",
+          "type": "array",
+          "mandatory": true,
+          "description": "List of RFID tags read in the session.",
+          "resParams": [
+            {
+              "name": "sessionId",
+              "type": "string",
+              "mandatory": true,
+              "description": "Identifier of the session the tag was read in."
+            },
+            {
+              "name": "tagId",
+              "type": "string",
+              "mandatory": true,
+              "description": "The RFID tag identifier (EPC)."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "Human-readable result message."
+        }
+      ],
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            },
+            {
+              "name": "X-Page-Number",
+              "value": "1",
+              "mandatory": false
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"sessionId\": \"rfid_8267defa6150700b48\",\n\t\t\t\"tagId\": \"E280117000000123456789AB\"\n\t\t}\n\t],\n\t\"message\": \"Fetched all tags under session.\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Complete RFID Session",
+      "new": true,
+      "method": "POST",
+      "path": "/terminals/:terminalId/sessions/:sessionId/complete",
+      "description": "Completes an active RFID reading session. Optionally provide the final result of the session.",
+      "reqParams": [
+        {
+          "name": "result",
+          "type": "string",
+          "mandatory": false,
+          "description": "The final result to set for the session. When omitted, the session is completed without an explicit result.",
+          "possibleValues": [
+            {
+              "value": "COMPLETED",
+              "description": "The session finished successfully."
+            },
+            {
+              "value": "CANCELLED",
+              "description": "The session was cancelled."
+            },
+            {
+              "value": "TIMED_OUT",
+              "description": "The session timed out before completion."
+            }
+          ]
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Outcome of the request."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "Human-readable result message."
+        }
+      ],
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ],
+          "body": "{\n    \"result\": \"COMPLETED\"\n}"
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"NFC reading session completed successfully.\"\n}"
+          }
+        ]
+      }
+    }
+  ]
+}

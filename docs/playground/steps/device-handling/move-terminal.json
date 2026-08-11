@@ -1,0 +1,48 @@
+{
+    "scenarioId": "move-terminal",
+    "scenarioName": "Move Terminal",
+    "steps": [
+        {
+            "id": "move-terminal",
+            "name": "Move Terminal",
+            "description": "Reassign the hardware terminal within the merchant under partner who handles multiple terminals.",
+            "order": 1,
+            "method": "PUT",
+            "endpoint": "partners/{{partnerId}}/terminals/{{terminalSerialNo}}/move",
+            "readOnly": true,
+            "response": {
+                "status": "SUCCESS",
+                "message": "Changed merchant for terminal successfully"
+            },
+            "hasMerchantId": false,
+            "guidePath": "/carbon/device-handling/move-terminal/move-terminal",
+            "payload": {
+                "targetMerchantId": ""
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "targetMerchantId",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Target Merchant ID to which the terminal needs to be assigned to."
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request."
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the move terminal request."
+                    }
+                ]
+            }
+        }
+    ]
+}

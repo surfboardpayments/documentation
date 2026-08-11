@@ -1,0 +1,4674 @@
+{
+  "title": "Terminals API",
+  "description": "Surfboard offers a diverse range of hardware terminals along with the SoftPOS terminal that can be integrated with your existing ECRs and checkout systems. The Terminals API allows you to register and manage these terminals. For CheckoutPro integration, you can use the Terminals APIs to link the terminal to your CheckoutPro, check the linkage status, and delink the terminal from your CheckoutPro.",
+  "endpoints": [
+    {
+      "fragment": "Register Device",
+      "method": "POST",
+      "link": "API_URL/merchants/:merchantId/stores/:storeId/devices"
+    },
+    {
+      "fragment": "Get Device Registration Code",
+      "method": "GET",
+      "link": "API_URL/merchants/:merchantId/stores/:storeId/device-registration"
+    },
+    {
+      "fragment": "Register Online Terminal",
+      "method": "POST",
+      "link": "API_URL/merchants/:merchantId/stores/:storeId/online-terminals"
+    },
+    {
+      "fragment": "Delink Terminal from Store",
+      "method": "POST",
+      "link": "API_URL/terminals/deactivate"
+    },
+    {
+      "fragment": "Change Store",
+      "method": "POST",
+      "link": "API_URL/terminals/change"
+    },
+    {
+      "fragment": "Link Terminal",
+      "method": "PUT",
+      "link": "API_URL/merchants/:merchantId/stores/:storeId/terminals/:terminalId/link"
+    },
+    {
+      "fragment": "Delink Terminal",
+      "method": "DELETE",
+      "link": "API_URL/merchants/:merchantId/stores/:storeId/terminals/:terminalId/link"
+    },
+    {
+      "fragment": "Check Link Status",
+      "method": "GET",
+      "link": "API_URL/merchants/:merchantId/stores/:storeId/terminals/:terminalId/link"
+    },
+    {
+      "fragment": "Update Terminal Name",
+      "method": "PUT",
+      "link": "API_URL/terminals/:terminalId"
+    },
+    {
+      "fragment": "Move Terminal",
+      "method": "PUT",
+      "link": "API_URL/partners/:partnerId/terminals/:serialNo/move"
+    },
+    {
+      "fragment": "Set Terminal Config",
+      "method": "PATCH",
+      "link": "API_URL/merchants/:merchantId/stores/:storeId/terminals/:terminalId"
+    },
+    {
+      "fragment": "Set Merchant Terminal Config",
+      "method": "PATCH",
+      "link": "API_URL/merchants/:merchantId/terminals"
+    },
+    {
+      "fragment": "Set Store Terminal Config",
+      "method": "PATCH",
+      "link": "API_URL/merchants/:merchantId/stores/:storeId/terminals"
+    },
+    {
+      "fragment": "Fetch Terminal Config",
+      "method": "GET",
+      "link": "API_URL/merchants/:merchantId/stores/:storeId/terminals/:terminalId/config"
+    },
+    {
+      "fragment": "Fetch Merchant Terminal Config",
+      "method": "GET",
+      "link": "API_URL/merchants/:merchantId/terminals/config"
+    },
+    {
+      "fragment": "Fetch Store Terminal Config",
+      "method": "GET",
+      "link": "API_URL/merchants/:merchantId/stores/:storeId/terminals/config"
+    },
+    {
+      "fragment": "Fetch Terminal by ID",
+      "method": "GET",
+      "link": "API_URL/terminals/:terminalId"
+    },
+    {
+      "fragment": "Fetch APN List",
+      "method": "GET",
+      "link": "API_URL/merchants/:merchantId/stores/:storeId/terminals/:terminalId/apns"
+    },
+    {
+      "fragment": "Get Interapp Code",
+      "method": "GET",
+      "link": "API_URL/merchants/:merchantId/stores/:storeId/terminals/interapp"
+    },
+    {
+      "fragment": "Get Interapp Details",
+      "method": "GET",
+      "link": "API_URL/merchants/:merchantId/stores/:storeId/terminals/interapp/:registrationCode"
+    },
+    {
+      "fragment": "Get Entry Code",
+      "method": "GET",
+      "link": "API_URL/merchants/:merchantId/stores/:storeId/terminals/:terminalId/entry-code"
+    },
+    {
+      "fragment": "Query Terminals Under Merchant",
+      "method": "GET",
+      "link": "API_URL/merchants/:merchantId/terminals"
+    },
+    {
+      "fragment": "Fetch Terminal by ID under Store",
+      "method": "GET",
+      "link": "API_URL/merchants/:merchantId/stores/:storeId/terminals/:terminalId"
+    },
+    {
+      "fragment": "Deactivate Terminal under Store",
+      "method": "DELETE",
+      "link": "API_URL/merchants/:merchantId/stores/:storeId/terminals/:terminalId"
+    },
+    {
+      "fragment": "Change Terminal Store",
+      "method": "POST",
+      "link": "API_URL/merchants/:merchantId/stores/:storeId/terminals/:terminalId/change"
+    },
+    {
+      "fragment": "Query Partner Terminal Configs",
+      "method": "GET",
+      "link": "API_URL/partners/:partnerId/terminal-configs"
+    },
+    {
+      "fragment": "Fetch Partner Terminal Config",
+      "method": "GET",
+      "link": "API_URL/partners/:partnerId/terminals/config"
+    },
+    {
+      "fragment": "Query Terminals Under Partner",
+      "method": "GET",
+      "link": "API_URL/partners/:partnerId/terminals/:terminalId"
+    },
+    {
+      "fragment": "Update Partner Terminal Config",
+      "method": "PATCH",
+      "link": "API_URL/partners/:partnerId/terminals"
+    },
+    {
+      "fragment": "Port Partner Terminals",
+      "method": "PUT",
+      "link": "API_URL/partners/:partnerId/terminals/port"
+    },
+    {
+      "fragment": "Publish Terminal Image and Config",
+      "method": "PUT",
+      "link": "API_URL/partners/:partnerId/merchants/:merchantId/stores/:storeId/terminals/:terminalId/config"
+    },
+    {
+      "fragment": "Reboot Terminal",
+      "method": "POST",
+      "link": "API_URL/terminals/:terminalId/reboot"
+    },
+    {
+      "fragment": "Fetch Terminal Metrics",
+      "method": "GET",
+      "link": "API_URL/terminals/:terminalId/metrics"
+    }
+  ],
+  "apis": [
+    {
+      "heading": "Register Device",
+      "new": true,
+      "description": "Registers a new terminal to store. For SDK-based workflows, this API call is unnecessary as SDK methods cover terminal registration. After the terminal is registered to a store under the merchant, it cannot be repurposed to be used by another merchant. However, you can use the Change Store API to transfer the terminal to another store under the same merchant.",
+      "reqParams": [
+        {
+          "name": "registrationIdentifier",
+          "type": "string",
+          "mandatory": true,
+          "description": "Usually, the registrationIdentifier is a 6-digit code found upon starting the terminal. For the SurfPad and Printer, you need to use the serial number from the back of the device."
+        },
+        {
+          "name": "terminalName",
+          "type": "string",
+          "mandatory": false,
+          "description": "Assign a name for your terminal. An optional param to identify a terminal for the user."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the terminal registration."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "Response data.",
+          "resParams": [
+            {
+              "name": "terminalId",
+              "type": "string",
+              "description": "Terminal ID of the registered terminal."
+            },
+            {
+              "name": "publicKey",
+              "type": "string",
+              "mandatory": false,
+              "description": "The terminal public key. Populated for online/SDK terminals; typically null for hardware devices."
+            },
+            {
+              "name": "registrationStatus",
+              "type": "string",
+              "description": "Represents the current status of the terminal. The possible values are:",
+              "possibleValues": [
+                {
+                  "value": "REGISTERED",
+                  "description": "The terminal has been successfully registered."
+                },
+                {
+                  "value": "ALREADY_REGISTERED",
+                  "description": "The terminal is already registered."
+                }
+              ]
+            },
+            {
+              "name": "sdkUrl",
+              "type": "string",
+              "mandatory": false,
+              "description": "The SDK server URL, returned when a self-hosted SDK key is provisioned for the terminal."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the terminal registration."
+        }
+      ],
+      "method": "POST",
+      "path": "/merchants/:merchantId/stores/:storeId/devices",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ],
+          "body": "{\n  \"registrationIdentifier\": \"250901\",\n  \"terminalName\": \"Kiosk One\"\n}"
+        },
+        "response": [
+          {
+            "code": 201,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"terminalId\": \"813ca2cb12ce400405\",\n    \"registrationStatus\": \"REGISTERED\"\n  },\n  \"message\": \"Terminal registered successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Get Device Registration Code",
+      "description": "This API generates a registration code and link that can be used to register devices to the store. The registration code can be entered manually on the device, or the registration link can be used for automatic registration via a QR code.",
+      "new": true,
+      "reqParams": [],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "mandatory": true,
+          "description": "Response data containing registration information.",
+          "resParams": [
+            {
+              "name": "registrationCode",
+              "type": "string",
+              "mandatory": true,
+              "description": "6-digit registration code that can be entered on the device for registration."
+            },
+            {
+              "name": "registrationLink",
+              "type": "string",
+              "mandatory": true,
+              "description": "Deep link URL that can be used for automatic device registration."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/merchants/:merchantId/stores/:storeId/device-registration",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"registrationCode\": \"905788\",\n    \"registrationLink\": \"checkoutx://com.surfboard.checkoutx/register?data=eyJyZWdpc3RyYXRpb25Db2RlIjoiOTA1Nzg4In0=\"\n  },\n  \"message\": \"Registration Code Generated Successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Register Online Terminal",
+      "description": "Registers a terminal with an online store so it can accept online payments.",
+      "reqParams": [
+        {
+          "name": "onlineTerminalMode",
+          "type": "string",
+          "mandatory": true,
+          "description": "Online payments can be carried out using any of these following modes.",
+          "possibleValues": [
+            {
+              "value": "PaymentPage",
+              "description": "In this mode, the payment page and all associated configuration is managed by Surfboard. This is the simplest mode to integrate as all that is required as an integrating partner is to redirect the customer to the payment page. The payment page needs to be the top level frame in any given context."
+            },
+            {
+              "value": "SelfHostedPage",
+              "description": "With SelfHostedPage, Surfboard renders the fields in your page. This provides you with maximum customization as to render the layout any way you want."
+            },
+            {
+              "value": "iFrame",
+              "description": "Registers an online terminal that renders as an embeddable iFrame."
+            },
+            {
+              "value": "MerchantInitiated",
+              "description": "Set this type if you want to accept Merchant Initiated Transactions (MIT)."
+            }
+          ]
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the terminal registration."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "Response data.",
+          "resParams": [
+            {
+              "name": "terminalId",
+              "type": "string",
+              "description": "Terminal ID of the registered terminal."
+            },
+            {
+              "name": "publicKey",
+              "type": "string",
+              "description": "For SelfHostedPage terminals use this key to initialize your Online SDK."
+            },
+            {
+              "name": "registrationStatus",
+              "type": "string",
+              "description": "Represents the current status of the terminal. The possible values are:",
+              "possibleValues": [
+                {
+                  "value": "REGISTERED",
+                  "description": "The terminal has been successfully registered."
+                },
+                {
+                  "value": "DEREGISTERED",
+                  "description": "The terminal was previously registered but has now been removed from the system."
+                },
+                {
+                  "value": "FAILED",
+                  "description": "The registration was unsuccessful."
+                }
+              ]
+            },
+            {
+              "name": "sdkUrl",
+              "type": "string",
+              "mandatory": false,
+              "description": "The SDK server URL, returned when a self-hosted SDK key is provisioned for the terminal."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the terminal registration."
+        }
+      ],
+      "method": "POST",
+      "path": "/merchants/:merchantId/stores/:storeId/online-terminals",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ],
+          "body": "{\n  \"onlineTerminalMode\": \"PaymentPage\"\n}"
+        },
+        "response": [
+          {
+            "code": 201,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"terminalId\": \"813ca2cb12ce400405\"\n  },\n  \"message\": \"Terminal registered successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Delink Terminal from Store",
+      "description": "Delinks the terminal from its registered store. Use this API to remove a terminal from its registered store. You cannot use this delinked terminal for another merchant. However, if you want to use this terminal in another store created under the same merchant, you can use the Change Store API.",
+      "reqParams": [
+        {
+          "name": "terminal$id",
+          "type": "string",
+          "mandatory": true,
+          "description": "Terminal ID of the terminal that has to be delinked."
+        },
+        {
+          "name": "storeId",
+          "type": "string",
+          "mandatory": false,
+          "description": "Store ID of the store from which the terminal needs to be delinked."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the terminal delinking."
+        }
+      ],
+      "method": "POST",
+      "path": "/terminals/deactivate",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ],
+          "body": "{\n  \"terminal$id\": \"c_Ou8mzoVQVn6dS4hvNtKH2\",\n  \"storeId\": \"st_GZVDbwmS86_G9pwc669U2\"\n}"
+        },
+        "response": [
+          {
+            "code": 201,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"message\": \"Terminal removed from store\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Change Store",
+      "description": "Changes the store to which the terminal is registered. You can use this API to utilize the terminal in another store created under the same merchant. However, the Terminal ID remains unchanged.",
+      "reqParams": [
+        {
+          "name": "terminal$id",
+          "type": "string",
+          "mandatory": true,
+          "description": "Terminal ID of the terminal for which the store needs to be changed."
+        },
+        {
+          "name": "storeId",
+          "type": "string",
+          "mandatory": false,
+          "description": "Store ID of the store to which the terminal needs to be registered."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the store change."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the store change."
+        }
+      ],
+      "method": "POST",
+      "path": "/terminals/change",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ],
+          "body": "{\n  \"terminal$id\": \"c_Ou8mzoVQVn6dS4hvNtKH2\",\n  \"storeId\": \"st_GZVDbwmS86_G9pwc669U2\"\n}"
+        },
+        "response": [
+          {
+            "code": 201,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"message\": \"Store successfully changed for the terminal\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Link Terminal",
+      "checkoutpro": true,
+      "description": "Links the terminal to the CheckoutPro. You can use this API to link the terminal to a CheckoutPro integration to accept payments.",
+      "reqParams": [
+        {
+          "name": "terminal$id",
+          "type": "string",
+          "mandatory": true,
+          "description": "Terminal ID of the terminal to link to the CheckoutPro identified by the :terminalId path parameter."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the linking request."
+        }
+      ],
+      "method": "PUT",
+      "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/link",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ],
+          "body": "{\n  \"terminal$id\": \"814aae4268e6700704\"\n}"
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"message\": \"Terminal linked successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Delink Terminal",
+      "checkoutpro": true,
+      "description": "Delinks the terminal from its linked CheckoutPro. Use this API to swap the terminal between different Checkouts.",
+      "reqParams": [
+        {
+          "name": "terminal$id",
+          "type": "string",
+          "mandatory": true,
+          "description": "Terminal ID of the terminal to delink from the CheckoutPro identified by the :terminalId path parameter."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the delinking request."
+        }
+      ],
+      "method": "DELETE",
+      "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/link",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ],
+          "body": "{\n\t\"terminal$id\": \"814aae4268e6700704\"\n}"
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"message\": \"Terminal delinked successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Check Link Status",
+      "checkoutpro": true,
+      "description": "Retrieves the linkage status between the terminal and CheckoutPro. Use this API to obtain the current link state between the terminal and CheckoutPro.",
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "Response data.",
+          "resParams": [
+            {
+              "name": "linkageStatus",
+              "type": "string",
+              "description": "Describes the linkage status of the terminal with CheckoutPro. i.e. ‘LINKED’ | ‘NOT_LINKED’."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/link",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"linkageStatus\": \"LINKED\"\n  },\n  \"message\": \"Fetched terminal status\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Update Terminal Name",
+      "checkoutpro": true,
+      "description": "Updates the display name of a registered terminal.",
+      "reqParams": [
+        {
+          "name": "terminalName",
+          "type": "string",
+          "mandatory": false,
+          "description": "Assign a name for your terminal. A param to identify a terminal for the user."
+        },
+        {
+          "name": "metadata",
+          "type": "object",
+          "mandatory": false,
+          "description": "Arbitrary key-value metadata to store against the terminal. At least one of terminalName or metadata must be provided."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the update request."
+        }
+      ],
+      "method": "PUT",
+      "path": "/terminals/:terminalId",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ],
+          "body": "{\n  \"terminalName\": \"New Terminal\"\n}"
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"message\": \"Terminal updated successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Move Terminal",
+      "description": "Use this API to reassign a hardware terminal to another merchant. This is limited to partners who handle their own storage and deal with terminals in bulk.",
+      "reqParams": [
+        {
+          "name": "targetMerchantId",
+          "type": "string",
+          "mandatory": true,
+          "description": "Target Merchant ID to which the terminal needs to be assigned."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the move terminal request."
+        }
+      ],
+      "method": "PUT",
+      "path": "/partners/:partnerId/terminals/:serialNo/move",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            }
+          ],
+          "body": "{\n  \"targetMerchantId\": \"81fa6b2d8d5dc8040e\"\n}"
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"message\": \"Changed merchant for terminal successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Set Terminal Config",
+      "description": "Sets specific configurations for an individual terminal. Use this API to configure settings and parameters for a particular terminal.",
+      "reqParams": [
+        {
+          "name": "serialNo",
+          "type": "string",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad",
+            "SurfTouch",
+            "SurfPrint"
+          ],
+          "description": "Serial number of the physical terminal."
+        },
+        {
+          "name": "wifiSsid",
+          "type": "string",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Name of the WiFi network."
+        },
+        {
+          "name": "wifiPassword",
+          "type": "string",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Password for the WiFi network."
+        },
+        {
+          "name": "autoSleep",
+          "type": "number",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Auto sleep time for the terminal in seconds. Terminal will sleep if no transactions are received in this time period. Only applies if the terminal is running on battery."
+        },
+        {
+          "name": "preferredRestartTime",
+          "type": "string",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Scheduled restart time for the terminal in HH:MM format. The default is 02:00am according to the device's timezone. It has a 1 hour restart window. For example, if set to 02:00am, restart could occur anytime between 02:00am and 02:59am. It is essential for the device to restart at least once every 24 hours. This might be particularly important for businesses that operate beyond the default restart time."
+        },
+        {
+          "name": "preferredNetwork",
+          "type": "string",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Preferred network for the terminal. It can be either 'WIFI' or 'GSM'."
+        },
+        {
+          "name": "alwaysShowMinorUnits",
+          "type": "number",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Determines how the amount is displayed on the terminal. It can be either '0' or '1'. When set to '1', the terminal will always display the minor units, even for whole numbers (e.g., 29 will be displayed as 29.00). When set to 0, the terminal will not include minor units for whole numbers."
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad",
+            "SurfTouch",
+            "SurfPrint",
+            "SoftPOS"
+          ],
+          "description": "Two-letter ISO language code, in lowercase, representing the language to be displayed in the terminal. Can be 'en', 'fi', 'da', or 'se'."
+        },
+        {
+          "name": "showStatusBar",
+          "type": "boolean",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Determines whether the status bar is displayed on the terminal. If set 'TRUE', the terminal will display the status bar. This is applicable to SurfPad terminals."
+        },
+        {
+          "name": "chipReadDelay",
+          "type": "number",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Time delay in milliseconds before the card is read."
+        },
+        {
+          "name": "showReceipt",
+          "type": "boolean",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfTouch",
+            "SurfPrint",
+            "SoftPOS"
+          ],
+          "description": "Set this to determine how receipts are showcased on the terminal."
+        },
+        {
+          "name": "preferredGsmOperator",
+          "type": "number",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "The preferred GSM operator identified by a numeric code."
+        },
+        {
+          "name": "openPosOnReboot",
+          "type": "string",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfTouch",
+            "SurfPrint"
+          ],
+          "description": "Indicates whether the POS system should open automatically after reboot. Possible values are 'enabled' or 'disabled'."
+        },
+        {
+          "name": "enableRefundLock",
+          "comingSoon": true,
+          "type": "boolean",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfTouch",
+            "SurfPrint",
+            "SoftPOS"
+          ],
+          "description": "Determines if the refund lock screen feature is enabled on the device. This is only available for android terminals."
+        },
+        {
+          "name": "refundScreenPin",
+          "comingSoon": true,
+          "type": "string",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfTouch",
+            "SurfPrint",
+            "SoftPOS"
+          ],
+          "description": "The PIN code used to authorize refunds on the screen. This is only available for android terminals."
+        },
+        {
+          "name": "screenTimeout",
+          "type": "number",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfTouch",
+            "SurfPrint",
+            "SoftPOS"
+          ],
+          "description": "The duration (in milliseconds) before the screen times out due to inactivity."
+        },
+        {
+          "name": "autoSleepInterval",
+          "type": "number",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "The interval (in milliseconds) before the device automatically goes to sleep."
+        },
+        {
+          "name": "receiptScreenTimeout",
+          "type": "number",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfTouch",
+            "SurfPrint",
+            "SoftPOS"
+          ],
+          "description": "Timeout of the receipt screen on hardware terminals."
+        },
+        {
+          "name": "offlineMode",
+          "type": "string",
+          "mandatory": false,
+          "description": "Controls whether the terminal keeps accepting card payments while offline (stored and forwarded once connectivity returns). Applies to the sb_terminal_k checkout app.",
+          "possibleValues": [
+            {
+              "value": "enabled",
+              "description": "The terminal accepts card payments while offline."
+            },
+            {
+              "value": "disabled",
+              "description": "The terminal requires connectivity to accept payments."
+            }
+          ]
+        },
+        {
+          "name": "displayContrast",
+          "type": "number",
+          "mandatory": false,
+          "description": "Display contrast level of the terminal screen."
+        },
+        {
+          "name": "idleScreenImageUrl",
+          "type": "string",
+          "mandatory": false,
+          "description": "URL of the image displayed on the idle screen of the terminal."
+        },
+        {
+          "name": "lockScreenPin",
+          "type": "string",
+          "mandatory": false,
+          "description": "PIN code used to unlock the terminal lock screen."
+        },
+        {
+          "name": "enableLockScreen",
+          "type": "boolean",
+          "mandatory": false,
+          "description": "Determines whether the lock screen is enabled on the terminal."
+        },
+        {
+          "name": "printerConfig",
+          "type": "string",
+          "mandatory": false,
+          "description": "Printer configuration mode for the terminal."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "PATCH",
+      "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ],
+          "body": "{\n\t\"serialNo\": \"123456789\",\n\t\"wifiSsid\": \"wifiname\",\n\t\"wifiPassword\": \"wifipassword\",\n\t\"autoSleep\": 3000,\n\t\"preferredNetwork\": \"WIFI\",\n\t\"preferredRestartTime\": \"03:00\",\n\t\"alwaysShowMinorUnits\": 1,\n\t\"language\": \"en\",\n\t\"showStatusBar\": true,\n\t\"chipReadDelay\": 500,\n\t\"showReceipt\": true,\n\t\"offlineMode\": \"enabled\"\n}"
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"message\": \"TERMINAL config updated successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Set Merchant Terminal Config",
+      "description": "Sets configurations for all the terminals registered to a specific merchant. Use this API to configure uniform settings and parameters across multiple terminals associated with a specific merchant.",
+      "reqParams": [
+        {
+          "name": "wifiSsid",
+          "type": "string",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Name of the WiFi network."
+        },
+        {
+          "name": "wifiPassword",
+          "type": "string",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Password for the WiFi network."
+        },
+        {
+          "name": "autoSleep",
+          "type": "number",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Auto sleep time for the terminal in seconds. Terminal will sleep if no transactions are received in this time period. Only applies if the terminal is running on battery."
+        },
+        {
+          "name": "preferredRestartTime",
+          "type": "string",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Scheduled restart time for the terminal in HH:MM format. The default is 02:00am according to the device's timezone. It has a 1 hour restart window. For example, if set to 02:00am, restart could occur anytime between 02:00am and 02:59am. It is essential for the device to restart at least once every 24 hours. This might be particularly important for businesses that operate beyond the default restart time."
+        },
+        {
+          "name": "preferredNetwork",
+          "type": "string",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Preferred network for the terminal. It can be either 'WIFI' or 'GSM'."
+        },
+        {
+          "name": "alwaysShowMinorUnits",
+          "type": "number",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Determines how the amount is displayed on the terminal. It can be either '0' or '1'. When set to '1', the terminal will always display the minor units, even for whole numbers (e.g., 29 will be displayed as 29.00). When set to 0, the terminal will not include minor units for whole numbers."
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad",
+            "SurfTouch",
+            "SurfPrint",
+            "SoftPOS"
+          ],
+          "description": "Two-letter ISO language code, in lowercase, representing the language to be displayed in the terminal. Can be 'en', 'fi', 'da', or 'se'."
+        },
+        {
+          "name": "showStatusBar",
+          "type": "boolean",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Determines whether the status bar is displayed on the terminal. If set 'TRUE', the terminal will display the status bar. This is applicable to SurfPad terminals."
+        },
+        {
+          "name": "chipReadDelay",
+          "type": "number",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Time delay in milliseconds before the card is read."
+        },
+        {
+          "name": "showReceipt",
+          "type": "boolean",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfTouch",
+            "SurfPrint",
+            "SoftPOS"
+          ],
+          "description": "Set this to determine how receipts are showcased on the terminal."
+        },
+        {
+          "name": "preferredGsmOperator",
+          "type": "number",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "The preferred GSM operator identified by a numeric code."
+        },
+        {
+          "name": "openPosOnReboot",
+          "type": "string",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfTouch",
+            "SurfPrint"
+          ],
+          "description": "Indicates whether the POS system should open automatically after reboot. Possible values are 'enabled' or 'disabled'."
+        },
+        {
+          "name": "enableRefundLock",
+          "comingSoon": true,
+          "type": "boolean",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfTouch",
+            "SurfPrint",
+            "SoftPOS"
+          ],
+          "description": "Determines if the refund lock screen feature is enabled on the device. This is only available for android terminals."
+        },
+        {
+          "name": "refundScreenPin",
+          "comingSoon": true,
+          "type": "string",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfTouch",
+            "SurfPrint",
+            "SoftPOS"
+          ],
+          "description": "The PIN code used to authorize refunds on the screen. This is only available for android terminals."
+        },
+        {
+          "name": "screenTimeout",
+          "type": "number",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfTouch",
+            "SurfPrint",
+            "SoftPOS"
+          ],
+          "description": "The duration (in milliseconds) before the screen times out due to inactivity."
+        },
+        {
+          "name": "autoSleepInterval",
+          "type": "number",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "The interval (in milliseconds) before the device automatically goes to sleep."
+        },
+        {
+          "name": "receiptScreenTimeout",
+          "type": "number",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfTouch",
+            "SurfPrint",
+            "SoftPOS"
+          ],
+          "description": "Timeout of the receipt screen on hardware terminals."
+        },
+        {
+          "name": "offlineMode",
+          "type": "string",
+          "mandatory": false,
+          "description": "Controls whether the terminal keeps accepting card payments while offline (stored and forwarded once connectivity returns). Applies to the sb_terminal_k checkout app.",
+          "possibleValues": [
+            {
+              "value": "enabled",
+              "description": "The terminal accepts card payments while offline."
+            },
+            {
+              "value": "disabled",
+              "description": "The terminal requires connectivity to accept payments."
+            }
+          ]
+        },
+        {
+          "name": "displayContrast",
+          "type": "number",
+          "mandatory": false,
+          "description": "Display contrast level of the terminal screen."
+        },
+        {
+          "name": "idleScreenImageUrl",
+          "type": "string",
+          "mandatory": false,
+          "description": "URL of the image displayed on the idle screen of the terminal."
+        },
+        {
+          "name": "lockScreenPin",
+          "type": "string",
+          "mandatory": false,
+          "description": "PIN code used to unlock the terminal lock screen."
+        },
+        {
+          "name": "enableLockScreen",
+          "type": "boolean",
+          "mandatory": false,
+          "description": "Determines whether the lock screen is enabled on the terminal."
+        },
+        {
+          "name": "printerConfig",
+          "type": "string",
+          "mandatory": false,
+          "description": "Printer configuration mode for the terminal."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "PATCH",
+      "path": "/merchants/:merchantId/terminals",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ],
+          "body": "{\n\t\"wifiSsid\": \"wifiname\",\n\t\"wifiPassword\": \"wifipassword\",\n\t\"autoSleep\": 3000,\n\t\"preferredNetwork\": \"WIFI\",\n\t\"preferredRestartTime\": \"03:00\",\n\t\"alwaysShowMinorUnits\": 1,\n\t\"language\": \"en\",\n\t\"showStatusBar\": true,\n\t\"chipReadDelay\": 500,\n\t\"showReceipt\": true,\n\t\"offlineMode\": \"enabled\"\n}"
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"message\": \"MERCHANT config updated successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Set Store Terminal Config",
+      "description": "Sets configurations for all the terminals registered to a specific store. Use this API to configure uniform settings and parameters across all the terminals associated with a specific store.",
+      "reqParams": [
+        {
+          "name": "wifiSsid",
+          "type": "string",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Name of the WiFi network."
+        },
+        {
+          "name": "wifiPassword",
+          "type": "string",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Password for the WiFi network."
+        },
+        {
+          "name": "autoSleep",
+          "type": "number",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Auto sleep time for the terminal in seconds. Terminal will sleep if no transactions are received in this time period. Only applies if the terminal is running on battery."
+        },
+        {
+          "name": "preferredRestartTime",
+          "type": "string",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Scheduled restart time for the terminal in HH:MM format. The default is 02:00am according to the device's timezone. It has a 1 hour restart window. For example, if set to 02:00am, restart could occur anytime between 02:00am and 02:59am. It is essential for the device to restart at least once every 24 hours. This might be particularly important for businesses that operate beyond the default restart time."
+        },
+        {
+          "name": "preferredNetwork",
+          "type": "string",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Preferred network for the terminal. It can be either 'WIFI' or 'GSM'."
+        },
+        {
+          "name": "alwaysShowMinorUnits",
+          "type": "number",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Determines how the amount is displayed on the terminal. It can be either '0' or '1'. When set to '1', the terminal will always display the minor units, even for whole numbers (e.g., 29 will be displayed as 29.00). When set to 0, the terminal will not include minor units for whole numbers."
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad",
+            "SurfTouch",
+            "SurfPrint",
+            "SoftPOS"
+          ],
+          "description": "Two-letter ISO language code, in lowercase, representing the language to be displayed in the terminal. Can be 'en', 'fi', 'da', or 'se'."
+        },
+        {
+          "name": "showStatusBar",
+          "type": "boolean",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Determines whether the status bar is displayed on the terminal. If set 'TRUE', the terminal will display the status bar. This is applicable to SurfPad terminals."
+        },
+        {
+          "name": "chipReadDelay",
+          "type": "number",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "Time delay in milliseconds before the card is read."
+        },
+        {
+          "name": "showReceipt",
+          "type": "boolean",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfTouch",
+            "SurfPrint",
+            "SoftPOS"
+          ],
+          "description": "Set this to determine how receipts are showcased on the terminal."
+        },
+        {
+          "name": "preferredGsmOperator",
+          "type": "number",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "The preferred GSM operator identified by a numeric code."
+        },
+        {
+          "name": "openPosOnReboot",
+          "type": "string",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfTouch",
+            "SurfPrint"
+          ],
+          "description": "Indicates whether the POS system should open automatically after reboot. Possible values are 'enabled' or 'disabled'."
+        },
+        {
+          "name": "enableRefundLock",
+          "comingSoon": true,
+          "type": "boolean",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfTouch",
+            "SurfPrint",
+            "SoftPOS"
+          ],
+          "description": "Determines if the refund lock screen feature is enabled on the device. This is only available for android terminals."
+        },
+        {
+          "name": "refundScreenPin",
+          "comingSoon": true,
+          "type": "string",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfTouch",
+            "SurfPrint",
+            "SoftPOS"
+          ],
+          "description": "The PIN code used to authorize refunds on the screen. This is only available for android terminals."
+        },
+        {
+          "name": "screenTimeout",
+          "type": "number",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfTouch",
+            "SurfPrint",
+            "SoftPOS"
+          ],
+          "description": "The duration (in milliseconds) before the screen times out due to inactivity."
+        },
+        {
+          "name": "autoSleepInterval",
+          "type": "number",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfPad"
+          ],
+          "description": "The interval (in milliseconds) before the device automatically goes to sleep."
+        },
+        {
+          "name": "receiptScreenTimeout",
+          "type": "number",
+          "mandatory": false,
+          "supportedFor": [
+            "SurfTouch",
+            "SurfPrint",
+            "SoftPOS"
+          ],
+          "description": "Timeout of the receipt screen on hardware terminals."
+        },
+        {
+          "name": "offlineMode",
+          "type": "string",
+          "mandatory": false,
+          "description": "Controls whether the terminal keeps accepting card payments while offline (stored and forwarded once connectivity returns). Applies to the sb_terminal_k checkout app.",
+          "possibleValues": [
+            {
+              "value": "enabled",
+              "description": "The terminal accepts card payments while offline."
+            },
+            {
+              "value": "disabled",
+              "description": "The terminal requires connectivity to accept payments."
+            }
+          ]
+        },
+        {
+          "name": "displayContrast",
+          "type": "number",
+          "mandatory": false,
+          "description": "Display contrast level of the terminal screen."
+        },
+        {
+          "name": "idleScreenImageUrl",
+          "type": "string",
+          "mandatory": false,
+          "description": "URL of the image displayed on the idle screen of the terminal."
+        },
+        {
+          "name": "lockScreenPin",
+          "type": "string",
+          "mandatory": false,
+          "description": "PIN code used to unlock the terminal lock screen."
+        },
+        {
+          "name": "enableLockScreen",
+          "type": "boolean",
+          "mandatory": false,
+          "description": "Determines whether the lock screen is enabled on the terminal."
+        },
+        {
+          "name": "printerConfig",
+          "type": "string",
+          "mandatory": false,
+          "description": "Printer configuration mode for the terminal."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "PATCH",
+      "path": "/merchants/:merchantId/stores/:storeId/terminals",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ],
+          "body": "{\n\t\"wifiSsid\": \"wifiname\",\n\t\"wifiPassword\": \"wifipassword\",\n\t\"autoSleep\": 3000,\n\t\"preferredNetwork\": \"WIFI\",\n\t\"preferredRestartTime\": \"03:00\",\n\t\"alwaysShowMinorUnits\": 1,\n\t\"language\": \"en\",\n\t\"showStatusBar\": true,\n\t\"chipReadDelay\": 500,\n\t\"showReceipt\": true,\n\t\"offlineMode\": \"enabled\"\n}"
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"message\": \"STORE config updated successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Fetch Terminal Config",
+      "description": "Use this API to fetch all currently active configurations for the terminal.",
+      "reqParams": [],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "Response data.",
+          "resParams": [
+            {
+              "name": "wifiSsid",
+              "type": "string",
+              "mandatory": false,
+              "description": "Name of the WiFi network."
+            },
+            {
+              "name": "wifiPassword",
+              "type": "string",
+              "mandatory": false,
+              "description": "Password for the WiFi network."
+            },
+            {
+              "name": "autoSleep",
+              "type": "number",
+              "mandatory": false,
+              "description": "Auto sleep time for the terminal in seconds. Terminal will sleep if no transactions are received in this time period. Only applies if the terminal is running on battery."
+            },
+            {
+              "name": "preferredRestartTime",
+              "type": "string",
+              "mandatory": false,
+              "description": "Scheduled restart time for the terminal in HH:MM format. The default is 02:00am according to the device's timezone. It has a 1 hour restart window. For example, if set to 02:00am, restart could occur anytime between 02:00am and 02:59am. It is essential for the device to restart at least once every 24 hours. This might be particularly important for businesses that operate beyond the default restart time."
+            },
+            {
+              "name": "preferredNetwork",
+              "type": "string",
+              "mandatory": false,
+              "description": "Preferred network for the terminal. It can be either 'WIFI' or 'GSM'.",
+              "possibleValues": [
+                {
+                  "value": "WIFI",
+                  "description": "Sets the preferred network of the terminal as WiFi."
+                },
+                {
+                  "value": "GSM",
+                  "description": "Sets the preferred network of the terminal as GSM or mobile network."
+                }
+              ]
+            },
+            {
+              "name": "alwaysShowMinorUnits",
+              "type": "number",
+              "mandatory": false,
+              "description": "Determines how the amount is displayed on the terminal. It can be either '0' or '1'. When set to '1', the terminal will always display the minor units, even for whole numbers (e.g., 29 will be displayed as 29.00). When set to 0, the terminal will not include minor units for whole numbers."
+            },
+            {
+              "name": "language",
+              "type": "string",
+              "mandatory": false,
+              "description": "Two-letter ISO language code, in lowercase, representing the language to be displayed in the terminal. Can be 'en', 'fi', 'da', or 'se'."
+            },
+            {
+              "name": "showStatusBar",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "Determines whether the status bar is displayed on the terminal. If set 'TRUE', the terminal will display the status bar. This is applicable to SurfPad terminals."
+            },
+            {
+              "name": "chipReadDelay",
+              "type": "number",
+              "mandatory": false,
+              "description": "Time delay in milliseconds before the card is read."
+            },
+            {
+              "name": "showReceipt",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "Set this to determine how receipts are showcased on the terminal."
+            },
+            {
+              "name": "preferredGsmOperator",
+              "type": "number",
+              "mandatory": false,
+              "description": "The preferred GSM operator identified by a numeric code."
+            },
+            {
+              "name": "openPosOnReboot",
+              "type": "string",
+              "mandatory": false,
+              "description": "Indicates whether the POS system should open automatically after reboot. Possible values are 'enabled' or 'disabled'."
+            },
+            {
+              "name": "enableRefundLock",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "Determines if the refund lock screen feature is enabled on the device. This is only available for android terminals."
+            },
+            {
+              "name": "screenTimeout",
+              "type": "number",
+              "mandatory": false,
+              "description": "The duration (in milliseconds) before the screen times out due to inactivity."
+            },
+            {
+              "name": "autoSleepInterval",
+              "type": "number",
+              "mandatory": false,
+              "description": "The interval (in milliseconds) before the device automatically goes to sleep."
+            },
+            {
+              "name": "receiptScreenTimeout",
+              "type": "number",
+              "mandatory": false,
+              "description": "Timeout of the receipt screen on hardware terminals."
+            },
+            {
+              "name": "offlineMode",
+              "type": "string",
+              "mandatory": false,
+              "description": "Current offline-payments toggle for the terminal.",
+              "possibleValues": [
+                {
+                  "value": "enabled",
+                  "description": "Offline card payments are enabled."
+                },
+                {
+                  "value": "disabled",
+                  "description": "Offline card payments are disabled."
+                }
+              ]
+            },
+            {
+              "name": "displayContrast",
+              "type": "number",
+              "mandatory": false,
+              "description": "Display contrast level of the terminal screen."
+            },
+            {
+              "name": "idleScreenImageUrl",
+              "type": "string",
+              "mandatory": false,
+              "description": "URL of the image shown on the terminal idle screen."
+            },
+            {
+              "name": "lockScreenPin",
+              "type": "string",
+              "mandatory": false,
+              "description": "PIN required to unlock the terminal lock screen."
+            },
+            {
+              "name": "refundScreenPin",
+              "type": "string",
+              "mandatory": false,
+              "description": "PIN required to authorize refunds on the terminal."
+            },
+            {
+              "name": "enableLockScreen",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "Whether the terminal auto-lock screen is enabled."
+            },
+            {
+              "name": "printerConfig",
+              "type": "string",
+              "mandatory": false,
+              "description": "Printer configuration mode set for the terminal."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/config",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"preferredRestartTime\": \"02:00\",\n\t\t\"preferredNetwork\": \"WIFI\",\n\t\t\"wifiSsid\": \"surfboard\",\n\t\t\"wifiPassword\": \"surfboa\",\n\t\t\"language\": \"da\",\n\t\t\"autoSleep\": 400,\n\t\t\"alwaysShowMinorUnits\": 1,\n\t\t\"showStatusBar\": false,\n\t\t\"showReceipt\": true,\n\t\t\"chipReadDelay\": 500,\n\t\t\"openPosOnReboot\": \"enabled\",\n\t\t\"enableRefundLock\": true,\n\t\t\"screenTimeout\": 3000000,\n\t\t\"preferredGsmOperator\": 2,\n\t\t\"offlineMode\": \"enabled\"\n\t},\n\t\"message\": \"Terminal config queried successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Fetch Merchant Terminal Config",
+      "description": "Use this API to fetch all currently active terminal configurations for the merchant.",
+      "reqParams": [],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "Response data.",
+          "resParams": [
+            {
+              "name": "wifiSsid",
+              "type": "string",
+              "mandatory": false,
+              "description": "Name of the WiFi network."
+            },
+            {
+              "name": "wifiPassword",
+              "type": "string",
+              "mandatory": false,
+              "description": "Password for the WiFi network."
+            },
+            {
+              "name": "autoSleep",
+              "type": "number",
+              "mandatory": false,
+              "description": "Auto sleep time for the terminal in seconds. Terminal will sleep if no transactions are received in this time period. Only applies if the terminal is running on battery."
+            },
+            {
+              "name": "preferredRestartTime",
+              "type": "string",
+              "mandatory": false,
+              "description": "Scheduled restart time for the terminal in HH:MM format. The default is 02:00am according to the device's timezone. It has a 1 hour restart window. For example, if set to 02:00am, restart could occur anytime between 02:00am and 02:59am. It is essential for the device to restart at least once every 24 hours. This might be particularly important for businesses that operate beyond the default restart time."
+            },
+            {
+              "name": "preferredNetwork",
+              "type": "string",
+              "mandatory": false,
+              "description": "Preferred network for the terminal. It can be either 'WIFI' or 'GSM'.",
+              "possibleValues": [
+                {
+                  "value": "WIFI",
+                  "description": "Sets the preferred network of the terminal as WiFi."
+                },
+                {
+                  "value": "GSM",
+                  "description": "Sets the preferred network of the terminal as GSM or mobile network."
+                }
+              ]
+            },
+            {
+              "name": "alwaysShowMinorUnits",
+              "type": "number",
+              "mandatory": false,
+              "description": "Determines how the amount is displayed on the terminal. It can be either '0' or '1'. When set to '1', the terminal will always display the minor units, even for whole numbers (e.g., 29 will be displayed as 29.00). When set to 0, the terminal will not include minor units for whole numbers."
+            },
+            {
+              "name": "language",
+              "type": "string",
+              "mandatory": false,
+              "description": "Two-letter ISO language code, in lowercase, representing the language to be displayed in the terminal. Can be 'en', 'fi', 'da', or 'se'."
+            },
+            {
+              "name": "showStatusBar",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "Determines whether the status bar is displayed on the terminal. If set 'TRUE', the terminal will display the status bar. This is applicable to SurfPad terminals."
+            },
+            {
+              "name": "chipReadDelay",
+              "type": "number",
+              "mandatory": false,
+              "description": "Time delay in milliseconds before the card is read."
+            },
+            {
+              "name": "showReceipt",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "Set this to determine how receipts are showcased on the terminal."
+            },
+            {
+              "name": "preferredGsmOperator",
+              "type": "number",
+              "mandatory": false,
+              "description": "The preferred GSM operator identified by a numeric code."
+            },
+            {
+              "name": "openPosOnReboot",
+              "type": "string",
+              "mandatory": false,
+              "description": "Indicates whether the POS system should open automatically after reboot. Possible values are 'enabled' or 'disabled'."
+            },
+            {
+              "name": "enableRefundLock",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "Determines if the refund lock screen feature is enabled on the device. This is only available for android terminals."
+            },
+            {
+              "name": "screenTimeout",
+              "type": "number",
+              "mandatory": false,
+              "description": "The duration (in milliseconds) before the screen times out due to inactivity."
+            },
+            {
+              "name": "autoSleepInterval",
+              "type": "number",
+              "mandatory": false,
+              "description": "The interval (in milliseconds) before the device automatically goes to sleep."
+            },
+            {
+              "name": "receiptScreenTimeout",
+              "type": "number",
+              "mandatory": false,
+              "description": "Timeout of the receipt screen on hardware terminals."
+            },
+            {
+              "name": "offlineMode",
+              "type": "string",
+              "mandatory": false,
+              "description": "Current offline-payments toggle for the terminal.",
+              "possibleValues": [
+                {
+                  "value": "enabled",
+                  "description": "Offline card payments are enabled."
+                },
+                {
+                  "value": "disabled",
+                  "description": "Offline card payments are disabled."
+                }
+              ]
+            },
+            {
+              "name": "displayContrast",
+              "type": "number",
+              "mandatory": false,
+              "description": "Display contrast level of the terminal screen."
+            },
+            {
+              "name": "idleScreenImageUrl",
+              "type": "string",
+              "mandatory": false,
+              "description": "URL of the image shown on the terminal idle screen."
+            },
+            {
+              "name": "lockScreenPin",
+              "type": "string",
+              "mandatory": false,
+              "description": "PIN required to unlock the terminal lock screen."
+            },
+            {
+              "name": "refundScreenPin",
+              "type": "string",
+              "mandatory": false,
+              "description": "PIN required to authorize refunds on the terminal."
+            },
+            {
+              "name": "enableLockScreen",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "Whether the terminal auto-lock screen is enabled."
+            },
+            {
+              "name": "printerConfig",
+              "type": "string",
+              "mandatory": false,
+              "description": "Printer configuration mode set for the terminal."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/merchants/:merchantId/terminals/config",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"preferredRestartTime\": \"02:00\",\n\t\t\"preferredNetwork\": \"WIFI\",\n\t\t\"wifiSsid\": \"surfboard\",\n\t\t\"wifiPassword\": \"surfboa\",\n\t\t\"language\": \"da\",\n\t\t\"autoSleep\": 400,\n\t\t\"alwaysShowMinorUnits\": 1,\n\t\t\"showStatusBar\": false,\n\t\t\"showReceipt\": true,\n\t\t\"chipReadDelay\": 500,\n\t\t\"openPosOnReboot\": \"enabled\",\n\t\t\"enableRefundLock\": true,\n\t\t\"screenTimeout\": 3000000,\n\t\t\"preferredGsmOperator\": 2,\n\t\t\"offlineMode\": \"enabled\"\n\t},\n\t\"message\": \"Merchant Terminal config queried successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Fetch Store Terminal Config",
+      "description": "Use this API to fetch all currently active configurations for the store.",
+      "reqParams": [],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "Response data.",
+          "resParams": [
+            {
+              "name": "wifiSsid",
+              "type": "string",
+              "mandatory": false,
+              "description": "Name of the WiFi network."
+            },
+            {
+              "name": "wifiPassword",
+              "type": "string",
+              "mandatory": false,
+              "description": "Password for the WiFi network."
+            },
+            {
+              "name": "autoSleep",
+              "type": "number",
+              "mandatory": false,
+              "description": "Auto sleep time for the terminal in seconds. Terminal will sleep if no transactions are received in this time period. Only applies if the terminal is running on battery."
+            },
+            {
+              "name": "preferredRestartTime",
+              "type": "string",
+              "mandatory": false,
+              "description": "Scheduled restart time for the terminal in HH:MM format. The default is 02:00am according to the device's timezone. It has a 1 hour restart window. For example, if set to 02:00am, restart could occur anytime between 02:00am and 02:59am. It is essential for the device to restart at least once every 24 hours. This might be particularly important for businesses that operate beyond the default restart time."
+            },
+            {
+              "name": "preferredNetwork",
+              "type": "string",
+              "mandatory": false,
+              "description": "Preferred network for the terminal. It can be either 'WIFI' or 'GSM'.",
+              "possibleValues": [
+                {
+                  "value": "WIFI",
+                  "description": "Sets the preferred network of the terminal as WiFi."
+                },
+                {
+                  "value": "GSM",
+                  "description": "Sets the preferred network of the terminal as GSM or mobile network."
+                }
+              ]
+            },
+            {
+              "name": "alwaysShowMinorUnits",
+              "type": "number",
+              "mandatory": false,
+              "description": "Determines how the amount is displayed on the terminal. It can be either '0' or '1'. When set to '1', the terminal will always display the minor units, even for whole numbers (e.g., 29 will be displayed as 29.00). When set to 0, the terminal will not include minor units for whole numbers."
+            },
+            {
+              "name": "language",
+              "type": "string",
+              "mandatory": false,
+              "description": "Two-letter ISO language code, in lowercase, representing the language to be displayed in the terminal. Can be 'en', 'fi', 'da', or 'se'."
+            },
+            {
+              "name": "showStatusBar",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "Determines whether the status bar is displayed on the terminal. If set 'TRUE', the terminal will display the status bar. This is applicable to SurfPad terminals."
+            },
+            {
+              "name": "chipReadDelay",
+              "type": "number",
+              "mandatory": false,
+              "description": "Time delay in milliseconds before the card is read."
+            },
+            {
+              "name": "showReceipt",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "Set this to determine how receipts are showcased on the terminal."
+            },
+            {
+              "name": "preferredGsmOperator",
+              "type": "number",
+              "mandatory": false,
+              "description": "The preferred GSM operator identified by a numeric code."
+            },
+            {
+              "name": "openPosOnReboot",
+              "type": "string",
+              "mandatory": false,
+              "description": "Indicates whether the POS system should open automatically after reboot. Possible values are 'enabled' or 'disabled'."
+            },
+            {
+              "name": "enableRefundLock",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "Determines if the refund lock screen feature is enabled on the device. This is only available for android terminals."
+            },
+            {
+              "name": "screenTimeout",
+              "type": "number",
+              "mandatory": false,
+              "description": "The duration (in milliseconds) before the screen times out due to inactivity."
+            },
+            {
+              "name": "autoSleepInterval",
+              "type": "number",
+              "mandatory": false,
+              "description": "The interval (in milliseconds) before the device automatically goes to sleep."
+            },
+            {
+              "name": "receiptScreenTimeout",
+              "type": "number",
+              "mandatory": false,
+              "description": "Timeout of the receipt screen on hardware terminals."
+            },
+            {
+              "name": "offlineMode",
+              "type": "string",
+              "mandatory": false,
+              "description": "Current offline-payments toggle for the terminal.",
+              "possibleValues": [
+                {
+                  "value": "enabled",
+                  "description": "Offline card payments are enabled."
+                },
+                {
+                  "value": "disabled",
+                  "description": "Offline card payments are disabled."
+                }
+              ]
+            },
+            {
+              "name": "displayContrast",
+              "type": "number",
+              "mandatory": false,
+              "description": "Display contrast level of the terminal screen."
+            },
+            {
+              "name": "idleScreenImageUrl",
+              "type": "string",
+              "mandatory": false,
+              "description": "URL of the image shown on the terminal idle screen."
+            },
+            {
+              "name": "lockScreenPin",
+              "type": "string",
+              "mandatory": false,
+              "description": "PIN required to unlock the terminal lock screen."
+            },
+            {
+              "name": "refundScreenPin",
+              "type": "string",
+              "mandatory": false,
+              "description": "PIN required to authorize refunds on the terminal."
+            },
+            {
+              "name": "enableLockScreen",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "Whether the terminal auto-lock screen is enabled."
+            },
+            {
+              "name": "printerConfig",
+              "type": "string",
+              "mandatory": false,
+              "description": "Printer configuration mode set for the terminal."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/merchants/:merchantId/stores/:storeId/terminals/config",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"preferredRestartTime\": \"02:00\",\n\t\t\"preferredNetwork\": \"WIFI\",\n\t\t\"wifiSsid\": \"surfboard\",\n\t\t\"wifiPassword\": \"surfboa\",\n\t\t\"language\": \"da\",\n\t\t\"autoSleep\": 400,\n\t\t\"alwaysShowMinorUnits\": 1,\n\t\t\"showStatusBar\": false,\n\t\t\"showReceipt\": true,\n\t\t\"chipReadDelay\": 500,\n\t\t\"openPosOnReboot\": \"enabled\",\n\t\t\"enableRefundLock\": true,\n\t\t\"screenTimeout\": 3000000,\n\t\t\"preferredGsmOperator\": 2,\n\t\t\"offlineMode\": \"enabled\"\n\t},\n\t\"message\": \"Store Terminal config queried successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Fetch Terminal by ID",
+      "description": "Retrieves information about a specific terminal. Use this API to get information regarding a particular terminal registered under a merchant.",
+      "reqParams": [],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "Response data.",
+          "resParams": [
+            {
+              "name": "terminalId",
+              "type": "string",
+              "description": "Terminal ID of the terminal."
+            },
+            {
+              "name": "terminalType",
+              "type": "string",
+              "description": "Describes the type of the terminal.",
+              "possibleValues": [
+                {
+                  "value": "surfpad",
+                  "description": "Hardware terminal with a physical keypad."
+                },
+                {
+                  "value": "surftouch",
+                  "description": "Android terminal with custom payment apps, digital receipts etc."
+                },
+                {
+                  "value": "surfprint",
+                  "description": "Android terminal with a built-in printer."
+                },
+                {
+                  "value": "checkoutPro",
+                  "description": "Complete checkout solution with a customer facing screen."
+                },
+                {
+                  "value": "checkoutX",
+                  "description": "Software checkout solution for NFC-enabled Android devices to accept contactless card payments."
+                },
+                {
+                  "value": "PaymentPage",
+                  "description": "In this mode, the payment page and all associated configuration is managed by Surfboard."
+                },
+                {
+                  "value": "SelfHostedPage",
+                  "description": "With SelfHostedPage, Surfboard renders the fields in your page."
+                },
+                {
+                  "value": "iFrame",
+                  "description": "Online terminal rendered as an embeddable iFrame."
+                },
+                {
+                  "value": "MerchantInitiated",
+                  "description": "Set this type if you want to accept Merchant Initiated Transactions (MIT)."
+                }
+              ]
+            },
+            {
+              "name": "softwareVersion",
+              "type": "string",
+              "description": "Software version of the terminal."
+            },
+            {
+              "name": "osType",
+              "type": "string",
+              "description": "Describes the type of Operating System (OS) running on the terminal.",
+              "possibleValues": [
+                {
+                  "value": "android",
+                  "description": "Android operating system."
+                },
+                {
+                  "value": "ios",
+                  "description": "Apple's operating system for iPhones."
+                },
+                {
+                  "value": "sb_firmware",
+                  "description": "Surfboard firmware."
+                }
+              ]
+            },
+            {
+              "name": "osVersion",
+              "type": "string",
+              "description": "Operating System (OS) version of the terminal."
+            },
+            {
+              "name": "deviceVendor",
+              "type": "string",
+              "description": "Device vendor of the terminal."
+            },
+            {
+              "name": "deviceModel",
+              "type": "string",
+              "description": "Device model of the terminal."
+            },
+            {
+              "name": "serialNo",
+              "type": "string",
+              "description": "Serial number of the terminal."
+            },
+            {
+              "name": "storeId",
+              "type": "string",
+              "description": "The Store ID of the store under which the terminal is registered."
+            },
+            {
+              "name": "linkedTerminalId",
+              "type": "string",
+              "description": "The Terminal ID of another terminal to which the current terminal is linked."
+            },
+            {
+              "name": "terminalStatus",
+              "type": "string",
+              "description": "Status of the terminal, it can be in one of these states: REGISTERED | ACTIVE | IN_ACTIVE | DE_REGISTERED."
+            },
+            {
+              "name": "terminalPaymentMethods",
+              "type": "string",
+              "description": "Payment methods supported by the terminal."
+            },
+            {
+              "name": "startDate",
+              "type": "string",
+              "description": "Timestamp at which the terminal was created."
+            },
+            {
+              "name": "terminalName",
+              "type": "string",
+              "description": "Name of the terminal used as a reference for users."
+            },
+            {
+              "name": "lastAliveAt",
+              "type": "string",
+              "description": "Time at which the terminal was last seen online."
+            },
+            {
+              "name": "isCharging",
+              "type": "boolean",
+              "description": "A boolean value that denotes if the terminal is charging or not."
+            },
+            {
+              "name": "batteryPercentage",
+              "type": "number",
+              "description": "Battery percentage of the terminal."
+            },
+            {
+              "name": "powerSource",
+              "type": "string",
+              "description": "Current power source to the terminal.",
+              "possibleValues": [
+                {
+                  "value": "EXTERNAL_POWER",
+                  "description": "Connected to an external power source."
+                },
+                {
+                  "value": "BATTERY",
+                  "description": "Charging via battery source."
+                }
+              ]
+            },
+            {
+              "name": "deviceNetwork",
+              "type": "string",
+              "description": "The current mode of communication.",
+              "possibleValues": [
+                {
+                  "value": "WIFI",
+                  "description": "The terminal is connected to WIFI."
+                },
+                {
+                  "value": "GSM",
+                  "description": "The terminal is connected to GSM."
+                }
+              ]
+            },
+            {
+              "name": "turnOnTime",
+              "type": "string",
+              "description": "Last boot up time of terminal."
+            },
+            {
+              "name": "terminalPublicKey",
+              "type": "string",
+              "description": "Public key used while initializing the SelfHostedPage Online Terminal (Online SDK)."
+            },
+            {
+              "name": "metadata",
+              "type": "object",
+              "mandatory": false,
+              "description": "Arbitrary key-value metadata stored against the terminal."
+            },
+            {
+              "name": "wifiStrength",
+              "type": "number",
+              "mandatory": false,
+              "description": "Wi-Fi signal strength reported by the terminal."
+            },
+            {
+              "name": "gsmStrength",
+              "type": "number",
+              "mandatory": false,
+              "description": "GSM signal strength reported by the terminal."
+            },
+            {
+              "name": "signalStrength",
+              "type": "number",
+              "mandatory": false,
+              "description": "Overall network signal strength reported by the terminal."
+            },
+            {
+              "name": "softwareMode",
+              "type": "string",
+              "mandatory": false,
+              "description": "Software mode the terminal is running in."
+            },
+            {
+              "name": "sdkUrl",
+              "type": "string",
+              "mandatory": false,
+              "description": "SDK URL associated with the terminal."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/terminals/:terminalId",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"terminalId\": \"81f878852b3a280904\",\n    \"terminalType\": \"surfpad\",\n    \"softwareVersion\": \"0.0.0\",\n    \"osType\": \"sb_firmware\",\n    \"osVersion\": \"0.0.0\",\n    \"deviceVendor\": \"Datecs\",\n    \"deviceModel\": \"Datecs PinPad\",\n    \"serialNo\": \"2922000007\",\n    \"storeId\": \"81497439a52270000f\",\n    \"linkedTerminalId\": null,\n    \"terminalStatus\": \"ACTIVE\",\n    \"startDate\": \"2022-11-17T09:29:51.427Z\",\n    \"terminalPaymentMethods\": [\n      \"CARD\"\n    ],\n    \"terminalName\": \"My Terminal\",\n    \"lastAliveAt\": \"2024-02-21T08:48:26.000Z\",\n    \"isCharging\": false,\n    \"batteryPercentage\": 100,\n    \"powerSource\": \"BATTERY\",\n    \"deviceNetwork\": \"WIFI\",\n    \"turnOnTime\": \"2024-02-21T05:14:33.417Z\"\n  },\n  \"message\": \"Fetched terminal details successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Fetch APN List",
+      "description": "Retrieves the list of APNs of the terminal. The terminal has to be active for a successful read, and the response will be received in exactly 10 seconds.",
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "Response data.",
+          "resParams": [
+            {
+              "name": "apns",
+              "type": "array",
+              "description": "An array of strings depicting all APNs of the terminal."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/apns",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"apns\": [\n      \"WIFI1\",\n      \"WIFI2\"\n    ]\n  }\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Get Interapp Code",
+      "description": "Use this API to generate the registration code used for interapp registration.",
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "mandatory": true,
+          "description": "Response data.",
+          "resParams": [
+            {
+              "name": "registrationCode",
+              "type": "string",
+              "mandatory": true,
+              "description": "Returns the registration code for interapp. This code is valid for 120 seconds."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/merchants/:merchantId/stores/:storeId/terminals/interapp",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"registrationCode\": \"v_Z37lV0JatqBvou\"\n  },\n  \"message\": \"Inter app code generated Successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Get Interapp Details",
+      "description": "Fetches the current status of the interapp registration for a terminal.",
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "mandatory": true,
+          "resParams": [
+            {
+              "name": "registrationStatus",
+              "type": "string",
+              "mandatory": true,
+              "description": "Denotes the registration status of the terminal.",
+              "possibleValues": [
+                {
+                  "value": "REGISTERED",
+                  "description": "Interapp registration successful."
+                },
+                {
+                  "value": "NOT_REGISTERED",
+                  "description": "Terminal not registered yet."
+                }
+              ]
+            },
+            {
+              "name": "terminalId",
+              "type": "string",
+              "mandatory": true,
+              "description": "Terminal ID of the registered terminal."
+            },
+            {
+              "name": "terminalName",
+              "type": "string",
+              "mandatory": false,
+              "description": "The name assigned to the registered terminal."
+            },
+            {
+              "name": "softwareMode",
+              "type": "string",
+              "mandatory": false,
+              "description": "The software mode the terminal is running in."
+            }
+          ],
+          "description": "Interapp registration details returned for the terminal."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/merchants/:merchantId/stores/:storeId/terminals/interapp/:registrationCode",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"registrationStatus\": \"REGISTERED\",\n    \"terminalId\": \"81f878852b3a280904\",\n    \"terminalName\": \"Front Desk Terminal\",\n    \"softwareMode\": \"online\"\n  },\n  \"message\": \"Terminal details fetched successfully.\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Get Entry Code",
+      "new": true,
+      "description": "Generates an entry code for a terminal under a merchant's store. Use this API to obtain the entry code, its registration code identifier, and the validity window for the terminal.",
+      "reqParams": [],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "Response data.",
+          "resParams": [
+            {
+              "name": "registrationCodeId",
+              "type": "string",
+              "description": "Identifier of the registration code associated with the entry code."
+            },
+            {
+              "name": "validUntil",
+              "type": "string",
+              "description": "Lifetime of the entry code in seconds, returned as a string."
+            },
+            {
+              "name": "entryCode",
+              "type": "string",
+              "description": "The generated entry code for the terminal."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/entry-code",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"registrationCodeId\": \"81f878852b3a280904\",\n    \"validUntil\": \"120\",\n    \"entryCode\": \"905788\"\n  },\n  \"message\": \"Fetched entry code\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Query Terminals Under Merchant",
+      "new": true,
+      "pagination": true,
+      "description": "Retrieves all the terminals registered under a merchant. Use this API to list every terminal associated with the merchant. You can optionally filter the results by terminal type.",
+      "query": "To filter the terminals by type send in terminalType as a query param. This endpoint is paginated. Send the x-page-number request header to page through the results (default 1). Each response returns the x-total-items header (total number of matching records) and the x-page-number header (the page that was served).",
+      "reqParams": [
+        {
+          "name": "terminalType",
+          "type": "string",
+          "mandatory": false,
+          "description": "Filters the terminals by type. For example 'surfpad', 'surftouch', 'surfprint', 'checkoutPro', 'checkoutX' or 'iFrame'."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "array",
+          "description": "Response data.",
+          "resParams": [
+            {
+              "name": "terminalId",
+              "type": "string",
+              "description": "Terminal ID of the terminal."
+            },
+            {
+              "name": "terminalType",
+              "type": "string",
+              "description": "Describes the type of the terminal, for example 'surfpad', 'surftouch', 'surfprint', 'checkoutPro', 'checkoutX' or 'iFrame'."
+            },
+            {
+              "name": "softwareVersion",
+              "type": "string",
+              "description": "Software version of the terminal."
+            },
+            {
+              "name": "osType",
+              "type": "string",
+              "description": "Describes the type of Operating System (OS) running on the terminal."
+            },
+            {
+              "name": "osVersion",
+              "type": "string",
+              "description": "Operating System (OS) version of the terminal."
+            },
+            {
+              "name": "deviceVendor",
+              "type": "string",
+              "description": "Device vendor of the terminal."
+            },
+            {
+              "name": "deviceModel",
+              "type": "string",
+              "description": "Device model of the terminal."
+            },
+            {
+              "name": "serialNo",
+              "type": "string",
+              "description": "Serial number of the terminal."
+            },
+            {
+              "name": "lastAliveAt",
+              "type": "string",
+              "mandatory": false,
+              "description": "Timestamp of the last time the terminal was seen alive."
+            },
+            {
+              "name": "isCharging",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "Whether the terminal is currently charging."
+            },
+            {
+              "name": "batteryPercentage",
+              "type": "number",
+              "mandatory": false,
+              "description": "Current battery charge level of the terminal, as a percentage."
+            },
+            {
+              "name": "wifiStrength",
+              "type": "number",
+              "mandatory": false,
+              "description": "Wi-Fi signal strength of the terminal."
+            },
+            {
+              "name": "gsmStrength",
+              "type": "number",
+              "mandatory": false,
+              "description": "GSM signal strength of the terminal."
+            },
+            {
+              "name": "powerSource",
+              "type": "string",
+              "mandatory": false,
+              "description": "Power source the terminal is currently using."
+            },
+            {
+              "name": "deviceNetwork",
+              "type": "string",
+              "mandatory": false,
+              "description": "Network the terminal device is connected to."
+            },
+            {
+              "name": "turnOnTime",
+              "type": "string",
+              "mandatory": false,
+              "description": "Timestamp of when the terminal was last turned on."
+            },
+            {
+              "name": "softwareMode",
+              "type": "string",
+              "mandatory": false,
+              "description": "The software mode the terminal is running in."
+            },
+            {
+              "name": "terminalPublicKey",
+              "type": "string",
+              "mandatory": false,
+              "description": "The public key of the terminal."
+            },
+            {
+              "name": "signalStrength",
+              "type": "number",
+              "mandatory": false,
+              "description": "Overall signal strength reported by the terminal."
+            },
+            {
+              "name": "sdkUrl",
+              "type": "string",
+              "mandatory": false,
+              "description": "The SDK server URL, present for self-hosted SDK terminals."
+            },
+            {
+              "name": "storeId",
+              "type": "string",
+              "description": "The Store ID of the store under which the terminal is registered."
+            },
+            {
+              "name": "linkedTerminalId",
+              "type": "string",
+              "description": "The Terminal ID of another terminal to which the current terminal is linked."
+            },
+            {
+              "name": "terminalStatus",
+              "type": "string",
+              "description": "Status of the terminal, it can be in one of these states: REGISTERED | ACTIVE | IN_ACTIVE | DE_REGISTERED."
+            },
+            {
+              "name": "startDate",
+              "type": "string",
+              "description": "Timestamp at which the terminal was created."
+            },
+            {
+              "name": "terminalPaymentMethods",
+              "type": "string",
+              "description": "Payment methods supported by the terminal."
+            },
+            {
+              "name": "terminalName",
+              "type": "string",
+              "description": "Name of the terminal used as a reference for users."
+            },
+            {
+              "name": "terminalCurrencyCode",
+              "type": "string",
+              "description": "Currency code associated with the terminal."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/merchants/:merchantId/terminals",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            },
+            {
+              "name": "x-page-number",
+              "value": "1",
+              "mandatory": false
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": [\n    {\n      \"terminalId\": \"81f878852b3a280904\",\n      \"terminalType\": \"surfpad\",\n      \"serialNo\": \"2922000007\",\n      \"storeId\": \"81497439a52270000f\",\n      \"terminalStatus\": \"ACTIVE\",\n      \"terminalName\": \"My Terminal\",\n      \"terminalCurrencyCode\": \"NA\"\n    }\n  ],\n  \"message\": \"Fetched terminals successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Fetch Terminal by ID under Store",
+      "new": true,
+      "description": "Retrieves information about a specific terminal registered under a merchant's store. Use this API to get the details of a particular terminal scoped to a store.",
+      "reqParams": [],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "Response data.",
+          "resParams": [
+            {
+              "name": "terminalId",
+              "type": "string",
+              "description": "Terminal ID of the terminal."
+            },
+            {
+              "name": "terminalType",
+              "type": "string",
+              "description": "Describes the type of the terminal.",
+              "possibleValues": [
+                {
+                  "value": "surfpad",
+                  "description": "Hardware terminal with a physical keypad."
+                },
+                {
+                  "value": "surftouch",
+                  "description": "Android terminal with custom payment apps, digital receipts etc."
+                },
+                {
+                  "value": "surfprint",
+                  "description": "Android terminal with a built-in printer."
+                },
+                {
+                  "value": "checkoutPro",
+                  "description": "Complete checkout solution with a customer facing screen."
+                },
+                {
+                  "value": "checkoutX",
+                  "description": "Software checkout solution for NFC-enabled Android devices to accept contactless card payments."
+                },
+                {
+                  "value": "PaymentPage",
+                  "description": "In this mode, the payment page and all associated configuration is managed by Surfboard."
+                },
+                {
+                  "value": "SelfHostedPage",
+                  "description": "With SelfHostedPage, Surfboard renders the fields in your page."
+                },
+                {
+                  "value": "iFrame",
+                  "description": "Online terminal rendered as an embeddable iFrame."
+                },
+                {
+                  "value": "MerchantInitiated",
+                  "description": "Set this type if you want to accept Merchant Initiated Transactions (MIT)."
+                }
+              ]
+            },
+            {
+              "name": "softwareVersion",
+              "type": "string",
+              "description": "Software version of the terminal."
+            },
+            {
+              "name": "osType",
+              "type": "string",
+              "description": "Describes the type of Operating System (OS) running on the terminal.",
+              "possibleValues": [
+                {
+                  "value": "android",
+                  "description": "Android operating system."
+                },
+                {
+                  "value": "ios",
+                  "description": "Apple's operating system for iPhones."
+                },
+                {
+                  "value": "sb_firmware",
+                  "description": "Surfboard firmware."
+                }
+              ]
+            },
+            {
+              "name": "osVersion",
+              "type": "string",
+              "description": "Operating System (OS) version of the terminal."
+            },
+            {
+              "name": "deviceVendor",
+              "type": "string",
+              "description": "Device vendor of the terminal."
+            },
+            {
+              "name": "deviceModel",
+              "type": "string",
+              "description": "Device model of the terminal."
+            },
+            {
+              "name": "serialNo",
+              "type": "string",
+              "description": "Serial number of the terminal."
+            },
+            {
+              "name": "storeId",
+              "type": "string",
+              "description": "The Store ID of the store under which the terminal is registered."
+            },
+            {
+              "name": "linkedTerminalId",
+              "type": "string",
+              "description": "The Terminal ID of another terminal to which the current terminal is linked."
+            },
+            {
+              "name": "terminalStatus",
+              "type": "string",
+              "description": "Status of the terminal, it can be in one of these states: REGISTERED | ACTIVE | IN_ACTIVE | DE_REGISTERED."
+            },
+            {
+              "name": "terminalPaymentMethods",
+              "type": "string",
+              "description": "Payment methods supported by the terminal."
+            },
+            {
+              "name": "startDate",
+              "type": "string",
+              "description": "Timestamp at which the terminal was created."
+            },
+            {
+              "name": "terminalName",
+              "type": "string",
+              "description": "Name of the terminal used as a reference for users."
+            },
+            {
+              "name": "lastAliveAt",
+              "type": "string",
+              "description": "Time at which the terminal was last seen online."
+            },
+            {
+              "name": "isCharging",
+              "type": "boolean",
+              "description": "A boolean value that denotes if the terminal is charging or not."
+            },
+            {
+              "name": "batteryPercentage",
+              "type": "number",
+              "description": "Battery percentage of the terminal."
+            },
+            {
+              "name": "powerSource",
+              "type": "string",
+              "description": "Current power source to the terminal.",
+              "possibleValues": [
+                {
+                  "value": "EXTERNAL_POWER",
+                  "description": "Connected to an external power source."
+                },
+                {
+                  "value": "BATTERY",
+                  "description": "Charging via battery source."
+                }
+              ]
+            },
+            {
+              "name": "deviceNetwork",
+              "type": "string",
+              "description": "The current mode of communication.",
+              "possibleValues": [
+                {
+                  "value": "WIFI",
+                  "description": "The terminal is connected to WIFI."
+                },
+                {
+                  "value": "GSM",
+                  "description": "The terminal is connected to GSM."
+                }
+              ]
+            },
+            {
+              "name": "turnOnTime",
+              "type": "string",
+              "description": "Last boot up time of terminal."
+            },
+            {
+              "name": "terminalPublicKey",
+              "type": "string",
+              "description": "Public key used while initializing the SelfHostedPage Online Terminal (Online SDK)."
+            },
+            {
+              "name": "metadata",
+              "type": "object",
+              "description": "Arbitrary key-value metadata stored against the terminal."
+            },
+            {
+              "name": "wifiStrength",
+              "type": "number",
+              "mandatory": false,
+              "description": "Wi-Fi signal strength reported by the terminal."
+            },
+            {
+              "name": "gsmStrength",
+              "type": "number",
+              "mandatory": false,
+              "description": "GSM signal strength reported by the terminal."
+            },
+            {
+              "name": "signalStrength",
+              "type": "number",
+              "mandatory": false,
+              "description": "Overall network signal strength reported by the terminal."
+            },
+            {
+              "name": "softwareMode",
+              "type": "string",
+              "mandatory": false,
+              "description": "Software mode the terminal is running in."
+            },
+            {
+              "name": "sdkUrl",
+              "type": "string",
+              "mandatory": false,
+              "description": "SDK URL associated with the terminal."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"terminalId\": \"81f878852b3a280904\",\n    \"terminalType\": \"surfpad\",\n    \"softwareVersion\": \"0.0.0\",\n    \"osType\": \"sb_firmware\",\n    \"osVersion\": \"0.0.0\",\n    \"deviceVendor\": \"Datecs\",\n    \"deviceModel\": \"Datecs PinPad\",\n    \"serialNo\": \"2922000007\",\n    \"storeId\": \"81497439a52270000f\",\n    \"linkedTerminalId\": null,\n    \"terminalStatus\": \"ACTIVE\",\n    \"startDate\": \"2022-11-17T09:29:51.427Z\",\n    \"terminalPaymentMethods\": [\n      \"CARD\"\n    ],\n    \"terminalName\": \"My Terminal\",\n    \"lastAliveAt\": \"2024-02-21T08:48:26.000Z\",\n    \"isCharging\": false,\n    \"batteryPercentage\": 100,\n    \"powerSource\": \"BATTERY\",\n    \"deviceNetwork\": \"WIFI\",\n    \"turnOnTime\": \"2024-02-21T05:14:33.417Z\"\n  },\n  \"message\": \"Fetched terminal details successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Deactivate Terminal under Store",
+      "new": true,
+      "description": "Removes a terminal from a merchant's store. Use this API to deregister a terminal scoped to a specific store. You cannot reuse this terminal for another merchant, but you can use the Change Terminal Store API to move it to another store under the same merchant.",
+      "reqParams": [],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the terminal removal."
+        }
+      ],
+      "method": "DELETE",
+      "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"message\": \"Terminal removed from store\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Change Terminal Store",
+      "new": true,
+      "description": "Changes the store to which a terminal is registered under a merchant. Use this API to move a terminal to another store created under the same merchant. The Terminal ID remains unchanged.",
+      "reqParams": [
+        {
+          "name": "storeId",
+          "type": "string",
+          "mandatory": false,
+          "description": "Store ID of the destination store the terminal is moved to."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the store change."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the store change."
+        }
+      ],
+      "method": "POST",
+      "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/change",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ],
+          "body": "{\n  \"storeId\": \"st_GZVDbwmS86_G9pwc669U2\"\n}"
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"message\": \"Store successfully changed for the terminal\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Query Partner Terminal Configs",
+      "new": true,
+      "description": "Retrieves the allowed external software versions for a partner. Use this API to fetch the configurations applicable at the partner, merchant, store, or terminal scope. The scope is selected based on the query param provided, in priority order: terminalId, then storeId, then merchantId, otherwise the partner scope.",
+      "query": "To select the config scope, send in terminalId, storeId or merchantId as a query param.",
+      "reqParams": [
+        {
+          "name": "terminalId",
+          "type": "string",
+          "mandatory": false,
+          "description": "Selects the TERMINAL config scope. This has the highest priority."
+        },
+        {
+          "name": "storeId",
+          "type": "string",
+          "mandatory": false,
+          "description": "Selects the STORE config scope when terminalId is absent."
+        },
+        {
+          "name": "merchantId",
+          "type": "string",
+          "mandatory": false,
+          "description": "Selects the MERCHANT config scope when terminalId and storeId are absent. When none of these are provided, the scope defaults to PARTNER."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "Response data.",
+          "resParams": [
+            {
+              "name": "allowedExternalSoftwareVersions",
+              "type": "array",
+              "description": "List of allowed external software versions. Defaults to an empty array when none are configured.",
+              "resParams": [
+                {
+                  "name": "type",
+                  "type": "string",
+                  "description": "Type of the external software."
+                },
+                {
+                  "name": "version",
+                  "type": "string",
+                  "description": "Version of the external software."
+                },
+                {
+                  "name": "softwareId",
+                  "type": "string",
+                  "description": "Identifier of the external software."
+                },
+                {
+                  "name": "minVersion",
+                  "type": "string",
+                  "description": "Minimum supported version of the external software."
+                },
+                {
+                  "name": "isPos",
+                  "type": "boolean",
+                  "description": "Indicates whether the software is a POS application."
+                },
+                {
+                  "name": "terminalType",
+                  "type": "string",
+                  "description": "Terminal type the software applies to."
+                },
+                {
+                  "name": "deviceType",
+                  "type": "string",
+                  "description": "Device type the software applies to."
+                },
+                {
+                  "name": "overrideLevel",
+                  "type": "string",
+                  "description": "Scope at which the configuration is overridden."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/partners/:partnerId/terminal-configs",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"allowedExternalSoftwareVersions\": [\n      {\n        \"type\": \"pos\",\n        \"version\": \"1.2.0\",\n        \"softwareId\": \"81fa6b2d8d5dc8040e\",\n        \"minVersion\": \"1.0.0\",\n        \"isPos\": true,\n        \"terminalType\": \"surftouch\",\n        \"deviceType\": \"android\",\n        \"overrideLevel\": \"PARTNER\"\n      }\n    ]\n  },\n  \"message\": \"Terminal configs fetched successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Fetch Partner Terminal Config",
+      "new": true,
+      "description": "Use this API to fetch all currently active terminal configurations for the partner.",
+      "reqParams": [],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "Response data.",
+          "resParams": [
+            {
+              "name": "preferredRestartTime",
+              "type": "string",
+              "mandatory": false,
+              "description": "Scheduled restart time for the terminal in HH:MM format. The default is 02:00am according to the device's timezone. It has a 1 hour restart window. For example, if set to 02:00am, restart could occur anytime between 02:00am and 02:59am. It is essential for the device to restart at least once every 24 hours. This might be particularly important for businesses that operate beyond the default restart time."
+            },
+            {
+              "name": "idleScreenImageUrl",
+              "type": "string",
+              "mandatory": false,
+              "description": "URL of the image displayed on the idle screen of the terminal."
+            },
+            {
+              "name": "preferredNetwork",
+              "type": "string",
+              "mandatory": false,
+              "description": "Preferred network for the terminal. It can be either 'WIFI' or 'GSM'."
+            },
+            {
+              "name": "wifiSsid",
+              "type": "string",
+              "mandatory": false,
+              "description": "Name of the WiFi network."
+            },
+            {
+              "name": "wifiPassword",
+              "type": "string",
+              "mandatory": false,
+              "description": "Password for the WiFi network."
+            },
+            {
+              "name": "language",
+              "type": "string",
+              "mandatory": false,
+              "description": "Two-letter ISO language code, in lowercase, representing the language to be displayed in the terminal. Can be 'en', 'fi', 'da', or 'se'."
+            },
+            {
+              "name": "autoSleep",
+              "type": "number",
+              "mandatory": false,
+              "description": "Auto sleep time for the terminal in seconds. Terminal will sleep if no transactions are received in this time period. Only applies if the terminal is running on battery."
+            },
+            {
+              "name": "alwaysShowMinorUnits",
+              "type": "number",
+              "mandatory": false,
+              "description": "Determines how the amount is displayed on the terminal. It can be either '0' or '1'. When set to '1', the terminal will always display the minor units, even for whole numbers (e.g., 29 will be displayed as 29.00). When set to 0, the terminal will not include minor units for whole numbers."
+            },
+            {
+              "name": "showStatusBar",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "Determines whether the status bar is displayed on the terminal. If set 'TRUE', the terminal will display the status bar. This is applicable to SurfPad terminals."
+            },
+            {
+              "name": "showReceipt",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "Set this to determine how receipts are showcased on the terminal."
+            },
+            {
+              "name": "chipReadDelay",
+              "type": "number",
+              "mandatory": false,
+              "description": "Time delay in milliseconds before the card is read."
+            },
+            {
+              "name": "openPosOnReboot",
+              "type": "string",
+              "mandatory": false,
+              "description": "Indicates whether the POS system should open automatically after reboot. Possible values are 'enabled' or 'disabled'."
+            },
+            {
+              "name": "lockScreenPin",
+              "type": "string",
+              "mandatory": false,
+              "description": "PIN code used to unlock the terminal's lock screen."
+            },
+            {
+              "name": "refundScreenPin",
+              "type": "string",
+              "mandatory": false,
+              "description": "PIN code used to authorize refunds on the terminal."
+            },
+            {
+              "name": "screenTimeout",
+              "type": "number",
+              "mandatory": false,
+              "description": "The duration (in milliseconds) before the screen times out due to inactivity."
+            },
+            {
+              "name": "autoSleepInterval",
+              "type": "number",
+              "mandatory": false,
+              "description": "The interval (in milliseconds) before the device automatically goes to sleep."
+            },
+            {
+              "name": "preferredGsmOperator",
+              "type": "number",
+              "mandatory": false,
+              "description": "The preferred GSM operator identified by a numeric code."
+            },
+            {
+              "name": "enableRefundLock",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "Determines if the refund lock screen feature is enabled on the device. This is only available for android terminals."
+            },
+            {
+              "name": "enableLockScreen",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "Determines whether the lock screen is enabled on the terminal."
+            },
+            {
+              "name": "printerConfig",
+              "type": "string",
+              "mandatory": false,
+              "description": "Printer configuration mode set for the terminal."
+            },
+            {
+              "name": "receiptScreenTimeout",
+              "type": "number",
+              "mandatory": false,
+              "description": "Timeout of the receipt screen on hardware terminals."
+            },
+            {
+              "name": "offlineMode",
+              "type": "string",
+              "mandatory": false,
+              "description": "Current offline-payments toggle for the terminal.",
+              "possibleValues": [
+                {
+                  "value": "enabled",
+                  "description": "Offline card payments are enabled."
+                },
+                {
+                  "value": "disabled",
+                  "description": "Offline card payments are disabled."
+                }
+              ]
+            },
+            {
+              "name": "displayContrast",
+              "type": "number",
+              "mandatory": false,
+              "description": "Display contrast level of the terminal screen."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/partners/:partnerId/terminals/config",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"preferredRestartTime\": \"02:00\",\n    \"preferredNetwork\": \"WIFI\",\n    \"wifiSsid\": \"surfboard\",\n    \"wifiPassword\": \"surfboa\",\n    \"language\": \"da\",\n    \"autoSleep\": 400,\n    \"alwaysShowMinorUnits\": 1,\n    \"showStatusBar\": false,\n    \"showReceipt\": true,\n    \"chipReadDelay\": 500,\n    \"openPosOnReboot\": \"enabled\",\n    \"screenTimeout\": 3000000,\n    \"preferredGsmOperator\": 2,\n    \"enableRefundLock\": true\n  },\n  \"message\": \"Partner Terminal config queried successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Query Terminals Under Partner",
+      "new": true,
+      "pagination": true,
+      "description": "Retrieves the terminals registered under a partner. Use this API to look up a terminal by its Terminal ID or serial number. When the path value is longer than 13 characters it is treated as a Terminal ID, otherwise it is treated as a serial number.",
+      "reqParams": [],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "array",
+          "description": "Response data.",
+          "resParams": [
+            {
+              "name": "terminalId",
+              "type": "string",
+              "description": "Terminal ID of the terminal."
+            },
+            {
+              "name": "terminalType",
+              "type": "string",
+              "description": "Describes the type of the terminal, for example 'surfpad', 'surftouch', 'surfprint', 'checkoutPro', 'checkoutX' or 'iFrame'."
+            },
+            {
+              "name": "softwareVersion",
+              "type": "string",
+              "description": "Software version of the terminal."
+            },
+            {
+              "name": "osType",
+              "type": "string",
+              "description": "Describes the type of Operating System (OS) running on the terminal."
+            },
+            {
+              "name": "osVersion",
+              "type": "string",
+              "description": "Operating System (OS) version of the terminal."
+            },
+            {
+              "name": "deviceVendor",
+              "type": "string",
+              "description": "Device vendor of the terminal."
+            },
+            {
+              "name": "deviceModel",
+              "type": "string",
+              "description": "Device model of the terminal."
+            },
+            {
+              "name": "serialNo",
+              "type": "string",
+              "description": "Serial number of the terminal."
+            },
+            {
+              "name": "lastAliveAt",
+              "type": "string",
+              "mandatory": false,
+              "description": "Timestamp of the last time the terminal was seen alive."
+            },
+            {
+              "name": "isCharging",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "Whether the terminal is currently charging."
+            },
+            {
+              "name": "batteryPercentage",
+              "type": "number",
+              "mandatory": false,
+              "description": "Current battery charge level of the terminal, as a percentage."
+            },
+            {
+              "name": "wifiStrength",
+              "type": "number",
+              "mandatory": false,
+              "description": "Wi-Fi signal strength of the terminal."
+            },
+            {
+              "name": "gsmStrength",
+              "type": "number",
+              "mandatory": false,
+              "description": "GSM signal strength of the terminal."
+            },
+            {
+              "name": "powerSource",
+              "type": "string",
+              "mandatory": false,
+              "description": "Power source the terminal is currently using."
+            },
+            {
+              "name": "deviceNetwork",
+              "type": "string",
+              "mandatory": false,
+              "description": "Network the terminal device is connected to."
+            },
+            {
+              "name": "turnOnTime",
+              "type": "string",
+              "mandatory": false,
+              "description": "Timestamp of when the terminal was last turned on."
+            },
+            {
+              "name": "softwareMode",
+              "type": "string",
+              "mandatory": false,
+              "description": "The software mode the terminal is running in."
+            },
+            {
+              "name": "terminalPublicKey",
+              "type": "string",
+              "mandatory": false,
+              "description": "The public key of the terminal."
+            },
+            {
+              "name": "signalStrength",
+              "type": "number",
+              "mandatory": false,
+              "description": "Overall signal strength reported by the terminal."
+            },
+            {
+              "name": "sdkUrl",
+              "type": "string",
+              "mandatory": false,
+              "description": "The SDK server URL, present for self-hosted SDK terminals."
+            },
+            {
+              "name": "storeId",
+              "type": "string",
+              "description": "The Store ID of the store under which the terminal is registered."
+            },
+            {
+              "name": "linkedTerminalId",
+              "type": "string",
+              "description": "The Terminal ID of another terminal to which the current terminal is linked."
+            },
+            {
+              "name": "terminalStatus",
+              "type": "string",
+              "description": "Status of the terminal, it can be in one of these states: REGISTERED | ACTIVE | IN_ACTIVE | DE_REGISTERED."
+            },
+            {
+              "name": "startDate",
+              "type": "string",
+              "description": "Timestamp at which the terminal was created."
+            },
+            {
+              "name": "terminalPaymentMethods",
+              "type": "string",
+              "description": "Payment methods supported by the terminal."
+            },
+            {
+              "name": "terminalName",
+              "type": "string",
+              "description": "Name of the terminal used as a reference for users."
+            },
+            {
+              "name": "merchantId",
+              "type": "string",
+              "description": "The Merchant ID of the merchant under which the terminal is registered."
+            },
+            {
+              "name": "terminalCurrencyCode",
+              "type": "string",
+              "description": "Currency code associated with the terminal."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/partners/:partnerId/terminals/:terminalId",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "x-page-number",
+              "value": "1",
+              "mandatory": false
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": [\n    {\n      \"terminalId\": \"81f878852b3a280904\",\n      \"terminalType\": \"surfpad\",\n      \"serialNo\": \"2922000007\",\n      \"storeId\": \"81497439a52270000f\",\n      \"terminalStatus\": \"ACTIVE\",\n      \"terminalName\": \"My Terminal\",\n      \"merchantId\": \"81fa6b2d8d5dc8040e\",\n      \"terminalCurrencyCode\": \"NA\"\n    }\n  ],\n  \"message\": \"Fetched terminals successfully\"\n}"
+          }
+        ]
+      },
+      "query": "This endpoint is paginated. Send the x-page-number request header to page through the results (default 1). Each response returns the x-total-items header (total number of matching records) and the x-page-number header (the page that was served)."
+    },
+    {
+      "heading": "Update Partner Terminal Config",
+      "new": true,
+      "description": "Sets terminal configuration for the terminals under a partner. All config fields are optional and only the provided ones are applied.",
+      "reqParams": [
+        {
+          "name": "preferredRestartTime",
+          "type": "string",
+          "mandatory": false,
+          "description": "Scheduled restart time for the terminal in HH:MM format. The default is 02:00am according to the device's timezone. It has a 1 hour restart window. For example, if set to 02:00am, restart could occur anytime between 02:00am and 02:59am. It is essential for the device to restart at least once every 24 hours."
+        },
+        {
+          "name": "idleScreenImageUrl",
+          "type": "string",
+          "mandatory": false,
+          "description": "URL of the image displayed on the idle screen of the terminal."
+        },
+        {
+          "name": "autoSleep",
+          "type": "number",
+          "mandatory": false,
+          "description": "Auto sleep time for the terminal in seconds. Terminal will sleep if no transactions are received in this time period. Only applies if the terminal is running on battery."
+        },
+        {
+          "name": "showStatusBar",
+          "type": "boolean",
+          "mandatory": false,
+          "description": "Determines whether the status bar is displayed on the terminal. If set 'TRUE', the terminal will display the status bar. This is applicable to SurfPad terminals."
+        },
+        {
+          "name": "screenTimeout",
+          "type": "number",
+          "mandatory": false,
+          "description": "The duration (in milliseconds) before the screen times out due to inactivity."
+        },
+        {
+          "name": "autoSleepInterval",
+          "type": "number",
+          "mandatory": false,
+          "description": "The interval (in milliseconds) before the device automatically goes to sleep."
+        },
+        {
+          "name": "printerConfig",
+          "type": "string",
+          "mandatory": false,
+          "description": "Printer configuration mode for the terminal."
+        },
+        {
+          "name": "receiptScreenTimeout",
+          "type": "number",
+          "mandatory": false,
+          "description": "Timeout of the receipt screen on hardware terminals."
+        },
+        {
+          "name": "showReceipt",
+          "type": "boolean",
+          "mandatory": false,
+          "description": "Set this to determine how receipts are showcased on the terminal."
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "mandatory": false,
+          "description": "Two-letter ISO language code, in lowercase, representing the language to be displayed in the terminal. Can be 'en', 'fi', 'da', or 'se'."
+        },
+        {
+          "name": "alwaysShowMinorUnits",
+          "type": "number",
+          "mandatory": false,
+          "description": "Determines how the amount is displayed on the terminal. It can be either '0' or '1'. When set to '1', the terminal will always display the minor units, even for whole numbers (e.g., 29 will be displayed as 29.00). When set to 0, the terminal will not include minor units for whole numbers."
+        },
+        {
+          "name": "openPosOnReboot",
+          "type": "string",
+          "mandatory": false,
+          "description": "Indicates whether the POS system should open automatically after reboot. Possible values are 'enabled' or 'disabled'."
+        },
+        {
+          "name": "chipReadDelay",
+          "type": "number",
+          "mandatory": false,
+          "description": "Time delay in milliseconds before the card is read."
+        },
+        {
+          "name": "lockScreenPin",
+          "type": "string",
+          "mandatory": false,
+          "description": "PIN code used to unlock the terminal's lock screen."
+        },
+        {
+          "name": "refundScreenPin",
+          "type": "string",
+          "mandatory": false,
+          "description": "PIN code used to authorize refunds on the terminal."
+        },
+        {
+          "name": "enableRefundLock",
+          "type": "boolean",
+          "mandatory": false,
+          "description": "Determines whether refunds require the refund PIN."
+        },
+        {
+          "name": "enableLockScreen",
+          "type": "boolean",
+          "mandatory": false,
+          "description": "Determines whether the lock screen is enabled on the terminal."
+        },
+        {
+          "name": "wifiSsid",
+          "type": "string",
+          "mandatory": false,
+          "description": "Name of the WiFi network."
+        },
+        {
+          "name": "wifiPassword",
+          "type": "string",
+          "mandatory": false,
+          "description": "Password for the WiFi network."
+        },
+        {
+          "name": "preferredGsmOperator",
+          "type": "number",
+          "mandatory": false,
+          "description": "The preferred GSM operator identified by a numeric code."
+        },
+        {
+          "name": "preferredNetwork",
+          "type": "string",
+          "mandatory": false,
+          "description": "Preferred network for the terminal. It can be either 'WIFI' or 'GSM'."
+        },
+        {
+          "name": "offlineMode",
+          "type": "string",
+          "mandatory": false,
+          "description": "Controls whether the terminal keeps accepting card payments while offline (stored and forwarded once connectivity returns). Applies to the sb_terminal_k checkout app.",
+          "possibleValues": [
+            {
+              "value": "enabled",
+              "description": "The terminal accepts card payments while offline."
+            },
+            {
+              "value": "disabled",
+              "description": "The terminal requires connectivity to accept payments."
+            }
+          ]
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "PATCH",
+      "path": "/partners/:partnerId/terminals",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            }
+          ],
+          "body": "{\n  \"wifiSsid\": \"wifiname\",\n  \"wifiPassword\": \"wifipassword\",\n  \"autoSleep\": 3000,\n  \"preferredNetwork\": \"WIFI\",\n  \"preferredRestartTime\": \"03:00\",\n  \"alwaysShowMinorUnits\": 1,\n  \"language\": \"en\",\n  \"showStatusBar\": true,\n  \"chipReadDelay\": 500,\n  \"showReceipt\": true\n}"
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"message\": \"PARTNER config updated successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Port Partner Terminals",
+      "new": true,
+      "description": "Ports a batch of terminals to a target merchant under a partner. Use this API to bulk reassign terminals, specifying the destination store for each terminal. This is limited to partners who handle their own storage and deal with terminals in bulk.",
+      "reqParams": [
+        {
+          "name": "terminalDetails",
+          "type": "array",
+          "mandatory": true,
+          "description": "List of terminals to port to the target merchant.",
+          "reqParams": [
+            {
+              "name": "serialNo",
+              "type": "string",
+              "mandatory": true,
+              "description": "Serial number of the terminal to port."
+            },
+            {
+              "name": "storeId",
+              "type": "string",
+              "mandatory": true,
+              "description": "Store ID the terminal should be assigned to under the target merchant."
+            }
+          ]
+        },
+        {
+          "name": "targetMerchantId",
+          "type": "string",
+          "mandatory": true,
+          "description": "Merchant ID of the merchant the terminals are ported to."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "array",
+          "description": "Response data. Each entry reports the per-terminal port outcome.",
+          "resParams": [
+            {
+              "name": "status",
+              "type": "string",
+              "description": "Port status of the terminal."
+            },
+            {
+              "name": "serialNo",
+              "type": "string",
+              "description": "Serial number of the ported terminal."
+            },
+            {
+              "name": "terminalId",
+              "type": "string",
+              "description": "Terminal ID of the resulting terminal."
+            },
+            {
+              "name": "registrationInfo",
+              "type": "object",
+              "description": "Registration information of the ported terminal."
+            },
+            {
+              "name": "errorMessage",
+              "type": "string",
+              "description": "Error message describing why the terminal failed to port, when applicable."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "PUT",
+      "path": "/partners/:partnerId/terminals/port",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            }
+          ],
+          "body": "{\n  \"targetMerchantId\": \"81fa6b2d8d5dc8040e\",\n  \"terminalDetails\": [\n    {\n      \"serialNo\": \"2922000007\",\n      \"storeId\": \"st_GZVDbwmS86_G9pwc669U2\"\n    }\n  ]\n}"
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": [\n    {\n      \"status\": \"SUCCESS\",\n      \"serialNo\": \"2922000007\",\n      \"terminalId\": \"81f878852b3a280904\",\n      \"registrationInfo\": {},\n      \"errorMessage\": \"\"\n    }\n  ],\n  \"message\": \"Terminals of partner ported successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Publish Terminal Image and Config",
+      "new": true,
+      "description": "Publishes the configuration and idle screen image to a terminal under a partner's merchant and store. Use this API to push the currently configured terminal settings and image to a specific terminal.",
+      "reqParams": [
+        {
+          "name": "offlineMode",
+          "type": "string",
+          "mandatory": false,
+          "description": "Controls whether the terminal keeps accepting card payments while offline (stored and forwarded once connectivity returns). Applies to the sb_terminal_k checkout app.",
+          "possibleValues": [
+            {
+              "value": "enabled",
+              "description": "The terminal accepts card payments while offline."
+            },
+            {
+              "value": "disabled",
+              "description": "The terminal requires connectivity to accept payments."
+            }
+          ]
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "Response data.",
+          "resParams": [
+            {
+              "name": "preferredRestartTime",
+              "type": "string",
+              "mandatory": false,
+              "description": "Scheduled restart time for the terminal in HH:MM format. The default is 02:00am according to the device's timezone. It has a 1 hour restart window. For example, if set to 02:00am, restart could occur anytime between 02:00am and 02:59am. It is essential for the device to restart at least once every 24 hours. This might be particularly important for businesses that operate beyond the default restart time."
+            },
+            {
+              "name": "idleScreenImageUrl",
+              "type": "string",
+              "mandatory": false,
+              "description": "URL of the image displayed on the idle screen of the terminal."
+            },
+            {
+              "name": "preferredNetwork",
+              "type": "string",
+              "mandatory": false,
+              "description": "Preferred network for the terminal. It can be either 'WIFI' or 'GSM'."
+            },
+            {
+              "name": "wifiSsid",
+              "type": "string",
+              "mandatory": false,
+              "description": "Name of the WiFi network."
+            },
+            {
+              "name": "wifiPassword",
+              "type": "string",
+              "mandatory": false,
+              "description": "Password for the WiFi network."
+            },
+            {
+              "name": "language",
+              "type": "string",
+              "mandatory": false,
+              "description": "Two-letter ISO language code, in lowercase, representing the language to be displayed in the terminal. Can be 'en', 'fi', 'da', or 'se'."
+            },
+            {
+              "name": "autoSleep",
+              "type": "number",
+              "mandatory": false,
+              "description": "Auto sleep time for the terminal in seconds. Terminal will sleep if no transactions are received in this time period. Only applies if the terminal is running on battery."
+            },
+            {
+              "name": "alwaysShowMinorUnits",
+              "type": "number",
+              "mandatory": false,
+              "description": "Determines how the amount is displayed on the terminal. It can be either '0' or '1'. When set to '1', the terminal will always display the minor units, even for whole numbers (e.g., 29 will be displayed as 29.00). When set to 0, the terminal will not include minor units for whole numbers."
+            },
+            {
+              "name": "showStatusBar",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "Determines whether the status bar is displayed on the terminal. If set 'TRUE', the terminal will display the status bar. This is applicable to SurfPad terminals."
+            },
+            {
+              "name": "showReceipt",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "Set this to determine how receipts are showcased on the terminal."
+            },
+            {
+              "name": "chipReadDelay",
+              "type": "number",
+              "mandatory": false,
+              "description": "Time delay in milliseconds before the card is read."
+            },
+            {
+              "name": "openPosOnReboot",
+              "type": "string",
+              "mandatory": false,
+              "description": "Indicates whether the POS system should open automatically after reboot. Possible values are 'enabled' or 'disabled'."
+            },
+            {
+              "name": "lockScreenPin",
+              "type": "string",
+              "mandatory": false,
+              "description": "PIN code used to unlock the terminal's lock screen."
+            },
+            {
+              "name": "refundScreenPin",
+              "type": "string",
+              "mandatory": false,
+              "description": "PIN code used to authorize refunds on the terminal."
+            },
+            {
+              "name": "screenTimeout",
+              "type": "number",
+              "mandatory": false,
+              "description": "The duration (in milliseconds) before the screen times out due to inactivity."
+            },
+            {
+              "name": "autoSleepInterval",
+              "type": "number",
+              "mandatory": false,
+              "description": "The interval (in milliseconds) before the device automatically goes to sleep."
+            },
+            {
+              "name": "preferredGsmOperator",
+              "type": "number",
+              "mandatory": false,
+              "description": "The preferred GSM operator identified by a numeric code."
+            },
+            {
+              "name": "enableRefundLock",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "Determines if the refund lock screen feature is enabled on the device. This is only available for android terminals."
+            },
+            {
+              "name": "enableLockScreen",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "Determines whether the lock screen is enabled on the terminal."
+            },
+            {
+              "name": "printerConfig",
+              "type": "string",
+              "mandatory": false,
+              "description": "Printer configuration mode set for the terminal."
+            },
+            {
+              "name": "receiptScreenTimeout",
+              "type": "number",
+              "mandatory": false,
+              "description": "Timeout of the receipt screen on hardware terminals."
+            },
+            {
+              "name": "offlineMode",
+              "type": "string",
+              "mandatory": false,
+              "description": "Current offline-payments toggle for the terminal.",
+              "possibleValues": [
+                {
+                  "value": "enabled",
+                  "description": "Offline card payments are enabled."
+                },
+                {
+                  "value": "disabled",
+                  "description": "Offline card payments are disabled."
+                }
+              ]
+            },
+            {
+              "name": "displayContrast",
+              "type": "number",
+              "mandatory": false,
+              "description": "Display contrast level of the terminal screen."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "PUT",
+      "path": "/partners/:partnerId/merchants/:merchantId/stores/:storeId/terminals/:terminalId/config",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"preferredRestartTime\": \"02:00\",\n    \"preferredNetwork\": \"WIFI\",\n    \"wifiSsid\": \"surfboard\",\n    \"wifiPassword\": \"surfboa\",\n    \"language\": \"da\",\n    \"autoSleep\": 400,\n    \"alwaysShowMinorUnits\": 1,\n    \"showStatusBar\": false,\n    \"showReceipt\": true,\n    \"chipReadDelay\": 500,\n    \"openPosOnReboot\": \"enabled\",\n    \"screenTimeout\": 3000000,\n    \"preferredGsmOperator\": 2,\n    \"enableRefundLock\": true\n  },\n  \"message\": \"Terminal config published successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Reboot Terminal",
+      "new": true,
+      "description": "Publishes a reboot command to a terminal. Use this API to remotely restart a terminal. The command is delivered asynchronously, so a SUCCESS response confirms the command was published, not that the device has rebooted.",
+      "reqParams": [],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the reboot command."
+        }
+      ],
+      "method": "POST",
+      "path": "/terminals/:terminalId/reboot",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"message\": \"Reboot command published successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Fetch Terminal Metrics",
+      "new": true,
+      "pagination": true,
+      "description": "Retrieves metric time-series data for a terminal, such as battery status and network strength. Use this API to monitor the health and connectivity of a terminal over time. You can optionally filter the metrics by event type and date range.",
+      "query": "To filter the metrics, send in event and queryDates as query params. This endpoint is paginated. Send the x-page-number request header to page through the results (default 1). Each response returns the x-total-items header (total number of matching records) and the x-page-number header (the page that was served).",
+      "reqParams": [
+        {
+          "name": "event",
+          "type": "string",
+          "mandatory": false,
+          "description": "Metric event type to filter by. Must be one of the accepted values: BATTERY_STATUS, NETWORK_STRENGTH, AGGREGATED_BATTERY_PERCENTAGE, AGGREGATED_CHARGING_STATE, AGGREGATED_POWER_SOURCE, AGGREGATED_GSM_CONNECTION_TYPE, AGGREGATED_GSM_SIGNAL_STRENGTH, AGGREGATED_WIFI_SIGNAL_STRENGTH or AGGREGATED_NETWORK_TYPE."
+        },
+        {
+          "name": "queryDates",
+          "type": "string",
+          "mandatory": false,
+          "description": "One or more dates to scope the metrics query. A single value is accepted and wrapped into an array."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request."
+        },
+        {
+          "name": "data",
+          "type": "array",
+          "mandatory": false,
+          "description": "List of terminal metric series, one per requested event.",
+          "resParams": [
+            {
+              "name": "terminalId",
+              "type": "string",
+              "description": "Terminal ID of the terminal the metric belongs to."
+            },
+            {
+              "name": "event",
+              "type": "string",
+              "description": "Metric event type of the series."
+            },
+            {
+              "name": "data",
+              "type": "object",
+              "description": "Metric data of the series.",
+              "resParams": [
+                {
+                  "name": "value",
+                  "type": "array",
+                  "description": "Time-ordered list of metric samples.",
+                  "resParams": [
+                    {
+                      "name": "time",
+                      "type": "string",
+                      "description": "Timestamp of the sample."
+                    },
+                    {
+                      "name": "value",
+                      "type": "string",
+                      "description": "Value of the sample, which can be a string or a boolean."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": false,
+          "description": "Status message of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/terminals/:terminalId/metrics",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            },
+            {
+              "name": "x-page-number",
+              "value": "1",
+              "mandatory": false
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": [\n    {\n      \"terminalId\": \"81f878852b3a280904\",\n      \"event\": \"BATTERY_STATUS\",\n      \"data\": {\n        \"value\": [\n          {\n            \"time\": \"2024-02-21T08:48:26.000Z\",\n            \"value\": \"100\"\n          }\n        ]\n      }\n    }\n  ],\n  \"message\": \"Fetched terminal metrics successfully\"\n}"
+          }
+        ]
+      }
+    }
+  ]
+}

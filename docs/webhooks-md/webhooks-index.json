@@ -1,0 +1,123 @@
+{
+  "title": "Surfboard Payments Webhook Events Reference",
+  "description": "Complete webhook events reference for Surfboard Payments platform",
+  "lastUpdated": "2026-01-21T08:59:38.265Z",
+  "webhooks": [
+    {
+      "title": "Logistics Events",
+      "description": "The Logistics events reference details the notifications and triggers associated with product shipment orders, specifically terminals and accessories, made with the Logistics API. These events offer real-time updates on product order statuses from placement to delivery. By monitoring these events, partners can ensure efficient order tracking and timely fulfillment for the products for the merchants.",
+      "sourceFile": "webhooks/logistics.json",
+      "events": [
+        {
+          "title": "Logistics Order Update",
+          "description": "This event is triggered whenever there's a change in the shipment status of the terminals and accessories ordered.",
+          "mdFile": "webhooks-md/logistics-logistics-order-update.md"
+        }
+      ]
+    },
+    {
+      "title": "Merchant Application Events",
+      "description": "The Merchant application events reference details the various events that arise during the merchant onboarding process in Surfboard. From the moment a partner initiates the onboarding by creating a merchant application, to the Know Your Business (KYB) step, theses webhooks provides real-time updates on the progress of each merchant application. By tracking these events, partners can ensure timely and accurate completion of merchant onboarding, enhancing the overall efficiency of the onboarding experience.",
+      "sourceFile": "webhooks/merchants.json",
+      "events": [
+        {
+          "title": "Application Initiated",
+          "description": "This event is triggered when the merchant application is created, and the KYB URL is generated. At this point, the merchant needs to provide the necessary details via the Web KYB.",
+          "mdFile": "webhooks-md/merchants-application-initiated.md"
+        },
+        {
+          "title": "Application Submitted",
+          "description": "This event is triggered once the merchant has completed and submitted the KYB for review.",
+          "mdFile": "webhooks-md/merchants-application-submitted.md"
+        },
+        {
+          "title": "Application Signed",
+          "description": "This event is triggered when both the merchant signatories and UBOs have signed the application.",
+          "mdFile": "webhooks-md/merchants-application-signed.md"
+        },
+        {
+          "title": "Application Started",
+          "description": "This event is triggered once the merchant has started filling out the application.",
+          "mdFile": "webhooks-md/merchants-application-started.md"
+        },
+        {
+          "title": "Application Pending Merchant Information",
+          "description": "This event is triggered when the application is being processed but requires additional data from the merchant for completion.",
+          "mdFile": "webhooks-md/merchants-application-pending-merchant-information.md"
+        },
+        {
+          "title": "Application Completed",
+          "description": "This event is triggered when the application has been processed and accepted. The next steps involve merchant creation and onboarding.",
+          "mdFile": "webhooks-md/merchants-application-completed.md"
+        },
+        {
+          "title": "Application Merchant Created",
+          "description": "This event is triggered when the merchant is created in Surfboard. The accompanying event data will include both the Merchant ID and Store ID.",
+          "mdFile": "webhooks-md/merchants-application-merchant-created.md"
+        },
+        {
+          "title": "Application Expired",
+          "description": "This event is triggered when the merchant application has reached its expiration. For the continuation of the onboarding process, a new application must be created for the merchant.",
+          "mdFile": "webhooks-md/merchants-application-expired.md"
+        },
+        {
+          "title": "Application Rejected",
+          "description": "This event is triggered  post-processing when the merchant application doesn't meet the necessary criteria and is subsequently rejected by Surfboard.",
+          "mdFile": "webhooks-md/merchants-application-rejected.md"
+        }
+      ]
+    },
+    {
+      "title": "Order Events",
+      "description": "The Order events reference details the various triggers and notifications associated with order processes. These events provide real-time updates on the status and progress of orders, from initiation to completion. By monitoring order events, you can obtain insights into the payment flow, detect issues, and optimize the checkout experience. Each event is linked to specific order attributes, enabling detailed tracking, ensuring seamless order and payment management.",
+      "sourceFile": "webhooks/orders.json",
+      "events": [
+        {
+          "title": "Order Updated",
+          "description": "This event is triggered when an order is updated.",
+          "mdFile": "webhooks-md/orders-order-updated.md"
+        },
+        {
+          "title": "Order Payment Initiated",
+          "description": "This event is triggered when a payment is initiated for an order.",
+          "mdFile": "webhooks-md/orders-order-payment-initiated.md"
+        },
+        {
+          "title": "Order Payment Processed",
+          "description": "This event is triggered when a payment is processed for an order.",
+          "mdFile": "webhooks-md/orders-order-payment-processed.md"
+        },
+        {
+          "title": "Order Payment Completed",
+          "description": "This event is triggered when a payment is completed for an order.",
+          "mdFile": "webhooks-md/orders-order-payment-completed.md"
+        },
+        {
+          "title": "Order Payment Failed",
+          "description": "This event is triggered when a payment for an order is failed.",
+          "mdFile": "webhooks-md/orders-order-payment-failed.md"
+        },
+        {
+          "title": "Order Payment Cancelled",
+          "description": "This event is triggered when a payment for an order is cancelled.",
+          "mdFile": "webhooks-md/orders-order-payment-cancelled.md"
+        },
+        {
+          "title": "Order Cancelled",
+          "description": "This event is triggered when an order is cancelled.",
+          "mdFile": "webhooks-md/orders-order-cancelled.md"
+        },
+        {
+          "title": "Order Customer Identity",
+          "description": "This event is triggered when a customer taps their card on the terminal, enabling you to identify the customer during a transaction and personalize the experience.",
+          "mdFile": "webhooks-md/orders-order-customer-identity.md"
+        },
+        {
+          "title": "Order Terminal Event",
+          "description": "This event is triggered for every state the terminal undergoes during a transaction.",
+          "mdFile": "webhooks-md/orders-order-terminal-event.md"
+        }
+      ]
+    }
+  ]
+}

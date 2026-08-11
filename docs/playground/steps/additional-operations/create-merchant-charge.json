@@ -1,0 +1,313 @@
+{
+    "scenarioId": "create-merchant-charge",
+    "scenarioName": "Create Merchant Charge",
+    "steps": [
+        {
+            "id": "create-merchant-charge",
+            "name": "Create Merchant Charge",
+            "description": "Create Merchant Charge",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "partners/{{partnerId}}/merchants/{{merchantId}}/charges",
+            "guidePath": "/carbon/additional-operations/create-merchant-charge",
+            "payload": {
+                "description": "Fee",
+                "currency": "752",
+                "amount": 5000000,
+                "vat": 35,
+                "billingDate": "2025-02-11",
+                "recurring": {
+                    "billingEndDate": "2025-02-12",
+                    "frequency": "daily"
+                }
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "description",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A brief description of the charge."
+                    },
+                    {
+                        "name": "currency",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Three-digit currency code"
+                    },
+                    {
+                        "name": "amount",
+                        "type": "number",
+                        "mandatory": true,
+                        "description": "Charge amount in smallest currency units"
+                    },
+                    {
+                        "name": "vat",
+                        "type": "number",
+                        "mandatory": false,
+                        "description": "Optional VAT amount."
+                    },
+                    {
+                        "name": "billingDate",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Date on which the charge is effective, in yyyy-mm-dd format."
+                    },
+                    {
+                        "name": "recurring",
+                        "type": "object",
+                        "mandatory": false,
+                        "description": "If set, defines a recurring charge schedule including frequency and optional end date.",
+                        "reqParams": [
+                            {
+                                "name": "frequency",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Specifies how frequently the charge will be billed. The possible values are:",
+                                "possibleValues": [
+                                    {
+                                        "value": "daily",
+                                        "description": "Recurring charge occurs every day."
+                                    },
+                                    {
+                                        "value": "twiceWeekly",
+                                        "description": "Recurring charge occurs twice a week."
+                                    },
+                                    {
+                                        "value": "weekly",
+                                        "description": "Recurring charge occurs once per week."
+                                    },
+                                    {
+                                        "value": "tenDays",
+                                        "description": "Recurring charge occurs once every 10 days."
+                                    },
+                                    {
+                                        "value": "fortNightly",
+                                        "description": "Recurring charge occurs once every two weeks."
+                                    },
+                                    {
+                                        "value": "monthly",
+                                        "description": "Recurring charge occurs once per month."
+                                    },
+                                    {
+                                        "value": "everyTwoMonths",
+                                        "description": "Recurring charge occurs once every two months."
+                                    },
+                                    {
+                                        "value": "trimester",
+                                        "description": "Recurring charge occurs every three months."
+                                    },
+                                    {
+                                        "value": "quarterly",
+                                        "description": "Recurring charge occurs once every quarter (three months)."
+                                    },
+                                    {
+                                        "value": "twiceYearly",
+                                        "description": "Recurring charge occurs twice a year."
+                                    },
+                                    {
+                                        "value": "annually",
+                                        "description": "Recurring charge occurs once a year."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "billingEndDate",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Date in yyyy-mm-dd format specifying when to stop recurring charges."
+                            }
+                        ]
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Indicates if the request was 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data containing information about the created charge.",
+                        "resParams": [
+                            {
+                                "name": "chargeId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Unique identifier for the newly created charge."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message describing the outcome of the request."
+                    }
+                ]
+            }
+        },
+        {
+            "id": "fetch-merchant-charge-by-id",
+            "name": "Fetch Merchant Charge by ID",
+            "description": "Fetch Merchant Charge by ID",
+            "order": 2,
+            "method": "GET",
+            "endpoint": "partners/{{partnerId}}/merchants/{{merchantId}}/charges/{{chargeId}}",
+            "guidePath": "/carbon/additional-operations/fetch-merchant-charge-by-id",
+            "payload": {
+                "chargeId": "{{chargeId}}"
+            },
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data containing details of the requested merchant charge",
+                        "resParams": [
+                            {
+                                "name": "isSubscriptionCharge",
+                                "type": "boolean",
+                                "description": "Specifies if this charge is subscription-based (recurring)."
+                            },
+                            {
+                                "name": "description",
+                                "type": "string",
+                                "description": "A short description of the charge."
+                            },
+                            {
+                                "name": "amount",
+                                "type": "number",
+                                "description": "Charge amount in smallest currency units."
+                            },
+                            {
+                                "name": "vat",
+                                "type": "number",
+                                "description": "The VAT amount applied to this charge."
+                            },
+                            {
+                                "name": "frequency",
+                                "type": "string",
+                                "description": "Specifies how frequently the charge will be billed. The possible values are:",
+                                "possibleValues": [
+                                    {
+                                        "value": "daily",
+                                        "description": "Recurring charge occurs every day."
+                                    },
+                                    {
+                                        "value": "twiceWeekly",
+                                        "description": "Recurring charge occurs twice a week."
+                                    },
+                                    {
+                                        "value": "weekly",
+                                        "description": "Recurring charge occurs once per week."
+                                    },
+                                    {
+                                        "value": "tenDays",
+                                        "description": "Recurring charge occurs once every 10 days."
+                                    },
+                                    {
+                                        "value": "fortNightly",
+                                        "description": "Recurring charge occurs once every two weeks."
+                                    },
+                                    {
+                                        "value": "monthly",
+                                        "description": "Recurring charge occurs once per month."
+                                    },
+                                    {
+                                        "value": "everyTwoMonths",
+                                        "description": "Recurring charge occurs once every two months."
+                                    },
+                                    {
+                                        "value": "trimester",
+                                        "description": "Recurring charge occurs every three months."
+                                    },
+                                    {
+                                        "value": "quarterly",
+                                        "description": "Recurring charge occurs once every quarter (three months)."
+                                    },
+                                    {
+                                        "value": "twiceYearly",
+                                        "description": "Recurring charge occurs twice a year."
+                                    },
+                                    {
+                                        "value": "annually",
+                                        "description": "Recurring charge occurs once a year."
+                                    },
+                                    {
+                                        "value": "unscheduled",
+                                        "description": "Recurring charge does not follow a fixed schedule."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "billingStartDate",
+                                "type": "string",
+                                "description": "Start date of the recurring charge in ISO 8601 format."
+                            },
+                            {
+                                "name": "billingEndDate",
+                                "type": "string",
+                                "description": "End date of the recurring charge in ISO 8601 format."
+                            },
+                            {
+                                "name": "subCharges",
+                                "type": "array",
+                                "description": "Array of sub-charges associated with this main charge.",
+                                "resParams": [
+                                    {
+                                        "name": "chargeId",
+                                        "type": "string",
+                                        "description": "Unique identifier for this sub-charge."
+                                    },
+                                    {
+                                        "name": "description",
+                                        "type": "string",
+                                        "description": "A short text describing the sub-charge."
+                                    },
+                                    {
+                                        "name": "amount",
+                                        "type": "number",
+                                        "description": "Charge amount in smallest currency units"
+                                    },
+                                    {
+                                        "name": "vat",
+                                        "type": "number",
+                                        "description": "VAT amount for this sub-charge."
+                                    },
+                                    {
+                                        "name": "status",
+                                        "type": "string",
+                                        "description": "Current status of the sub-charge."
+                                    },
+                                    {
+                                        "name": "billingDate",
+                                        "type": "string",
+                                        "description": "Date when this sub-charge was billed, in ISO 8601 format."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

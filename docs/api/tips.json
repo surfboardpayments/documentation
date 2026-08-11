@@ -1,0 +1,866 @@
+{
+  "title": "Tips APIs",
+  "description": "Tips APIs enable merchants to integrate tipping functionality directly into the payment terminals. These APIs provide options for adding either preset or custom tip amounts to the overall payment amount on the terminal screen. When customers make payments, they can choose from these displayed preset tip values or decide to enter a custom amount based on their preference. Tips can be configured at the merchant, store, or terminal levels, allowing for flexibility to match your unique operational requirements.",
+  "endpoints": [
+    {
+      "fragment": "Set Merchant Tips Config",
+      "method": "PATCH",
+      "link": "API_URL/merchants/:merchantId/tips"
+    },
+    {
+      "fragment": "Set Store Tips Config",
+      "method": "PATCH",
+      "link": "API_URL/merchants/:merchantId/stores/:storeId/tips"
+    },
+    {
+      "fragment": "Set Terminal Tips Config",
+      "method": "PATCH",
+      "link": "API_URL/merchants/:merchantId/stores/:storeId/terminals/:terminalId/tips"
+    },
+    {
+      "fragment": "Fetch Merchant Tips Config",
+      "method": "GET",
+      "link": "API_URL/merchants/:merchantId/tips"
+    },
+    {
+      "fragment": "Fetch Store Tips Config",
+      "method": "GET",
+      "link": "API_URL/merchants/:merchantId/stores/:storeId/tips"
+    },
+    {
+      "fragment": "Fetch Terminal Tips Config",
+      "method": "GET",
+      "link": "API_URL/merchants/:merchantId/stores/:storeId/terminals/:terminalId/tips"
+    }
+  ],
+  "apis": [
+    {
+      "heading": "Set Merchant Tips Config",
+      "description": "Sets the merchant-level tips configuration inherited by all stores and terminals registered to the merchant. Use this API to apply the same tips configuration across every terminal associated with a merchant.",
+      "reqParams": [
+        {
+          "name": "tipConfig",
+          "type": "string",
+          "mandatory": false,
+          "description": "Specifies how tips are managed during the payment. The possible values are the following:",
+          "possibleValues": [
+            {
+              "value": "ENABLED",
+              "description": "Allows the terminal to display preset tip options while accepting payments."
+            },
+            {
+              "value": "DISABLED",
+              "description": "Hides the tip option so the terminal shows no tip prompts during payment."
+            },
+            {
+              "value": "OTHER_AMOUNT",
+              "description": "Lets the customer enter a free custom tip amount on the tips screen. Equivalent to sending tipConfig: ENABLED with freeAmountEnabled: true. When the configuration is read back it is reported as tipConfig: ENABLED with freeAmountEnabled: true, not as OTHER_AMOUNT."
+            }
+          ]
+        },
+        {
+          "name": "tipLevel1",
+          "type": "number",
+          "mandatory": false,
+          "description": "The first preset tip option shown to the customer, interpreted as a percentage or a fixed amount according to tipDisplayFormat."
+        },
+        {
+          "name": "tipLevel2",
+          "type": "number",
+          "mandatory": false,
+          "description": "The second preset tip option shown to the customer, interpreted as a percentage or a fixed amount according to tipDisplayFormat."
+        },
+        {
+          "name": "tipLevel3",
+          "type": "number",
+          "mandatory": false,
+          "description": "The third preset tip option shown to the customer, interpreted as a percentage or a fixed amount according to tipDisplayFormat."
+        },
+        {
+          "name": "defaultCustomAmount",
+          "type": "number",
+          "mandatory": false,
+          "description": "The value pre-filled on the screen for the custom tip amount."
+        },
+        {
+          "name": "displayCalculatedAmount",
+          "type": "string",
+          "mandatory": false,
+          "description": "Specifies whether the calculated tip amount is shown on screen.",
+          "possibleValues": [
+            {
+              "value": "ENABLED",
+              "description": "Shows the calculated tip amount."
+            },
+            {
+              "value": "DISABLED",
+              "description": "Hides the calculated tip amount."
+            }
+          ]
+        },
+        {
+          "name": "tipDisplayFormat",
+          "type": "string",
+          "mandatory": false,
+          "description": "The format in which the preset tip levels are displayed.",
+          "possibleValues": [
+            {
+              "value": "PERCENTAGE",
+              "description": "Displays preset tip levels as percentages."
+            },
+            {
+              "value": "AMOUNT",
+              "description": "Displays preset tip levels as fixed amounts."
+            }
+          ]
+        },
+        {
+          "name": "maxCustomTipAmount",
+          "type": "number",
+          "mandatory": false,
+          "description": "The maximum tip amount a customer can enter for a custom tip."
+        },
+        {
+          "name": "freeAmountEnabled",
+          "type": "boolean",
+          "mandatory": false,
+          "description": "Only meaningful when tipConfig is ENABLED: setting it to true switches the configuration to OTHER_AMOUNT, letting the customer enter a custom tip amount on the tips screen. It has no effect when tipConfig is DISABLED and is not stored as an independent field (equivalent to sending tipConfig: OTHER_AMOUNT)."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "PATCH",
+      "path": "/merchants/:merchantId/tips",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ],
+          "body": "{\"tipConfig\": \"ENABLED\", \"tipLevel1\": 10, \"tipLevel2\": 20, \"tipLevel3\": 30, \"defaultCustomAmount\": 25, \"displayCalculatedAmount\": \"ENABLED\", \"tipDisplayFormat\": \"PERCENTAGE\", \"maxCustomTipAmount\": 100, \"freeAmountEnabled\": true}"
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"MERCHANT config updated successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Set Store Tips Config",
+      "description": "Sets the store-level tips configuration applied to every terminal registered to the store. Use this API to apply the same tips configuration across every terminal associated with a store.",
+      "reqParams": [
+        {
+          "name": "tipConfig",
+          "type": "string",
+          "mandatory": false,
+          "description": "Specifies how tips are managed during the payment. The possible values are the following:",
+          "possibleValues": [
+            {
+              "value": "ENABLED",
+              "description": "Allows the terminal to display preset tip options while accepting payments."
+            },
+            {
+              "value": "DISABLED",
+              "description": "Hides the tip option so the terminal shows no tip prompts during payment."
+            },
+            {
+              "value": "OTHER_AMOUNT",
+              "description": "Lets the customer enter a free custom tip amount on the tips screen. Equivalent to sending tipConfig: ENABLED with freeAmountEnabled: true. When the configuration is read back it is reported as tipConfig: ENABLED with freeAmountEnabled: true, not as OTHER_AMOUNT."
+            }
+          ]
+        },
+        {
+          "name": "tipLevel1",
+          "type": "number",
+          "mandatory": false,
+          "description": "The first preset tip option shown to the customer, interpreted as a percentage or a fixed amount according to tipDisplayFormat."
+        },
+        {
+          "name": "tipLevel2",
+          "type": "number",
+          "mandatory": false,
+          "description": "The second preset tip option shown to the customer, interpreted as a percentage or a fixed amount according to tipDisplayFormat."
+        },
+        {
+          "name": "tipLevel3",
+          "type": "number",
+          "mandatory": false,
+          "description": "The third preset tip option shown to the customer, interpreted as a percentage or a fixed amount according to tipDisplayFormat."
+        },
+        {
+          "name": "defaultCustomAmount",
+          "type": "number",
+          "mandatory": false,
+          "description": "The value pre-filled on the screen for the custom tip amount."
+        },
+        {
+          "name": "displayCalculatedAmount",
+          "type": "string",
+          "mandatory": false,
+          "description": "Specifies whether the calculated tip amount is shown on screen.",
+          "possibleValues": [
+            {
+              "value": "ENABLED",
+              "description": "Shows the calculated tip amount."
+            },
+            {
+              "value": "DISABLED",
+              "description": "Hides the calculated tip amount."
+            }
+          ]
+        },
+        {
+          "name": "tipDisplayFormat",
+          "type": "string",
+          "mandatory": false,
+          "description": "The format in which the preset tip levels are displayed.",
+          "possibleValues": [
+            {
+              "value": "PERCENTAGE",
+              "description": "Displays preset tip levels as percentages."
+            },
+            {
+              "value": "AMOUNT",
+              "description": "Displays preset tip levels as fixed amounts."
+            }
+          ]
+        },
+        {
+          "name": "maxCustomTipAmount",
+          "type": "number",
+          "mandatory": false,
+          "description": "The maximum tip amount a customer can enter for a custom tip."
+        },
+        {
+          "name": "freeAmountEnabled",
+          "type": "boolean",
+          "mandatory": false,
+          "description": "Only meaningful when tipConfig is ENABLED: setting it to true switches the configuration to OTHER_AMOUNT, letting the customer enter a custom tip amount on the tips screen. It has no effect when tipConfig is DISABLED and is not stored as an independent field (equivalent to sending tipConfig: OTHER_AMOUNT)."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "PATCH",
+      "path": "/merchants/:merchantId/stores/:storeId/tips",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ],
+          "body": "{\"tipConfig\": \"ENABLED\", \"tipLevel1\": 10, \"tipLevel2\": 20, \"tipLevel3\": 30, \"defaultCustomAmount\": 25, \"displayCalculatedAmount\": \"ENABLED\", \"tipDisplayFormat\": \"PERCENTAGE\", \"maxCustomTipAmount\": 100, \"freeAmountEnabled\": true}"
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"STORE config updated successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Set Terminal Tips Config",
+      "description": "Sets the tips configuration for an individual terminal. Use this API to configure tips for a particular terminal.",
+      "reqParams": [
+        {
+          "name": "tipConfig",
+          "type": "string",
+          "mandatory": false,
+          "description": "Specifies how tips are managed during the payment. The possible values are the following:",
+          "possibleValues": [
+            {
+              "value": "ENABLED",
+              "description": "Allows the terminal to display preset tip options while accepting payments."
+            },
+            {
+              "value": "DISABLED",
+              "description": "Hides the tip option so the terminal shows no tip prompts during payment."
+            },
+            {
+              "value": "OTHER_AMOUNT",
+              "description": "Lets the customer enter a free custom tip amount on the tips screen. Equivalent to sending tipConfig: ENABLED with freeAmountEnabled: true. When the configuration is read back it is reported as tipConfig: ENABLED with freeAmountEnabled: true, not as OTHER_AMOUNT."
+            }
+          ]
+        },
+        {
+          "name": "tipLevel1",
+          "type": "number",
+          "mandatory": false,
+          "description": "The first preset tip option shown to the customer, interpreted as a percentage or a fixed amount according to tipDisplayFormat."
+        },
+        {
+          "name": "tipLevel2",
+          "type": "number",
+          "mandatory": false,
+          "description": "The second preset tip option shown to the customer, interpreted as a percentage or a fixed amount according to tipDisplayFormat."
+        },
+        {
+          "name": "tipLevel3",
+          "type": "number",
+          "mandatory": false,
+          "description": "The third preset tip option shown to the customer, interpreted as a percentage or a fixed amount according to tipDisplayFormat."
+        },
+        {
+          "name": "defaultCustomAmount",
+          "type": "number",
+          "mandatory": false,
+          "description": "The value pre-filled on the screen for the custom tip amount."
+        },
+        {
+          "name": "displayCalculatedAmount",
+          "type": "string",
+          "mandatory": false,
+          "description": "Specifies whether the calculated tip amount is shown on screen.",
+          "possibleValues": [
+            {
+              "value": "ENABLED",
+              "description": "Shows the calculated tip amount."
+            },
+            {
+              "value": "DISABLED",
+              "description": "Hides the calculated tip amount."
+            }
+          ]
+        },
+        {
+          "name": "tipDisplayFormat",
+          "type": "string",
+          "mandatory": false,
+          "description": "The format in which the preset tip levels are displayed.",
+          "possibleValues": [
+            {
+              "value": "PERCENTAGE",
+              "description": "Displays preset tip levels as percentages."
+            },
+            {
+              "value": "AMOUNT",
+              "description": "Displays preset tip levels as fixed amounts."
+            }
+          ]
+        },
+        {
+          "name": "maxCustomTipAmount",
+          "type": "number",
+          "mandatory": false,
+          "description": "The maximum tip amount a customer can enter for a custom tip."
+        },
+        {
+          "name": "freeAmountEnabled",
+          "type": "boolean",
+          "mandatory": false,
+          "description": "Only meaningful when tipConfig is ENABLED: setting it to true switches the configuration to OTHER_AMOUNT, letting the customer enter a custom tip amount on the tips screen. It has no effect when tipConfig is DISABLED and is not stored as an independent field (equivalent to sending tipConfig: OTHER_AMOUNT)."
+        },
+        {
+          "name": "serialNo",
+          "type": "string",
+          "mandatory": false,
+          "description": "Hardware serial number of the target terminal."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "PATCH",
+      "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/tips",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ],
+          "body": "{\"tipConfig\": \"ENABLED\", \"tipLevel1\": 10, \"tipLevel2\": 20, \"tipLevel3\": 30, \"defaultCustomAmount\": 25, \"displayCalculatedAmount\": \"ENABLED\", \"tipDisplayFormat\": \"PERCENTAGE\", \"maxCustomTipAmount\": 100, \"freeAmountEnabled\": true, \"serialNo\": \"1850123456\"}"
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"TERMINAL config updated successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Fetch Merchant Tips Config",
+      "description": "Retrieves the merchant-level tips configuration inherited by all terminals registered to the merchant. Use this API to get the tips configuration applied across the merchant.",
+      "reqParams": [],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "mandatory": true,
+          "description": "Response data.",
+          "resParams": [
+            {
+              "name": "tipConfig",
+              "type": "string",
+              "mandatory": false,
+              "description": "Specifies how tips are managed during payment. Always returned as ENABLED or DISABLED; a configuration stored as OTHER_AMOUNT is normalized to ENABLED here and surfaced separately through the freeAmountEnabled flag (which is true in that case).",
+              "possibleValues": [
+                {
+                  "value": "ENABLED",
+                  "description": "Allows the terminal to display preset tip options while accepting payments."
+                },
+                {
+                  "value": "DISABLED",
+                  "description": "Hides the tip option so the terminal shows no tip prompts during payment."
+                }
+              ]
+            },
+            {
+              "name": "tipLevel1",
+              "type": "number",
+              "mandatory": false,
+              "description": "The first preset tip option shown to the customer, interpreted as a percentage or a fixed amount according to tipDisplayFormat."
+            },
+            {
+              "name": "tipLevel2",
+              "type": "number",
+              "mandatory": false,
+              "description": "The second preset tip option shown to the customer, interpreted as a percentage or a fixed amount according to tipDisplayFormat."
+            },
+            {
+              "name": "tipLevel3",
+              "type": "number",
+              "mandatory": false,
+              "description": "The third preset tip option shown to the customer, interpreted as a percentage or a fixed amount according to tipDisplayFormat."
+            },
+            {
+              "name": "defaultCustomAmount",
+              "type": "number",
+              "mandatory": false,
+              "description": "The value pre-filled on the screen for the custom tip amount."
+            },
+            {
+              "name": "displayCalculatedAmount",
+              "type": "string",
+              "mandatory": false,
+              "description": "Specifies whether the calculated tip amount is shown on screen.",
+              "possibleValues": [
+                {
+                  "value": "ENABLED",
+                  "description": "Shows the calculated tip amount."
+                },
+                {
+                  "value": "DISABLED",
+                  "description": "Hides the calculated tip amount."
+                }
+              ]
+            },
+            {
+              "name": "tipDisplayFormat",
+              "type": "string",
+              "mandatory": false,
+              "description": "The format in which the preset tip levels are displayed.",
+              "possibleValues": [
+                {
+                  "value": "PERCENTAGE",
+                  "description": "Displays preset tip levels as percentages."
+                },
+                {
+                  "value": "AMOUNT",
+                  "description": "Displays preset tip levels as fixed amounts."
+                }
+              ]
+            },
+            {
+              "name": "freeAmountEnabled",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "True when the stored tips configuration is OTHER_AMOUNT (the customer can enter a custom tip amount); otherwise false. Derived directly from tipConfig, so it always accompanies a normalized tipConfig of ENABLED."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/merchants/:merchantId/tips",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"tipConfig\": \"ENABLED\",\n    \"tipLevel1\": 10,\n    \"tipLevel2\": 20,\n    \"tipLevel3\": 30,\n    \"defaultCustomAmount\": 25,\n    \"displayCalculatedAmount\": \"ENABLED\",\n    \"tipDisplayFormat\": \"PERCENTAGE\",\n    \"freeAmountEnabled\": true\n  },\n  \"message\": \"merchant config queried successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Fetch Store Tips Config",
+      "description": "Retrieves the store-level tips configuration applied to all terminals registered to the store. Use this API to get the tips configuration applied across the store.",
+      "reqParams": [],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "mandatory": true,
+          "description": "Response data.",
+          "resParams": [
+            {
+              "name": "tipConfig",
+              "type": "string",
+              "mandatory": false,
+              "description": "Specifies how tips are managed during payment. Always returned as ENABLED or DISABLED; a configuration stored as OTHER_AMOUNT is normalized to ENABLED here and surfaced separately through the freeAmountEnabled flag (which is true in that case).",
+              "possibleValues": [
+                {
+                  "value": "ENABLED",
+                  "description": "Allows the terminal to display preset tip options while accepting payments."
+                },
+                {
+                  "value": "DISABLED",
+                  "description": "Hides the tip option so the terminal shows no tip prompts during payment."
+                }
+              ]
+            },
+            {
+              "name": "tipLevel1",
+              "type": "number",
+              "mandatory": false,
+              "description": "The first preset tip option shown to the customer, interpreted as a percentage or a fixed amount according to tipDisplayFormat."
+            },
+            {
+              "name": "tipLevel2",
+              "type": "number",
+              "mandatory": false,
+              "description": "The second preset tip option shown to the customer, interpreted as a percentage or a fixed amount according to tipDisplayFormat."
+            },
+            {
+              "name": "tipLevel3",
+              "type": "number",
+              "mandatory": false,
+              "description": "The third preset tip option shown to the customer, interpreted as a percentage or a fixed amount according to tipDisplayFormat."
+            },
+            {
+              "name": "defaultCustomAmount",
+              "type": "number",
+              "mandatory": false,
+              "description": "The value pre-filled on the screen for the custom tip amount."
+            },
+            {
+              "name": "displayCalculatedAmount",
+              "type": "string",
+              "mandatory": false,
+              "description": "Specifies whether the calculated tip amount is shown on screen.",
+              "possibleValues": [
+                {
+                  "value": "ENABLED",
+                  "description": "Shows the calculated tip amount."
+                },
+                {
+                  "value": "DISABLED",
+                  "description": "Hides the calculated tip amount."
+                }
+              ]
+            },
+            {
+              "name": "tipDisplayFormat",
+              "type": "string",
+              "mandatory": false,
+              "description": "The format in which the preset tip levels are displayed.",
+              "possibleValues": [
+                {
+                  "value": "PERCENTAGE",
+                  "description": "Displays preset tip levels as percentages."
+                },
+                {
+                  "value": "AMOUNT",
+                  "description": "Displays preset tip levels as fixed amounts."
+                }
+              ]
+            },
+            {
+              "name": "freeAmountEnabled",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "True when the stored tips configuration is OTHER_AMOUNT (the customer can enter a custom tip amount); otherwise false. Derived directly from tipConfig, so it always accompanies a normalized tipConfig of ENABLED."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/merchants/:merchantId/stores/:storeId/tips",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"tipConfig\": \"ENABLED\",\n    \"tipLevel1\": 10,\n    \"tipLevel2\": 20,\n    \"tipLevel3\": 30,\n    \"defaultCustomAmount\": 25,\n    \"displayCalculatedAmount\": \"ENABLED\",\n    \"tipDisplayFormat\": \"PERCENTAGE\",\n    \"freeAmountEnabled\": true\n  },\n  \"message\": \"store config queried successfully\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Fetch Terminal Tips Config",
+      "description": "Retrieves the tips configuration for an individual terminal. Use this API to get the tips configuration applied to a particular terminal.",
+      "reqParams": [],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "mandatory": true,
+          "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "mandatory": true,
+          "description": "Response data.",
+          "resParams": [
+            {
+              "name": "tipConfig",
+              "type": "string",
+              "mandatory": false,
+              "description": "Specifies how tips are managed during payment. Always returned as ENABLED or DISABLED; a configuration stored as OTHER_AMOUNT is normalized to ENABLED here and surfaced separately through the freeAmountEnabled flag (which is true in that case).",
+              "possibleValues": [
+                {
+                  "value": "ENABLED",
+                  "description": "Allows the terminal to display preset tip options while accepting payments."
+                },
+                {
+                  "value": "DISABLED",
+                  "description": "Hides the tip option so the terminal shows no tip prompts during payment."
+                }
+              ]
+            },
+            {
+              "name": "tipLevel1",
+              "type": "number",
+              "mandatory": false,
+              "description": "The first preset tip option shown to the customer, interpreted as a percentage or a fixed amount according to tipDisplayFormat."
+            },
+            {
+              "name": "tipLevel2",
+              "type": "number",
+              "mandatory": false,
+              "description": "The second preset tip option shown to the customer, interpreted as a percentage or a fixed amount according to tipDisplayFormat."
+            },
+            {
+              "name": "tipLevel3",
+              "type": "number",
+              "mandatory": false,
+              "description": "The third preset tip option shown to the customer, interpreted as a percentage or a fixed amount according to tipDisplayFormat."
+            },
+            {
+              "name": "defaultCustomAmount",
+              "type": "number",
+              "mandatory": false,
+              "description": "The value pre-filled on the screen for the custom tip amount."
+            },
+            {
+              "name": "displayCalculatedAmount",
+              "type": "string",
+              "mandatory": false,
+              "description": "Specifies whether the calculated tip amount is shown on screen.",
+              "possibleValues": [
+                {
+                  "value": "ENABLED",
+                  "description": "Shows the calculated tip amount."
+                },
+                {
+                  "value": "DISABLED",
+                  "description": "Hides the calculated tip amount."
+                }
+              ]
+            },
+            {
+              "name": "tipDisplayFormat",
+              "type": "string",
+              "mandatory": false,
+              "description": "The format in which the preset tip levels are displayed.",
+              "possibleValues": [
+                {
+                  "value": "PERCENTAGE",
+                  "description": "Displays preset tip levels as percentages."
+                },
+                {
+                  "value": "AMOUNT",
+                  "description": "Displays preset tip levels as fixed amounts."
+                }
+              ]
+            },
+            {
+              "name": "freeAmountEnabled",
+              "type": "boolean",
+              "mandatory": false,
+              "description": "True when the stored tips configuration is OTHER_AMOUNT (the customer can enter a custom tip amount); otherwise false. Derived directly from tipConfig, so it always accompanies a normalized tipConfig of ENABLED."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "mandatory": true,
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/tips",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "MERCHANT-ID",
+              "value": "YOUR_MERCHANT_ID"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"tipConfig\": \"ENABLED\",\n    \"tipLevel1\": 10,\n    \"tipLevel2\": 20,\n    \"tipLevel3\": 30,\n    \"defaultCustomAmount\": 25,\n    \"displayCalculatedAmount\": \"ENABLED\",\n    \"tipDisplayFormat\": \"PERCENTAGE\",\n    \"freeAmountEnabled\": true\n  },\n  \"message\": \"terminal config queried successfully\"\n}"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+    "title": "Logistics Events",
+    "description": "The Logistics events reference details the notifications and triggers associated with product shipment orders, specifically terminals and accessories, made with the Logistics API. These events offer real-time updates on product order statuses from placement to delivery. By monitoring these events, partners can ensure efficient order tracking and timely fulfillment for the products for the merchants.",
+    "endpoints": [
+        {
+            "fragment": "Logistics Order Update"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Logistics Order Update",
+            "description": "This event is triggered whenever there's a change in the shipment status of the terminals and accessories ordered.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "description": "Unique identifier for the merchant for which the products are being shipped."
+                        },
+                        {
+                            "name": "orderId",
+                            "type": "string",
+                            "description": "Unique identifier for the product shipment order."
+                        },
+                        {
+                            "name": "orderStatus",
+                            "type": "string",
+                            "description": "Provides the status of the shipment order for the terminals and accessories. The possible values are:",
+                            "possibleValues": [
+                                {
+                                    "value": "ORDER_PLACED",
+                                    "description": "The order has been successfully placed."
+                                },
+                                {
+                                    "value": "ORDER_SHIPPED",
+                                    "description": "The order has been shipped and is in transit."
+                                },
+                                {
+                                    "value": "ORDER_COMPLETED",
+                                    "description": "The order has been successfully fulfilled and completed."
+                                },
+                                {
+                                    "value": "ORDER_PENDING_FOR_STOCK",
+                                    "description": "The order is pending processing due to availability."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"eventType\": \"logistics.orderupdate\",\n  \"metadata\": {\n     \"eventId\": \"81a214e74b107801ff\",\n     \"created\": 1695793998732,\n     \"retryAttempt\": 0,\n     \"webhookEventId\": \"81a214e7455ed01cff\"\n  },\n  \"data\": {\n     \"merchantId\": \"81412e2e4102f80f0e\",\n     \"orderId\": \"81376ad8ebedf80310\",\n     \"orderStatus\": \"ORDER_SHIPPED\",\n     \"trackingUrl\": \"https://www.dhl.com/home/tracking.html\",\n     \"packageDetails\": [\n\t    {\n\t\t     \"productId\": \"817361bb0a23400701\",\n\t\t     \"serial\": \"658364\"\n\t\t}\n\t]\n  }\n}\n   "
+                    }
+                ]
+            }
+        }
+    ]
+}

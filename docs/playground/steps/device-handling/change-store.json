@@ -1,0 +1,52 @@
+{
+    "scenarioId": "change-store",
+    "scenarioName": "Change Store",
+    "steps": [
+        {
+           "id": "change-store",
+           "name": "Change Store",
+           "description": "Change the store and terminal to another store under the same merchant",
+           "order": 1,
+           "method": "POST",
+           "endpoint": "terminals/change",
+           "readOnly": true,
+           "response": {
+            "status": "SUCCESS",
+            "message": "Store successfully changed for the terminal"
+          },
+           "guidePath": "/carbon/device-handling/change-store/home",
+           "payload": {
+            "terminal$id": "{{terminalId}}",
+            "storeId": "{{storeId}}"
+           },
+           "specifications": {
+            "reqParams": [
+                {
+                    "name": "terminal$id",
+                    "type": "String",
+                    "mandatory": true,
+                    "description": "Terminal ID of the terminal for which the store needs to be changed."
+                },
+                {
+                    "name": "storeId",
+                    "type": "String",
+                    "mandatory": true,
+                    "description": "Store ID of the store to which the terminal needs to be registered."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "String",
+                    "description": "Status of the store change."
+                },
+                {
+                    "name": "message",
+                    "type": "String",
+                    "description": "A message that describes the status of the store change."
+                }
+            ]
+           }
+        }
+    ]
+}

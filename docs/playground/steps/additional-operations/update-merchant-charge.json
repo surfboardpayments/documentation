@@ -1,0 +1,87 @@
+{
+    "scenarioId": "update-merchant-charge",
+    "scenarioName": "Update Merchant Charge",
+    "steps": [
+        {
+            "id": "update-merchant-charge",
+            "name": "Update Merchant Charge",
+            "description": "Update Merchant Charge",
+            "order": 1,
+            "method": "PUT",
+            "endpoint": "partners/{{partnerId}}/merchants/{{merchantId}}/charges/{{chargeId}}",
+            "guidePath": "/carbon/additional-operations/update-merchant-charge",
+            "payload": {
+                "amount": 650000,
+                "vat": 15,
+                "recurring": {
+                    "updateType": "onlyNext",
+                    "billingEndDate": "2025-10-23"
+                }
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "amount",
+                        "type": "number",
+                        "mandatory": true,
+                        "description": "Updated amount in minor currency units."
+                    },
+                    {
+                        "name": "vat",
+                        "type": "number",
+                        "mandatory": false,
+                        "description": "Optional updated VAT amount."
+                    },
+                    {
+                        "name": "recurring",
+                        "type": "object",
+                        "mandatory": false,
+                        "description": "Updated recurring schedule. Billing end date and updateType can be specified here.",
+                        "reqParams": [
+                            {
+                                "name": "updateType",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Indicates the type of the update.The possible values are",
+                                "possibleValues": [
+                                    {
+                                        "value": "onlyNext",
+                                        "description": "Applies the update to the next billing cycle only."
+                                    },
+                                    {
+                                        "value": "lifeTime",
+                                        "description": "Applies the update for the remaining lifetime of the subscription."
+                                    },
+                                    {
+                                        "value": "current",
+                                        "description": "Applies the update immediately to the current billing cycle."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "billingEndDate",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Date in yyyy-mm-dd format specifying the new end date for the recurring charge."
+                            }
+                        ]
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Indicates if the request was 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message describing the outcome of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

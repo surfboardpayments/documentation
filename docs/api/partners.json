@@ -1,0 +1,1643 @@
+{
+  "title": "Partners API",
+  "description": "The Partners API lets a Surfboard partner manage the merchants, users, and analytics that sit under their partner account. Look up partner details and configuration, pull partner, transaction and application analytics, search across everything a partner owns, look up companies during onboarding, and list and update users.",
+  "endpoints": [
+    {
+      "fragment": "Get Partner Details",
+      "method": "GET",
+      "link": "API_URL/partners/:partnerId"
+    },
+    {
+      "fragment": "Get Partner Config",
+      "method": "GET",
+      "link": "API_URL/partners/:partnerId/config"
+    },
+    {
+      "fragment": "Get Partner Analytics",
+      "method": "GET",
+      "link": "API_URL/partners/:partnerId/analytics"
+    },
+    {
+      "fragment": "Get Transaction Analytics",
+      "method": "GET",
+      "link": "API_URL/partners/:partnerId/transaction-analytics"
+    },
+    {
+      "fragment": "Get Application Analytics",
+      "method": "GET",
+      "link": "API_URL/partners/:partnerId/partner-analytics"
+    },
+    {
+      "fragment": "Global Search",
+      "method": "GET",
+      "link": "API_URL/partners/:partnerId/global-search"
+    },
+    {
+      "fragment": "Search Companies",
+      "method": "GET",
+      "link": "API_URL/partners/:partnerId/companies/search"
+    },
+    {
+      "fragment": "List Partner Users",
+      "method": "GET",
+      "link": "API_URL/partners/:partnerId/users"
+    },
+    {
+      "fragment": "List Merchant Users",
+      "method": "GET",
+      "link": "API_URL/partners/:partnerId/merchants/:merchantId/users"
+    },
+    {
+      "fragment": "Update Merchant User",
+      "method": "PUT",
+      "link": "API_URL/partners/:partnerId/merchants/:merchantId/users/:userId"
+    }
+  ],
+  "apis": [
+    {
+      "heading": "Get Partner Details",
+      "description": "Retrieve the core details of a partner account, including its onboarding URL, supported billing plans, enabled payment methods, and the acquirer configured for each country the partner operates in.",
+      "reqParams": [
+        {
+          "name": "partnerId",
+          "type": "string",
+          "mandatory": true,
+          "description": "Identifier of the partner to fetch details for. Supplied in the URL path."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request, either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "The partner account details.",
+          "resParams": [
+            {
+              "name": "partnerId",
+              "type": "string",
+              "description": "Unique identifier of the partner."
+            },
+            {
+              "name": "webOnboardingUrl",
+              "type": "string",
+              "description": "Hosted URL where the partner's merchants complete web-based onboarding."
+            },
+            {
+              "name": "partnerName",
+              "type": "string",
+              "description": "Display name of the partner."
+            },
+            {
+              "name": "status",
+              "type": "string",
+              "description": "Lifecycle status of the partner account, for example ACTIVE."
+            },
+            {
+              "name": "supportedBillingPlans",
+              "type": "array",
+              "description": "Billing plans the partner is allowed to assign to its merchants."
+            },
+            {
+              "name": "partnerType",
+              "type": "string",
+              "description": "Type of partner, which determines the onboarding and billing flow available to it."
+            },
+            {
+              "name": "paymentMethods",
+              "type": "array",
+              "description": "Payment methods enabled for the partner, for example CARD or SWISH."
+            },
+            {
+              "name": "countryCode",
+              "type": "string",
+              "description": "Primary country the partner is registered in (ISO 3166-1 alpha-2)."
+            },
+            {
+              "name": "acquirerConfig",
+              "type": "array",
+              "description": "The acquirer used to process card payments, per operating country.",
+              "resParams": [
+                {
+                  "name": "country",
+                  "type": "string",
+                  "description": "Country the acquirer applies to (ISO 3166-1 alpha-2)."
+                },
+                {
+                  "name": "acquirer",
+                  "type": "string",
+                  "description": "Name of the acquirer that settles card payments in this country."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/partners/:partnerId",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"partnerId\": \"pt_9c31a0f4b2\",\n\t\t\"webOnboardingUrl\": \"https://onboarding.surfboard.se/pt_9c31a0f4b2\",\n\t\t\"partnerName\": \"Nordic Coffee Group\",\n\t\t\"status\": \"ACTIVE\",\n\t\t\"supportedBillingPlans\": [\"STANDARD\", \"PREMIUM\"],\n\t\t\"partnerType\": \"RESELLER\",\n\t\t\"paymentMethods\": [\"CARD\", \"SWISH\"],\n\t\t\"countryCode\": \"SE\",\n\t\t\"acquirerConfig\": [\n\t\t\t{\n\t\t\t\t\"country\": \"SE\",\n\t\t\t\t\"acquirer\": \"NEXI\"\n\t\t\t}\n\t\t]\n\t},\n\t\"message\": \"Partner details fetched successfully\"\n}"
+          },
+          {
+            "code": 400,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unable to fetch partner details\"\n}"
+          },
+          {
+            "code": 401,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unauthorized access. Please provide valid credentials to access this endpoint.\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Get Partner Config",
+      "description": "Retrieve the partner-level feature toggles that control how the partner portal and onboarding behave, such as whether terminals can be activated from the portal and whether the cash-register features are available.",
+      "reqParams": [
+        {
+          "name": "partnerId",
+          "type": "string",
+          "mandatory": true,
+          "description": "Identifier of the partner to fetch configuration for. Supplied in the URL path."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request, either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "The partner feature configuration.",
+          "resParams": [
+            {
+              "name": "activateTerminalFromPortal",
+              "type": "boolean",
+              "description": "Whether terminals can be activated directly from the partner portal."
+            },
+            {
+              "name": "allowAdvancedOnboarding",
+              "type": "boolean",
+              "description": "Whether the partner has access to the advanced onboarding flow."
+            },
+            {
+              "name": "enableProductCatalogueInOnboarding",
+              "type": "boolean",
+              "description": "Whether the product catalog step is shown during merchant onboarding."
+            },
+            {
+              "name": "ecrEnabled",
+              "type": "boolean",
+              "description": "Whether the partner has access to the cash-register (ECR) features in the portal."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/partners/:partnerId/config",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"activateTerminalFromPortal\": true,\n\t\t\"allowAdvancedOnboarding\": false,\n\t\t\"enableProductCatalogueInOnboarding\": true,\n\t\t\"ecrEnabled\": false\n\t},\n\t\"message\": \"Partner config fetched successfully\"\n}"
+          },
+          {
+            "code": 400,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unable to fetch partner config\"\n}"
+          },
+          {
+            "code": 401,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unauthorized access. Please provide valid credentials to access this endpoint.\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Get Partner Analytics",
+      "description": "Retrieve a high-level summary of the partner's onboarding and transaction activity, including application counts by status, merchants created, and transaction volumes and amounts across purchases and returns.",
+      "reqParams": [
+        {
+          "name": "partnerId",
+          "type": "string",
+          "mandatory": true,
+          "description": "Identifier of the partner to fetch analytics for. Supplied in the URL path."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request, either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "The partner activity summary.",
+          "resParams": [
+            {
+              "name": "totalNumberOfApplication",
+              "type": "number",
+              "description": "Total number of merchant applications created under the partner."
+            },
+            {
+              "name": "totalNumberOfAppInitiated",
+              "type": "number",
+              "description": "Number of applications that have been initiated but not yet submitted."
+            },
+            {
+              "name": "totalNumberOfAppExpired",
+              "type": "number",
+              "description": "Number of applications that expired before completion."
+            },
+            {
+              "name": "totalNumberOfAppSubmitted",
+              "type": "number",
+              "description": "Number of applications submitted for review."
+            },
+            {
+              "name": "totalNumberOfAppPending",
+              "type": "number",
+              "description": "Number of applications awaiting further information."
+            },
+            {
+              "name": "totalNumberOfAppSigned",
+              "type": "number",
+              "description": "Number of applications that have been signed."
+            },
+            {
+              "name": "totalNumberOfAppRejected",
+              "type": "number",
+              "description": "Number of applications that were rejected."
+            },
+            {
+              "name": "totalNumberOfAppCompleted",
+              "type": "number",
+              "description": "Number of applications that completed onboarding."
+            },
+            {
+              "name": "totalNumberOfMerchantCreated",
+              "type": "number",
+              "description": "Number of merchants created under the partner."
+            },
+            {
+              "name": "totalNumberOfTransaction",
+              "type": "number",
+              "description": "Total number of transactions across the partner's merchants."
+            },
+            {
+              "name": "totalNumberOfPurchaseTransaction",
+              "type": "number",
+              "description": "Number of purchase transactions across the partner's merchants."
+            },
+            {
+              "name": "totalNumberReturnTransaction",
+              "type": "number",
+              "description": "Number of return transactions across the partner's merchants."
+            },
+            {
+              "name": "totalAmountOfTransaction",
+              "type": "number",
+              "description": "Total value of all transactions, in the smallest unit of the currency (e.g. öre for SEK)."
+            },
+            {
+              "name": "totalAmountOfPurchaseTransaction",
+              "type": "number",
+              "description": "Total value of purchase transactions, in the smallest currency unit."
+            },
+            {
+              "name": "totalAmountOfReturnTransaction",
+              "type": "number",
+              "description": "Total value of return transactions, in the smallest currency unit."
+            },
+            {
+              "name": "recentActivityData",
+              "type": "array",
+              "description": "Recent activity events for the partner, as an ordered list of key-value entries.",
+              "resParams": [
+                {
+                  "name": "event",
+                  "type": "string",
+                  "description": "The type of activity that occurred."
+                },
+                {
+                  "name": "timestamp",
+                  "type": "string",
+                  "description": "When the activity occurred, in ISO 8601 format."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/partners/:partnerId/analytics",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"totalNumberOfApplication\": 128,\n\t\t\"totalNumberOfAppInitiated\": 12,\n\t\t\"totalNumberOfAppExpired\": 4,\n\t\t\"totalNumberOfAppSubmitted\": 9,\n\t\t\"totalNumberOfAppPending\": 6,\n\t\t\"totalNumberOfAppSigned\": 15,\n\t\t\"totalNumberOfAppRejected\": 3,\n\t\t\"totalNumberOfAppCompleted\": 79,\n\t\t\"totalNumberOfMerchantCreated\": 79,\n\t\t\"totalNumberOfTransaction\": 54210,\n\t\t\"totalNumberOfPurchaseTransaction\": 52890,\n\t\t\"totalNumberReturnTransaction\": 1320,\n\t\t\"totalAmountOfTransaction\": 812450000,\n\t\t\"totalAmountOfPurchaseTransaction\": 829100000,\n\t\t\"totalAmountOfReturnTransaction\": 16650000,\n\t\t\"recentActivityData\": [\n\t\t\t{\n\t\t\t\t\"event\": \"MERCHANT_CREATED\",\n\t\t\t\t\"timestamp\": \"2026-06-14T08:11:00.000Z\"\n\t\t\t}\n\t\t]\n\t},\n\t\"message\": \"Partner details fetched successfully\"\n}"
+          },
+          {
+            "code": 400,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unable to fetch partner details\"\n}"
+          },
+          {
+            "code": 401,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unauthorized access. Please provide valid credentials to access this endpoint.\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Get Transaction Analytics",
+      "pagination": true,
+      "description": "Retrieve aggregated transaction analytics across the partner's merchants. Narrow the results with filters such as store, terminal, payment method, card brand, or date range, and group the totals by one or more dimensions to build reporting dashboards.",
+      "query": "Page through results with the `x-page-number` request header. The total number of matching rows is returned in the `x-total-items` response header. Grouping is controlled with bracketed query keys, for example `groupBy[storeId]=true` or `groupBy[timeSegments]=DAILY`.",
+      "reqParams": [
+        {
+          "name": "partnerId",
+          "type": "string",
+          "mandatory": true,
+          "description": "Identifier of the partner to fetch analytics for. Supplied in the URL path."
+        },
+        {
+          "name": "merchantId",
+          "type": "string",
+          "mandatory": false,
+          "description": "Return only analytics for this merchant under the partner."
+        },
+        {
+          "name": "storeId",
+          "type": "string",
+          "mandatory": false,
+          "description": "Return only analytics for transactions at this store."
+        },
+        {
+          "name": "terminalId",
+          "type": "string",
+          "mandatory": false,
+          "description": "Return only analytics for transactions processed by this terminal."
+        },
+        {
+          "name": "startDate",
+          "type": "string",
+          "mandatory": false,
+          "description": "Start of the date range to aggregate over (ISO 8601, e.g. 2026-06-01)."
+        },
+        {
+          "name": "endDate",
+          "type": "string",
+          "mandatory": false,
+          "description": "End of the date range to aggregate over (ISO 8601)."
+        },
+        {
+          "name": "orderType",
+          "type": "string",
+          "mandatory": false,
+          "description": "Return only analytics for this order type.",
+          "possibleValues": [
+            "PURCHASE",
+            "RETURN"
+          ]
+        },
+        {
+          "name": "terminalType",
+          "type": "string",
+          "mandatory": false,
+          "description": "Return only analytics for this terminal type."
+        },
+        {
+          "name": "paymentMethod",
+          "type": "string",
+          "mandatory": false,
+          "description": "Return only analytics for this payment method, for example CARD or SWISH."
+        },
+        {
+          "name": "cardBrand",
+          "type": "string",
+          "mandatory": false,
+          "description": "Return only analytics for this card brand, for example VISA or MASTERCARD."
+        },
+        {
+          "name": "currency",
+          "type": "string",
+          "mandatory": false,
+          "description": "Return only analytics in this currency (ISO 4217 code)."
+        },
+        {
+          "name": "includeRealtimeTransactions",
+          "type": "boolean",
+          "mandatory": false,
+          "description": "When true, includes transactions that have not yet settled in the aggregation."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request, either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "array",
+          "description": "The aggregated analytics rows, one per grouping bucket.",
+          "resParams": [
+            {
+              "name": "storeId",
+              "type": "string",
+              "description": "Store the row is grouped by. Present only when grouping by store."
+            },
+            {
+              "name": "terminalId",
+              "type": "string",
+              "description": "Terminal the row is grouped by. Present only when grouping by terminal."
+            },
+            {
+              "name": "orderType",
+              "type": "string",
+              "description": "Order type the row is grouped by. Present only when grouping by order type.",
+              "possibleValues": [
+                "PURCHASE",
+                "RETURN"
+              ]
+            },
+            {
+              "name": "terminalType",
+              "type": "string",
+              "description": "Terminal type the row is grouped by. Present only when grouping by terminal type."
+            },
+            {
+              "name": "orderTransactionCount",
+              "type": "string",
+              "description": "Number of transactions in this grouping bucket."
+            },
+            {
+              "name": "totalTransactionAmount",
+              "type": "number",
+              "description": "Total transaction value for this bucket, in the smallest unit of the currency (e.g. öre for SEK)."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/partners/:partnerId/transaction-analytics",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "x-page-number",
+              "value": "1",
+              "mandatory": false
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"storeId\": \"st_2a91\",\n\t\t\t\"orderType\": \"PURCHASE\",\n\t\t\t\"orderTransactionCount\": \"1204\",\n\t\t\t\"totalTransactionAmount\": 18942000\n\t\t}\n\t],\n\t\"message\": \"Transaction analytics for partner fetched successfully\"\n}"
+          },
+          {
+            "code": 400,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unable to fetch transaction analytics for partner.\"\n}"
+          },
+          {
+            "code": 401,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unauthorized access. Please provide valid credentials to access this endpoint.\"\n}"
+          }
+        ]
+      },
+      "params": {
+        "startDate": "2026-06-01",
+        "endDate": "2026-06-30",
+        "storeId": "st_2a91",
+        "paymentMethod": "CARD",
+        "orderType": "PURCHASE"
+      }
+    },
+    {
+      "heading": "Get Application Analytics",
+      "pagination": true,
+      "description": "Retrieve aggregated merchant onboarding analytics for the partner, such as application counts by status, conversion and rejection rates, and merchants created. Filter by country, application type, or status group, choose a time frame, and group by dimensions like country or month for onboarding reporting.",
+      "query": "Page through results with the `x-page-number` request header. The total number of matching rows is returned in the `x-total-items` response header. List filters use bracket notation, for example `filters[countries]=SE&filters[countries]=NO`.",
+      "reqParams": [
+        {
+          "name": "partnerId",
+          "type": "string",
+          "mandatory": true,
+          "description": "Identifier of the partner to fetch onboarding analytics for. Supplied in the URL path."
+        },
+        {
+          "name": "timeFrame",
+          "type": "string",
+          "mandatory": false,
+          "description": "Preset time window to aggregate over. Use CUSTOM together with dateFrom and dateTo for an explicit range.",
+          "possibleValues": [
+            "LAST_24_HOURS",
+            "LAST_7_DAYS",
+            "LAST_30_DAYS",
+            "LAST_90_DAYS",
+            "LAST_6_MONTHS",
+            "LAST_12_MONTHS",
+            "MONTH_TO_DATE",
+            "QUARTER_TO_DATE",
+            "YEAR_TO_DATE",
+            "CUSTOM"
+          ]
+        },
+        {
+          "name": "dateFrom",
+          "type": "string",
+          "mandatory": false,
+          "description": "Start of a custom date range (ISO 8601). Used when timeFrame is CUSTOM."
+        },
+        {
+          "name": "dateTo",
+          "type": "string",
+          "mandatory": false,
+          "description": "End of a custom date range (ISO 8601). Used when timeFrame is CUSTOM."
+        },
+        {
+          "name": "groupBy",
+          "type": "array",
+          "mandatory": false,
+          "description": "One or more dimensions to group the results by.",
+          "possibleValues": [
+            "country",
+            "applicationType",
+            "statusGroup",
+            "day",
+            "week",
+            "month",
+            "quarter",
+            "year"
+          ]
+        },
+        {
+          "name": "filters[countries]",
+          "type": "array",
+          "mandatory": false,
+          "description": "Return only applications for these countries (ISO 3166-1 alpha-2 codes)."
+        },
+        {
+          "name": "filters[applicationTypes]",
+          "type": "array",
+          "mandatory": false,
+          "description": "Return only applications of these types.",
+          "possibleValues": [
+            "ONBOARDING",
+            "RENEWAL"
+          ]
+        },
+        {
+          "name": "filters[statusGroup]",
+          "type": "string",
+          "mandatory": false,
+          "description": "Return only applications in this status group.",
+          "possibleValues": [
+            "IN_PROGRESS",
+            "COMPLETED",
+            "FAILED",
+            "UNDER_REVIEW"
+          ]
+        },
+        {
+          "name": "sortBy",
+          "type": "string",
+          "mandatory": false,
+          "description": "Field to sort the grouped rows by.",
+          "possibleValues": [
+            "totalApplications",
+            "totalCompleted",
+            "country"
+          ]
+        },
+        {
+          "name": "sortOrder",
+          "type": "string",
+          "mandatory": false,
+          "description": "Sort direction for the results.",
+          "possibleValues": [
+            "ASC",
+            "DESC"
+          ]
+        },
+        {
+          "name": "pageNumber",
+          "type": "number",
+          "mandatory": false,
+          "description": "Page of results to return. Overrides the x-page-number header when supplied."
+        },
+        {
+          "name": "itemsPerPage",
+          "type": "number",
+          "mandatory": false,
+          "description": "Number of rows to return per page."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request, either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "The aggregated onboarding analytics.",
+          "resParams": [
+            {
+              "name": "applicationAnalyticsData",
+              "type": "array",
+              "description": "The grouped analytics rows.",
+              "resParams": [
+                {
+                  "name": "country",
+                  "type": "string",
+                  "description": "Country the row is grouped by. Present only when grouping by country."
+                },
+                {
+                  "name": "applicationType",
+                  "type": "string",
+                  "description": "Application type the row is grouped by. Present only when grouping by application type.",
+                  "possibleValues": [
+                    "ONBOARDING",
+                    "RENEWAL"
+                  ]
+                },
+                {
+                  "name": "statusGroup",
+                  "type": "string",
+                  "description": "Status group the row is grouped by. Present only when grouping by status group.",
+                  "possibleValues": [
+                    "IN_PROGRESS",
+                    "COMPLETED",
+                    "FAILED",
+                    "UNDER_REVIEW"
+                  ]
+                },
+                {
+                  "name": "timeSegment",
+                  "type": "string",
+                  "description": "Time bucket the row is grouped by. Present only when grouping by a time dimension."
+                },
+                {
+                  "name": "totalApplications",
+                  "type": "number",
+                  "description": "Total applications in this bucket."
+                },
+                {
+                  "name": "totalInitiated",
+                  "type": "number",
+                  "description": "Applications initiated but not yet submitted in this bucket."
+                },
+                {
+                  "name": "totalExpired",
+                  "type": "number",
+                  "description": "Applications that expired before completion in this bucket."
+                },
+                {
+                  "name": "totalSubmitted",
+                  "type": "number",
+                  "description": "Applications submitted for review in this bucket."
+                },
+                {
+                  "name": "totalPending",
+                  "type": "number",
+                  "description": "Applications awaiting further information in this bucket."
+                },
+                {
+                  "name": "totalSigned",
+                  "type": "number",
+                  "description": "Applications signed in this bucket."
+                },
+                {
+                  "name": "totalRejected",
+                  "type": "number",
+                  "description": "Applications rejected in this bucket."
+                },
+                {
+                  "name": "totalCompleted",
+                  "type": "number",
+                  "description": "Applications that completed onboarding in this bucket."
+                },
+                {
+                  "name": "totalMerchantCreated",
+                  "type": "number",
+                  "description": "Merchants created in this bucket."
+                },
+                {
+                  "name": "totalServiceProviderCreated",
+                  "type": "number",
+                  "description": "Service providers created in this bucket."
+                },
+                {
+                  "name": "conversionRate",
+                  "type": "number",
+                  "description": "Share of applications that completed onboarding, as a percentage."
+                },
+                {
+                  "name": "rejectionRate",
+                  "type": "number",
+                  "description": "Share of applications that were rejected, as a percentage."
+                },
+                {
+                  "name": "expirationRate",
+                  "type": "number",
+                  "description": "Share of applications that expired, as a percentage."
+                }
+              ]
+            },
+            {
+              "name": "totalCount",
+              "type": "number",
+              "description": "Total number of grouped rows across all pages."
+            },
+            {
+              "name": "pageNumber",
+              "type": "number",
+              "description": "The page of results returned."
+            },
+            {
+              "name": "itemsPerPage",
+              "type": "number",
+              "description": "Number of rows returned per page."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/partners/:partnerId/partner-analytics",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "x-page-number",
+              "value": "1",
+              "mandatory": false
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"applicationAnalyticsData\": [\n\t\t\t{\n\t\t\t\t\"country\": \"SE\",\n\t\t\t\t\"totalApplications\": 84,\n\t\t\t\t\"totalInitiated\": 6,\n\t\t\t\t\"totalExpired\": 2,\n\t\t\t\t\"totalSubmitted\": 5,\n\t\t\t\t\"totalPending\": 3,\n\t\t\t\t\"totalSigned\": 9,\n\t\t\t\t\"totalRejected\": 1,\n\t\t\t\t\"totalCompleted\": 58,\n\t\t\t\t\"totalMerchantCreated\": 58,\n\t\t\t\t\"totalServiceProviderCreated\": 0,\n\t\t\t\t\"conversionRate\": 69.05,\n\t\t\t\t\"rejectionRate\": 1.19,\n\t\t\t\t\"expirationRate\": 2.38\n\t\t\t}\n\t\t],\n\t\t\"totalCount\": 1,\n\t\t\"pageNumber\": 1,\n\t\t\"itemsPerPage\": 100\n\t},\n\t\"message\": \"Application analytics fetched successfully\"\n}"
+          },
+          {
+            "code": 400,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unable to fetch application analytics.\"\n}"
+          },
+          {
+            "code": 401,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unauthorized access. Please provide valid credentials to access this endpoint.\"\n}"
+          }
+        ]
+      },
+      "params": {
+        "timeFrame": "LAST_30_DAYS",
+        "groupBy": [
+          "country"
+        ],
+        "filters[countries]": "SE",
+        "sortBy": "totalApplications",
+        "sortOrder": "DESC"
+      }
+    },
+    {
+      "heading": "Global Search",
+      "pagination": true,
+      "description": "Run a free-text search across everything the partner owns — merchants, stores, terminals, applications, and companies — and get back the matching records grouped by type, along with the fields that matched. Narrow the search with filters such as merchant, store, or status.",
+      "query": "Page through results with the `x-page-number` request header, or supply `pageNumber` as a query parameter. The total number of matches is returned in the `x-total-items` response header.",
+      "reqParams": [
+        {
+          "name": "partnerId",
+          "type": "string",
+          "mandatory": true,
+          "description": "Identifier of the partner whose records are searched. Supplied in the URL path."
+        },
+        {
+          "name": "query",
+          "type": "string",
+          "mandatory": true,
+          "description": "The text to search the partner's records for, such as a merchant name, store name, or company."
+        },
+        {
+          "name": "pageNumber",
+          "type": "number",
+          "mandatory": false,
+          "description": "Page of results to return. Overrides the x-page-number header when supplied."
+        },
+        {
+          "name": "merchantId",
+          "type": "string",
+          "mandatory": false,
+          "description": "Return only records belonging to this merchant. Accepts a single value or a comma-separated list."
+        },
+        {
+          "name": "merchantType",
+          "type": "string",
+          "mandatory": false,
+          "description": "Return only records for merchants of this type. Accepts a single value or a comma-separated list."
+        },
+        {
+          "name": "storeId",
+          "type": "string",
+          "mandatory": false,
+          "description": "Return only records belonging to this store. Accepts a single value or a comma-separated list."
+        },
+        {
+          "name": "storeStatus",
+          "type": "string",
+          "mandatory": false,
+          "description": "Return only stores in this status. Accepts a single value or a comma-separated list."
+        },
+        {
+          "name": "terminalStatus",
+          "type": "string",
+          "mandatory": false,
+          "description": "Return only terminals in this status. Accepts a single value or a comma-separated list."
+        },
+        {
+          "name": "applicationStatus",
+          "type": "string",
+          "mandatory": false,
+          "description": "Return only applications in this status. Accepts a single value or a comma-separated list."
+        },
+        {
+          "name": "applicationType",
+          "type": "string",
+          "mandatory": false,
+          "description": "Return only applications of this type. Accepts a single value or a comma-separated list."
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "mandatory": false,
+          "description": "Return only records of this document type, for example MERCHANT or STORE. Accepts a single value or a comma-separated list."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request, either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "The search results.",
+          "resParams": [
+            {
+              "name": "hits",
+              "type": "array",
+              "description": "The matching records.",
+              "resParams": [
+                {
+                  "name": "partnerId",
+                  "type": "string",
+                  "description": "Identifier of the partner the matched record belongs to."
+                },
+                {
+                  "name": "merchantId",
+                  "type": "string",
+                  "description": "Identifier of the merchant the matched record belongs to."
+                },
+                {
+                  "name": "storeId",
+                  "type": "string",
+                  "description": "Identifier of the store the matched record belongs to."
+                },
+                {
+                  "name": "data",
+                  "type": "object",
+                  "description": "The matched record's document fields.",
+                  "resParams": [
+                    {
+                      "name": "type",
+                      "type": "string",
+                      "description": "The kind of record that matched, for example MERCHANT, STORE, or COMPANY."
+                    },
+                    {
+                      "name": "partnerId",
+                      "type": "string",
+                      "description": "Identifier of the partner the record belongs to."
+                    },
+                    {
+                      "name": "merchantId",
+                      "type": "string",
+                      "description": "Identifier of the merchant the record belongs to."
+                    },
+                    {
+                      "name": "storeId",
+                      "type": "string",
+                      "description": "Identifier of the store the record belongs to."
+                    },
+                    {
+                      "name": "companyId",
+                      "type": "string",
+                      "description": "Identifier of the company the record belongs to."
+                    },
+                    {
+                      "name": "pfAccountId",
+                      "type": "string",
+                      "description": "Payment facilitator account identifier for the record."
+                    },
+                    {
+                      "name": "name",
+                      "type": "string",
+                      "description": "Display name of the matched record."
+                    },
+                    {
+                      "name": "email",
+                      "type": "string",
+                      "description": "Email associated with the matched record."
+                    },
+                    {
+                      "name": "status",
+                      "type": "string",
+                      "description": "Status of the matched record, mirrored from its store status."
+                    },
+                    {
+                      "name": "storeStatus",
+                      "type": "string",
+                      "description": "Status of the store the record belongs to."
+                    },
+                    {
+                      "name": "merchantType",
+                      "type": "string",
+                      "description": "Type of the merchant the record belongs to."
+                    }
+                  ]
+                },
+                {
+                  "name": "matches",
+                  "type": "array",
+                  "description": "The individual field matches for this record.",
+                  "resParams": [
+                    {
+                      "name": "field",
+                      "type": "string",
+                      "description": "The document field that matched the search."
+                    },
+                    {
+                      "name": "matched",
+                      "type": "array",
+                      "description": "The matched value or values for the field."
+                    },
+                    {
+                      "name": "snippet",
+                      "type": "string",
+                      "description": "A snippet of text surrounding the match."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/partners/:partnerId/global-search",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "x-page-number",
+              "value": "1",
+              "mandatory": false
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"hits\": [\n\t\t\t{\n\t\t\t\t\"partnerId\": \"pt_9c31a0f4b2\",\n\t\t\t\t\"merchantId\": \"m_5f2c1a9b3d\",\n\t\t\t\t\"storeId\": \"st_2a91\",\n\t\t\t\t\"data\": {\n\t\t\t\t\t\"type\": \"MERCHANT\",\n\t\t\t\t\t\"partnerId\": \"pt_9c31a0f4b2\",\n\t\t\t\t\t\"merchantId\": \"m_5f2c1a9b3d\",\n\t\t\t\t\t\"storeId\": \"st_2a91\",\n\t\t\t\t\t\"companyId\": \"co_71ad\",\n\t\t\t\t\t\"pfAccountId\": \"pf_88c2\",\n\t\t\t\t\t\"name\": \"Kaffebaren AB\",\n\t\t\t\t\t\"email\": \"hello@kaffebaren.se\",\n\t\t\t\t\t\"status\": \"ACTIVE\",\n\t\t\t\t\t\"storeStatus\": \"ACTIVE\",\n\t\t\t\t\t\"merchantType\": \"STANDARD\"\n\t\t\t\t},\n\t\t\t\t\"matches\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"field\": \"name\",\n\t\t\t\t\t\t\"matched\": [\"Kaffebaren AB\"],\n\t\t\t\t\t\t\"snippet\": \"…Kaffebaren AB…\"\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t}\n\t\t]\n\t},\n\t\"message\": \"Global search results fetched successfully\"\n}"
+          },
+          {
+            "code": 400,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unable to fetch global search results\"\n}"
+          },
+          {
+            "code": 401,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unauthorized access. Please provide valid credentials to access this endpoint.\"\n}"
+          }
+        ]
+      },
+      "params": {
+        "query": "Kaffebaren",
+        "type": "MERCHANT",
+        "storeStatus": "ACTIVE"
+      }
+    },
+    {
+      "heading": "Search Companies",
+      "description": "Search a company registry by name to find businesses during merchant onboarding, returning matching companies with their registry identifiers, legal form, and registered address. Optionally restrict the search to one or more countries.",
+      "reqParams": [
+        {
+          "name": "partnerId",
+          "type": "string",
+          "mandatory": true,
+          "description": "Identifier of the partner performing the search. Supplied in the URL path."
+        },
+        {
+          "name": "companyName",
+          "type": "string",
+          "mandatory": true,
+          "description": "The company name to search the registry for."
+        },
+        {
+          "name": "countryCode",
+          "type": "string",
+          "mandatory": false,
+          "description": "Restrict the search to one or more countries (ISO 3166-1 alpha-2). Accepts a single value or a list."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request, either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "array",
+          "description": "The matching companies.",
+          "resParams": [
+            {
+              "name": "companyId",
+              "type": "string",
+              "description": "Surfboard identifier for the company."
+            },
+            {
+              "name": "creditsafeId",
+              "type": "string",
+              "description": "Identifier of the company in the Creditsafe registry."
+            },
+            {
+              "name": "companyName",
+              "type": "string",
+              "description": "Registered name of the company."
+            },
+            {
+              "name": "legalGroupCode",
+              "type": "string",
+              "description": "Code identifying the company's legal form."
+            },
+            {
+              "name": "legalGroupText",
+              "type": "string",
+              "description": "Human-readable description of the company's legal form."
+            },
+            {
+              "name": "address",
+              "type": "object",
+              "description": "The company's registered address.",
+              "resParams": [
+                {
+                  "name": "simpleValue",
+                  "type": "string",
+                  "description": "The full address as a single formatted string."
+                },
+                {
+                  "name": "street",
+                  "type": "string",
+                  "description": "Street part of the address."
+                },
+                {
+                  "name": "city",
+                  "type": "string",
+                  "description": "City part of the address."
+                },
+                {
+                  "name": "postCode",
+                  "type": "string",
+                  "description": "Postal code part of the address."
+                },
+                {
+                  "name": "telephone",
+                  "type": "string",
+                  "description": "Registered telephone number for the company."
+                }
+              ]
+            },
+            {
+              "name": "town",
+              "type": "string",
+              "description": "Town the company is registered in."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/partners/:partnerId/companies/search",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"companyId\": \"co_71ad\",\n\t\t\t\"creditsafeId\": \"SE-0-5566778899\",\n\t\t\t\"companyName\": \"Kaffebaren AB\",\n\t\t\t\"legalGroupCode\": \"AB\",\n\t\t\t\"legalGroupText\": \"Aktiebolag\",\n\t\t\t\"address\": {\n\t\t\t\t\"simpleValue\": \"Storgatan 1, 111 22 Stockholm\",\n\t\t\t\t\"street\": \"Storgatan 1\",\n\t\t\t\t\"city\": \"Stockholm\",\n\t\t\t\t\"postCode\": \"111 22\",\n\t\t\t\t\"telephone\": \"+46 8 123 456\"\n\t\t\t},\n\t\t\t\"town\": \"Stockholm\"\n\t\t}\n\t],\n\t\"message\": \"Company search completed successfully\"\n}"
+          },
+          {
+            "code": 400,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Failed to search companies\"\n}"
+          },
+          {
+            "code": 401,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unauthorized access. Please provide valid credentials to access this endpoint.\"\n}"
+          }
+        ]
+      },
+      "params": {
+        "companyName": "Kaffebaren",
+        "countryCode": "SE"
+      }
+    },
+    {
+      "heading": "List Partner Users",
+      "description": "Retrieve all users that belong to the partner account, including their names, contact details, and role. Use this to manage the partner's team members.",
+      "reqParams": [
+        {
+          "name": "partnerId",
+          "type": "string",
+          "mandatory": true,
+          "description": "Identifier of the partner whose users are returned. Supplied in the URL path."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request, either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "array",
+          "description": "The users belonging to the partner.",
+          "resParams": [
+            {
+              "name": "userId",
+              "type": "string",
+              "description": "Unique identifier of the user."
+            },
+            {
+              "name": "firstName",
+              "type": "string",
+              "description": "User's first name."
+            },
+            {
+              "name": "lastName",
+              "type": "string",
+              "description": "User's last name."
+            },
+            {
+              "name": "imageUrl",
+              "type": "string",
+              "description": "URL of the user's profile image."
+            },
+            {
+              "name": "merchantId",
+              "type": "string",
+              "description": "Identifier of the merchant the user is associated with, if any."
+            },
+            {
+              "name": "partnerId",
+              "type": "string",
+              "description": "Identifier of the partner the user belongs to."
+            },
+            {
+              "name": "phoneNumber",
+              "type": "string",
+              "description": "User's phone number."
+            },
+            {
+              "name": "swishNumber",
+              "type": "string",
+              "description": "User's Swish number, if set."
+            },
+            {
+              "name": "address",
+              "type": "string",
+              "description": "User's address."
+            },
+            {
+              "name": "email",
+              "type": "string",
+              "description": "User's email address."
+            },
+            {
+              "name": "role",
+              "type": "string",
+              "description": "The user's role, which determines their permissions."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/partners/:partnerId/users",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"userId\": \"u_3f81a0\",\n\t\t\t\"firstName\": \"Anna\",\n\t\t\t\"lastName\": \"Berg\",\n\t\t\t\"imageUrl\": \"https://cdn.surfboard.se/u/3f81a0.png\",\n\t\t\t\"merchantId\": \"\",\n\t\t\t\"partnerId\": \"pt_9c31a0f4b2\",\n\t\t\t\"phoneNumber\": \"+46701234567\",\n\t\t\t\"swishNumber\": \"\",\n\t\t\t\"address\": \"Storgatan 1, Stockholm\",\n\t\t\t\"email\": \"anna@nordiccoffee.se\",\n\t\t\t\"role\": \"ADMIN\"\n\t\t}\n\t],\n\t\"message\": \"Fetched users for partner successfully\"\n}"
+          },
+          {
+            "code": 400,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unable to fetch users for partner\"\n}"
+          },
+          {
+            "code": 401,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unauthorized access. Please provide valid credentials to access this endpoint.\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "List Merchant Users",
+      "description": "Retrieve all users that belong to a specific merchant under the partner, including their names, contact details, and role. Use this to manage the staff of one of your merchants.",
+      "reqParams": [
+        {
+          "name": "partnerId",
+          "type": "string",
+          "mandatory": true,
+          "description": "Identifier of the partner the merchant belongs to. Supplied in the URL path."
+        },
+        {
+          "name": "merchantId",
+          "type": "string",
+          "mandatory": true,
+          "description": "Identifier of the merchant whose users are returned. Supplied in the URL path."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request, either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "array",
+          "description": "The users belonging to the merchant.",
+          "resParams": [
+            {
+              "name": "userId",
+              "type": "string",
+              "description": "Unique identifier of the user."
+            },
+            {
+              "name": "firstName",
+              "type": "string",
+              "description": "User's first name."
+            },
+            {
+              "name": "lastName",
+              "type": "string",
+              "description": "User's last name."
+            },
+            {
+              "name": "imageUrl",
+              "type": "string",
+              "description": "URL of the user's profile image."
+            },
+            {
+              "name": "merchantId",
+              "type": "string",
+              "description": "Identifier of the merchant the user belongs to."
+            },
+            {
+              "name": "partnerId",
+              "type": "string",
+              "description": "Identifier of the partner the user is associated with, if any."
+            },
+            {
+              "name": "phoneNumber",
+              "type": "string",
+              "description": "User's phone number."
+            },
+            {
+              "name": "swishNumber",
+              "type": "string",
+              "description": "User's Swish number, if set."
+            },
+            {
+              "name": "address",
+              "type": "string",
+              "description": "User's address."
+            },
+            {
+              "name": "email",
+              "type": "string",
+              "description": "User's email address."
+            },
+            {
+              "name": "role",
+              "type": "string",
+              "description": "The user's role, which determines their permissions."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/partners/:partnerId/merchants/:merchantId/users",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"userId\": \"u_7b42c1\",\n\t\t\t\"firstName\": \"Erik\",\n\t\t\t\"lastName\": \"Lund\",\n\t\t\t\"imageUrl\": \"https://cdn.surfboard.se/u/7b42c1.png\",\n\t\t\t\"merchantId\": \"m_5f2c1a9b3d\",\n\t\t\t\"partnerId\": \"pt_9c31a0f4b2\",\n\t\t\t\"phoneNumber\": \"+46707654321\",\n\t\t\t\"swishNumber\": \"1231181189\",\n\t\t\t\"address\": \"Kungsgatan 5, Göteborg\",\n\t\t\t\"email\": \"erik@kaffebaren.se\",\n\t\t\t\"role\": \"CASHIER\"\n\t\t}\n\t],\n\t\"message\": \"Fetched users for merchant successfully\"\n}"
+          },
+          {
+            "code": 400,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unable to fetch users for merchant\"\n}"
+          },
+          {
+            "code": 401,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unauthorized access. Please provide valid credentials to access this endpoint.\"\n}"
+          }
+        ]
+      }
+    },
+    {
+      "heading": "Update Merchant User",
+      "description": "Update the profile of a user belonging to one of the partner's merchants. Any combination of first name, last name, profile image, and address can be updated; omitted fields are left unchanged.",
+      "reqParams": [
+        {
+          "name": "partnerId",
+          "type": "string",
+          "mandatory": true,
+          "description": "Identifier of the partner the merchant belongs to. Supplied in the URL path."
+        },
+        {
+          "name": "merchantId",
+          "type": "string",
+          "mandatory": true,
+          "description": "Identifier of the merchant the user belongs to. Supplied in the URL path."
+        },
+        {
+          "name": "userId",
+          "type": "string",
+          "mandatory": true,
+          "description": "Identifier of the user to update. Supplied in the URL path."
+        },
+        {
+          "name": "firstName",
+          "type": "string",
+          "mandatory": false,
+          "description": "New first name for the user."
+        },
+        {
+          "name": "lastName",
+          "type": "string",
+          "mandatory": false,
+          "description": "New last name for the user."
+        },
+        {
+          "name": "imageUrl",
+          "type": "string",
+          "mandatory": false,
+          "description": "New profile image URL for the user."
+        },
+        {
+          "name": "address",
+          "type": "string",
+          "mandatory": false,
+          "description": "New address for the user."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request, either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "The updated user profile.",
+          "resParams": [
+            {
+              "name": "userId",
+              "type": "string",
+              "description": "Unique identifier of the user."
+            },
+            {
+              "name": "firstName",
+              "type": "string",
+              "description": "User's first name after the update."
+            },
+            {
+              "name": "lastName",
+              "type": "string",
+              "description": "User's last name after the update."
+            },
+            {
+              "name": "imageUrl",
+              "type": "string",
+              "description": "URL of the user's profile image after the update."
+            },
+            {
+              "name": "address",
+              "type": "string",
+              "description": "User's address after the update."
+            },
+            {
+              "name": "email",
+              "type": "string",
+              "description": "User's email address."
+            },
+            {
+              "name": "merchantId",
+              "type": "string",
+              "description": "Identifier of the merchant the user belongs to."
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "PUT",
+      "path": "/partners/:partnerId/merchants/:merchantId/users/:userId",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            }
+          ],
+          "body": "{\n  \"firstName\": \"Erik\",\n  \"lastName\": \"Lundqvist\",\n  \"address\": \"Kungsgatan 5, Göteborg\"\n}"
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"userId\": \"u_7b42c1\",\n\t\t\"firstName\": \"Erik\",\n\t\t\"lastName\": \"Lundqvist\",\n\t\t\"imageUrl\": \"https://cdn.surfboard.se/u/7b42c1.png\",\n\t\t\"address\": \"Kungsgatan 5, Göteborg\",\n\t\t\"email\": \"erik@kaffebaren.se\",\n\t\t\"merchantId\": \"m_5f2c1a9b3d\"\n\t},\n\t\"message\": \"User profile updated successfully.\"\n}"
+          },
+          {
+            "code": 400,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"No fields provided to update.\"\n}"
+          },
+          {
+            "code": 401,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Unauthorized access. Please provide valid credentials to access this endpoint.\"\n}"
+          }
+        ]
+      }
+    }
+  ]
+}

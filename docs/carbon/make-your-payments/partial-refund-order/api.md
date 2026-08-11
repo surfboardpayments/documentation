@@ -1,0 +1,3 @@
+Order created as a full payment or partial payment can be partially refunded using  the specified line item and the original purchaseOrderId (the orderId from the completed order). By using the Create Order API, you can process the partial refund, and the following section provides an overview of how the partial refund works
+
+![partial refund order flow](https://developer-portal-docs-test.web.app/images/partial-refund.png "partial refund order flow")

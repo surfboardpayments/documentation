@@ -1,0 +1,55 @@
+{
+    "scenarioId": "get-interapp-code",
+    "scenarioName": "Get Interapp Code",
+    "steps": [
+        {
+            "id": "get-interapp-code",
+            "name": "Get Interapp Code",
+            "description": "Generate an Interapp code for a specific terminal to be registered with app switch.",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "merchants/{{merchantId}}/stores/{{storeId}}/terminals/interapp",
+            "readOnly": true,
+            "response":{
+                "status": "SUCCESS",
+                "data": {
+                  "registrationCode": "v_Z37lV0JatqBvou"
+                },
+                "message": "Registration Code Generated Successfully"
+              },
+            "guidePath": "/carbon/device-handling/get-interapp-code/get-interapp-code",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+               "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "registrationCode",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Returns the registration code for interapp. This code is valid for 120 seconds."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ]
+            }
+        }
+    ]
+}

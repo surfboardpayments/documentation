@@ -1,0 +1,950 @@
+{
+  "title": "Transactions API",
+  "description": "The Transactions API lets you retrieve a merchant's card and payment transactions. Fetch a paginated transaction list — optionally narrowed to a date range, store, or terminal — or run a free-text search across a merchant's transactions to reconcile payments, build reporting, or look up an individual sale.",
+  "endpoints": [
+    {
+      "fragment": "List Transactions",
+      "method": "GET",
+      "link": "API_URL/transactions"
+    },
+    {
+      "fragment": "List Transactions by Date Range",
+      "method": "GET",
+      "link": "API_URL/transactions/range"
+    },
+    {
+      "fragment": "Search Transactions",
+      "method": "GET",
+      "link": "API_URL/transactions/search"
+    }
+  ],
+  "apis": [
+    {
+      "heading": "List Transactions",
+      "pagination": true,
+      "description": "Retrieve a paginated list of the authenticated merchant's transactions. Narrow the results to a date range, a single store, or a single terminal. When a start date is given without an end date, a 24-hour window from the start date is used.",
+      "query": "Page through results with the `x-page-number` request header. The total number of matching transactions is returned in the `x-total-items` response header.",
+      "reqParams": [
+        {
+          "name": "startDate",
+          "type": "string",
+          "mandatory": false,
+          "description": "Start of the date range to fetch transactions for (ISO 8601, e.g. 2026-06-01). When omitted, results are not date-filtered."
+        },
+        {
+          "name": "endDate",
+          "type": "string",
+          "mandatory": false,
+          "description": "End of the date range. If a startDate is supplied without an endDate, a 24-hour window from startDate is used."
+        },
+        {
+          "name": "storeId",
+          "type": "string",
+          "mandatory": false,
+          "description": "Return only transactions that took place at this store."
+        },
+        {
+          "name": "terminalId",
+          "type": "string",
+          "mandatory": false,
+          "description": "Return only transactions processed by this terminal (checkout)."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request, either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "array",
+          "description": "The transactions on the current page.",
+          "resParams": [
+            {
+              "name": "transactionId",
+              "type": "string",
+              "description": "Unique identifier of the transaction."
+            },
+            {
+              "name": "merchantId",
+              "type": "string",
+              "description": "Identifier of the merchant the transaction belongs to."
+            },
+            {
+              "name": "storeId",
+              "type": "string",
+              "description": "Identifier of the store where the transaction took place."
+            },
+            {
+              "name": "terminalId",
+              "type": "string",
+              "description": "Identifier of the terminal (checkout) that processed the transaction."
+            },
+            {
+              "name": "orderId",
+              "type": "string",
+              "description": "Identifier of the order the transaction settled."
+            },
+            {
+              "name": "paymentId",
+              "type": "string",
+              "description": "Identifier of the payment that produced the transaction."
+            },
+            {
+              "name": "referenceId",
+              "type": "string",
+              "description": "Your own reference, supplied when the payment was created."
+            },
+            {
+              "name": "rrn",
+              "type": "string",
+              "description": "Retrieval reference number assigned by the acquirer."
+            },
+            {
+              "name": "amount",
+              "type": "number",
+              "description": "Transaction amount, in the smallest unit of the currency (e.g. öre for SEK)."
+            },
+            {
+              "name": "currency",
+              "type": "string",
+              "description": "ISO 4217 currency code of the transaction."
+            },
+            {
+              "name": "method",
+              "type": "string",
+              "description": "Payment method used, for example CARD, SWISH or GIFT_CARD."
+            },
+            {
+              "name": "type",
+              "type": "string",
+              "description": "Transaction type, for example PURCHASE or RETURN."
+            },
+            {
+              "name": "orderSummary",
+              "type": "string",
+              "description": "Short, human-readable summary of the order."
+            },
+            {
+              "name": "timestamp",
+              "type": "string",
+              "description": "When the transaction was created, in ISO 8601 format."
+            },
+            {
+              "name": "voided",
+              "type": "boolean",
+              "description": "Whether the transaction was voided."
+            },
+            {
+              "name": "issuerCountry",
+              "type": "string",
+              "description": "Country of the card issuer, reported at settlement."
+            },
+            {
+              "name": "interchangeDomain",
+              "type": "string",
+              "description": "Interchange domain the card falls under, for example domestic or intra-regional."
+            },
+            {
+              "name": "cardCategory",
+              "type": "string",
+              "description": "Card category reported at settlement, for example consumer or commercial."
+            },
+            {
+              "name": "cardUsage",
+              "type": "string",
+              "description": "Card funding type reported at settlement, for example debit or credit."
+            },
+            {
+              "name": "fee",
+              "type": "number",
+              "description": "Surfboard fee charged on the transaction, in the smallest currency unit."
+            },
+            {
+              "name": "feeVat",
+              "type": "number",
+              "description": "VAT charged on the Surfboard fee, in the smallest currency unit."
+            },
+            {
+              "name": "settlementStatus",
+              "type": "string",
+              "description": "Settlement state of the transaction; NOT_SETTLED until it is paid out."
+            },
+            {
+              "name": "payout",
+              "type": "number",
+              "description": "Amount paid out to the merchant for this transaction, in the smallest currency unit."
+            },
+            {
+              "name": "settlementRef",
+              "type": "string",
+              "description": "Reference of the settlement batch the transaction was paid out in."
+            },
+            {
+              "name": "settlementDate",
+              "type": "string",
+              "description": "Date the transaction was paid out to the merchant."
+            },
+            {
+              "name": "truncatedPan",
+              "type": "string",
+              "description": "Last four digits of the card number (PAN), zero-padded to four characters."
+            },
+            {
+              "name": "cardLabel",
+              "type": "string",
+              "description": "Application label of the card scheme used (the AID name)."
+            },
+            {
+              "name": "posEntryMode",
+              "type": "string",
+              "description": "How the card was presented at the point of sale (entry mode)."
+            },
+            {
+              "name": "issuerApplication",
+              "type": "string",
+              "description": "Issuer application data returned by the card."
+            },
+            {
+              "name": "terminalVerificationResult",
+              "type": "string",
+              "description": "Terminal verification results (TVR) from the card interaction."
+            },
+            {
+              "name": "aid",
+              "type": "string",
+              "description": "Application identifier (AID) of the card scheme used."
+            },
+            {
+              "name": "customerResponseCode",
+              "type": "string",
+              "description": "Response code returned by the card issuer."
+            },
+            {
+              "name": "cvmMethod",
+              "type": "string",
+              "description": "Cardholder verification method code used during the transaction."
+            },
+            {
+              "name": "cvmMethodDescription",
+              "type": "string",
+              "description": "Human-readable description of the cardholder verification method (e.g. 'Online PIN', 'No CVM')."
+            },
+            {
+              "name": "authMode",
+              "type": "string",
+              "description": "Authorization mode; ISSUER when the issuer authorized the transaction."
+            },
+            {
+              "name": "cardBrand",
+              "type": "string",
+              "description": "Card brand, for example VISA or MASTERCARD."
+            },
+            {
+              "name": "authCode",
+              "type": "string",
+              "description": "Authorization code returned by the issuer."
+            },
+            {
+              "name": "adjustments",
+              "type": "array",
+              "description": "Tip or amount adjustments applied to the transaction. Present only when adjustments exist.",
+              "resParams": [
+                {
+                  "name": "type",
+                  "type": "string",
+                  "description": "The kind of adjustment, for example TIP."
+                },
+                {
+                  "name": "amount",
+                  "type": "number",
+                  "description": "Adjustment amount, in the smallest currency unit."
+                },
+                {
+                  "name": "adjustmentId",
+                  "type": "string",
+                  "description": "Unique identifier of the adjustment."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/transactions",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "x-page-number",
+              "value": "1",
+              "mandatory": false
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"transactionId\": \"txn_8f21c0a9b7\",\n\t\t\t\"merchantId\": \"m_5f2c1a9b3d\",\n\t\t\t\"storeId\": \"st_2a91\",\n\t\t\t\"terminalId\": \"t_7c33\",\n\t\t\t\"orderId\": \"ord_4b19d2\",\n\t\t\t\"paymentId\": \"pay_a71f\",\n\t\t\t\"referenceId\": \"order-2026-0012\",\n\t\t\t\"rrn\": \"618234501122\",\n\t\t\t\"amount\": 14900,\n\t\t\t\"currency\": \"SEK\",\n\t\t\t\"method\": \"CARD\",\n\t\t\t\"type\": \"PURCHASE\",\n\t\t\t\"orderSummary\": \"2x Flat White\",\n\t\t\t\"timestamp\": \"2026-06-01T09:24:11.000Z\",\n\t\t\t\"voided\": false,\n\t\t\t\"settlementStatus\": \"SETTLED\",\n\t\t\t\"fee\": 268,\n\t\t\t\"feeVat\": 67,\n\t\t\t\"payout\": 14632,\n\t\t\t\"cardBrand\": \"VISA\",\n\t\t\t\"truncatedPan\": \"0341\",\n\t\t\t\"cardLabel\": \"VISA CREDIT\",\n\t\t\t\"authMode\": \"ISSUER\"\n\t\t}\n\t],\n\t\"message\": \"Fetched all transactions under merchant\"\n}"
+          },
+          {
+            "code": 400,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Failed to fetch transactions\"\n}"
+          },
+          {
+            "code": 401,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Authentication failed\"\n}"
+          }
+        ]
+      },
+      "params": {
+        "startDate": "2026-06-01",
+        "endDate": "2026-06-30",
+        "storeId": "st_2a91",
+        "terminalId": "t_7c33"
+      }
+    },
+    {
+      "heading": "List Transactions by Date Range",
+      "pagination": true,
+      "description": "The same paginated transaction list as List Transactions, but the date range is supplied as `start` and `end` query parameters. The response is identical; use whichever parameter names fit your integration.",
+      "query": "Page through results with the `x-page-number` request header. The total number of matching transactions is returned in the `x-total-items` response header.",
+      "reqParams": [
+        {
+          "name": "start",
+          "type": "string",
+          "mandatory": false,
+          "description": "Start of the date range to fetch transactions for (ISO 8601, e.g. 2026-06-01)."
+        },
+        {
+          "name": "end",
+          "type": "string",
+          "mandatory": false,
+          "description": "End of the date range. If start is supplied without end, a 24-hour window from start is used."
+        },
+        {
+          "name": "storeId",
+          "type": "string",
+          "mandatory": false,
+          "description": "Return only transactions that took place at this store."
+        },
+        {
+          "name": "terminalId",
+          "type": "string",
+          "mandatory": false,
+          "description": "Return only transactions processed by this terminal (checkout)."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request, either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "array",
+          "description": "The transactions on the current page.",
+          "resParams": [
+            {
+              "name": "transactionId",
+              "type": "string",
+              "description": "Unique identifier of the transaction."
+            },
+            {
+              "name": "merchantId",
+              "type": "string",
+              "description": "Identifier of the merchant the transaction belongs to."
+            },
+            {
+              "name": "storeId",
+              "type": "string",
+              "description": "Identifier of the store where the transaction took place."
+            },
+            {
+              "name": "terminalId",
+              "type": "string",
+              "description": "Identifier of the terminal (checkout) that processed the transaction."
+            },
+            {
+              "name": "orderId",
+              "type": "string",
+              "description": "Identifier of the order the transaction settled."
+            },
+            {
+              "name": "paymentId",
+              "type": "string",
+              "description": "Identifier of the payment that produced the transaction."
+            },
+            {
+              "name": "referenceId",
+              "type": "string",
+              "description": "Your own reference, supplied when the payment was created."
+            },
+            {
+              "name": "rrn",
+              "type": "string",
+              "description": "Retrieval reference number assigned by the acquirer."
+            },
+            {
+              "name": "amount",
+              "type": "number",
+              "description": "Transaction amount, in the smallest unit of the currency (e.g. öre for SEK)."
+            },
+            {
+              "name": "currency",
+              "type": "string",
+              "description": "ISO 4217 currency code of the transaction."
+            },
+            {
+              "name": "method",
+              "type": "string",
+              "description": "Payment method used, for example CARD, SWISH or GIFT_CARD."
+            },
+            {
+              "name": "type",
+              "type": "string",
+              "description": "Transaction type, for example PURCHASE or RETURN."
+            },
+            {
+              "name": "orderSummary",
+              "type": "string",
+              "description": "Short, human-readable summary of the order."
+            },
+            {
+              "name": "timestamp",
+              "type": "string",
+              "description": "When the transaction was created, in ISO 8601 format."
+            },
+            {
+              "name": "voided",
+              "type": "boolean",
+              "description": "Whether the transaction was voided."
+            },
+            {
+              "name": "issuerCountry",
+              "type": "string",
+              "description": "Country of the card issuer, reported at settlement."
+            },
+            {
+              "name": "interchangeDomain",
+              "type": "string",
+              "description": "Interchange domain the card falls under, for example domestic or intra-regional."
+            },
+            {
+              "name": "cardCategory",
+              "type": "string",
+              "description": "Card category reported at settlement, for example consumer or commercial."
+            },
+            {
+              "name": "cardUsage",
+              "type": "string",
+              "description": "Card funding type reported at settlement, for example debit or credit."
+            },
+            {
+              "name": "fee",
+              "type": "number",
+              "description": "Surfboard fee charged on the transaction, in the smallest currency unit."
+            },
+            {
+              "name": "feeVat",
+              "type": "number",
+              "description": "VAT charged on the Surfboard fee, in the smallest currency unit."
+            },
+            {
+              "name": "settlementStatus",
+              "type": "string",
+              "description": "Settlement state of the transaction; NOT_SETTLED until it is paid out."
+            },
+            {
+              "name": "payout",
+              "type": "number",
+              "description": "Amount paid out to the merchant for this transaction, in the smallest currency unit."
+            },
+            {
+              "name": "settlementRef",
+              "type": "string",
+              "description": "Reference of the settlement batch the transaction was paid out in."
+            },
+            {
+              "name": "settlementDate",
+              "type": "string",
+              "description": "Date the transaction was paid out to the merchant."
+            },
+            {
+              "name": "truncatedPan",
+              "type": "string",
+              "description": "Last four digits of the card number (PAN), zero-padded to four characters."
+            },
+            {
+              "name": "cardLabel",
+              "type": "string",
+              "description": "Application label of the card scheme used (the AID name)."
+            },
+            {
+              "name": "posEntryMode",
+              "type": "string",
+              "description": "How the card was presented at the point of sale (entry mode)."
+            },
+            {
+              "name": "issuerApplication",
+              "type": "string",
+              "description": "Issuer application data returned by the card."
+            },
+            {
+              "name": "terminalVerificationResult",
+              "type": "string",
+              "description": "Terminal verification results (TVR) from the card interaction."
+            },
+            {
+              "name": "aid",
+              "type": "string",
+              "description": "Application identifier (AID) of the card scheme used."
+            },
+            {
+              "name": "customerResponseCode",
+              "type": "string",
+              "description": "Response code returned by the card issuer."
+            },
+            {
+              "name": "cvmMethod",
+              "type": "string",
+              "description": "Cardholder verification method code used during the transaction."
+            },
+            {
+              "name": "cvmMethodDescription",
+              "type": "string",
+              "description": "Human-readable description of the cardholder verification method (e.g. 'Online PIN', 'No CVM')."
+            },
+            {
+              "name": "authMode",
+              "type": "string",
+              "description": "Authorization mode; ISSUER when the issuer authorized the transaction."
+            },
+            {
+              "name": "cardBrand",
+              "type": "string",
+              "description": "Card brand, for example VISA or MASTERCARD."
+            },
+            {
+              "name": "authCode",
+              "type": "string",
+              "description": "Authorization code returned by the issuer."
+            },
+            {
+              "name": "adjustments",
+              "type": "array",
+              "description": "Tip or amount adjustments applied to the transaction. Present only when adjustments exist.",
+              "resParams": [
+                {
+                  "name": "type",
+                  "type": "string",
+                  "description": "The kind of adjustment, for example TIP."
+                },
+                {
+                  "name": "amount",
+                  "type": "number",
+                  "description": "Adjustment amount, in the smallest currency unit."
+                },
+                {
+                  "name": "adjustmentId",
+                  "type": "string",
+                  "description": "Unique identifier of the adjustment."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/transactions/range",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            },
+            {
+              "name": "x-page-number",
+              "value": "1",
+              "mandatory": false
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"transactionId\": \"txn_8f21c0a9b7\",\n\t\t\t\"merchantId\": \"m_5f2c1a9b3d\",\n\t\t\t\"storeId\": \"st_2a91\",\n\t\t\t\"terminalId\": \"t_7c33\",\n\t\t\t\"orderId\": \"ord_4b19d2\",\n\t\t\t\"paymentId\": \"pay_a71f\",\n\t\t\t\"referenceId\": \"order-2026-0012\",\n\t\t\t\"rrn\": \"618234501122\",\n\t\t\t\"amount\": 14900,\n\t\t\t\"currency\": \"SEK\",\n\t\t\t\"method\": \"CARD\",\n\t\t\t\"type\": \"PURCHASE\",\n\t\t\t\"orderSummary\": \"2x Flat White\",\n\t\t\t\"timestamp\": \"2026-06-01T09:24:11.000Z\",\n\t\t\t\"voided\": false,\n\t\t\t\"settlementStatus\": \"SETTLED\",\n\t\t\t\"fee\": 268,\n\t\t\t\"feeVat\": 67,\n\t\t\t\"payout\": 14632,\n\t\t\t\"cardBrand\": \"VISA\",\n\t\t\t\"truncatedPan\": \"0341\",\n\t\t\t\"cardLabel\": \"VISA CREDIT\",\n\t\t\t\"authMode\": \"ISSUER\"\n\t\t}\n\t],\n\t\"message\": \"Fetched all transactions under merchant\"\n}"
+          },
+          {
+            "code": 400,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Failed to fetch transactions\"\n}"
+          },
+          {
+            "code": 401,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Authentication failed\"\n}"
+          }
+        ]
+      },
+      "params": {
+        "start": "2026-06-01",
+        "end": "2026-06-30",
+        "storeId": "st_2a91",
+        "terminalId": "t_7c33"
+      }
+    },
+    {
+      "heading": "Search Transactions",
+      "description": "Run a free-text search across the merchant's transactions — for example by order reference, RRN, or card label — and get back the matching transactions along with the fields that matched and a short snippet for each.",
+      "reqParams": [
+        {
+          "name": "query",
+          "type": "string",
+          "mandatory": true,
+          "description": "The text to search the merchant's transactions for, such as an order reference, RRN, or card label."
+        }
+      ],
+      "resParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status of the request, either 'SUCCESS' or 'ERROR'."
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "The search results.",
+          "resParams": [
+            {
+              "name": "transactionDetails",
+              "type": "object",
+              "description": "The matches found for the search.",
+              "resParams": [
+                {
+                  "name": "entries",
+                  "type": "number",
+                  "description": "Total number of matching transactions."
+                },
+                {
+                  "name": "hits",
+                  "type": "array",
+                  "description": "The matching transactions.",
+                  "resParams": [
+                    {
+                      "name": "transactionId",
+                      "type": "string",
+                      "description": "Identifier of the matching transaction."
+                    },
+                    {
+                      "name": "path",
+                      "type": "string",
+                      "description": "Location within the transaction where the match was found."
+                    },
+                    {
+                      "name": "matches",
+                      "type": "array",
+                      "description": "The individual field matches for this transaction.",
+                      "resParams": [
+                        {
+                          "name": "field",
+                          "type": "string",
+                          "description": "The transaction field that matched the search."
+                        },
+                        {
+                          "name": "matched",
+                          "type": "string",
+                          "description": "The matched value."
+                        },
+                        {
+                          "name": "snippet",
+                          "type": "string",
+                          "description": "A snippet of text surrounding the match."
+                        }
+                      ]
+                    },
+                    {
+                      "name": "transaction",
+                      "type": "object",
+                      "description": "A normalized view of the matched transaction.",
+                      "resParams": [
+                        {
+                          "name": "transactionId",
+                          "type": "string",
+                          "description": "Unique identifier of the transaction."
+                        },
+                        {
+                          "name": "merchantId",
+                          "type": "string",
+                          "description": "Identifier of the merchant the transaction belongs to."
+                        },
+                        {
+                          "name": "storeId",
+                          "type": "string",
+                          "description": "Identifier of the store where the transaction took place."
+                        },
+                        {
+                          "name": "terminalId",
+                          "type": "string",
+                          "description": "Identifier of the terminal (checkout) that processed the transaction."
+                        },
+                        {
+                          "name": "orderId",
+                          "type": "string",
+                          "description": "Identifier of the order the transaction settled."
+                        },
+                        {
+                          "name": "paymentId",
+                          "type": "string",
+                          "description": "Identifier of the payment that produced the transaction."
+                        },
+                        {
+                          "name": "referenceId",
+                          "type": "string",
+                          "description": "Your own reference, supplied when the payment was created."
+                        },
+                        {
+                          "name": "rrn",
+                          "type": "string",
+                          "description": "Retrieval reference number assigned by the acquirer."
+                        },
+                        {
+                          "name": "amount",
+                          "type": "number",
+                          "description": "Transaction amount, in the smallest unit of the currency (e.g. öre for SEK)."
+                        },
+                        {
+                          "name": "currency",
+                          "type": "string",
+                          "description": "ISO 4217 currency code of the transaction."
+                        },
+                        {
+                          "name": "method",
+                          "type": "string",
+                          "description": "Payment method used, for example CARD, SWISH or GIFT_CARD."
+                        },
+                        {
+                          "name": "type",
+                          "type": "string",
+                          "description": "Transaction type, for example PURCHASE or RETURN."
+                        },
+                        {
+                          "name": "orderSummary",
+                          "type": "string",
+                          "description": "Short, human-readable summary of the order."
+                        },
+                        {
+                          "name": "timestamp",
+                          "type": "string",
+                          "description": "When the transaction was created, in ISO 8601 format."
+                        },
+                        {
+                          "name": "voided",
+                          "type": "boolean",
+                          "description": "Whether the transaction was voided."
+                        },
+                        {
+                          "name": "issuerCountry",
+                          "type": "string",
+                          "description": "Country of the card issuer, reported at settlement."
+                        },
+                        {
+                          "name": "interchangeDomain",
+                          "type": "string",
+                          "description": "Interchange domain the card falls under, for example domestic or intra-regional."
+                        },
+                        {
+                          "name": "cardCategory",
+                          "type": "string",
+                          "description": "Card category reported at settlement, for example consumer or commercial."
+                        },
+                        {
+                          "name": "cardUsage",
+                          "type": "string",
+                          "description": "Card funding type reported at settlement, for example debit or credit."
+                        },
+                        {
+                          "name": "fee",
+                          "type": "number",
+                          "description": "Surfboard fee charged on the transaction, in the smallest currency unit."
+                        },
+                        {
+                          "name": "feeVat",
+                          "type": "number",
+                          "description": "VAT charged on the Surfboard fee, in the smallest currency unit."
+                        },
+                        {
+                          "name": "settlementStatus",
+                          "type": "string",
+                          "description": "Settlement state of the transaction; NOT_SETTLED until it is paid out."
+                        },
+                        {
+                          "name": "payout",
+                          "type": "number",
+                          "description": "Amount paid out to the merchant for this transaction, in the smallest currency unit."
+                        },
+                        {
+                          "name": "settlementRef",
+                          "type": "string",
+                          "description": "Reference of the settlement batch the transaction was paid out in."
+                        },
+                        {
+                          "name": "settlementDate",
+                          "type": "string",
+                          "description": "Date the transaction was paid out to the merchant."
+                        },
+                        {
+                          "name": "truncatedPan",
+                          "type": "string",
+                          "description": "Last four digits of the card number (PAN), zero-padded to four characters."
+                        },
+                        {
+                          "name": "cardLabel",
+                          "type": "string",
+                          "description": "Application label of the card scheme used (the AID name)."
+                        },
+                        {
+                          "name": "posEntryMode",
+                          "type": "string",
+                          "description": "How the card was presented at the point of sale (entry mode)."
+                        },
+                        {
+                          "name": "issuerApplication",
+                          "type": "string",
+                          "description": "Issuer application data returned by the card."
+                        },
+                        {
+                          "name": "terminalVerificationResult",
+                          "type": "string",
+                          "description": "Terminal verification results (TVR) from the card interaction."
+                        },
+                        {
+                          "name": "aid",
+                          "type": "string",
+                          "description": "Application identifier (AID) of the card scheme used."
+                        },
+                        {
+                          "name": "customerResponseCode",
+                          "type": "string",
+                          "description": "Response code returned by the card issuer."
+                        },
+                        {
+                          "name": "cvmMethod",
+                          "type": "string",
+                          "description": "Cardholder verification method code used during the transaction."
+                        },
+                        {
+                          "name": "cvmMethodDescription",
+                          "type": "string",
+                          "description": "Human-readable description of the cardholder verification method (e.g. 'Online PIN', 'No CVM')."
+                        },
+                        {
+                          "name": "authMode",
+                          "type": "string",
+                          "description": "Authorization mode; ISSUER when the issuer authorized the transaction."
+                        },
+                        {
+                          "name": "cardBrand",
+                          "type": "string",
+                          "description": "Card brand, for example VISA or MASTERCARD."
+                        },
+                        {
+                          "name": "authCode",
+                          "type": "string",
+                          "description": "Authorization code returned by the issuer."
+                        },
+                        {
+                          "name": "adjustments",
+                          "type": "array",
+                          "description": "Tip or amount adjustments applied to the transaction. Present only when adjustments exist.",
+                          "resParams": [
+                            {
+                              "name": "type",
+                              "type": "string",
+                              "description": "The kind of adjustment, for example TIP."
+                            },
+                            {
+                              "name": "amount",
+                              "type": "number",
+                              "description": "Adjustment amount, in the smallest currency unit."
+                            },
+                            {
+                              "name": "adjustmentId",
+                              "type": "string",
+                              "description": "Unique identifier of the adjustment."
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A message that describes the status of the request."
+        }
+      ],
+      "method": "GET",
+      "path": "/transactions/search",
+      "examples": {
+        "request": {
+          "headers": [
+            {
+              "name": "API-KEY",
+              "value": "YOUR_API_KEY"
+            },
+            {
+              "name": "API-SECRET",
+              "value": "YOUR_API_SECRET"
+            }
+          ]
+        },
+        "response": [
+          {
+            "code": 200,
+            "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"transactionDetails\": {\n\t\t\t\"entries\": 1,\n\t\t\t\"hits\": [\n\t\t\t\t{\n\t\t\t\t\t\"transactionId\": \"txn_8f21c0a9b7\",\n\t\t\t\t\t\"path\": \"transaction.referenceId\",\n\t\t\t\t\t\"matches\": [\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"field\": \"referenceId\",\n\t\t\t\t\t\t\t\"matched\": \"order-2026-0012\",\n\t\t\t\t\t\t\t\"snippet\": \"…order-2026-0012…\"\n\t\t\t\t\t\t}\n\t\t\t\t\t],\n\t\t\t\t\t\"transaction\": {\n\t\t\t\t\t\t\"transactionId\": \"txn_8f21c0a9b7\",\n\t\t\t\t\t\t\"merchantId\": \"m_5f2c1a9b3d\",\n\t\t\t\t\t\t\"storeId\": \"st_2a91\",\n\t\t\t\t\t\t\"terminalId\": \"t_7c33\",\n\t\t\t\t\t\t\"orderId\": \"ord_4b19d2\",\n\t\t\t\t\t\t\"paymentId\": \"pay_a71f\",\n\t\t\t\t\t\t\"referenceId\": \"order-2026-0012\",\n\t\t\t\t\t\t\"rrn\": \"618234501122\",\n\t\t\t\t\t\t\"amount\": 14900,\n\t\t\t\t\t\t\"currency\": \"SEK\",\n\t\t\t\t\t\t\"method\": \"CARD\",\n\t\t\t\t\t\t\"type\": \"PURCHASE\",\n\t\t\t\t\t\t\"orderSummary\": \"2x Flat White\",\n\t\t\t\t\t\t\"timestamp\": \"2026-06-01T09:24:11.000Z\",\n\t\t\t\t\t\t\"voided\": false,\n\t\t\t\t\t\t\"settlementStatus\": \"SETTLED\",\n\t\t\t\t\t\t\"fee\": 268,\n\t\t\t\t\t\t\"feeVat\": 67,\n\t\t\t\t\t\t\"payout\": 14632,\n\t\t\t\t\t\t\"cardBrand\": \"VISA\",\n\t\t\t\t\t\t\"truncatedPan\": \"0341\",\n\t\t\t\t\t\t\"cardLabel\": \"VISA CREDIT\",\n\t\t\t\t\t\t\"authMode\": \"ISSUER\"\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t]\n\t\t}\n\t},\n\t\"message\": \"Transaction details search done successfully.\"\n}"
+          },
+          {
+            "code": 400,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Please pass in the search value as a query.\"\n}"
+          },
+          {
+            "code": 401,
+            "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Authentication failed\"\n}"
+          }
+        ]
+      },
+      "params": {
+        "query": "order-2026-0012"
+      }
+    }
+  ]
+}

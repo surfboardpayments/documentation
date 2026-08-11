@@ -1,0 +1,109 @@
+{
+    "title": "Client Auth Tokens API",
+    "description": "These APIs are used when you would like to make requests from the client directly to Surfboard without using the API-Key and API-Secret. The generated token is restricted to perform calls limited to orders, payments and transactions.",
+    "endpoints": [
+        {
+            "fragment": "Create Token",
+            "method": "POST",
+            "link": "API_URL/partners/:partnerId/token"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Create Token",
+            "description": "Creates a token for a given externalUserID. The token must be passed via the authorization header as a bearer token in subsequent requests. ",
+            "important": "To get <span class='font-semibold'>providerId</span> and <span class='font-semibold'>providerCertificate</span> details, kindly contact <a class='text-button-login' href='mailto:integrations@surfboard.se'>integrations@surfboard.se</a> or via our Slack channel.",
+            "reqParams": [
+                {
+                    "name": "providerId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Provider ID of the auth provider"
+                },
+                {
+                    "name": "providerCertificate",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Certificate of the auth provider"
+                },
+                {
+                    "name": "externalUserId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "ExternalUserId ID to be assigned to the user who requires auth token"
+                },
+                {
+                    "name": "email",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Email address of the user"
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'.."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data",
+                    "resParams": [
+                        {
+                            "name": "token",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Auth Token that is valid for a given interval specified in validUntil"
+                        },
+                        {
+                            "name": "validUntil",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "This provides the duration of the token in seconds. Once the expiry duration is reached, a new token needs to be fetched. It must be noted that Surfboard will change the duration of the token based on the running environment and its internal controls for fraud."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/partners/:partnerId/token",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\n  \"providerId\": \"BB72CE2C-B160-4BFE-ACB9-3FC270260C33\",\n  \"providerCertificate\": \"2c95c565604048d7998a034ccbd2fbb5\",\n  \"externalUserId\": \"A8895CBBCC503F\"\n}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"token\": \"4E306D4EDC9C48919671014D1125B61A4B12170F806F45D087ADD190A21869234F1D7D1D8A1547A0A38556739091BF09\"\n\t\t\"validUntil\": \"3600\"\n\t},\n\t\"message\": \"Auth token fetched successfully\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

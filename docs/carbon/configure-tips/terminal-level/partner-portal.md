@@ -1,0 +1,2 @@
+1. Configure terminal-level settings by navigating to **Merchants→ select the desired merchant→Terminals**.
+2. In Terminals section **Actions → Set Terminal Tips Config** for the terminal you want to configure tips, fill in the details, and click **Save Changes** to apply.

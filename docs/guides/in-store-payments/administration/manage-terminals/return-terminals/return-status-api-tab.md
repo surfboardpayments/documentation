@@ -1,0 +1,13 @@
+---
+title: "Track the Status of Returning Terminals Using API"
+description: "Guide to track the status of returning payment terminals using the API."
+category: "Terminals"
+path: "/guides/in-store-payments/administration//manage-terminals/return-terminals/return-status-api-tab.md"
+---
+
+1. Send a **`GET`** request with the **`partnerId`** to the [**Fetch All Return Requests API**](api/logistics#Fetch-All-Return-Requests).
+2. In the response, you will receive the following details: **`returnId`**, **`status`**, **`terminalId`**, **`name`**, **`email`**, **`phoneNumber`**, **`address`**, **`deliveryInstruction`**, **`reasonForReturn`**, **`comment`**, and **`message`**, as shown below in the code block.
+
+Here’s example request and response for the tracking the return request
+
+{% requestresponse method="GET" requests=[{language: "cURL", code: "curl -H 'Content-Type: application/json' \\\n     -H 'API-KEY: YOUR_API_KEY' \\\n     -H 'API-SECRET: YOUR_API_SECRET'  \\\n     YOUR_API_URL/partners/:partnerId/logistics/return"}] response="{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"returnId\": 14,\n\t\t\t\"status\": \"CREATED\",\n\t\t\t\"terminalId\": \"818fa9927939800704\",\n\t\t\t\"name\": \"Joe's supermarket\",\n\t\t\t\"email\": \"a@surfboard.se\",\n\t\t\t\"phoneNumber\": \"+46737359971\",\n\t\t\t\"address\": {\n\t\t\t\t\"addressLine1\": \"Östra Strandgatan 57c\",\n\t\t\t\t\"addressLine2\": \"\",\n\t\t\t\t\"addressLine3\": \"\",\n\t\t\t\t\"countryCode\": \"FI\",\n\t\t\t\t\"postalCode\": \"20810\",\n\t\t\t\t\"city\": \"Åbo\"\n\t\t\t},\n\t\t\t\"deliveryInstruction\": \"Go left after the elevator\",\n\t\t\t\"reasonForReturn\": \"WARRANTY\",\n\t\t\t\"comment\": \"for return\"\n\t\t},\n\t\t{\n\t\t\t\"returnId\": 15,\n\t\t\t\"status\": \"CREATED\",\n\t\t\t\"terminalId\": \"816a0ff6bc0fb00404\",\n\t\t\t\"name\": \"John's supermarket\",\n\t\t\t\"email\": \"b@surfboard.se\",\n\t\t\t\"phoneNumber\": \"+46737359971\",\n\t\t\t\"address\": {\n\t\t\t\t\"addressLine1\": \"Östra Strandgatan 57b\",\n\t\t\t\t\"addressLine2\": \"\",\n\t\t\t\t\"addressLine3\": \"\",\n\t\t\t\t\"countryCode\": \"FI\",\n\t\t\t\t\"postalCode\": \"20810\",\n\t\t\t\t\"city\": \"Åbo\"\n\t\t\t},\n\t\t\t\"deliveryInstruction\": \"Go left after the elevator\",\n\t\t\t\"reasonForReturn\": \"WARRANTY\",\n\t\t\t\"comment\": \"to return\"\n\t\t}\n\t],\n\t\"message\": \"Return requests fetched successfully\"\n}" languages=["cURL"] /%}

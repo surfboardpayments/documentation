@@ -1,0 +1,45 @@
+{
+    "scenarioId": "fetch-receipt-link",
+    "scenarioName": "Fetch Receipt Link",
+    "steps": [
+        {
+            "id": "fetch-receipt-link",
+            "name": "Fetch Receipt Link",
+            "description": "Fetch the link to the receipt.",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "receipts/{{id}}/link",
+            "guidePath": "/carbon/receipts/fetch-receipt-link/home",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request 'SUCCESS' | 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "description": "Response data.",
+                        "resParams": [
+                            {
+                                "name": "receiptURL",
+                                "type": "string",
+                                "description": "This parameter provides the URL link to access the receipt for a specific transaction."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the email receipt request."
+                    }
+                ]
+            }
+        }
+    ]
+}

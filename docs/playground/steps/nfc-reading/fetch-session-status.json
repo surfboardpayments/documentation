@@ -1,0 +1,74 @@
+{
+    "scenarioId": "fetch-session-status",
+    "scenarioName": "Fetch Session Status",
+    "steps": [
+        {
+            "id": "fetch-session-status",
+            "name": "Fetch Session Status",
+            "description": "Retrieve the status of a specific NFC reading session.",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "terminals/{{terminalId}}/sessions/{{sessionId}}/status",
+            "guidePath": "/carbon/nfc-reading/fetch-session-status",
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data.",
+                        "resParams": [
+                            {
+                                "name": "sessionStatus",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "The current status of the session.",
+                                "possibleValues": [
+                                    {
+                                        "value": "PENDING",
+                                        "description": "The session is currently pending and waiting for NFC reading."
+                                    },
+                                    {
+                                        "value": "CANCELLED",
+                                        "description": "The session was cancelled by the user or system."
+                                    },
+                                    {
+                                        "value": "COMPLETED",
+                                        "description": "The session has been successfully completed."
+                                    },
+                                    {
+                                        "value": "TIMED_OUT",
+                                        "description": "The session has timed out due to inactivity or other issues."
+                                    },
+                                    {
+                                        "value": "NOT_FOUND",
+                                        "description": "The session was not found or does not exist."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "nfcTags",
+                                "type": "array",
+                                "mandatory": true,
+                                "description": "List of NFC (Base64 encoded RFID value) tags involved in the session."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

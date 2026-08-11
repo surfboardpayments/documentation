@@ -1,0 +1,83 @@
+{
+    "scenario": "advanced-customizations",
+    "scenarios": [
+        {
+            "id": "generate-branding-options",
+            "name": "Generate Branding Options",
+            "description": "Generate a list of branding options for a merchant.",
+            "order": 1
+        },
+        {
+            "id": "create-gift-card",
+            "name": "Create Gift Card",
+            "description": "Create a gift card for a merchant.",
+            "order": 2
+        },
+        {
+            "id": "get-all-gift-cards",
+            "name": "Get All Gift Cards",
+            "description": "Retrieve a list of all gift cards for a merchant.",
+            "order": 3
+        },
+        {
+            "id": "get-gift-card-details",
+            "name": "Get Gift Card Details",
+            "description": "Retrieve a specific gift card for a merchant.",
+            "order": 4
+        },
+        {
+            "id": "get-gift-card-transactions",
+            "name": "Get Gift Card Transactions",
+            "description": "Retrieve a list of transactions for a specific gift card.",
+            "order": 5
+        },
+        {
+            "id": "create-promotion",
+            "name": "Create Promotion",
+            "description": "Create a promotion for a merchant.",
+            "order": 6
+        },
+        {
+            "id": "update-promotion",
+            "name": "Update Promotion",
+            "description": "Update a specific promotion for a merchant.",
+            "order": 7
+        },
+        {
+            "id": "fetch-promotion-by-id",
+            "name": "Fetch Promotion by ID",
+            "description": "Retrieve a specific promotion for a merchant.",
+            "order": 8
+        },
+        {
+            "id": "fetch-promotions",
+            "name": "Fetch Promotions",
+            "description": "Retrieve a list of all promotions for a merchant.",
+            "order": 9
+        },
+        {
+            "id": "delete-promotion",
+            "name": "Delete Promotion",
+            "description": "Delete a specific promotion for a merchant.",
+            "order": 10
+        },
+        {
+            "id": "generate-product-description",
+            "name": "Generate Product Description",
+            "description": "Generate Product Description",
+            "order": 11
+        },
+        {
+            "id": "generate-product-images",
+            "name": "Generate Product Images",
+            "description": "Generate Product Images",
+            "order": 12
+        },
+        {
+            "id": "generate-product-catalog-from-images",
+            "name": "Generate Product Catalog from Images",
+            "description": "Generate Product Catalog from Images",
+            "order": 13
+        }
+    ]
+}

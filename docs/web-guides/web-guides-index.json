@@ -1,0 +1,455 @@
+{
+  "title": "Surfboard Payments Web Guides",
+  "description": "Developer guides from surfboardpayments.com covering payment methods, SDKs, terminal integrations, and payment lifecycle",
+  "totalGuides": 32,
+  "lastUpdated": "2026-03-11",
+  "categories": [
+    "in-store",
+    "online"
+  ],
+  "guides": [
+    {
+      "title": "Tap to Pay on iPhone SDK",
+      "slug": "tap-to-pay-iphone",
+      "description": "Accept contactless payments directly on iPhone. Complete integration guide for Surfboard's iOS SoftPOS SDK -- from setup to production.",
+      "category": "in-store",
+      "tags": [
+        "iOS",
+        "Swift",
+        "SoftPOS",
+        "In-Store",
+        "XCFramework"
+      ],
+      "mdFile": "web-guides/tap-to-pay-iphone.md"
+    },
+    {
+      "title": "Android SoftPOS SDK",
+      "slug": "android-softpos-sdk",
+      "description": "Turn Android devices into payment terminals with the Surfboard Android SoftPOS SDK. Complete integration guide from setup to production.",
+      "category": "in-store",
+      "tags": [
+        "Android",
+        "Kotlin",
+        "SoftPOS",
+        "In-Store",
+        "NFC"
+      ],
+      "mdFile": "web-guides/android-softpos-sdk.md"
+    },
+    {
+      "title": "EMV Terminal Integration",
+      "slug": "emv-terminal-integration",
+      "description": "Integrate traditional card-present terminals through Surfboard's unified API. From account setup to live payments in one guide.",
+      "category": "in-store",
+      "tags": [
+        "EMV",
+        "Terminal",
+        "In-Store",
+        "API",
+        "Hardware"
+      ],
+      "mdFile": "web-guides/emv-terminal-integration.md"
+    },
+    {
+      "title": "Payment Page",
+      "slug": "payment-page",
+      "description": "Redirect customers to a Surfboard-hosted checkout page. The fastest way to accept online payments with minimal integration effort.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "Payment Page",
+        "Hosted Checkout",
+        "API"
+      ],
+      "mdFile": "web-guides/payment-page.md"
+    },
+    {
+      "title": "Inter-App Integration",
+      "slug": "interapp-integration",
+      "description": "Integrate your POS app with CheckoutX using native app switch. Register terminals, process payments, and scan NFC tags through a bi-directional deep link flow.",
+      "category": "in-store",
+      "tags": [
+        "In-Store",
+        "Android",
+        "iOS",
+        "CheckoutX",
+        "App Switch"
+      ],
+      "mdFile": "web-guides/interapp-integration.md"
+    },
+    {
+      "title": "Self-Hosted Checkout",
+      "slug": "self-hosted-checkout",
+      "description": "Embed a payment form directly in your web app with the Surfboard Online SDK. Full UI control with Surfboard handling PCI compliance.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "SDK",
+        "JavaScript",
+        "Self-Hosted",
+        "Checkout"
+      ],
+      "mdFile": "web-guides/self-hosted-checkout.md"
+    },
+    {
+      "title": "Server-to-Server API",
+      "slug": "server-to-server-api",
+      "description": "Process online payments entirely from your backend with Merchant Initiated Transactions. Full control over recurring payments, subscriptions, and tokenized card flows.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Server-to-Server",
+        "MIT",
+        "Tokenization"
+      ],
+      "mdFile": "web-guides/server-to-server-api.md"
+    },
+    {
+      "title": "Create an Order",
+      "slug": "create-an-order",
+      "description": "Learn how to create orders with line items, tax, customer details, and control functions. The starting point for accepting payments with the Surfboard API.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Orders",
+        "In-Store"
+      ],
+      "mdFile": "web-guides/create-an-order.md"
+    },
+    {
+      "title": "Merchant Onboarding",
+      "slug": "merchant-onboarding",
+      "description": "Set up merchants and stores on the Surfboard platform. Walk through the full onboarding flow from merchant creation to KYB completion and store setup.",
+      "category": "online",
+      "tags": [
+        "Onboarding",
+        "Merchant",
+        "KYB",
+        "Store",
+        "API"
+      ],
+      "mdFile": "web-guides/merchant-onboarding.md"
+    },
+    {
+      "title": "Payment Lifecycle",
+      "slug": "payment-lifecycle",
+      "description": "Manage the full payment lifecycle from order creation through capture, void, cancel, and refund operations using the Surfboard Payments API.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Payments",
+        "Refunds",
+        "Capture"
+      ],
+      "mdFile": "web-guides/payment-lifecycle.md"
+    },
+    {
+      "title": "Capture a Payment",
+      "slug": "capture-a-payment",
+      "description": "Finalize a previously authorized payment by capturing funds. Covers delay capture and pre-authorization flows with step-by-step API examples.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Payments",
+        "Capture",
+        "In-Store"
+      ],
+      "mdFile": "web-guides/capture-a-payment.md"
+    },
+    {
+      "title": "Terminal & Device Management",
+      "slug": "terminal-device-management",
+      "description": "Manage payment terminals and devices via the Surfboard API. Register in-store and online terminals, configure settings, and handle device operations.",
+      "category": "in-store",
+      "tags": [
+        "In-Store",
+        "Terminal",
+        "API",
+        "Device Management",
+        "Configuration"
+      ],
+      "mdFile": "web-guides/terminal-device-management.md"
+    },
+    {
+      "title": "Cancel a Payment",
+      "slug": "cancel-a-payment",
+      "description": "Stop an in-progress payment before it completes. Use cancellation when a customer abandons checkout or a payment needs to be halted mid-process.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Payments",
+        "In-Store"
+      ],
+      "mdFile": "web-guides/cancel-a-payment.md"
+    },
+    {
+      "title": "Webhooks",
+      "slug": "webhooks-notifications",
+      "description": "Receive real-time event notifications via webhooks. Subscribe to order, payment, logistics, and merchant application events with automatic retries and signature verification.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Webhooks",
+        "Events"
+      ],
+      "mdFile": "web-guides/webhooks-notifications.md"
+    },
+    {
+      "title": "Notification Subscriptions",
+      "slug": "notification-subscriptions",
+      "description": "Subscribe to persistent, account-level event notifications delivered via email, Slack, or SFTP. Receive settlement reports and operational alerts for merchants and partners.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Notifications",
+        "Email",
+        "Slack",
+        "SFTP",
+        "Reports"
+      ],
+      "mdFile": "web-guides/notification-subscriptions.md"
+    },
+    {
+      "title": "Recurring Payments",
+      "slug": "recurring-payments",
+      "description": "Implement subscription billing and recurring charges using tokenization, recurring payment configuration, and Merchant Initiated Transactions.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Recurring",
+        "Subscriptions",
+        "Tokenization",
+        "MIT"
+      ],
+      "mdFile": "web-guides/recurring-payments.md"
+    },
+    {
+      "title": "Void a Payment",
+      "slug": "void-a-payment",
+      "description": "Reverse a completed payment before settlement. Voiding stops funds from transferring to the merchant's account, avoiding incorrect transactions.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Payments",
+        "In-Store"
+      ],
+      "mdFile": "web-guides/void-a-payment.md"
+    },
+    {
+      "title": "Receipts",
+      "slug": "receipts",
+      "description": "Generate, email, print, and customise receipts for in-store transactions using the Surfboard Receipts API.",
+      "category": "in-store",
+      "tags": [
+        "In-Store",
+        "API",
+        "Receipts",
+        "Printing",
+        "ESC/POS"
+      ],
+      "mdFile": "web-guides/receipts.md"
+    },
+    {
+      "title": "Refund an Order",
+      "slug": "refund-an-order",
+      "description": "Process a full refund by creating a return order with negative quantities. Covers the complete refund flow with API examples and payment method requirements.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Payments",
+        "Refunds",
+        "In-Store"
+      ],
+      "mdFile": "web-guides/refund-an-order.md"
+    },
+    {
+      "title": "Partial Refund",
+      "slug": "partial-refund",
+      "description": "Refund specific items or a reduced amount from a completed order. Process partial returns by creating a return order with only the items to be refunded.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Payments",
+        "Refunds",
+        "In-Store"
+      ],
+      "mdFile": "web-guides/partial-refund.md"
+    },
+    {
+      "title": "Tips Configuration",
+      "slug": "tips-configuration",
+      "description": "Configure tipping on Surfboard payment terminals at the merchant, store, or terminal level using a hierarchical override model.",
+      "category": "in-store",
+      "tags": [
+        "In-Store",
+        "API",
+        "Tips",
+        "Configuration",
+        "Terminal"
+      ],
+      "mdFile": "web-guides/tips-configuration.md"
+    },
+    {
+      "title": "NFC Tag Reading",
+      "slug": "nfc-tag-reading",
+      "description": "Use the NFC Reading API to create tag-reading sessions on payment terminals, scan NFC/RFID-tagged products, and retrieve scanned tag data.",
+      "category": "in-store",
+      "tags": [
+        "In-Store",
+        "API",
+        "NFC",
+        "RFID",
+        "Terminal"
+      ],
+      "mdFile": "web-guides/nfc-tag-reading.md"
+    },
+    {
+      "title": "Partial Payments",
+      "slug": "partial-payments",
+      "description": "Split an order across multiple payment methods or transactions. Accept card, cash, and Swish in any combination to settle a single order.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Payments",
+        "In-Store"
+      ],
+      "mdFile": "web-guides/partial-payments.md"
+    },
+    {
+      "title": "Multi-Merchant Terminals",
+      "slug": "multi-merchant-terminals",
+      "description": "Set up shared payment terminals for multiple merchants using the Multi-Merchant Group API. Ideal for food courts, events, and co-located businesses.",
+      "category": "in-store",
+      "tags": [
+        "In-Store",
+        "API",
+        "Multi-Merchant",
+        "Terminal",
+        "Partners"
+      ],
+      "mdFile": "web-guides/multi-merchant-terminals.md"
+    },
+    {
+      "title": "Store Management",
+      "slug": "store-management",
+      "description": "Create, update, verify, and manage in-store and online stores using the Surfboard Payments Store APIs.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Stores",
+        "Domain Verification",
+        "Management"
+      ],
+      "mdFile": "web-guides/store-management.md"
+    },
+    {
+      "title": "Gift Cards & Promotions",
+      "slug": "gift-cards-promotions",
+      "description": "Issue and manage gift cards, track transactions, and create marketing promotions using the Surfboard Payments APIs.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Gift Cards",
+        "Promotions",
+        "Commerce"
+      ],
+      "mdFile": "web-guides/gift-cards-promotions.md"
+    },
+    {
+      "title": "Product Catalog",
+      "slug": "product-catalog",
+      "description": "Create and manage product catalogs, products, variants, inventory levels, and analytics through the Catalog API.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Products",
+        "Catalog",
+        "Inventory"
+      ],
+      "mdFile": "web-guides/product-catalog.md"
+    },
+    {
+      "title": "Settlements & Reporting",
+      "slug": "settlements-reporting",
+      "description": "Retrieve settlement reports, view adjustments, manage merchant charges, and register customer profiles for reconciliation and billing.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Settlements",
+        "Reporting",
+        "Charges",
+        "Adjustments"
+      ],
+      "mdFile": "web-guides/settlements-reporting.md"
+    },
+    {
+      "title": "Account & Service Provider Management",
+      "slug": "account-management",
+      "description": "Create merchant and partner accounts, manage user roles, register service providers, and configure external notifications via the Surfboard API.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Accounts",
+        "Service Providers",
+        "Partners"
+      ],
+      "mdFile": "web-guides/account-management.md"
+    },
+    {
+      "title": "Payment Methods",
+      "slug": "payment-methods",
+      "description": "Activate, deactivate, and list payment methods for a merchant. Manage card, Swish, Klarna, AMEX, Vipps, MobilePay, and more via the API or Partner Portal.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Payment Methods",
+        "In-Store"
+      ],
+      "mdFile": "web-guides/payment-methods.md"
+    },
+    {
+      "title": "Client Auth Tokens",
+      "slug": "client-auth-tokens",
+      "description": "Generate client-side authentication tokens for secure API access from browsers and mobile apps without exposing your API key or secret.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Authentication",
+        "Security"
+      ],
+      "mdFile": "web-guides/client-auth-tokens.md"
+    },
+    {
+      "title": "Partner Branding",
+      "slug": "partner-branding",
+      "description": "Configure white-label branding for terminals and payment pages. Set colors, fonts, logos, and cover images at the partner level via API or Partner Portal.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Branding",
+        "White-Label"
+      ],
+      "mdFile": "web-guides/partner-branding.md"
+    }
+  ]
+}

@@ -1,0 +1,756 @@
+{
+    "title": "Gift Cards API",
+    "description": "The Gift Cards API enables merchants to create, manage, and track gift cards. Gift cards can be of two types: FUND (monetary value) or ENTITLEMENT (usage-based). The API supports creating gift cards, retrieving gift card information, and tracking transactions.",
+    "endpoints": [
+        {
+            "fragment": "Create Gift Card",
+            "method": "POST",
+            "link": "API_URL/giftcards"
+        },
+        {
+            "fragment": "Get All Gift Cards",
+            "method": "GET", 
+            "link": "API_URL/giftcards"
+        },
+        {
+            "fragment": "Get Gift Card Details",
+            "method": "GET",
+            "link": "API_URL/giftcards/:id"
+        },
+        {
+            "fragment": "Get Gift Card Transactions",
+            "method": "GET",
+            "link": "API_URL/giftcards/:giftCardId/transactions"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Create Gift Card",
+            "new": true,
+            "description": "Creates a new gift card with specified type and configuration. Gift cards can be FUND type (with monetary value) or ENTITLEMENT type (with usage limits).",
+            "reqParams": [
+                {
+                    "name": "cardType",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Type of gift card to create.",
+                    "possibleValues": [
+                        {
+                            "value": "FUND",
+                            "description": "Gift card with monetary value"
+                        },
+                        {
+                            "value": "ENTITLEMENT", 
+                            "description": "Gift card with usage-based limits"
+                        }
+                    ]
+                },
+                {
+                    "name": "amount",
+                    "type": "number",
+                    "mandatory": false,
+                    "description": "Monetary amount for FUND type gift cards. Required when cardType is FUND."
+                },
+                {
+                    "name": "redemptionLimit",
+                    "type": "number", 
+                    "mandatory": false,
+                    "description": "Number of times the gift card can be used. Required when cardType is ENTITLEMENT."
+                },
+                {
+                    "name": "currency",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Currency code for the gift card amount."
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Optional name for the gift card."
+                },
+                {
+                    "name": "accessControl",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Access control level for the gift card.",
+                    "possibleValues": [
+                        {
+                            "value": "OPEN",
+                            "description": "Gift card can be used by anyone"
+                        },
+                        {
+                            "value": "RESTRICTED",
+                            "description": "Gift card has restricted access"
+                        }
+                    ]
+                },
+                {
+                    "name": "expiryDate",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Expiry date for the gift card in mm/dd/yyyy or mm-dd-yyyy format."
+                },
+                {
+                    "name": "note",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Optional note or description for the gift card."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data containing gift card details.",
+                    "resParams": [
+                        {
+                            "name": "giftCardId",
+                            "type": "string",
+                            "description": "Unique identifier for the created gift card."
+                        },
+                        {
+                            "name": "pan",
+                            "type": "string", 
+                            "description": "Primary Account Number for the gift card."
+                        },
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "description": "Name of the gift card."
+                        },
+                        {
+                            "name": "formats",
+                            "type": "object",
+                            "description": "Different format representations of the gift card.",
+                            "resParams": [
+                                {
+                                    "name": "qrCode",
+                                    "type": "string",
+                                    "description": "QR code representation of the gift card."
+                                },
+                                {
+                                    "name": "nfcData",
+                                    "type": "string",
+                                    "description": "NFC data for the gift card."
+                                },
+                                {
+                                    "name": "barcode",
+                                    "type": "string",
+                                    "description": "Barcode representation of the gift card."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "cardType",
+                            "type": "string",
+                            "description": "Type of the gift card (FUND or ENTITLEMENT)."
+                        },
+                        {
+                            "name": "amount",
+                            "type": "number",
+                            "description": "Monetary amount for FUND type gift cards."
+                        },
+                        {
+                            "name": "redemptionLimit",
+                            "type": "number",
+                            "description": "Usage limit for ENTITLEMENT type gift cards."
+                        },
+                        {
+                            "name": "currency",
+                            "type": "string",
+                            "description": "Currency code for the gift card."
+                        },
+                        {
+                            "name": "accessControl",
+                            "type": "string",
+                            "description": "Access control level of the gift card."
+                        },
+                        {
+                            "name": "externalId",
+                            "type": "string",
+                            "description": "External identifier for the gift card."
+                        },
+                        {
+                            "name": "externalIdType",
+                            "type": "string",
+                            "description": "Type of external identifier."
+                        },
+                        {
+                            "name": "status",
+                            "type": "string",
+                            "description": "Current status of the gift card."
+                        },
+                        {
+                            "name": "shareableLink",
+                            "type": "string",
+                            "description": "Shareable link for the gift card."
+                        },
+                        {
+                            "name": "expiryDate",
+                            "type": "string",
+                            "description": "Expiry date of the gift card."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/giftcards",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "api-key",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "api-secret",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "merchant-id",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\n\t\"cardType\": \"FUND\",\n\t\"amount\": 100.00,\n\t\"currency\": \"SEK\",\n\t\"name\": \"Holiday Gift Card\",\n\t\"accessControl\": \"OPEN\",\n\t\"expiryDate\": \"12/31/2024\",\n\t\"note\": \"Happy Holidays!\"\n}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"giftCardId\": \"83a5aea0381600045c\",\n\t\t\"pan\": \"1504703347938280\",\n\t\t\"name\": \"Birthday Gift Card\",\n\t\t\"formats\": {\n\t\t\t\"qrCode\": \"undefinedVWwIYiYXCANr202512310200\",\n\t\t\t\"nfcData\": \"undefinedVWwIYiYXCANr202512310200\",\n\t\t\t\"barcode\": \"2877866156\"\n\t\t},\n\t\t\"cardType\": \"FUND\",\n\t\t\"amount\": 100,\n\t\t\"redemptionLimit\": 0,\n\t\t\"currency\": \"SEK\",\n\t\t\"accessControl\": \"OPEN\",\n\t\t\"externalId\": \"m_iWGri3XAyTmkbKYsYtV47\",\n\t\t\"externalIdType\": \"MERCHANT\",\n\t\t\"status\": \"CREATED\",\n\t\t\"shareableLink\": \"https://slr.test.surfboard.se/afaa6fb5\"\n\t},\n\t\"message\": \"Gift card created successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Get All Gift Cards",
+            "new": true,
+            "description": "Retrieves a paginated list of all gift cards for a merchant. Supports filtering by type and status.",
+            "pagination": true,
+            "query": "To filter gift cards send in <span class='font-semibold'>type</span> and <span class='font-semibold'>status</span> as query params. Use <span class='font-semibold'>x-page-number</span> header for pagination.",
+            "reqParams": [
+                {
+                    "name": "type",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Filter gift cards by type.",
+                    "possibleValues": [
+                        {
+                            "value": "FUND",
+                            "description": "Gift cards with monetary value"
+                        },
+                        {
+                            "value": "ENTITLEMENT",
+                            "description": "Gift cards with usage-based limits"
+                        }
+                    ]
+                },
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Filter gift cards by status."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Array of gift card objects.",
+                    "resParams": [
+                        {
+                            "name": "giftCardId",
+                            "type": "string",
+                            "description": "Unique identifier for the gift card."
+                        },
+                        {
+                            "name": "pan",
+                            "type": "string",
+                            "description": "Primary Account Number for the gift card."
+                        },
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "description": "Name of the gift card."
+                        },
+                        {
+                            "name": "cardType",
+                            "type": "string",
+                            "description": "Type of the gift card (FUND or ENTITLEMENT)."
+                        },
+                        {
+                            "name": "amount",
+                            "type": "number",
+                            "description": "Original monetary amount for FUND type gift cards."
+                        },
+                        {
+                            "name": "currentAmount",
+                            "type": "number",
+                            "description": "Current remaining amount for FUND type gift cards."
+                        },
+                        {
+                            "name": "usageCount",
+                            "type": "number",
+                            "description": "Number of times the gift card has been used."
+                        },
+                        {
+                            "name": "redemptionLimit",
+                            "type": "number",
+                            "description": "Usage limit for ENTITLEMENT type gift cards."
+                        },
+                        {
+                            "name": "currency",
+                            "type": "string",
+                            "description": "Currency code for the gift card."
+                        },
+                        {
+                            "name": "accessControl",
+                            "type": "string",
+                            "description": "Access control level of the gift card."
+                        },
+                        {
+                            "name": "status",
+                            "type": "string",
+                            "description": "Current status of the gift card."
+                        },
+                        {
+                            "name": "expiryDate",
+                            "type": "string",
+                            "description": "Expiry date of the gift card."
+                        },
+                        {
+                            "name": "lastTransactionAt",
+                            "type": "string",
+                            "description": "Timestamp of the last transaction."
+                        },
+                        {
+                            "name": "transactionCount",
+                            "type": "number",
+                            "description": "Total number of transactions."
+                        },
+                        {
+                            "name": "totalRedeemed",
+                            "type": "number",
+                            "description": "Total amount redeemed from the gift card."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/giftcards",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "api-key",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "api-secret",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "merchant-id",
+                            "value": "YOUR_MERCHANT_ID"
+                        },
+                        {
+                            "name": "x-page-number",
+                            "value": "1"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"giftCardId\": \"83a2adb2fd9d58095c\",\n\t\t\t\"pan\": \"1802723955691673\",\n\t\t\t\"name\": \"Birthday Gift Card\",\n\t\t\t\"cardType\": \"FUND\",\n\t\t\t\"amount\": 100,\n\t\t\t\"currentAmount\": 100,\n\t\t\t\"usageCount\": 0,\n\t\t\t\"redemptionLimit\": 0,\n\t\t\t\"currency\": \"SEK\",\n\t\t\t\"accessControl\": \"OPEN\",\n\t\t\t\"status\": \"CREATED\",\n\t\t\t\"expiryDate\": \"2025-12-31T00:00:00.000Z\",\n\t\t\t\"transactionCount\": 0,\n\t\t\t\"totalRedeemed\": 0\n\t\t},\n\t\t{\n\t\t\t\"giftCardId\": \"83a2ac747d9d580b5c\",\n\t\t\t\"pan\": \"1167728279630112\",\n\t\t\t\"name\": \"Birthday Gift Card\",\n\t\t\t\"cardType\": \"FUND\",\n\t\t\t\"amount\": 100,\n\t\t\t\"currentAmount\": 100,\n\t\t\t\"usageCount\": 0,\n\t\t\t\"redemptionLimit\": 0,\n\t\t\t\"currency\": \"SEK\",\n\t\t\t\"accessControl\": \"OPEN\",\n\t\t\t\"status\": \"CREATED\",\n\t\t\t\"expiryDate\": \"2025-12-31T00:00:00.000Z\",\n\t\t\t\"transactionCount\": 0,\n\t\t\t\"totalRedeemed\": 0\n\t\t},\n\t\t{\n\t\t\t\"giftCardId\": \"83a256695d9d28025c\",\n\t\t\t\"pan\": \"1657679889602692\",\n\t\t\t\"name\": \"Birthday Gift Card\",\n\t\t\t\"cardType\": \"FUND\",\n\t\t\t\"amount\": 100,\n\t\t\t\"currentAmount\": 100,\n\t\t\t\"usageCount\": 0,\n\t\t\t\"redemptionLimit\": 0,\n\t\t\t\"currency\": \"SEK\",\n\t\t\t\"accessControl\": \"OPEN\",\n\t\t\t\"status\": \"CREATED\",\n\t\t\t\"expiryDate\": \"2025-12-31T00:00:00.000Z\",\n\t\t\t\"transactionCount\": 0,\n\t\t\t\"totalRedeemed\": 0\n\t\t}\n\t],\n\t\"message\": \"Gift cards fetched\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Get Gift Card Details",
+            "new": true,
+            "description": "Retrieves detailed information for a specific gift card using its ID or PAN. Includes customer details, transaction history summary, and format representations.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Detailed gift card information.",
+                    "resParams": [
+                        {
+                            "name": "giftCardId",
+                            "type": "string",
+                            "description": "Unique identifier for the gift card."
+                        },
+                        {
+                            "name": "pan",
+                            "type": "string",
+                            "description": "Primary Account Number for the gift card."
+                        },
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "description": "Name of the gift card."
+                        },
+                        {
+                            "name": "cardType",
+                            "type": "string",
+                            "description": "Type of the gift card (FUND or ENTITLEMENT)."
+                        },
+                        {
+                            "name": "amount",
+                            "type": "number",
+                            "description": "Original monetary amount for FUND type gift cards."
+                        },
+                        {
+                            "name": "currentAmount",
+                            "type": "number",
+                            "description": "Current remaining amount for FUND type gift cards."
+                        },
+                        {
+                            "name": "usageCount",
+                            "type": "number",
+                            "description": "Number of times the gift card has been used."
+                        },
+                        {
+                            "name": "redemptionLimit",
+                            "type": "number",
+                            "description": "Usage limit for ENTITLEMENT type gift cards."
+                        },
+                        {
+                            "name": "currency",
+                            "type": "string",
+                            "description": "Currency code for the gift card."
+                        },
+                        {
+                            "name": "accessControl",
+                            "type": "string",
+                            "description": "Access control level of the gift card."
+                        },
+                        {
+                            "name": "status",
+                            "type": "string",
+                            "description": "Current status of the gift card."
+                        },
+                        {
+                            "name": "expiryDate",
+                            "type": "string",
+                            "description": "Expiry date of the gift card."
+                        },
+                        {
+                            "name": "lastTransactionAt",
+                            "type": "string",
+                            "description": "Timestamp of the last transaction."
+                        },
+                        {
+                            "name": "transactionCount",
+                            "type": "number",
+                            "description": "Total number of transactions."
+                        },
+                        {
+                            "name": "totalRedeemed",
+                            "type": "number",
+                            "description": "Total amount redeemed from the gift card."
+                        },
+                        {
+                            "name": "customerDetails",
+                            "type": "object",
+                            "description": "Customer information associated with the gift card.",
+                            "resParams": [
+                                {
+                                    "name": "customerId",
+                                    "type": "string",
+                                    "description": "Unique identifier for the customer."
+                                },
+                                {
+                                    "name": "firstName",
+                                    "type": "string",
+                                    "description": "Customer's first name."
+                                },
+                                {
+                                    "name": "middleName",
+                                    "type": "string",
+                                    "description": "Customer's middle name."
+                                },
+                                {
+                                    "name": "surname",
+                                    "type": "string",
+                                    "description": "Customer's surname."
+                                },
+                                {
+                                    "name": "countryCode",
+                                    "type": "string",
+                                    "description": "Customer's country code."
+                                },
+                                {
+                                    "name": "emails",
+                                    "type": "array",
+                                    "description": "Array of customer email addresses.",
+                                    "resParams": [
+                                        {
+                                            "name": "email",
+                                            "type": "string",
+                                            "description": "Customer email address."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "phoneNumbers",
+                                    "type": "array",
+                                    "description": "Array of customer phone numbers.",
+                                    "resParams": [
+                                        {
+                                            "name": "phoneNumber",
+                                            "type": "object",
+                                            "description": "Customer phone number details.",
+                                            "resParams": [
+                                                {
+                                                    "name": "countryCode",
+                                                    "type": "string",
+                                                    "description": "Phone number country code."
+                                                },
+                                                {
+                                                    "name": "number",
+                                                    "type": "string",
+                                                    "description": "Phone number."
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "shareableLink",
+                            "type": "string",
+                            "description": "Shareable link for the gift card."
+                        },
+                        {
+                            "name": "formats",
+                            "type": "object",
+                            "description": "Different format representations of the gift card.",
+                            "resParams": [
+                                {
+                                    "name": "qrCode",
+                                    "type": "string",
+                                    "description": "QR code representation of the gift card."
+                                },
+                                {
+                                    "name": "nfcData",
+                                    "type": "string",
+                                    "description": "NFC data for the gift card."
+                                },
+                                {
+                                    "name": "barcode",
+                                    "type": "string",
+                                    "description": "Barcode representation of the gift card."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/giftcards/:id",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "api-key",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "api-secret",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "merchant-id",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"giftCardId\": \"83a2adb2fd9d58095c\",\n\t\t\"pan\": \"1802723955691673\",\n\t\t\"name\": \"Birthday Gift Card\",\n\t\t\"cardType\": \"FUND\",\n\t\t\"amount\": 100,\n\t\t\"currentAmount\": 75,\n\t\t\"usageCount\": 2,\n\t\t\"redemptionLimit\": 0,\n\t\t\"currency\": \"SEK\",\n\t\t\"accessControl\": \"OPEN\",\n\t\t\"externalId\": \"m_iWGri3XAyTmkbKYsYtV47\",\n\t\t\"externalIdType\": \"MERCHANT\",\n\t\t\"status\": \"ACTIVE\",\n\t\t\"expiryDate\": \"2025-12-31T00:00:00.000Z\",\n\t\t\"lastTransactionAt\": \"2024-11-15T10:30:00Z\",\n\t\t\"transactionCount\": 2,\n\t\t\"totalRedeemed\": 25,\n\t\t\"customerDetails\": {\n\t\t\t\"customerId\": \"83a2adb2fd9d58001c\",\n\t\t\t\"firstName\": \"John\",\n\t\t\t\"surname\": \"Doe\",\n\t\t\t\"countryCode\": \"SE\",\n\t\t\t\"emails\": [{\"email\": \"john.doe@example.com\"}],\n\t\t\t\"phoneNumbers\": [{\"phoneNumber\": {\"countryCode\": \"+46\", \"number\": \"701234567\"}}]\n\t\t},\n\t\t\"shareableLink\": \"https://slr.test.surfboard.se/afaa6fb5\",\n\t\t\"formats\": {\n\t\t\t\"qrCode\": \"undefinedVWwIYiYXCANr202512310200\",\n\t\t\t\"nfcData\": \"undefinedVWwIYiYXCANr202512310200\",\n\t\t\t\"barcode\": \"2877866156\"\n\t\t}\n\t},\n\t\"message\": \"Gift card details retrieved successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Get Gift Card Transactions",
+            "new": true,
+            "description": "Retrieves a paginated list of transactions for a specific gift card. Supports filtering by transaction type.",
+            "pagination": true,
+            "query": "To filter transactions by type send in <span class='font-semibold'>transactionType</span> as query param. Use <span class='font-semibold'>x-page-number</span> header for pagination.",
+            "reqParams": [
+                {
+                    "name": "transactionType",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Filter transactions by type.",
+                    "possibleValues": [
+                        {
+                            "value": "ISSUED",
+                            "description": "Gift card issuance transactions"
+                        },
+                        {
+                            "value": "CREDIT",
+                            "description": "Credit transactions (adding value)"
+                        },
+                        {
+                            "value": "DEBIT",
+                            "description": "Debit transactions (using value)"
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Array of transaction objects.",
+                    "resParams": [
+                        {
+                            "name": "paymentId",
+                            "type": "string",
+                            "description": "Unique identifier for the payment/transaction."
+                        },
+                        {
+                            "name": "transactionType",
+                            "type": "string",
+                            "description": "Type of transaction (ISSUED, CREDIT, DEBIT)."
+                        },
+                        {
+                            "name": "transactionAmount",
+                            "type": "number",
+                            "description": "Amount involved in the transaction."
+                        },
+                        {
+                            "name": "currency",
+                            "type": "string",
+                            "description": "Currency code for the transaction amount."
+                        },
+                        {
+                            "name": "valueBefore",
+                            "type": "number",
+                            "description": "Gift card value before the transaction."
+                        },
+                        {
+                            "name": "valueAfter",
+                            "type": "number",
+                            "description": "Gift card value after the transaction."
+                        },
+                        {
+                            "name": "orderId",
+                            "type": "string",
+                            "description": "Associated order ID if applicable."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "description": "Merchant ID associated with the transaction."
+                        },
+                        {
+                            "name": "storeId",
+                            "type": "string",
+                            "description": "Store ID associated with the transaction."
+                        },
+                        {
+                            "name": "metadata",
+                            "type": "object",
+                            "description": "Additional metadata for the transaction."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/giftcards/:giftCardId/transactions",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "api-key",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "api-secret",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "merchant-id",
+                            "value": "YOUR_MERCHANT_ID"
+                        },
+                        {
+                            "name": "x-page-number",
+                            "value": "1"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"paymentId\": \"83a2adb2fd9d58095d\",\n\t\t\t\"transactionType\": \"ISSUED\",\n\t\t\t\"transactionAmount\": 100,\n\t\t\t\"currency\": \"SEK\",\n\t\t\t\"valueBefore\": 0,\n\t\t\t\"valueAfter\": 100,\n\t\t\t\"merchantId\": \"83a2adb2fd9d58001a\",\n\t\t\t\"storeId\": \"83a2adb2fd9d58002b\"\n\t\t},\n\t\t{\n\t\t\t\"paymentId\": \"83a2adb2fd9d58095e\",\n\t\t\t\"transactionType\": \"DEBIT\",\n\t\t\t\"transactionAmount\": 25,\n\t\t\t\"currency\": \"SEK\",\n\t\t\t\"valueBefore\": 100,\n\t\t\t\"valueAfter\": 75,\n\t\t\t\"orderId\": \"83a2adb2fd9d58003c\",\n\t\t\t\"merchantId\": \"83a2adb2fd9d58001a\",\n\t\t\t\"storeId\": \"83a2adb2fd9d58002b\",\n\t\t\t\"metadata\": {\n\t\t\t\t\"terminalId\": \"83a2adb2fd9d58004d\",\n\t\t\t\t\"transactionDate\": \"2024-11-15T10:30:00Z\"\n\t\t\t}\n\t\t}\n\t],\n\t\"message\": \"Gift card transactions retrieved successfully\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

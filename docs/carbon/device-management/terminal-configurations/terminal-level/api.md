@@ -1,0 +1,1 @@
+Sets specific configurations for an individual terminal. Use this API to configure settings and parameters for a particular terminal.

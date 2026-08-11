@@ -1,0 +1,31 @@
+{
+    "scenarioId": "remove-branding-for-terminal",
+    "scenarioName": "Remove Branding for Terminal",
+    "steps": [
+        {
+            "id": "remove-branding-for-terminal",
+            "name": "Remove Branding for Terminal",
+            "description": "Remove branding configurations for a specific terminal.",
+            "order": 1,
+            "method": "DELETE",
+            "endpoint": "merchants/{{merchantId}}/stores/{{storeId}}/terminals/{{terminalId}}/branding",
+            "guidePath": "/carbon/configure-branding/remove-branding-for-terminal",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "description": "A message describing the outcome of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

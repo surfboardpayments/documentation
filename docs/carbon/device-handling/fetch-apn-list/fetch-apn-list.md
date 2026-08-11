@@ -1,0 +1,3 @@
+# Fetch APN List
+
+Retrieves the list of Access Point Names (APNs) configured on a terminal. The terminal must be in an active state for the request to be processed successfully. Once the request is triggered, the terminal communicates with the network and returns the APN details in exactly 10 seconds. This API is useful for verifying network connectivity settings and troubleshooting communication issues on the terminal.

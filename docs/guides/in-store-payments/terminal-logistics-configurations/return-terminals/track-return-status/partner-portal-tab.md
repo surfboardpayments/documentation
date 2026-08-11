@@ -1,0 +1,2 @@
+1. Log in to the **Partner Portal** and click the **Return Request** tab in the dashboard to view a list of terminals associated with the partner.
+2. With this list, you can check the details of **Return Request Status, Reason, Merchant Name, Email and Address**

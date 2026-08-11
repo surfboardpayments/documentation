@@ -1,0 +1,1 @@
+CheckoutX is a white-label application, allowing you to customize the UI to maintain your brand identity. You can adjust the Logo, font type, background, brand, and accent colors on all screens that appear after the initial terminal registration. For more details on branding customization options, please refer to Customise your Appearance.

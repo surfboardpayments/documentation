@@ -1,0 +1,217 @@
+{
+    "scenarioId": "fetch-terminal-by-id",
+    "scenarioName": "Fetch Terminal by ID",
+    "steps": [
+        {
+            "id": "fetch-terminal-by-id",
+            "name": "Fetch Terminal by ID",
+            "description": "Retrieves information about a specific terminal registered under a merchant by the terminalId.",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "terminals/{{terminalId}}",
+            "guidePath": "/carbon/device-handling/fetch-terminal-by-id/fetch-terminal-by-id",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "description": "Response data.",
+                        "resParams": [
+                            {
+                                "name": "terminalId",
+                                "type": "string",
+                                "description": "Terminal ID of the terminal."
+                            },
+                            {
+                                "name": "terminalType",
+                                "type": "string",
+                                "description": "Describes the type of the terminal.",
+                                "possibleValues": [
+                                    {
+                                        "value": "surfpad",
+                                        "description": "Hardware terminal with a physical keypad."
+                                    },
+                                    {
+                                        "value": "surftouch",
+                                        "description": "Android terminal with custom payment apps, digital receipts etc."
+                                    },
+                                    {
+                                        "value": "surfprint",
+                                        "description": "Android terminal with a built-in printer."
+                                    },
+                                    {
+                                        "value": "checkoutPro",
+                                        "description": "Complete checkout solution with a customer facing screen."
+                                    },
+                                    {
+                                        "value": "checkoutX",
+                                        "description": "Software checkout solution for NFC-enabled Android devices to accept contactless card payments."
+                                    },
+                                    {
+                                        "value": "softpos",
+                                        "description": "SoftPOS solution on COTS devices."
+                                    },
+                                    {
+                                        "value": "PaymentPage",
+                                        "description": "In this mode, the payment page and all associated configuration is managed by Surfboard."
+                                    },
+                                    {
+                                        "value": "SelfHostedPage",
+                                        "description": "With SelfHostedPage, Surfboard renders the fields in your page."
+                                    },
+                                    {
+                                        "value": "MerchantInitiated",
+                                        "description": "Set this type if you want to accept Merchant Initiated Transactions (MIT)."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "softwareVersion",
+                                "type": "string",
+                                "description": "Software version of the terminal."
+                            },
+                            {
+                                "name": "osType",
+                                "type": "string",
+                                "description": "Describes the type of Operating System(OS) running on the terminal.",
+                                "possibleValues": [
+                                    {
+                                        "value": "android",
+                                        "description": "Android operating system."
+                                    },
+                                    {
+                                        "value": "ios",
+                                        "description": "Apple's operating system for iPhones."
+                                    },
+                                    {
+                                        "value": "sb_firmware",
+                                        "description": "Surfboard firmware."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "osVersion",
+                                "type": "string",
+                                "description": "Operating System(OS) version of the terminal."
+                            },
+                            {
+                                "name": "deviceVendor",
+                                "type": "string",
+                                "description": "Device vendor of the terminal."
+                            },
+                            {
+                                "name": "deviceModel",
+                                "type": "string",
+                                "description": "Device model of the terminal."
+                            },
+                            {
+                                "name": "serialNo",
+                                "type": "string",
+                                "description": "Serial number of the terminal."
+                            },
+                            {
+                                "name": "storeId",
+                                "type": "String",
+                                "description": "The Store ID of the store under which the terminal is registered."
+                            },
+                            {
+                                "name": "linkedTerminalId",
+                                "type": "string",
+                                "description": "The Terminal ID of another terminal to which the current terminal is linked."
+                            },
+                            {
+                                "name": "terminalStatus",
+                                "type": "string",
+                                "description": "Status of the terminal, it can be in one of these states: REGISTERED | ACTIVE | IN_ACTIVE | DE_REGISTERED."
+                            },
+                            {
+                                "name": "terminalPaymentMethods",
+                                "type": "string",
+                                "description": "Payment methods supported by the terminal."
+                            },
+                            {
+                                "name": "startDate",
+                                "type": "string",
+                                "description": "Timestamp at which the merchant was created."
+                            },
+                            {
+                                "name": "terminalName",
+                                "type": "string",
+                                "description": "Name of the terminal used as a reference for users."
+                            },
+                            {
+                                "name": "lastAliveAt",
+                                "type": "string",
+                                "description": "Time at which the terminal was last seen online."
+                            },
+                            {
+                                "name": "isCharging",
+                                "type": "boolean",
+                                "description": "A boolean value that denotes if the terminal is charging or not."
+                            },
+                            {
+                                "name": "batteryPercentage",
+                                "type": "number",
+                                "description": "Battery percentage of the terminal."
+                            },
+                            {
+                                "name": "powerSource",
+                                "type": "string",
+                                "description": "Current power source to the terminal.",
+                                "possibleValues": [
+                                    {
+                                        "value": "EXTERNAL_POWER",
+                                        "description": "Connected to an external power source."
+                                    },
+                                    {
+                                        "value": "BATTERY",
+                                        "description": "Charging via battery source."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "deviceNetwork",
+                                "type": "string",
+                                "description": "The current mode of communication.",
+                                "possibleValues": [
+                                    {
+                                        "value": "WIFI",
+                                        "description": "The terminal is connected to WIFI."
+                                    },
+                                    {
+                                        "value": "GSM",
+                                        "description": "The terminal is connected to GSM."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "turnOnTime",
+                                "type": "string",
+                                "description": "Last boot up time of terminal."
+                            },
+                            {
+                                "name": "terminalPublicKey",
+                                "type": "string",
+                                "description": "Public key used while initializing SelfHostedPage Online Terminal (Online SDK)"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

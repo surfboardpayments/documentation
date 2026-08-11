@@ -1,0 +1,85 @@
+{
+    "id": "added-features",
+    "name": "Added Features",
+    "description": "These are additional features added to the API for admin functions, service provider, notifications API",
+    "scenarios": [
+        {
+            "id": "create-merchant-account",
+            "name": "Create Merchant Account",
+            "description": "Create Merchant Account",
+            "order": 1
+        },
+        {
+            "id": "create-partner-account",
+            "name": "Create Partner Account",
+            "description": "Create Partner Account",
+            "order": 2
+        },
+        {
+            "id": "create-service-provider",
+            "name": "Create Service Provider",
+            "description": "Create Service Provider",
+            "order": 3
+        },
+        {
+            "id": "fetch-service-provider-application-status",
+            "name": "Fetch Service Provider Application Status",
+            "description": "Fetch Service Provider Application Status",
+            "order": 4
+        },
+        {
+            "id": "fetch-service-provider-for-merchant",
+            "name": "Fetch Service Provider for Merchant",
+            "description": "Fetch Service Provider for Merchant",
+            "order": 5
+        },
+        {
+            "id": "fetch-service-provider-for-partner",
+            "name": "Fetch Service Provider for Partner",
+            "description": "Fetch Service Provider for Partner",
+            "order": 6
+        },
+        {
+            "id": "get-all-service-provider-applications",
+            "name": "Get All Service Provider Applications",
+            "description": "Get All Service Provider Applications",
+            "order": 7
+        },
+        {
+            "id": "subscribe-to-merchant-reports",
+            "name": "Subscribe to Merchant Reports",
+            "description": "Subscribe to Merchant Reports",
+            "order": 8
+        },
+        {
+            "id": "fetch-external-notifications-for-merchant",
+            "name": "Fetch External Notifications for Merchant",
+            "description": "Fetch External Notifications for Merchant",
+            "order": 9
+        },
+        {
+            "id": "subscribe-to-partner-notifications",
+            "name": "Subscribe to Partner Notifications",
+            "description": "Subscribe to Partner Notifications",
+            "order": 10
+        },
+        {
+            "id": "fetch-external-notifications-for-partner",
+            "name": "Fetch External Notifications for Partner",
+            "description": "Fetch External Notifications for Partner",
+            "order": 11
+        },
+        {
+            "id": "unsubscribe-notification-for-merchant",
+            "name": "Unsubscribe Notification for Merchant",
+            "description": "Unsubscribe Notification for Merchant",
+            "order": 12
+        },
+        {
+            "id": "unsubscribe-notification-for-partner",
+            "name": "Unsubscribe Notification for Partner",
+            "description": "Unsubscribe Notification for Partner",
+            "order": 13
+        }
+    ]
+}

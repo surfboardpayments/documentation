@@ -1,0 +1,183 @@
+{
+    "scenarioId": "subscribe-to-partner-notifications",
+    "scenarioName": "Subscribe to Partner Notifications",
+    "steps": [
+        {
+            "id": "subscribe-to-partner-notifications",
+            "name": "Subscribe to Partner Notifications",
+            "description": "Subscribe to Partner Notifications",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "partners/{{partnerId}}/notifications/reports",
+            "guidePath": "/carbon/added-features/subscribe-to-partner-notifications",
+            "payload": {
+                "event": "DAILY_FILE_TRANSFER",
+                "slackUrl": "https://surfboardworkspace.slack.com/archives/C039RL0LS8M",
+                "email": "john@gmail.com",
+                "sftpInfo": {
+                    "host": "192.168.0.211",
+                    "user": "surfboard-test",
+                    "port": 8080,
+                    "hostKey": "AAAAB3NzaC1yc2EAAAADAQABAAABgQDVjVZBKMAFE3z4m1M6xVpudb+Wcal1kAfzdpOsi64cXjBdK2VS0cuI38htYHGXhpqQ2z/XbYZ2ZfPUkzL/P0IV7Kec22ohLNSN3+r9r3jjB/EU9S46ApuHzloEFnSlPVT5xQA2d09Rs40iMjRp3hfov4pwNPwlav0ikLafSvPWZ2bUfsWq/vNdhnNGBd0au59qIAHrphkF5oyRQUjC5kssSuwZXo2GWC0zHuT06h3/t21BJMoQT4cJ2AEw5Cfvq/cUtSAUKsWaz++0wgyYBOYnYGHpxype+6c7x8gRkuAeuSyj/CdDG39CMSKLsf35CSr7bH8Tsmm6VuIPFwTr8FloGdVwthQiSOPDn15kQXeEiksmzeIMKilgpEWIxp1pgYgtrOefAXp+aoKSqNw+ccvUhiVwIpo2BXxM+l3douJMy2B7A29R+VvwOGDV1zbiYrxjbpDHqMpLjOo5vckj/YYyvHn32nnmb92Hl+A1+b9om1c/y/RN2aRgz6tgmPxhhVU="
+                }
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "event",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "The event type to subscribe to for notifications",
+                        "possibleValues": [
+                            {
+                                "value": "MERCHANT_ONBOARDED",
+                                "description": "Merchant onboarding notifications"
+                            },
+                            {
+                                "value": "ONLINE_STORE_ONBOARDED",
+                                "description": "Online store onboarding notifications"
+                            },
+                            {
+                                "value": "TERMINAL_REGISTERED",
+                                "description": "Terminal registration notifications"
+                            },
+                            {
+                                "value": "LOGISTICS_TERMINAL_SHIPPED",
+                                "description": "Logistics terminal shipping notifications"
+                            },
+                            {
+                                "value": "DAILY_FILE_TRANSFER",
+                                "description": "Daily SFTP file transfers"
+                            },
+                            {
+                                "value": "WEEKLY_FILE_TRANSFER",
+                                "description": "Weekly SFTP file transfers"
+                            },
+                            {
+                                "value": "MONTHLY_FILE_TRANSFER",
+                                "description": "Monthly SFTP file transfers"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "email",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Email address for notification delivery (optional)",
+                        "conditional": true
+                    },
+                    {
+                        "name": "slackUrl",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Slack webhook URL for notification delivery (optional)",
+                        "conditional": true
+                    },
+                    {
+                        "name": "sftpInfo",
+                        "type": "object",
+                        "mandatory": false,
+                        "description": "SFTP configuration for receiving notification reports",
+                        "conditional": true,
+                        "reqParams": [
+                            {
+                                "name": "host",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "SFTP server hostname or IP address"
+                            },
+                            {
+                                "name": "user",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Username for SFTP authentication"
+                            },
+                            {
+                                "name": "port",
+                                "type": "number",
+                                "mandatory": false,
+                                "description": "SFTP server port (default: 22)"
+                            },
+                            {
+                                "name": "hostKey",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "SFTP server host key for secure connection"
+                            },
+                            {
+                                "name": "remoteDirectory",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Remote directory path for file delivery"
+                            },
+                            {
+                                "name": "separator",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Field separator for CSV reports",
+                                "possibleValues": [
+                                    {
+                                        "value": "COMMA",
+                                        "description": "Comma separator (,)"
+                                    },
+                                    {
+                                        "value": "SEMICOLON",
+                                        "description": "Semicolon separator (;)"
+                                    },
+                                    {
+                                        "value": "PIPE",
+                                        "description": "Pipe separator (|)"
+                                    },
+                                    {
+                                        "value": "TAB",
+                                        "description": "Tab separator"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                    },
+                    {
+                        "name": "data",
+                        "type": "array",
+                        "mandatory": true,
+                        "description": "Array of notification subscription data",
+                        "resParams": [
+                            {
+                                "name": "notificationId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Unique identifier for the notification subscription"
+                            },
+                            {
+                                "name": "NotificationChannel",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Type of notification channel (e.g., SLACK, SFTP, EMAIL)"
+                            },
+                            {
+                                "name": "publicKey",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Public key for SFTP authentication (only present for SFTP channels)"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request"
+                    }
+                ]
+            }
+        }
+    ]
+}

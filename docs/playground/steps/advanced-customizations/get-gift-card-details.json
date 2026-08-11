@@ -1,0 +1,211 @@
+{
+    "scenarioId": "get-gift-card-details",
+    "scenarioName": "Get Gift Card Details",
+    "steps": [
+        {
+            "id": "get-gift-card-details",
+            "name": "Get Gift Card Details",
+            "description": "Get details of a specific gift card.",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "gift-cards/{{id}}",
+            "guidePath": "/carbon/advanced-customizations/get-gift-card-details",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Detailed gift card information.",
+                        "resParams": [
+                            {
+                                "name": "giftCardId",
+                                "type": "string",
+                                "description": "Unique identifier for the gift card."
+                            },
+                            {
+                                "name": "pan",
+                                "type": "string",
+                                "description": "Primary Account Number for the gift card."
+                            },
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "description": "Name of the gift card."
+                            },
+                            {
+                                "name": "cardType",
+                                "type": "string",
+                                "description": "Type of the gift card (FUND or ENTITLEMENT)."
+                            },
+                            {
+                                "name": "amount",
+                                "type": "number",
+                                "description": "Original monetary amount for FUND type gift cards."
+                            },
+                            {
+                                "name": "currentAmount",
+                                "type": "number",
+                                "description": "Current remaining amount for FUND type gift cards."
+                            },
+                            {
+                                "name": "usageCount",
+                                "type": "number",
+                                "description": "Number of times the gift card has been used."
+                            },
+                            {
+                                "name": "redemptionLimit",
+                                "type": "number",
+                                "description": "Usage limit for ENTITLEMENT type gift cards."
+                            },
+                            {
+                                "name": "currency",
+                                "type": "string",
+                                "description": "Currency code for the gift card."
+                            },
+                            {
+                                "name": "accessControl",
+                                "type": "string",
+                                "description": "Access control level of the gift card."
+                            },
+                            {
+                                "name": "status",
+                                "type": "string",
+                                "description": "Current status of the gift card."
+                            },
+                            {
+                                "name": "expiryDate",
+                                "type": "string",
+                                "description": "Expiry date of the gift card."
+                            },
+                            {
+                                "name": "lastTransactionAt",
+                                "type": "string",
+                                "description": "Timestamp of the last transaction."
+                            },
+                            {
+                                "name": "transactionCount",
+                                "type": "number",
+                                "description": "Total number of transactions."
+                            },
+                            {
+                                "name": "totalRedeemed",
+                                "type": "number",
+                                "description": "Total amount redeemed from the gift card."
+                            },
+                            {
+                                "name": "customerDetails",
+                                "type": "object",
+                                "description": "Customer information associated with the gift card.",
+                                "resParams": [
+                                    {
+                                        "name": "customerId",
+                                        "type": "string",
+                                        "description": "Unique identifier for the customer."
+                                    },
+                                    {
+                                        "name": "firstName",
+                                        "type": "string",
+                                        "description": "Customer's first name."
+                                    },
+                                    {
+                                        "name": "middleName",
+                                        "type": "string",
+                                        "description": "Customer's middle name."
+                                    },
+                                    {
+                                        "name": "surname",
+                                        "type": "string",
+                                        "description": "Customer's surname."
+                                    },
+                                    {
+                                        "name": "countryCode",
+                                        "type": "string",
+                                        "description": "Customer's country code."
+                                    },
+                                    {
+                                        "name": "emails",
+                                        "type": "array",
+                                        "description": "Array of customer email addresses.",
+                                        "resParams": [
+                                            {
+                                                "name": "email",
+                                                "type": "string",
+                                                "description": "Customer email address."
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "phoneNumbers",
+                                        "type": "array",
+                                        "description": "Array of customer phone numbers.",
+                                        "resParams": [
+                                            {
+                                                "name": "phoneNumber",
+                                                "type": "object",
+                                                "description": "Customer phone number details.",
+                                                "resParams": [
+                                                    {
+                                                        "name": "countryCode",
+                                                        "type": "string",
+                                                        "description": "Phone number country code."
+                                                    },
+                                                    {
+                                                        "name": "number",
+                                                        "type": "string",
+                                                        "description": "Phone number."
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "shareableLink",
+                                "type": "string",
+                                "description": "Shareable link for the gift card."
+                            },
+                            {
+                                "name": "formats",
+                                "type": "object",
+                                "description": "Different format representations of the gift card.",
+                                "resParams": [
+                                    {
+                                        "name": "qrCode",
+                                        "type": "string",
+                                        "description": "QR code representation of the gift card."
+                                    },
+                                    {
+                                        "name": "nfcData",
+                                        "type": "string",
+                                        "description": "NFC data for the gift card."
+                                    },
+                                    {
+                                        "name": "barcode",
+                                        "type": "string",
+                                        "description": "Barcode representation of the gift card."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

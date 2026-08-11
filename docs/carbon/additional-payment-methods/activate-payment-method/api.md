@@ -1,0 +1,1 @@
+Create a `POST` request for enabling each payment method with a boolean value or configured with specific settings using an object.

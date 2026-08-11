@@ -1,0 +1,142 @@
+{
+    "title": "Admin Functions API",
+    "description": "The Admin Functions API provides comprehensive administrative capabilities for managing user accounts, roles, permissions, and system configurations. These APIs enable partners and merchants to perform administrative operations programmatically, including user account management, role assignments, and system-level configurations with flexible permission controls.",
+    "endpoints": [
+        {
+            "fragment": "Create Merchant Account",
+            "method": "POST",
+            "link": "API_URL/merchants/:merchantId/accounts"
+        },
+        {
+            "fragment": "Create Partner Account",
+            "method": "POST",
+            "link": "API_URL/partners/:partnerId/accounts"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Create Merchant Account",
+            "description": "Create a new account for a merchant with specified email and role permissions.",
+            "new": true,
+            "reqParams": [
+                {
+                    "name": "email",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Email address for the new merchant account"
+                },
+                {
+                    "name": "role",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Role assigned to the account (e.g., ADMIN, SUPER_ADMIN, USER)."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request"
+                }
+            ],
+            "method": "POST",
+            "path": "/merchants/:merchantId/accounts",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\n\t\"email\": \"admin@merchant.com\",\n\t\"role\": \"ADMIN\"\n}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Initiate Signup sucessfull\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Create Partner Account",
+            "description": "Create a new account for a partner with specified email and role permissions.",
+            "new": true,
+            "reqParams": [
+                {
+                    "name": "email",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Email address for the new partner account"
+                },
+                {
+                    "name": "role",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Role assigned to the account (e.g., ADMIN, SUPER_ADMIN, USER)."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request"
+                }
+            ],
+            "method": "POST",
+            "path": "/partners/:partnerId/accounts",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ],
+                    "body": "{\n\t\"email\": \"admin@partner.com\",\n\t\"role\": \"ADMIN\"\n}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Initiate Signup sucessfull\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

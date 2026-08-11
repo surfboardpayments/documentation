@@ -1,0 +1,1 @@
+To update merchant details, You can use this API to edit the email address, merchant logo URL, and phone number of a merchant.

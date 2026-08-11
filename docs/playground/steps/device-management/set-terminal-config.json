@@ -1,0 +1,318 @@
+{
+    "scenarioId": "set-terminal-config",
+    "scenarioName": "Set Terminal Config",
+    "steps": [
+        {
+            "id": "set-terminal-config",
+            "name": "Set Terminal Config",
+            "description": "Configure settings for a specific terminal",
+            "order": 1,
+            "method": "PATCH",
+            "endpoint": "merchants/{{merchantId}}/stores/{{storeId}}/terminals/{{terminalId}}",
+            "guidePath": "/carbon/device-management/terminal-configurations/terminal-level/home",
+            "payload": {
+                "serialNo": "123456789",
+                "wifiSsid": "wifiname",
+                "wifiPassword": "wifipassword",
+                "autoSleep": 3000,
+                "preferredNetwork": "WIFI",
+                "preferredRestartTime": "03:00",
+                "alwaysShowMinorUnits": 1,
+                "language": "en",
+                "showStatusBar": true,
+                "chipReadDelay": 500,
+                "showReceipt": true
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "serialNo",
+                        "type": "string",
+                        "mandatory": false,
+                        "supportedFor": ["SurfPad", "SurfTouch", "SurfPrint"],
+                        "description": "Serial number of the physical terminal."
+                    },
+                    {
+                        "name": "wifiSsid",
+                        "type": "string",
+                        "mandatory": false,
+                        "supportedFor": ["SurfPad"],
+                        "description": "Name of the WiFi network."
+                    },
+                    {
+                        "name": "wifiPassword",
+                        "type": "string",
+                        "mandatory": false,
+                        "supportedFor": ["SurfPad"],
+                        "description": "Password for the WiFi network."
+                    },
+                    {
+                        "name": "autoSleep",
+                        "type": "number",
+                        "mandatory": false,
+                        "supportedFor": ["SurfPad"],
+                        "description": "Auto sleep time for the terminal in seconds. Terminal will sleep if no transactions are received in this time period. Only applies if the terminal is running on battery."
+                    },
+                    {
+                        "name": "preferredRestartTime",
+                        "type": "string",
+                        "mandatory": false,
+                        "supportedFor": ["SurfPad"],
+                        "description": "Scheduled restart time for the terminal in HH:MM format. The default is 02:00am according to the device's timezone. It has a 1 hour restart window. For example, if set to 02:00am, restart could occur anytime between 02:00am and 02:59am. It is essential for the device to restart at least once every 24 hours. This might be particularly important for businesses that operate beyond the default restart time."
+                    },
+                    {
+                        "name": "preferredNetwork",
+                        "type": "string",
+                        "mandatory": false,
+                        "supportedFor": ["SurfPad"],
+                        "description": "Preferred network for the terminal. It can be either 'WIFI' or 'GSM'."
+                    },
+                    {
+                        "name": "alwaysShowMinorUnits",
+                        "type": "number",
+                        "mandatory": false,
+                        "supportedFor": ["SurfPad"],
+                        "description": "Determines how the amount is displayed on the terminal. It can be either '0' or '1'. When set to '1', the terminal will always display the minor units, even for whole numbers (e.g., 29 will be displayed as 29.00). When set to 0, the terminal will not include minor units for whole numbers."
+                    },
+                    {
+                        "name": "language",
+                        "type": "string",
+                        "mandatory": false,
+                        "supportedFor": [
+                            "SurfPad",
+                            "SurfTouch",
+                            "SurfPrint",
+                            "SoftPOS"
+                        ],
+                        "description": "Two letter ISO language code, in lowercase, representing the language to be displayed in the terminal. Can be 'en', 'fi', 'da' , 'se'."
+                    },
+                    {
+                        "name": "showStatusBar",
+                        "type": "boolean",
+                        "mandatory": false,
+                        "supportedFor": ["SurfPad"],
+                        "description": "Determines whether the status bar is displayed on the terminal. If set 'TRUE', the terminal will display the status bar. This is applicable to SurfPad terminals."
+                    },
+                    {
+                        "name": "chipReadDelay",
+                        "type": "number",
+                        "mandatory": false,
+                        "supportedFor": ["SurfPad"],
+                        "description": "Time delay in milliseconds before the card is read."
+                    },
+                    {
+                        "name": "showReceipt",
+                        "type": "boolean",
+                        "mandatory": false,
+                        "supportedFor": ["SurfTouch", "SurfPrint", "SoftPOS"],
+                        "description": "Set this to determine how receipts are showcased on the terminal."
+                    },
+                    {
+                        "name": "preferredGsmOperator",
+                        "type": "number",
+                        "mandatory": false,
+                        "supportedFor": ["SurfPad"],
+                        "description": "The preferred GSM operator identified by a numeric code."
+                    },
+                    {
+                        "name": "openPosOnReboot",
+                        "type": "string",
+                        "mandatory": false,
+                        "supportedFor": ["SurfTouch", "SurfPrint"],
+                        "description": "Indicates whether the POS system should open automatically after reboot. Possible values are 'enabled' or 'disabled'."
+                    },
+                    {
+                        "name": "enableRefundLock",
+                        "comingSoon": true,
+                        "type": "boolean",
+                        "mandatory": false,
+                        "supportedFor": ["SurfTouch", "SurfPrint", "SoftPOS"],
+                        "description": "Determines if the refund lock screen feature is enabled on the device. This is only available for android terminals."
+                    },
+                    {
+                        "name": "refundScreenPin",
+                        "comingSoon": true,
+                        "type": "string",
+                        "mandatory": false,
+                        "supportedFor": ["SurfTouch", "SurfPrint", "SoftPOS"],
+                        "description": "The PIN code used to authorize refunds on the screen. This is only available for android terminals."
+                    },
+                    {
+                        "name": "screenTimeout",
+                        "type": "number",
+                        "mandatory": false,
+                        "supportedFor": ["SurfTouch", "SurfPrint", "SoftPOS"],
+                        "description": "The duration (in milliseconds) before the screen times out due to inactivity."
+                    },
+                    {
+                        "name": "autoSleepInterval",
+                        "type": "number",
+                        "mandatory": false,
+                        "supportedFor": ["SurfPad"],
+                        "description": "The interval (in milliseconds) before the device automatically goes to sleep."
+                    },
+                    {
+                        "name": "receiptScreenTimeout",
+                        "type": "number",
+                        "mandatory": false,
+                        "supportedFor": ["SurfTouch", "SurfPrint", "SoftPOS"],
+                        "description": "Timeout of the receipt screen on hardware terminals."
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "description": "Status of the request"
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        },
+        {
+            "id": "fetch-terminal-config",
+            "name": "Fetch Terminal Config",
+            "description": "Fetch the current configuration for a specific terminal",
+            "order": 2,
+            "method": "GET",
+            "endpoint": "merchants/{{merchantId}}/stores/{{storeId}}/terminals/{{terminalId}}/config",
+            "guidePath": "/carbon/device-management/terminal-configurations/fetch-terminal-config",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "description": "Response data.",
+                        "resParams": [
+                            {
+                                "name": "wifiSsid",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Name of the WiFi network."
+                            },
+                            {
+                                "name": "wifiPassword",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Password for the WiFi network."
+                            },
+                            {
+                                "name": "autoSleep",
+                                "type": "number",
+                                "mandatory": false,
+                                "description": "Auto sleep time for the terminal in seconds. Terminal will sleep if no transactions are received in this time period. Only applies if the terminal is running on battery."
+                            },
+                            {
+                                "name": "preferredRestartTime",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Scheduled restart time for the terminal in HH:MM format. The default is 02:00am according to the device's timezone. It has a 1 hour restart window. For example, if set to 02:00am, restart could occur anytime between 02:00am and 02:59am. It is essential for the device to restart at least once every 24 hours. This might be particularly important for businesses that operate beyond the default restart time."
+                            },
+                            {
+                                "name": "preferredNetwork",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Preferred network for the terminal. It can be either 'WIFI' or 'GSM'.",
+                                "possibleValues": [
+                                    {
+                                        "value": "WIFI",
+                                        "description": "Sets the preferred network of the terminal as WiFI."
+                                    },
+                                    {
+                                        "value": "GSM",
+                                        "description": "Sets the preferred network of the terminal as GSM or mobile network."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "alwaysShowMinorUnits",
+                                "type": "number",
+                                "mandatory": false,
+                                "description": "Determines how the amount is displayed on the terminal. It can be either '0' or '1'. When set to '1', the terminal will always display the minor units, even for whole numbers (e.g., 29 will be displayed as 29.00). When set to 0, the terminal will not include minor units for whole numbers."
+                            },
+                            {
+                                "name": "language",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Two letter ISO language code, in lowercase, representing the language to be displayed in the terminal. Can be 'en', 'fi', 'da' , 'se'."
+                            },
+                            {
+                                "name": "showStatusBar",
+                                "type": "boolean",
+                                "mandatory": false,
+                                "description": "Determines whether the status bar is displayed on the terminal. If set 'TRUE', the terminal will display the status bar. This is applicable to SurfPad terminals."
+                            },
+                            {
+                                "name": "chipReadDelay",
+                                "type": "number",
+                                "mandatory": false,
+                                "description": "Time delay in milliseconds before the card is read."
+                            },
+                            {
+                                "name": "showReceipt",
+                                "type": "boolean",
+                                "mandatory": false,
+                                "description": "Set this to determine how receipts are showcased on the terminal."
+                            },
+                            {
+                                "name": "preferredGsmOperator",
+                                "type": "number",
+                                "mandatory": false,
+                                "description": "The preferred GSM operator identified by a numeric code."
+                            },
+                            {
+                                "name": "openPosOnReboot",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Indicates whether the POS system should open automatically after reboot. Possible values are 'enabled' or 'disabled'."
+                            },
+                            {
+                                "name": "enableRefundLock",
+                                "type": "boolean",
+                                "mandatory": false,
+                                "description": "Determines if the refund lock screen feature is enabled on the device. This is only available for android terminals."
+                            },
+                            {
+                                "name": "screenTimeout",
+                                "type": "number",
+                                "mandatory": false,
+                                "description": "The duration (in milliseconds) before the screen times out due to inactivity."
+                            },
+                            {
+                                "name": "autoSleepInterval",
+                                "type": "number",
+                                "mandatory": false,
+                                "description": "The interval (in milliseconds) before the device automatically goes to sleep."
+                            },
+                            {
+                                "name": "receiptScreenTimeout",
+                                "type": "number",
+                                "mandatory": false,
+                                "description": "Timeout of the receipt screen on hardware terminals."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

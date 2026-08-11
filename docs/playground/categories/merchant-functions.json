@@ -1,0 +1,49 @@
+{
+    "id": "merchant-functions",
+    "name": "Merchant Functions",
+    "description": "Learn how to use other functionality of merchant",
+    "scenarios": [
+        {
+            "id": "update-merchant-details",
+            "name": "Update Merchant Details",
+            "description": "Update merchant details",
+            "order": 1
+        },
+        {
+            "id": "activate-terminal",
+            "name": "Activate Terminal",
+            "description": "Activate terminal",
+            "order": 2
+        },
+        {
+            "id": "fetch-all-merchants",
+            "name": "Fetch All Merchants",
+            "description": "Fetch all merchants",
+            "order": 3
+        },
+        {
+            "id": "fetch-all-merchant-terminals",
+            "name": "Fetch All Merchants Terminals",
+            "description": "Fetch all merchants terminals",
+            "order": 4
+        },
+        {
+            "id": "fetch-merchant-details",
+            "name": "Fetch Merchant Details",
+            "description": "Fetch merchant details",
+            "order": 5
+        },
+        {
+            "id": "fetch-transaction-analytics",
+            "name": "Fetch Transaction Analytics",
+            "description": "Fetch transaction analytics",
+            "order": 6
+        },
+        {
+            "id": "fetch-all-merchant-contracts",
+            "name": "Fetch All Merchant Contracts",
+            "description": "Fetch all merchant contracts",
+            "order": 7
+        }
+    ]
+}

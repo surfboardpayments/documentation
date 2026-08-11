@@ -1,0 +1,664 @@
+{
+    "title": "Templates API",
+    "description": "The POS Template API allows you to customize and manage the content displayed on your POS screen.",
+    "endpoints": [
+        {
+            "fragment": "Create Template",
+            "method": "POST",
+            "link": "API_URL/merchants/:merchantId/stores/:storeId/templates"
+        },
+        {
+            "fragment": "Update Template",
+            "method": "PUT",
+            "link": "API_URL/merchants/:merchantId/stores/:sId/templates/:templateId"
+        },
+        {
+            "fragment": "Fetch Template by ID",
+            "method": "GET",
+            "link": "API_URL/merchants/:merchantId/stores/:sId/templates/:templateId"
+        },
+        {
+            "fragment": "Fetch Templates",
+            "method": "GET",
+            "link": "API_URL/merchants/:merchantId/stores/:sId/templates"
+        },
+        {
+            "fragment": "Delete Template by ID",
+            "method": "DELETE",
+            "link": "API_URL/merchants/:merchantId/stores/:sId/templates/:templateId"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Create Template",
+            "description": "This API allows you to create a new POS template.",
+            "reqParams": [
+                {
+                    "name": "paymentMethodOrder",
+                    "type": "array",
+                    "description": "Array of preferred payment methods that will be displayed on the POS system in the order of preference."
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Name or label for the POS template."
+                },
+                {
+                    "name": "productsPerPage",
+                    "type": "number",
+                    "description": "Number of products to be displayed per page in the POS template."
+                },
+                {
+                    "name": "product",
+                    "type": "array",
+                    "description": "Product categories and their order.",
+                    "reqParams": [
+                        {
+                            "name": "category",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Category of the product."
+                        },
+                        {
+                            "name": "productOrder",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "Array of product IDs in the preferred order."
+                        }
+                    ]
+                },
+                {
+                    "name": "autoSet",
+                    "type": "array",
+                    "description": "Array of time intervals during which certain automatic settings or actions should be applied.",
+                    "reqParams": [
+                        {
+                            "name": "start",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Start time for the interval."
+                        },
+                        {
+                            "name": "end",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "End time for the interval."
+                        }
+                    ]
+                },
+                {
+                    "name": "terminal",
+                    "type": "object",
+                    "description": "Terminal information for the POS template.",
+                    "reqParams": [
+                        {
+                            "name": "primaryTerminal",
+                            "type": "string",
+                            "description": "ID of the primary terminal to be used."
+                        },
+                        {
+                            "name": "secondaryTerminal",
+                            "type": "string",
+                            "description": "ID of the secondary terminal to be used."
+                        },
+                        {
+                            "name": "terminalOrder",
+                            "type": "array",
+                            "description": "Array of terminal IDs in the preferred order."
+                        }
+                    ]
+                },
+                {
+                    "name": "metaData",
+                    "type": "object",
+                    "description": "Additional metadata for the POS template as key-value pairs."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data.",
+                    "reqParams": [
+                        {
+                            "name": "templateId",
+                            "type": "string",
+                            "description": "The unique identifier of the newly created POS template."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/merchants/:merchantId/stores/:storeId/templates",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"paymentMethodOrder\":[\"SWISH\"],\"name\":\"SurfboardString\",\"productsPerPage\":10,\"autoSet\":[{\"start\":\"06:00\",\"end\":\"09:00\"},{\"start\":\"11:00\",\"end\":\"18:00\"}],\"product\":[{\"category\":\"electronics\",\"productOrder\":[\"82674cfdf77f500001\",\"82674cfdf77f500001\"]}],\"terminal\":{\"primaryTerminal\":\"82674beadf0f700405\",\"terminalOrder\":[\"82674beadf0f700405\"]},\"metaData\":{\"we\":\"do\",\"do\":\"we\"}}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"templateId\": \"8271dfa5782e380148\"\n\t},\n\t\"message\": \"Pos-Template Created Successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Update Template",
+            "description": "This API allows you to update an existing POS template.",
+            "reqParams": [
+                {
+                    "name": "paymentMethodOrder",
+                    "type": "array",
+                    "description": "Array of preferred payment methods that will be displayed on the POS system in the order of preference."
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Name or label for the POS template."
+                },
+                {
+                    "name": "productsPerPage",
+                    "type": "number",
+                    "description": "Number of products to be displayed per page in the POS template."
+                },
+                {
+                    "name": "product",
+                    "type": "array",
+                    "description": "Product categories and their order.",
+                    "reqParams": [
+                        {
+                            "name": "category",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Category of the product."
+                        },
+                        {
+                            "name": "productOrder",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "Array of product IDs in the preferred order."
+                        }
+                    ]
+                },
+                {
+                    "name": "autoSet",
+                    "type": "array",
+                    "description": "Array of time intervals during which certain automatic settings or actions should be applied.",
+                    "reqParams": [
+                        {
+                            "name": "start",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Start time for the interval."
+                        },
+                        {
+                            "name": "end",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "End time for the interval."
+                        }
+                    ]
+                },
+                {
+                    "name": "terminal",
+                    "type": "object",
+                    "description": "Terminal information for the POS template.",
+                    "reqParams": [
+                        {
+                            "name": "primaryTerminal",
+                            "type": "string",
+                            "description": "ID of the primary terminal to be used."
+                        },
+                        {
+                            "name": "secondaryTerminal",
+                            "type": "string",
+                            "description": "ID of the secondary terminal to be used."
+                        },
+                        {
+                            "name": "terminalOrder",
+                            "type": "array",
+                            "description": "Array of terminal IDs in the preferred order."
+                        }
+                    ]
+                },
+                {
+                    "name": "metaData",
+                    "type": "object",
+                    "description": "Additional metadata for the POS template as key-value pairs."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "PUT",
+            "path": "/merchants/:merchantId/stores/:sId/templates/:templateId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Pos-Template updated Successfully for template id 8269d8d131d1100848\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Template by ID",
+            "description": "This API retrieves the details of a specific POS template using its ID.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data.",
+                    "reqParams": [
+                        {
+                            "name": "templateId",
+                            "type": "string",
+                            "description": "The unique identifier of the newly created POS template."
+                        },
+                        {
+                            "name": "userId",
+                            "type": "string",
+                            "description": "Unique identifier of the user who created the POS template."
+                        },
+                        {
+                            "name": "paymentMethodOrder",
+                            "type": "array",
+                            "description": "Array of preferred payment methods that will be displayed on the POS system in the order of preference."
+                        },
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Name or label for the POS template."
+                        },
+                        {
+                            "name": "productsPerPage",
+                            "type": "number",
+                            "description": "Number of products to be displayed per page in the POS template."
+                        },
+                        {
+                            "name": "product",
+                            "type": "array",
+                            "description": "Product categories and their order.",
+                            "reqParams": [
+                                {
+                                    "name": "category",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Category of the product."
+                                },
+                                {
+                                    "name": "productOrder",
+                                    "type": "array",
+                                    "mandatory": true,
+                                    "description": "Array of product IDs in the preferred order."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "autoSet",
+                            "type": "array",
+                            "description": "Array of time intervals during which certain automatic settings or actions should be applied.",
+                            "reqParams": [
+                                {
+                                    "name": "start",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Start time for the interval."
+                                },
+                                {
+                                    "name": "end",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "End time for the interval."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "terminal",
+                            "type": "object",
+                            "description": "Terminal information for the POS template.",
+                            "reqParams": [
+                                {
+                                    "name": "primaryTerminal",
+                                    "type": "string",
+                                    "description": "ID of the primary terminal to be used."
+                                },
+                                {
+                                    "name": "secondaryTerminal",
+                                    "type": "string",
+                                    "description": "ID of the secondary terminal to be used."
+                                },
+                                {
+                                    "name": "terminalOrder",
+                                    "type": "array",
+                                    "description": "Array of terminal IDs in the preferred order."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "metaData",
+                            "type": "object",
+                            "description": "Additional metadata for the POS template as key-value pairs."
+                        },
+                        {
+                            "name": "deleted",
+                            "type": "boolean",
+                            "description": "Denotes whether the template was deleted or not"
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/merchants/:merchantId/stores/:sId/templates/:templateId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"templateId\": \"8267defa6150700b48\",\n\t\t\"userId\": \"u_EArLulLMogC6b-9e9Gci0\",\n\t\t\"name\": \"SurfboardString\",\n\t\t\"terminalOrder\": {\n\t\t\t\"terminalOrder\": [\n\t\t\t\t\"82674beadf0f700405\"\n\t\t\t],\n\t\t\t\"primaryTerminal\": \"82674beadf0f700405\",\n\t\t\t\"secondaryTerminal\": null\n\t\t},\n\t\t\"categoryOrder\": null,\n\t\t\"productOrder\": [\n\t\t\t{\n\t\t\t\t\"category\": \"electronics\",\n\t\t\t\t\"productOrder\": [\n\t\t\t\t\t\"82674cfdf77f500001\",\n\t\t\t\t\t\"82674cfdf77f500001\"\n\t\t\t\t]\n\t\t\t}\n\t\t],\n\t\t\"paymentMethodOrder\": [\n\t\t\t\"SWISH\"\n\t\t],\n\t\t\"autoSet\": [\n\t\t\t{\n\t\t\t\t\"start\": \"06:00\",\n\t\t\t\t\"end\": \"09:00\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"start\": \"11:00\",\n\t\t\t\t\"end\": \"18:00\"\n\t\t\t}\n\t\t],\n\t\t\"deleted\": false,\n\t\t\"metadata\": {\n\t\t\t\"we\": \"do\",\n\t\t\t\"do\": \"we\"\n\t\t}\n\t},\n\t\"message\": \"Template Data fetched successfully for the template id [8267defa6150700b48]\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Templates",
+            "description": "This API retrieves all the POS templates created under the user.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Response data.",
+                    "reqParams": [
+                        {
+                            "name": "templateId",
+                            "type": "string",
+                            "description": "The unique identifier of the newly created POS template."
+                        },
+                        {
+                            "name": "userId",
+                            "type": "string",
+                            "description": "Unique identifier of the user who created the POS template."
+                        },
+                        {
+                            "name": "paymentMethodOrder",
+                            "type": "array",
+                            "description": "Array of preferred payment methods that will be displayed on the POS system in the order of preference."
+                        },
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Name or label for the POS template."
+                        },
+                        {
+                            "name": "productsPerPage",
+                            "type": "number",
+                            "description": "Number of products to be displayed per page in the POS template."
+                        },
+                        {
+                            "name": "product",
+                            "type": "array",
+                            "description": "Product categories and their order.",
+                            "reqParams": [
+                                {
+                                    "name": "category",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Category of the product."
+                                },
+                                {
+                                    "name": "productOrder",
+                                    "type": "array",
+                                    "mandatory": true,
+                                    "description": "Array of product IDs in the preferred order."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "autoSet",
+                            "type": "array",
+                            "description": "Array of time intervals during which certain automatic settings or actions should be applied.",
+                            "reqParams": [
+                                {
+                                    "name": "start",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Start time for the interval."
+                                },
+                                {
+                                    "name": "end",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "End time for the interval."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "terminal",
+                            "type": "object",
+                            "description": "Terminal information for the POS template.",
+                            "reqParams": [
+                                {
+                                    "name": "primaryTerminal",
+                                    "type": "string",
+                                    "description": "ID of the primary terminal to be used."
+                                },
+                                {
+                                    "name": "secondaryTerminal",
+                                    "type": "string",
+                                    "description": "ID of the secondary terminal to be used."
+                                },
+                                {
+                                    "name": "terminalOrder",
+                                    "type": "array",
+                                    "description": "Array of terminal IDs in the preferred order."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "metaData",
+                            "type": "object",
+                            "description": "Additional metadata for the POS template as key-value pairs."
+                        },
+                        {
+                            "name": "deleted",
+                            "type": "boolean",
+                            "description": "Denotes whether the template was deleted or not"
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/merchants/:merchantId/stores/:sId/templates",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"templateId\": \"826dcc0b62e0100248\",\n\t\t\t\"userId\": \"u_EArLulLMogC6b-9e9Gci0\",\n\t\t\t\"name\": \"SurfboardString\",\n\t\t\t\"terminalOrder\": {\n\t\t\t\t\"terminalOrder\": [\n\t\t\t\t\t\"82674beadf0f700405\"\n\t\t\t\t],\n\t\t\t\t\"primaryTerminal\": \"82674beadf0f700405\",\n\t\t\t\t\"secondaryTerminal\": null\n\t\t\t},\n\t\t\t\"categoryOrder\": null,\n\t\t\t\"productOrder\": [\n\t\t\t\t{\n\t\t\t\t\t\"category\": \"electronics\",\n\t\t\t\t\t\"productOrder\": [\n\t\t\t\t\t\t\"82674cfdf77f500001\",\n\t\t\t\t\t\t\"82674cfdf77f500001\"\n\t\t\t\t\t]\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"paymentMethodOrder\": [\n\t\t\t\t\"SWISH\"\n\t\t\t],\n\t\t\t\"autoSet\": [\n\t\t\t\t{\n\t\t\t\t\t\"start\": \"06:00\",\n\t\t\t\t\t\"end\": \"09:00\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"start\": \"11:00\",\n\t\t\t\t\t\"end\": \"18:00\"\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"deleted\": false\n\t\t}\n\t],\n\t\"message\": \"Template Data fetched successfully for the user id [u_EArLulLMogC6b-9e9Gci0]\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Delete Template by ID",
+            "description": "Use this API to delete an existing template by Template ID.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "DELETE",
+            "path": "/merchants/:merchantId/stores/:sId/templates/:templateId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Template id [8271dfa5782e380148] deleted successfully\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

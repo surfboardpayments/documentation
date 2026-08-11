@@ -1,0 +1,226 @@
+{
+    "scenarioId": "activate-payment-method",
+    "scenarioName": "Activate Payment Method",
+    "steps": [
+        {
+            "id": "activate-payment-method",
+            "name": "Activate Payment Method",
+            "description": "Enable a specific payment method for a merchant.",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "merchants/{{merchantId}}/payment-methods",
+            "readOnly": true,
+            "response": {
+                "status": "SUCCESS",
+                "data": [
+                    {
+                        "method": "b2binv",
+                        "paymentMethodId": "838f499c1f7bf00c23",
+                        "status": "SUCCESS"
+                    },
+                    {
+                        "method": "card",
+                        "paymentMethodId": "82523116c63be80123",
+                        "status": "SUCCESS"
+                    },
+                    {
+                        "method": "swish",
+                        "status": "ERROR",
+                        "message": "PM_0010 - Register payment method failed: SWISH registration already exists."
+                    },
+                    {
+                        "method": "acc2acc",
+                        "paymentMethodId": "838f499c1f7bf01c23",
+                        "status": "SUCCESS"
+                    }
+                ],
+                "message": "Processed payment method registrations"
+            },
+            "guidePath": "/carbon/additional-payment-methods/activate-payment-method/home",
+            "payload": {
+                "card": true,
+                "swish": true,
+                "b2binv": true,
+                "acc2acc": true
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "storeId",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Optional store identifier to associate payment methods with a specific store."
+                    },
+                    {
+                        "name": "merchantId",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Optional merchant identifier for the payment method configuration."
+                    },
+                    {
+                        "name": "card",
+                        "type": "boolean",
+                        "mandatory": false,
+                        "description": "Card payment method configuration. Set to true to enable card payments."
+                    },
+                    {
+                        "name": "amex",
+                        "type": "boolean",
+                        "mandatory": false,
+                        "description": "American Express payment method configuration. Set to true to enable AMEX payments."
+                    },
+                    {
+                        "name": "swish",
+                        "type": "boolean",
+                        "mandatory": false,
+                        "description": "Swedish mobile payment method configuration. Set to true to enable Swish payments."
+                    },
+                    {
+                        "name": "klarna",
+                        "type": "boolean",
+                        "mandatory": false,
+                        "description": "Buy now, pay later payment method configuration. Set to true to enable Klarna payments."
+                    },
+                    {
+                        "name": "b2binv",
+                        "type": "boolean",
+                        "mandatory": false,
+                        "description": "B2B invoice payment method configuration. Set to true to enable B2B invoice payments."
+                    },
+                    {
+                        "name": "acc2acc",
+                        "type": "boolean",
+                        "mandatory": false,
+                        "description": "Account to account transfer payment method configuration. Set to true to enable account to account transfers."
+                    },
+                    {
+                        "name": "svipps",
+                        "type": "boolean",
+                        "mandatory": false,
+                        "description": "Norwegian mobile payment method. Set to true to enable Vipps payment method."
+                    },
+                    {
+                        "name": "smobilepay",
+                        "type": "boolean",
+                        "mandatory": false,
+                        "description": "Danish mobile payment method. Set to true to enable MobilePay payment method."
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "array",
+                        "mandatory": true,
+                        "description": "Array of payment method registration results.",
+                        "resParams": [
+                            {
+                                "name": "method",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "The payment method name (e.g., 'amex', 'swish', 'card')."
+                            },
+                            {
+                                "name": "paymentMethodId",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Unique identifier assigned to the payment method (present on success)."
+                            },
+                            {
+                                "name": "status",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Registration status for this payment method, either 'SUCCESS' or 'ERROR'."
+                            },
+                            {
+                                "name": "message",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Error message if registration failed (present on error)."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the overall status of the request."
+                    }
+                ]
+            }
+        },
+        {
+            "id": "fetch-payment-method-details",
+            "name": "Fetch Payment Method Details",
+            "description": "Retrieve detailed information about a specific payment method.",
+            "order": 2,
+            "method": "GET",
+            "endpoint": "merchants/{{merchantId}}/payment-methods/{{paymentMethodId}}",
+            "readOnly": true,
+            "response": {
+                "status": "SUCCESS",
+                "data": {
+                    "paymentMethodId": "8235c0943bd9800023",
+                    "paymentMethod": "AMEX",
+                    "status": "ACTIVATED",
+                    "amexMID": "abcedefg"
+                },
+                "message": "Fetched payment method successfully"
+            },
+            "guidePath": "/carbon/additional-payment-methods/fetch-payment-method-details/home",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "description": "Response data",
+                        "resParams": [
+                            {
+                                "name": "paymentMethodId",
+                                "type": "String",
+                                "description": "PaymentMethod ID of the payment method."
+                            },
+                            {
+                                "name": "paymentMethod",
+                                "type": "String",
+                                "description": "Specifies the payment method. It can be one of the following: 'AMEX', 'SWISH', or 'CARD’."
+                            },
+                            {
+                                "name": "status",
+                                "type": "String",
+                                "description": "Status of the payment method, indicated as either ACTIVATED' or 'DEACTIVATED’."
+                            },
+                            {
+                                "name": "amexMID",
+                                "type": "Number",
+                                "description": "Returns AMEX MID for AMEX payment method."
+                            },
+                            {
+                                "name": "acquirerMID",
+                                "type": "String",
+                                "description": "Returns the respective Acquirer MID for CARD payment method."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

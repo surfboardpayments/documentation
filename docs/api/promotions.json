@@ -1,0 +1,1328 @@
+{
+    "title": "Promotions API",
+    "description": "The Promotions API lets merchants run marketing campaigns that are shown to customers across their stores and terminals — for example on a terminal’s idle screen or printed on a receipt. A promotion defines what is displayed (its visual assets), when it runs (its schedule), and how it rewards customers: either a promo code that applies a discount at checkout or a redirect link that sends customers to a destination. After it is created, a promotion is assigned to one or more stores and synced to their terminals to go live, and it keeps running within its schedule until it expires or its budget or redemption limits are reached.",
+    "endpoints": [
+        {
+            "fragment": "Create Promotion",
+            "method": "POST",
+            "link": "API_URL/merchants/:merchantId/promotions/v2"
+        },
+        {
+            "fragment": "Update Promotion",
+            "method": "PUT",
+            "link": "API_URL/merchants/:merchantId/promotions/:promotionId"
+        },
+        {
+            "fragment": "Delete Promotion",
+            "method": "DELETE",
+            "link": "API_URL/merchants/:merchantId/promotions/:promotionId"
+        },
+        {
+            "fragment": "Fetch Promotion by ID",
+            "method": "GET",
+            "link": "API_URL/merchants/:merchantId/promotions/:promotionId"
+        },
+        {
+            "fragment": "Fetch Promotions",
+            "method": "GET",
+            "link": "API_URL/merchants/:merchantId/v2/promotions"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Create Promotion",
+            "new": true,
+            "description": "Creates a new promotion for a merchant. Set `promoType` to choose the mechanism — a promo code that discounts a customer’s order, or a redirect link that sends customers to a destination — then define the schedule, the visual assets shown to customers, and any eligibility, redemption, and usage rules. A newly created promotion is not yet visible to customers: assign it to one or more stores and sync it to their terminals to make it live. The promotion type is fixed once the promotion is created.",
+            "method": "POST",
+            "path": "/merchants/:merchantId/promotions/v2",
+            "reqParams": [
+                {
+                    "name": "merchantId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "The unique identifier of the merchant the promotion belongs to."
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A name used to identify the promotion in the dashboard."
+                },
+                {
+                    "name": "promoType",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "The promotion mechanism. This is fixed at creation and cannot be changed later.",
+                    "possibleValues": [
+                        {
+                            "value": "PROMO_CODE",
+                            "description": "A discount the customer redeems with a code, configured in `promoCode`."
+                        },
+                        {
+                            "value": "REDIRECT_LINK",
+                            "description": "Sends the customer to a destination URL, configured in `redirectLink`."
+                        }
+                    ]
+                },
+                {
+                    "name": "schedule",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "The window during which the promotion runs.",
+                    "reqParams": [
+                        {
+                            "name": "startTime",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "ISO-8601 timestamp at which the promotion becomes active."
+                        },
+                        {
+                            "name": "endTime",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "ISO-8601 timestamp at which the promotion ends."
+                        }
+                    ]
+                },
+                {
+                    "name": "visualAssets",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "The content shown to customers for the promotion. Each item’s `type` determines which of the fields below apply.",
+                    "reqParams": [
+                        {
+                            "name": "type",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "The kind of asset.",
+                            "possibleValues": [
+                                {
+                                    "value": "TEXT",
+                                    "description": "Text content, shown using `headline`, `subheadline`, and `body`."
+                                },
+                                {
+                                    "value": "IMAGE",
+                                    "description": "An image, shown using `url`."
+                                },
+                                {
+                                    "value": "VIDEO",
+                                    "description": "A video, shown using `url`."
+                                },
+                                {
+                                    "value": "BUTTON",
+                                    "description": "A button, shown using `buttonText` and `buttonUrl`."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "headline",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "The primary line of a TEXT asset."
+                        },
+                        {
+                            "name": "subheadline",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "The secondary line of a TEXT asset."
+                        },
+                        {
+                            "name": "body",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "The body copy of a TEXT asset."
+                        },
+                        {
+                            "name": "url",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "The public URL of an IMAGE or VIDEO asset."
+                        },
+                        {
+                            "name": "buttonText",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "The label shown on a BUTTON asset."
+                        },
+                        {
+                            "name": "buttonUrl",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "The URL a BUTTON asset opens when tapped."
+                        }
+                    ]
+                },
+                {
+                    "name": "promoCode",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "The discount configuration for a promo-code promotion.",
+                    "reqParams": [
+                        {
+                            "name": "code",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "The code a customer enters at checkout to redeem the offer (for example, SAVE20)."
+                        },
+                        {
+                            "name": "offer",
+                            "type": "object",
+                            "mandatory": true,
+                            "description": "How much the code discounts.",
+                            "reqParams": [
+                                {
+                                    "name": "type",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Whether the discount is a percentage or a fixed amount.",
+                                    "possibleValues": [
+                                        {
+                                            "value": "PERCENTAGE_OFF",
+                                            "description": "A percentage discount, set by `percentage`."
+                                        },
+                                        {
+                                            "value": "FIXED_AMOUNT_OFF",
+                                            "description": "A fixed-value discount, set by `amount`."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "percentage",
+                                    "type": "number",
+                                    "mandatory": false,
+                                    "description": "The percentage discount to apply (0–100)."
+                                },
+                                {
+                                    "name": "amount",
+                                    "type": "number",
+                                    "mandatory": false,
+                                    "description": "The fixed discount amount, in the smallest currency unit (for example, 10 SEK is 1000)."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "budget",
+                            "type": "object",
+                            "mandatory": true,
+                            "description": "The spend limit for the promo code.",
+                            "reqParams": [
+                                {
+                                    "name": "maxAmount",
+                                    "type": "number",
+                                    "mandatory": true,
+                                    "description": "The maximum total discount the promotion may give away, in the smallest currency unit. When reached, the promotion stops automatically with status BUDGET_DEPLETED."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "redirectLink",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "The redirect destination for a redirect-link promotion.",
+                    "reqParams": [
+                        {
+                            "name": "url",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "The destination the customer is taken to."
+                        }
+                    ]
+                },
+                {
+                    "name": "assignmentRules",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "Conditions an order must satisfy for a customer to be eligible for the promotion.",
+                    "reqParams": [
+                        {
+                            "name": "minimumOrderAmount",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "The minimum order total required, in the smallest currency unit."
+                        },
+                        {
+                            "name": "itemPresentInOrder",
+                            "type": "array",
+                            "mandatory": false,
+                            "description": "The order must contain at least one of these item IDs."
+                        },
+                        {
+                            "name": "categoryPresentInOrder",
+                            "type": "array",
+                            "mandatory": false,
+                            "description": "The order must contain at least one item from these category IDs."
+                        }
+                    ]
+                },
+                {
+                    "name": "redemptionRules",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "Conditions that must be met at checkout before the discount is applied.",
+                    "reqParams": [
+                        {
+                            "name": "minimumOrderAmount",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "The minimum order total required, in the smallest currency unit."
+                        },
+                        {
+                            "name": "itemPresentInOrder",
+                            "type": "array",
+                            "mandatory": false,
+                            "description": "The order must contain at least one of these item IDs."
+                        },
+                        {
+                            "name": "categoryPresentInOrder",
+                            "type": "array",
+                            "mandatory": false,
+                            "description": "The order must contain at least one item from these category IDs."
+                        }
+                    ]
+                },
+                {
+                    "name": "usageLimits",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "Limits on how many times the promotion can be redeemed.",
+                    "reqParams": [
+                        {
+                            "name": "maximumRedemptions",
+                            "type": "number",
+                            "mandatory": true,
+                            "description": "The total number of redemptions allowed across all customers. Once reached, the promotion stops with status ATTEMPTS_EXHAUSTED."
+                        },
+                        {
+                            "name": "maximumRedemptionsPerCustomer",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "The number of redemptions allowed per individual customer (for example, 1 for a one-time offer)."
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Indicates whether the request succeeded — either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "Identifiers for the created promotion.",
+                    "resParams": [
+                        {
+                            "name": "promotionId",
+                            "type": "string",
+                            "description": "The identifier of the new promotion. Use it to fetch, update, assign, sync, or delete the promotion."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "For example, \"Promotion created successfully\"."
+                }
+            ],
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"name\":\"Loyalty Boost\",\"promoType\":\"PROMO_CODE\",\"schedule\":{\"startTime\":\"2026-08-01T00:00:00Z\",\"endTime\":\"2026-08-31T23:59:59Z\"},\"visualAssets\":[{\"type\":\"TEXT\",\"headline\":\"Members save more\",\"subheadline\":\"This August\"},{\"type\":\"BUTTON\",\"buttonText\":\"Join now\",\"buttonUrl\":\"https://example.com/join\"}],\"promoCode\":{\"code\":\"AUG10\",\"offer\":{\"type\":\"PERCENTAGE_OFF\",\"percentage\":10},\"budget\":{\"maxAmount\":5000}},\"assignmentRules\":{\"minimumOrderAmount\":2500},\"usageLimits\":{\"maximumRedemptions\":1000,\"maximumRedemptionsPerCustomer\":2}}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"promotionId\": \"promo_8KzR4pQ7eZ2LvUjH\"\n  },\n  \"message\": \"Promotion created successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Update Promotion",
+            "new": true,
+            "note": "The promotion type (`promoType`) is fixed at creation and cannot be changed here — to change it, delete the promotion and create a new one.",
+            "description": "Updates an existing promotion. Only the fields included in the request are changed; any omitted field is left as it was. Updated content is then synced to the terminals where the promotion is displayed.",
+            "method": "PUT",
+            "path": "/merchants/:merchantId/promotions/:promotionId",
+            "reqParams": [
+                {
+                    "name": "merchantId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "The unique identifier of the merchant the promotion belongs to."
+                },
+                {
+                    "name": "promotionId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "The promotion to update, as returned when it was created."
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "A new name for the promotion."
+                },
+                {
+                    "name": "schedule",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "The window during which the promotion runs.",
+                    "reqParams": [
+                        {
+                            "name": "startTime",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "ISO-8601 timestamp at which the promotion becomes active."
+                        },
+                        {
+                            "name": "endTime",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "ISO-8601 timestamp at which the promotion ends."
+                        }
+                    ]
+                },
+                {
+                    "name": "visualAssets",
+                    "type": "array",
+                    "mandatory": false,
+                    "description": "Replaces the promotion’s display content with this set. Each item’s `type` determines which of the fields below apply.",
+                    "reqParams": [
+                        {
+                            "name": "type",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "The kind of asset.",
+                            "possibleValues": [
+                                {
+                                    "value": "TEXT",
+                                    "description": "Text content, shown using `headline`, `subheadline`, and `body`."
+                                },
+                                {
+                                    "value": "IMAGE",
+                                    "description": "An image, shown using `url`."
+                                },
+                                {
+                                    "value": "VIDEO",
+                                    "description": "A video, shown using `url`."
+                                },
+                                {
+                                    "value": "BUTTON",
+                                    "description": "A button, shown using `buttonText` and `buttonUrl`."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "headline",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "The primary line of a TEXT asset."
+                        },
+                        {
+                            "name": "subheadline",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "The secondary line of a TEXT asset."
+                        },
+                        {
+                            "name": "body",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "The body copy of a TEXT asset."
+                        },
+                        {
+                            "name": "url",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "The public URL of an IMAGE or VIDEO asset."
+                        },
+                        {
+                            "name": "buttonText",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "The label shown on a BUTTON asset."
+                        },
+                        {
+                            "name": "buttonUrl",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "The URL a BUTTON asset opens when tapped."
+                        }
+                    ]
+                },
+                {
+                    "name": "promoCode",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "The discount configuration for a promo-code promotion.",
+                    "reqParams": [
+                        {
+                            "name": "code",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "The code a customer enters at checkout to redeem the offer (for example, SAVE20)."
+                        },
+                        {
+                            "name": "offer",
+                            "type": "object",
+                            "mandatory": true,
+                            "description": "How much the code discounts.",
+                            "reqParams": [
+                                {
+                                    "name": "type",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Whether the discount is a percentage or a fixed amount.",
+                                    "possibleValues": [
+                                        {
+                                            "value": "PERCENTAGE_OFF",
+                                            "description": "A percentage discount, set by `percentage`."
+                                        },
+                                        {
+                                            "value": "FIXED_AMOUNT_OFF",
+                                            "description": "A fixed-value discount, set by `amount`."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "percentage",
+                                    "type": "number",
+                                    "mandatory": false,
+                                    "description": "The percentage discount to apply (0–100)."
+                                },
+                                {
+                                    "name": "amount",
+                                    "type": "number",
+                                    "mandatory": false,
+                                    "description": "The fixed discount amount, in the smallest currency unit (for example, 10 SEK is 1000)."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "budget",
+                            "type": "object",
+                            "mandatory": true,
+                            "description": "The spend limit for the promo code.",
+                            "reqParams": [
+                                {
+                                    "name": "maxAmount",
+                                    "type": "number",
+                                    "mandatory": true,
+                                    "description": "The maximum total discount the promotion may give away, in the smallest currency unit. When reached, the promotion stops automatically with status BUDGET_DEPLETED."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "redirectLink",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "The redirect destination for a redirect-link promotion.",
+                    "reqParams": [
+                        {
+                            "name": "url",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "The destination the customer is taken to."
+                        }
+                    ]
+                },
+                {
+                    "name": "assignmentRules",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "Conditions an order must satisfy for a customer to be eligible for the promotion.",
+                    "reqParams": [
+                        {
+                            "name": "minimumOrderAmount",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "The minimum order total required, in the smallest currency unit."
+                        },
+                        {
+                            "name": "itemPresentInOrder",
+                            "type": "array",
+                            "mandatory": false,
+                            "description": "The order must contain at least one of these item IDs."
+                        },
+                        {
+                            "name": "categoryPresentInOrder",
+                            "type": "array",
+                            "mandatory": false,
+                            "description": "The order must contain at least one item from these category IDs."
+                        }
+                    ]
+                },
+                {
+                    "name": "redemptionRules",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "Conditions that must be met at checkout before the discount is applied.",
+                    "reqParams": [
+                        {
+                            "name": "minimumOrderAmount",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "The minimum order total required, in the smallest currency unit."
+                        },
+                        {
+                            "name": "itemPresentInOrder",
+                            "type": "array",
+                            "mandatory": false,
+                            "description": "The order must contain at least one of these item IDs."
+                        },
+                        {
+                            "name": "categoryPresentInOrder",
+                            "type": "array",
+                            "mandatory": false,
+                            "description": "The order must contain at least one item from these category IDs."
+                        }
+                    ]
+                },
+                {
+                    "name": "usageLimits",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "Limits on how many times the promotion can be redeemed.",
+                    "reqParams": [
+                        {
+                            "name": "maximumRedemptions",
+                            "type": "number",
+                            "mandatory": true,
+                            "description": "The total number of redemptions allowed across all customers. Once reached, the promotion stops with status ATTEMPTS_EXHAUSTED."
+                        },
+                        {
+                            "name": "maximumRedemptionsPerCustomer",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "The number of redemptions allowed per individual customer (for example, 1 for a one-time offer)."
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Indicates whether the request succeeded — either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The updated promotion."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "For example, \"Promotion updated successfully\"."
+                }
+            ],
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"name\":\"Loyalty Boost (extended)\",\"schedule\":{\"startTime\":\"2026-08-01T00:00:00Z\",\"endTime\":\"2026-09-15T23:59:59Z\"}}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {},\n  \"message\": \"Promotion updated successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Delete Promotion",
+            "new": true,
+            "description": "Permanently deletes a promotion. It is removed from every store it was assigned to and can no longer be displayed or redeemed. This action cannot be undone.",
+            "method": "DELETE",
+            "path": "/merchants/:merchantId/promotions/:promotionId",
+            "reqParams": [
+                {
+                    "name": "merchantId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "The unique identifier of the merchant the promotion belongs to."
+                },
+                {
+                    "name": "promotionId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "The promotion to delete."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Indicates whether the request succeeded — either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "For example, \"Promotion deleted successfully\"."
+                }
+            ],
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": ""
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"message\": \"Promotion deleted successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Promotion by ID",
+            "new": true,
+            "description": "Returns the full configuration of a single promotion — its schedule, visual assets, discount or redirect details, rules, and current status. The promotion is returned inside the `data` array.",
+            "method": "GET",
+            "path": "/merchants/:merchantId/promotions/:promotionId",
+            "reqParams": [
+                {
+                    "name": "merchantId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "The unique identifier of the merchant the promotion belongs to."
+                },
+                {
+                    "name": "promotionId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "The promotion to retrieve."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Indicates whether the request succeeded — either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "description": "The matching promotion.",
+                    "resParams": [
+                        {
+                            "name": "promotionId",
+                            "type": "string",
+                            "description": "The unique identifier of the promotion."
+                        },
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "description": "The promotion’s name."
+                        },
+                        {
+                            "name": "status",
+                            "type": "string",
+                            "description": "The current lifecycle state of the promotion.",
+                            "possibleValues": [
+                                {
+                                    "value": "ACTIVE",
+                                    "description": "Currently running — within its schedule, with budget and redemption limits remaining."
+                                },
+                                {
+                                    "value": "CREATED",
+                                    "description": "Created but not yet started (its start time is in the future)."
+                                },
+                                {
+                                    "value": "DEACTIVATED",
+                                    "description": "Manually switched off by the merchant."
+                                },
+                                {
+                                    "value": "EXPIRED",
+                                    "description": "Past its end time."
+                                },
+                                {
+                                    "value": "BUDGET_DEPLETED",
+                                    "description": "Stopped because spend reached the promo code budget."
+                                },
+                                {
+                                    "value": "ATTEMPTS_EXHAUSTED",
+                                    "description": "Stopped because the redemption limit was reached."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "promoType",
+                            "type": "string",
+                            "description": "The promotion mechanism.",
+                            "possibleValues": [
+                                {
+                                    "value": "PROMO_CODE",
+                                    "description": "A discount the customer redeems with a code, configured in `promoCode`."
+                                },
+                                {
+                                    "value": "REDIRECT_LINK",
+                                    "description": "Sends the customer to a destination URL, configured in `redirectLink`."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "appliedTo",
+                            "type": "string",
+                            "description": "The kind of entity the promotion applies to (for example, STORE or MERCHANT)."
+                        },
+                        {
+                            "name": "appliedToId",
+                            "type": "string",
+                            "description": "The identifier of the entity the promotion applies to."
+                        },
+                        {
+                            "name": "schedule",
+                            "type": "object",
+                            "description": "The promotion’s active window.",
+                            "resParams": [
+                                {
+                                    "name": "startTime",
+                                    "type": "string",
+                                    "description": "ISO-8601 start time."
+                                },
+                                {
+                                    "name": "endTime",
+                                    "type": "string",
+                                    "description": "ISO-8601 end time."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "promoCode",
+                            "type": "object",
+                            "description": "Present when `promoType` is PROMO_CODE.",
+                            "resParams": [
+                                {
+                                    "name": "code",
+                                    "type": "string",
+                                    "description": "The redeemable code."
+                                },
+                                {
+                                    "name": "offer",
+                                    "type": "object",
+                                    "description": "The discount the code applies.",
+                                    "resParams": [
+                                        {
+                                            "name": "type",
+                                            "type": "string",
+                                            "description": "Whether the discount is a percentage or a fixed amount."
+                                        },
+                                        {
+                                            "name": "percentage",
+                                            "type": "number",
+                                            "description": "The percentage off, when the offer is PERCENTAGE_OFF."
+                                        },
+                                        {
+                                            "name": "amount",
+                                            "type": "number",
+                                            "description": "The fixed amount off, when the offer is FIXED_AMOUNT_OFF."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "budget",
+                                    "type": "object",
+                                    "description": "Budget and spend tracking.",
+                                    "resParams": [
+                                        {
+                                            "name": "maxAmount",
+                                            "type": "number",
+                                            "description": "The spend limit."
+                                        },
+                                        {
+                                            "name": "currency",
+                                            "type": "string",
+                                            "description": "The currency of the budget figures."
+                                        },
+                                        {
+                                            "name": "spentAmount",
+                                            "type": "number",
+                                            "description": "How much of the budget has been used so far."
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "redirectLink",
+                            "type": "object",
+                            "description": "Present when `promoType` is REDIRECT_LINK.",
+                            "resParams": [
+                                {
+                                    "name": "url",
+                                    "type": "string",
+                                    "description": "The destination URL."
+                                },
+                                {
+                                    "name": "sharableIdleLink",
+                                    "type": "string",
+                                    "description": "A generated short link for display on the idle screen."
+                                },
+                                {
+                                    "name": "sharablePrinterLink",
+                                    "type": "string",
+                                    "description": "A generated short link for printed receipts."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "usageLimits",
+                            "type": "object",
+                            "description": "The redemption limits.",
+                            "resParams": [
+                                {
+                                    "name": "maximumRedemptions",
+                                    "type": "number",
+                                    "description": "The total redemption limit."
+                                },
+                                {
+                                    "name": "maximumRedemptionsPerCustomer",
+                                    "type": "number",
+                                    "description": "The per-customer redemption limit (may be null)."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "visualAssets",
+                            "type": "array",
+                            "description": "The promotion’s display assets."
+                        },
+                        {
+                            "name": "createdAt",
+                            "type": "string",
+                            "description": "When the promotion was created."
+                        },
+                        {
+                            "name": "updatedAt",
+                            "type": "string",
+                            "description": "When the promotion was last updated."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "For example, \"Promotions fetched successfully\"."
+                }
+            ],
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": ""
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": [\n    {\n      \"promotionId\": \"promo_8KzR4pQ7eZ2LvUjH\",\n      \"name\": \"Loyalty Boost\",\n      \"status\": \"ACTIVE\",\n      \"promoType\": \"PROMO_CODE\",\n      \"appliedTo\": \"STORE\",\n      \"appliedToId\": \"store_123\",\n      \"schedule\": {\n        \"startTime\": \"2026-08-01T00:00:00Z\",\n        \"endTime\": \"2026-08-31T23:59:59Z\"\n      },\n      \"promoCode\": {\n        \"code\": \"AUG10\",\n        \"offer\": {\n          \"type\": \"PERCENTAGE_OFF\",\n          \"percentage\": 10\n        },\n        \"budget\": {\n          \"maxAmount\": 5000,\n          \"currency\": \"SEK\",\n          \"spentAmount\": 1200\n        }\n      },\n      \"usageLimits\": {\n        \"maximumRedemptions\": 1000,\n        \"maximumRedemptionsPerCustomer\": 2\n      },\n      \"visualAssets\": [],\n      \"createdAt\": \"2026-07-20T08:00:00Z\",\n      \"updatedAt\": \"2026-07-25T09:30:00Z\"\n    }\n  ],\n  \"message\": \"Promotions fetched successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Promotions",
+            "new": true,
+            "pagination": true,
+            "note": "Results are paginated. The total number of promotions and the current page are returned in the `x-total-items` and `x-page-number` response headers.",
+            "description": "Returns a paginated list of the merchant’s promotions with their full configuration and current store/terminal assignments. Optionally filter by status, for example to show only ACTIVE promotions.",
+            "method": "GET",
+            "path": "/merchants/:merchantId/v2/promotions",
+            "reqParams": [
+                {
+                    "name": "merchantId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "The unique identifier of the merchant whose promotions are listed."
+                },
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Returns only promotions in this state. Omit to return promotions of any status.",
+                    "possibleValues": [
+                        {
+                            "value": "ACTIVE",
+                            "description": "Currently running — within its schedule, with budget and redemption limits remaining."
+                        },
+                        {
+                            "value": "CREATED",
+                            "description": "Created but not yet started (its start time is in the future)."
+                        },
+                        {
+                            "value": "DEACTIVATED",
+                            "description": "Manually switched off by the merchant."
+                        },
+                        {
+                            "value": "EXPIRED",
+                            "description": "Past its end time."
+                        },
+                        {
+                            "value": "BUDGET_DEPLETED",
+                            "description": "Stopped because spend reached the promo code budget."
+                        },
+                        {
+                            "value": "ATTEMPTS_EXHAUSTED",
+                            "description": "Stopped because the redemption limit was reached."
+                        }
+                    ]
+                },
+                {
+                    "name": "pageNumber",
+                    "type": "number",
+                    "mandatory": false,
+                    "description": "The page of results to return. Defaults to 1."
+                },
+                {
+                    "name": "pageSize",
+                    "type": "number",
+                    "mandatory": false,
+                    "description": "The number of promotions per page. Defaults to 100."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Indicates whether the request succeeded — either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The paginated promotions payload.",
+                    "resParams": [
+                        {
+                            "name": "promotions",
+                            "type": "array",
+                            "description": "The promotions on the requested page.",
+                            "resParams": [
+                                {
+                                    "name": "promotionId",
+                                    "type": "string",
+                                    "description": "The unique identifier of the promotion."
+                                },
+                                {
+                                    "name": "name",
+                                    "type": "string",
+                                    "description": "The promotion’s name."
+                                },
+                                {
+                                    "name": "status",
+                                    "type": "string",
+                                    "description": "The current lifecycle state of the promotion.",
+                                    "possibleValues": [
+                                        {
+                                            "value": "ACTIVE",
+                                            "description": "Currently running — within its schedule, with budget and redemption limits remaining."
+                                        },
+                                        {
+                                            "value": "CREATED",
+                                            "description": "Created but not yet started (its start time is in the future)."
+                                        },
+                                        {
+                                            "value": "DEACTIVATED",
+                                            "description": "Manually switched off by the merchant."
+                                        },
+                                        {
+                                            "value": "EXPIRED",
+                                            "description": "Past its end time."
+                                        },
+                                        {
+                                            "value": "BUDGET_DEPLETED",
+                                            "description": "Stopped because spend reached the promo code budget."
+                                        },
+                                        {
+                                            "value": "ATTEMPTS_EXHAUSTED",
+                                            "description": "Stopped because the redemption limit was reached."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "promoType",
+                                    "type": "string",
+                                    "description": "The promotion mechanism.",
+                                    "possibleValues": [
+                                        {
+                                            "value": "PROMO_CODE",
+                                            "description": "A discount the customer redeems with a code, configured in `promoCode`."
+                                        },
+                                        {
+                                            "value": "REDIRECT_LINK",
+                                            "description": "Sends the customer to a destination URL, configured in `redirectLink`."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "appliedTo",
+                                    "type": "string",
+                                    "description": "The kind of entity the promotion applies to (for example, STORE or MERCHANT)."
+                                },
+                                {
+                                    "name": "appliedToId",
+                                    "type": "string",
+                                    "description": "The identifier of the entity the promotion applies to."
+                                },
+                                {
+                                    "name": "schedule",
+                                    "type": "object",
+                                    "description": "The promotion’s active window.",
+                                    "resParams": [
+                                        {
+                                            "name": "startTime",
+                                            "type": "string",
+                                            "description": "The ISO-8601 timestamp at which the promotion becomes active."
+                                        },
+                                        {
+                                            "name": "endTime",
+                                            "type": "string",
+                                            "description": "The ISO-8601 timestamp at which the promotion ends."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "promoCode",
+                                    "type": "object",
+                                    "description": "Present when `promoType` is PROMO_CODE.",
+                                    "resParams": [
+                                        {
+                                            "name": "code",
+                                            "type": "string",
+                                            "description": "The redeemable code."
+                                        },
+                                        {
+                                            "name": "offer",
+                                            "type": "object",
+                                            "description": "The discount the code applies.",
+                                            "resParams": [
+                                                {
+                                                    "name": "type",
+                                                    "type": "string",
+                                                    "description": "Whether the discount is a percentage or a fixed amount."
+                                                },
+                                                {
+                                                    "name": "percentage",
+                                                    "type": "number",
+                                                    "description": "The percentage off, when the offer is PERCENTAGE_OFF."
+                                                },
+                                                {
+                                                    "name": "amount",
+                                                    "type": "number",
+                                                    "description": "The fixed amount off, when the offer is FIXED_AMOUNT_OFF."
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "name": "budget",
+                                            "type": "object",
+                                            "description": "Budget and spend tracking.",
+                                            "resParams": [
+                                                {
+                                                    "name": "maxAmount",
+                                                    "type": "number",
+                                                    "description": "The spend limit."
+                                                },
+                                                {
+                                                    "name": "currency",
+                                                    "type": "string",
+                                                    "description": "The currency of the budget figures."
+                                                },
+                                                {
+                                                    "name": "spentAmount",
+                                                    "type": "number",
+                                                    "description": "How much of the budget has been used so far."
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "redirectLink",
+                                    "type": "object",
+                                    "description": "Present when `promoType` is REDIRECT_LINK.",
+                                    "resParams": [
+                                        {
+                                            "name": "url",
+                                            "type": "string",
+                                            "description": "The destination URL."
+                                        },
+                                        {
+                                            "name": "sharableIdleLink",
+                                            "type": "string",
+                                            "description": "A generated short link for display on the idle screen."
+                                        },
+                                        {
+                                            "name": "sharablePrinterLink",
+                                            "type": "string",
+                                            "description": "A generated short link for printed receipts."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "usageLimits",
+                                    "type": "object",
+                                    "description": "The redemption limits.",
+                                    "resParams": [
+                                        {
+                                            "name": "maximumRedemptions",
+                                            "type": "number",
+                                            "description": "The total redemption limit."
+                                        },
+                                        {
+                                            "name": "maximumRedemptionsPerCustomer",
+                                            "type": "number",
+                                            "description": "The per-customer redemption limit (may be null)."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "visualAssets",
+                                    "type": "array",
+                                    "description": "The promotion’s display assets."
+                                },
+                                {
+                                    "name": "assignments",
+                                    "type": "array",
+                                    "description": "Where the promotion is currently assigned.",
+                                    "resParams": [
+                                        {
+                                            "name": "targetType",
+                                            "type": "string",
+                                            "description": "Whether the promotion is assigned to a store or a terminal."
+                                        },
+                                        {
+                                            "name": "targetId",
+                                            "type": "string",
+                                            "description": "The identifier of the store or terminal the promotion is assigned to."
+                                        },
+                                        {
+                                            "name": "assignedAt",
+                                            "type": "string",
+                                            "description": "When the assignment was made."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "createdAt",
+                                    "type": "string",
+                                    "description": "When the promotion was created."
+                                },
+                                {
+                                    "name": "updatedAt",
+                                    "type": "string",
+                                    "description": "When the promotion was last updated."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "For example, \"Promotions fetched successfully\"."
+                }
+            ],
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": ""
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n  \"status\": \"SUCCESS\",\n  \"data\": {\n    \"promotions\": [\n      {\n        \"promotionId\": \"promo_8KzR4pQ7eZ2LvUjH\",\n        \"name\": \"Loyalty Boost\",\n        \"status\": \"ACTIVE\",\n        \"promoType\": \"PROMO_CODE\",\n        \"appliedTo\": \"STORE\",\n        \"appliedToId\": \"store_123\",\n        \"schedule\": {\n          \"startTime\": \"2026-08-01T00:00:00Z\",\n          \"endTime\": \"2026-08-31T23:59:59Z\"\n        },\n        \"promoCode\": {\n          \"code\": \"AUG10\",\n          \"offer\": {\n            \"type\": \"PERCENTAGE_OFF\",\n            \"percentage\": 10\n          },\n          \"budget\": {\n            \"maxAmount\": 5000,\n            \"currency\": \"SEK\",\n            \"spentAmount\": 1200\n          }\n        },\n        \"usageLimits\": {\n          \"maximumRedemptions\": 1000,\n          \"maximumRedemptionsPerCustomer\": 2\n        },\n        \"visualAssets\": [],\n        \"assignments\": [\n          {\n            \"targetType\": \"STORE\",\n            \"targetId\": \"store_123\",\n            \"assignedAt\": \"2026-08-01T10:00:00Z\"\n          }\n        ],\n        \"createdAt\": \"2026-07-20T08:00:00Z\",\n        \"updatedAt\": \"2026-07-25T09:30:00Z\"\n      }\n    ]\n  },\n  \"message\": \"Promotions fetched successfully\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,1 @@
+Creates a store under a merchant. Use this API to create a store to which you can register your terminals. You can create a single store or multiple stores under a merchant based on your requirements.

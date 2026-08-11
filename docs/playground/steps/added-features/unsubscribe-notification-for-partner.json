@@ -1,0 +1,33 @@
+{
+    "scenarioId": "unsubscribe-notification-for-partner",
+    "scenarioName": "Unsubscribe Notification for Partner",
+    "steps": [
+        {
+            "id": "unsubscribe-notification-for-partner",
+            "name": "Unsubscribe Notification for Partner",
+            "description": "Unsubscribe Notification for Partner",
+            "order": 1,
+            "method": "DELETE",
+            "endpoint": "partners/{{partnerId}}/notifications/{{notificationId}}",
+            "guidePath": "/carbon/added-features/unsubscribe-notifications-for-partner",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'"
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request"
+                    }
+                ]
+            }
+        }
+    ]
+}

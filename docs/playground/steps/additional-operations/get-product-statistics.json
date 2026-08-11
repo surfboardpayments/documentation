@@ -1,0 +1,245 @@
+{
+    "scenarioId": "get-product-statistics",
+    "scenarioName": "get-product-statistics",
+    "steps": [
+        {
+            "id": "get-product-statistics",
+            "name": "Get Product Statistics",
+            "description": "Get Product Statistics",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "catalog/{{catalogId}}/products/{{productId}}/statistics",
+            "guidePath": "/carbon/additional-operations/get-product-statistics",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data containing product statistics.",
+                        "resParams": [
+                            {
+                                "name": "productId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Unique identifier of the product."
+                            },
+                            {
+                                "name": "productName",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Name of the product."
+                            },
+                            {
+                                "name": "unit",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Unit of measurement for the product."
+                            },
+                            {
+                                "name": "query",
+                                "type": "object",
+                                "mandatory": true,
+                                "description": "The date range used for filtering statistics.",
+                                "resParams": [
+                                    {
+                                        "name": "startDate",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Start date of the statistics period in YYYY-MM-DD format."
+                                    },
+                                    {
+                                        "name": "endDate",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "End date of the statistics period in YYYY-MM-DD format."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "statistics",
+                                "type": "object",
+                                "mandatory": true,
+                                "description": "Sales and performance statistics for the product.",
+                                "resParams": [
+                                    {
+                                        "name": "byCurrency",
+                                        "type": "array",
+                                        "mandatory": true,
+                                        "description": "Statistics broken down by currency.",
+                                        "resParams": [
+                                            {
+                                                "name": "currency",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "Currency code."
+                                            },
+                                            {
+                                                "name": "totalUnitsSold",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Total number of units sold."
+                                            },
+                                            {
+                                                "name": "totalUnitsReturned",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Total number of units returned."
+                                            },
+                                            {
+                                                "name": "totalRevenue",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Total revenue generated."
+                                            },
+                                            {
+                                                "name": "totalVat",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Total VAT collected."
+                                            },
+                                            {
+                                                "name": "totalCampaignDiscount",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Total campaign discount applied."
+                                            },
+                                            {
+                                                "name": "orderCount",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Total number of orders containing this product."
+                                            },
+                                            {
+                                                "name": "averageOrderValue",
+                                                "type": "number",
+                                                "mandatory": true,
+                                                "description": "Average order value for orders containing this product."
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "netUnitsSold",
+                                        "type": "number",
+                                        "mandatory": true,
+                                        "description": "Net units sold after accounting for returns."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "inventoryStatus",
+                                "type": "object",
+                                "mandatory": true,
+                                "description": "Current inventory status of the product.",
+                                "resParams": [
+                                    {
+                                        "name": "currentStock",
+                                        "type": "number",
+                                        "mandatory": true,
+                                        "description": "Current stock quantity available."
+                                    },
+                                    {
+                                        "name": "stockIn",
+                                        "type": "number",
+                                        "mandatory": true,
+                                        "description": "Total stock added during the period."
+                                    },
+                                    {
+                                        "name": "stockOut",
+                                        "type": "number",
+                                        "mandatory": true,
+                                        "description": "Total stock removed during the period."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "vatBreakdown",
+                                "type": "array",
+                                "mandatory": true,
+                                "description": "VAT breakdown by percentage.",
+                                "resParams": [
+                                    {
+                                        "name": "vatPercentage",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "VAT percentage applied."
+                                    },
+                                    {
+                                        "name": "vatAmount",
+                                        "type": "number",
+                                        "mandatory": true,
+                                        "description": "Total VAT amount collected at this percentage."
+                                    },
+                                    {
+                                        "name": "taxableAmount",
+                                        "type": "number",
+                                        "mandatory": true,
+                                        "description": "Total taxable amount at this percentage."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "variants",
+                                "type": "array",
+                                "mandatory": true,
+                                "description": "Statistics for each product variant.",
+                                "resParams": [
+                                    {
+                                        "name": "variantId",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Unique identifier of the variant."
+                                    },
+                                    {
+                                        "name": "variantName",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Name of the variant."
+                                    },
+                                    {
+                                        "name": "unit",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Unit of measurement for the variant."
+                                    },
+                                    {
+                                        "name": "byCurrency",
+                                        "type": "array",
+                                        "mandatory": true,
+                                        "description": "Variant statistics broken down by currency."
+                                    },
+                                    {
+                                        "name": "inventoryStatus",
+                                        "type": "object",
+                                        "mandatory": true,
+                                        "description": "Current inventory status of the variant."
+                                    },
+                                    {
+                                        "name": "vatBreakdown",
+                                        "type": "array",
+                                        "mandatory": true,
+                                        "description": "VAT breakdown for the variant."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

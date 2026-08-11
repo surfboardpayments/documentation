@@ -1,0 +1,590 @@
+{
+    "title": "Receipts API",
+    "description": "The Receipts API lets you fetch receipt data, add data Surfboard does not hold, print receipts (including raw ESC/POS), email receipts, and get a shareable receipt link.",
+    "endpoints": [
+        {
+            "fragment": "Fetch Receipt Data",
+            "method": "GET",
+            "link": "API_URL/receipts/:id"
+        },
+        {
+            "fragment": "Add Receipt Data",
+            "method": "POST",
+            "link": "API_URL/receipts/:id"
+        },
+        {
+            "fragment": "Print Receipt",
+            "method": "POST",
+            "link": "API_URL/receipts/:id/print"
+        },
+        {
+            "fragment": "Email Receipt",
+            "method": "PUT",
+            "link": "API_URL/receipts/:id/email"
+        },
+        {
+            "fragment": "Fetch Receipt Link",
+            "method": "GET",
+            "link": "API_URL/receipts/:id/link"
+        },
+        {
+            "fragment": "Print ESC/POS Receipt",
+            "method": "PUT",
+            "link": "API_URL/receipts/:terminalId/escpos"
+        },
+        {
+            "fragment": "Update Receipt Host Data",
+            "method": "PUT",
+            "link": "API_URL/receipts/:orderId"
+        },
+        {
+            "fragment": "Print Receipt (Legacy)",
+            "method": "PUT",
+            "link": "API_URL/receipts/:id/print"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Fetch Receipt Data",
+            "method": "GET",
+            "path": "/receipts/:id",
+            "description": "Fetch the raw receipt data for a completed transaction. Use this when you want to print the receipt yourself or render your own digital receipt.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": false,
+                    "description": "The receipt payload for the transaction. Includes at least the fields below, plus line items, totals, and payment/fiscal details.",
+                    "resParams": [
+                        {
+                            "name": "id",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Transaction identifier the receipt belongs to."
+                        },
+                        {
+                            "name": "amount",
+                            "type": "number",
+                            "mandatory": false,
+                            "description": "Transaction amount, in the smallest currency unit."
+                        },
+                        {
+                            "name": "currency",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "ISO 4217 currency code of the transaction."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Human-facing status message."
+                }
+            ],
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"id\": \"{{transactionId}}\",\n\t\t\"amount\": 1000,\n\t\t\"currency\": \"SEK\"\n\t},\n\t\"message\": \"Receipt data fetched successfully.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Add Receipt Data",
+            "method": "POST",
+            "path": "/receipts/:id",
+            "description": "Add receipt data that Surfboard does not hold — for example fiscal data from your own control unit — when you use Surfboard's digital-receipt or print APIs but keep some data on your side.",
+            "reqParams": [
+                {
+                    "name": "receiptNumber",
+                    "type": "number",
+                    "mandatory": false,
+                    "description": "Receipt number from your own system."
+                },
+                {
+                    "name": "cashRegisterName",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Name of the cash register that produced the receipt."
+                },
+                {
+                    "name": "controlUnitSerial",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Serial number of the control unit used."
+                },
+                {
+                    "name": "cashierName",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Name of the cashier who handled the transaction."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Human-facing status message."
+                }
+            ],
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ],
+                    "body": "{\n\t\"receiptNumber\": 1042,\n\t\"cashRegisterName\": \"Register 1\",\n\t\"controlUnitSerial\": \"CU-123456\",\n\t\"cashierName\": \"Alex\"\n}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Receipt data added successfully.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Print Receipt",
+            "method": "POST",
+            "path": "/receipts/:id/print",
+            "description": "Print the receipt for a transaction. By default it prints on the terminal that processed the transaction; optionally target a different terminal or choose a template type.",
+            "reqParams": [
+                {
+                    "name": "terminalId",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Terminal to print on. Defaults to the terminal that processed the transaction."
+                },
+                {
+                    "name": "templateType",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Which receipt template to print. Defaults to TRANSACTION_RECEIPT.",
+                    "possibleValues": [
+                        {
+                            "value": "TRANSACTION_RECEIPT",
+                            "description": "The standard per-transaction receipt."
+                        },
+                        {
+                            "value": "SALES_SUMMARY",
+                            "description": "A sales-summary receipt."
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Human-facing status message."
+                }
+            ],
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ],
+                    "body": "{\n\t\"terminalId\": \"{{terminalId}}\",\n\t\"templateType\": \"TRANSACTION_RECEIPT\"\n}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Receipt sent to the printer successfully.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Email Receipt",
+            "method": "PUT",
+            "path": "/receipts/:id/email",
+            "description": "Send the receipt for a transaction as an email to the address provided in the body.",
+            "reqParams": [
+                {
+                    "name": "email",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Email address to send the receipt to."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Human-facing status message."
+                }
+            ],
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ],
+                    "body": "{\n\t\"email\": \"customer@example.com\"\n}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Email receipt processed successfully.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Receipt Link",
+            "method": "GET",
+            "path": "/receipts/:id/link",
+            "description": "Return a shareable link to the digital receipt for a transaction.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Contains the receipt link.",
+                    "resParams": [
+                        {
+                            "name": "receiptURL",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Shareable URL of the digital receipt."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Human-facing status message."
+                }
+            ],
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"receiptURL\": \"https://receipt.surfboardpayments.com/{{transactionId}}\"\n\t},\n\t\"message\": \"Receipt URL fetched successfully.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Print ESC/POS Receipt",
+            "method": "PUT",
+            "path": "/receipts/:terminalId/escpos",
+            "description": "Send raw ESC/POS commands (base64-encoded) to a terminal for printing. This endpoint takes a terminal ID in the path, not a receipt or transaction ID.",
+            "reqParams": [
+                {
+                    "name": "escposCommands",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Base64-encoded ESC/POS byte stream to send to the printer. The decoded payload must start with the ESC byte (0x1B). Maximum 100,000 base64 characters per call."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Human-facing status message."
+                }
+            ],
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ],
+                    "body": "{\n\t\"escposCommands\": \"G0A=\"\n}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"ESC/POS commands sent to the terminal successfully.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Update Receipt Host Data",
+            "method": "PUT",
+            "path": "/receipts/:orderId",
+            "description": "Legacy. Update order data that Surfboard does not hold but that the receipt needs. Superseded by Add Receipt Data.",
+            "reqParams": [
+                {
+                    "name": "merchantId",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Identifier of the merchant."
+                },
+                {
+                    "name": "sequenceNumber",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Sequence number of the receipt from your system."
+                },
+                {
+                    "name": "cashRegisterName",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Name of the cash register that produced the receipt."
+                },
+                {
+                    "name": "controlUnitSerialNumber",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Serial number of the control unit used."
+                },
+                {
+                    "name": "cashierName",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Name of the cashier who handled the transaction."
+                },
+                {
+                    "name": "customerName",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Name of the customer."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Human-facing status message."
+                }
+            ],
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ],
+                    "body": "{\n\t\"merchantId\": \"{{merchantId}}\",\n\t\"sequenceNumber\": \"1042\",\n\t\"cashRegisterName\": \"Register 1\",\n\t\"controlUnitSerialNumber\": \"CU-123456\",\n\t\"cashierName\": \"Alex\",\n\t\"customerName\": \"Sam Smith\"\n}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Receipt host data updated successfully.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Print Receipt (Legacy)",
+            "method": "PUT",
+            "path": "/receipts/:id/print",
+            "description": "Legacy. Print the receipt using the older print API. Superseded by Print Receipt.",
+            "reqParams": [
+                {
+                    "name": "terminalId",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Terminal to print on. Defaults to the terminal that processed the transaction."
+                },
+                {
+                    "name": "language",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Language of the printed receipt.",
+                    "possibleValues": [
+                        {
+                            "value": "sv",
+                            "description": "Swedish."
+                        },
+                        {
+                            "value": "da",
+                            "description": "Danish."
+                        },
+                        {
+                            "value": "fi",
+                            "description": "Finnish."
+                        },
+                        {
+                            "value": "en",
+                            "description": "English."
+                        }
+                    ]
+                },
+                {
+                    "name": "templateId",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Identifier of the receipt template to use."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Human-facing status message."
+                }
+            ],
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ],
+                    "body": "{\n\t\"terminalId\": \"{{terminalId}}\",\n\t\"language\": \"en\",\n\t\"templateId\": \"{{templateId}}\"\n}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"message\": \"Print receipt processed successfully.\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

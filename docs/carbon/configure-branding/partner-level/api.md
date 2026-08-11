@@ -1,0 +1,1 @@
+Create a `PATCH` request to **Create branding for partner API** depending on the level at which you wish to configure the user-interface page and include the optional parameters as needed.

@@ -1,0 +1,171 @@
+{
+    "scenarioId": "create-promotion",
+    "scenarioName": "Create Promotion",
+    "steps": [
+        {
+            "id": "create-promotion",
+            "name": "Create Promotion",
+            "description": "Create a new promotion for a merchant.",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "merchants/{{mId}}/stores/{{sId}}/promotions",
+            "guidePath": "/carbon/advanced-customizations/create-promotion",
+            "payload": {
+                "title": "First Promotion",
+                "name": "Slash sale",
+                "description": "Slash sale on all fruits",
+                "assetUrl": "https://www.surfpayapp.com/hubfs/connect/surfpay_checkout-companion.png",
+                "type": "RECEIPT_BIG",
+                "assetOpacity": "0",
+                "backgroundColor": "#a1a1aa",
+                "contentTextColor": "#78716c",
+                "endProductUrl": "https://www.timestamp-converter.com/",
+                "endProduct": "12345",
+                "buttonLabel": "Click",
+                "priority": 1,
+                "idleBigSpot": true,
+                "receiptBig": true,
+                "receiptSmall": true,
+                "endDate": "05-05-2027",
+                "startDate": "05-05-2025"
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "merchantId",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "The unique identifier for the merchant creating the promotion."
+                    },
+                    {
+                        "name": "title",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "The title of the promotion."
+                    },
+                    {
+                        "name": "name",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "The name of the promotion."
+                    },
+                    {
+                        "name": "description",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "A brief description of the promotion."
+                    },
+                    {
+                        "name": "assetUrl",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "URL of the promotion image."
+                    },
+                    {
+                        "name": "assetOpacity",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Opacity level of the promotional asset, ranging from 0 (fully transparent) to 1 (fully opaque)."
+                    },
+                    {
+                        "name": "backgroundColor",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Background color for the promotion, in hex format."
+                    },
+                    {
+                        "name": "contentTextColor",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Text color for the promotional content, in hex format."
+                    },
+                    {
+                        "name": "endProductUrl",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "URL of the product linked to the promotion."
+                    },
+                    {
+                        "name": "endProduct",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Product ID associated with the promotion."
+                    },
+                    {
+                        "name": "buttonLabel",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "The label for the action button in the promotion."
+                    },
+                    {
+                        "name": "priority",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "The priority of the promotion, where lower numbers indicate higher priority."
+                    },
+                    {
+                        "name": "type",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "The type of promotion.",
+                        "possibleValues": [
+                            {
+                                "value": "RECEIPT_BIG",
+                                "description": "Promotion displayed in a large spot on the receipt."
+                            },
+                            {
+                                "value": "RECEIPT_SMALL",
+                                "description": "Promotion displayed in a small spot on the receipt."
+                            },
+                            {
+                                "value": "IDLE_BIG_SPOT",
+                                "description": "Promotion displayed on the idle screen in a large spot."
+                            },
+                            {
+                                "value": "OTHER_SCREEN",
+                                "description": "Promotion displayed on other screens."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "startDate",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "The start date of the promotion in 'MM-DD-YYYY' format."
+                    },
+                    {
+                        "name": "endDate",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "The end date of the promotion in 'MM-DD-YYYY' format."
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "description": "Response data",
+                        "resParams": [
+                            {
+                                "name": "promotionId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Unique identifier of the promotion."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

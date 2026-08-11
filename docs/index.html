@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Surfboard Payments Documentation</title>
+    </head>
+    <body>
+        <script>
+            async function fetchContent() {
+                try {
+                    const path = window.location.pathname;
+                    if (path === "/favicon.ico") return;
+
+                    const pathMappings = {
+                        "/api/": ".json",
+                        "/changelogs/": ".json",
+                        "/docs/": ".md",
+                        "/guides/": ".md",
+                        "/images/": ".png",
+                        "/sidebar/": ".json",
+                        "/webhooks/": ".json",
+                    };
+
+                    for (const prefix in pathMappings) {
+                        if (
+                            path.startsWith(prefix) &&
+                            !path.endsWith(pathMappings[prefix])
+                        ) {
+                            window.location.href = path + pathMappings[prefix];
+                            return;
+                        }
+                    }
+                } catch (error) {
+                    document.getElementById("content").className = "error";
+                    document.getElementById(
+                        "content"
+                    ).innerHTML = `Error: ${error}`;
+                }
+            }
+
+            document.addEventListener("click", function (e) {
+                const link = e.target.closest("a");
+                if (link && link.href.startsWith(window.location.origin)) {
+                    e.preventDefault();
+                    const newPath = link.href.replace(
+                        window.location.origin,
+                        ""
+                    );
+                    history.pushState({}, "", newPath);
+                    fetchContent();
+                }
+            });
+
+            document.addEventListener("DOMContentLoaded", fetchContent);
+            window.addEventListener("popstate", fetchContent);
+        </script>
+    </body>
+</html>

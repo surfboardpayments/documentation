@@ -1,0 +1,42 @@
+{
+    "scenarioId": "update-terminal-name",
+    "scenarioName": "Update Terminal Name",
+    "steps": [
+        {
+            "id": "update-terminal-name",
+            "name": "Update Terminal Name",
+            "description": "Updates the name of the registered terminal.",
+            "order": 1,
+            "method": "PUT",
+            "endpoint": "terminals/{{terminalId}}",
+            "guidePath": "/carbon/device-handling/update-terminal-name/home",
+            "payload": {
+                "terminalName": "New Terminal"
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "terminalName",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Assign a name for your terminal. An optional param to identify a terminal for the user."
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request."
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the update request."
+                    }
+                ]
+            }
+        }
+    ]
+}

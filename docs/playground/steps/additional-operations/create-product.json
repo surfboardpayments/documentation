@@ -1,0 +1,475 @@
+{
+    "scenarioId": "create-product",
+    "scenarioName": "Create Product",
+    "steps": [
+        {
+            "id": "create-product",
+            "name": "Create Product",
+            "description": "Create Product",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "catalog/{{catalogId}}/products",
+            "guidePath": "/carbon/additional-operations/create-product",
+            "payload": {
+                "storeId": "8136a645a2c2d1bb0f",
+                "name": "SurfPad Purple Logo",
+                "type": "PRODUCT",
+                "unitType": "FIXED",
+                "costPrice": 20,
+                "sellingPrice": 45,
+                "currencyCode": "752",
+                "tax": [
+                    {
+                        "type": "VAT",
+                        "percentage": "3"
+                    }
+                ],
+                "description": "SurfPad Payment Terminal in Purple",
+                "category": "electronics",
+                "unit": "nos",
+                "productImages": [
+                    "https://res.cloudinary.com/martinsurf/image/upload/v1619101937/surfboardpayments/surfboard-icon.svg"
+                ],
+                "hsnCode": "723453",
+                "barCode": "7812123454323"
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "storeId",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Unique identifier of the store where the product will be created."
+                    },
+                    {
+                        "name": "name",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Name of the product."
+                    },
+                    {
+                        "name": "type",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A Product can exist in two ways as the following,",
+                        "possibleValues": [
+                            {
+                                "value": "PRODUCT",
+                                "description": "Its refers to tangible things sold for the exchange of a fee."
+                            },
+                            {
+                                "value": "SERVICE",
+                                "description": "Refers to action provided in exchange for a fee."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "unitType",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "This refers to the way a product is measured or quantified.",
+                        "possibleValues": [
+                            {
+                                "value": "FIXED",
+                                "description": "Pre-packaged products sold in fixed units."
+                            },
+                            {
+                                "value": "VARIABLE",
+                                "description": "Product sold by weight or volume."
+                            },
+                            {
+                                "value": "FREE_AMOUNT",
+                                "description": "Denotes products priced at checkout."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "costPrice",
+                        "type": "number",
+                        "mandatory": false,
+                        "description": "Cost price of the product."
+                    },
+                    {
+                        "name": "sellingPrice",
+                        "type": "number",
+                        "mandatory": true,
+                        "description": "Selling price of the product."
+                    },
+                    {
+                        "name": "currencyCode",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "It refers to the standardised code used to represent a specific currency."
+                    },
+                    {
+                        "name": "tax",
+                        "type": "array",
+                        "mandatory": true,
+                        "description": "Array of taxes.",
+                        "reqParams": [
+                            {
+                                "name": "percentage",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Percentage of the tax for the product."
+                            },
+                            {
+                                "name": "type",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Type of the tax. Tax type supported currently is 'vat'."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "variantCategory",
+                        "type": "array",
+                        "mandatory": false,
+                        "description": "Defines the different variants available for the product.",
+                        "reqParams": [
+                            {
+                                "name": "label",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "User defined Label for the variant category."
+                            },
+                            {
+                                "name": "Key",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Key of the variant."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "variantCategories",
+                        "type": "array",
+                        "mandatory": true,
+                        "description": "Describes the different variants available for the product.",
+                        "reqParams": [
+                            {
+                                "name": "category",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "The user defined variant category under variantCategory."
+                            },
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Name of the variant."
+                            },
+                            {
+                                "name": "value",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Value of the variant."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "description",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Description of the product."
+                    },
+                    {
+                        "name": "unit",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "This refers to the metric unit of the item. The possible values are 'm' , 'mm' , 'cm' , 'km' , 'in' , 'ft' , 'mi' , 'kg' , 'g' , 'mg' , 'lb' , 'oz' , 'l' , 'ml' , 'cu. m' , 'gal' , 'pt' , 'fl oz' , 'W' , 'kW' , 'kWh' , 'sq m' , 'sq km' , 'sq ft' , 'h' , 'min' , 's' , 'days' , 'wk' , 'mn' , 'yr' , 'nos'. "
+                    },
+                    {
+                        "name": "category",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Category of the product."
+                    },
+                    {
+                        "name": "productImages",
+                        "type": "array",
+                        "mandatory": true,
+                        "description": "An array of URLs showcasing the product."
+                    },
+                    {
+                        "name": "hsnCode",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "A 6-digit uniform code that identifies the product."
+                    },
+                    {
+                        "name": "barCode",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Encoded white and black lines on the product."
+                    },
+                    {
+                        "name": "productProperties",
+                        "type": "object",
+                        "mandatory": false,
+                        "description": "Additional properties that help describe the product like size, origin, weight, manufacturer, etc."
+                    },
+                    {
+                        "name": "monthlyPlans",
+                        "type": "object",
+                        "mandatory": false,
+                        "description": "Refers to the charges of the product or service for a specific time period.",
+                        "reqParams": [
+                            {
+                                "name": "amount",
+                                "type": "number",
+                                "mandatory": true,
+                                "description": "Amount of the plan."
+                            },
+                            {
+                                "name": "currencyCode",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "It refers to the standardised code used to represent a specific currency."
+                            },
+                            {
+                                "name": "interval",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "This refers to the time period of the billing plan."
+                            },
+                            {
+                                "name": "intervalCount",
+                                "type": "number",
+                                "mandatory": true,
+                                "description": "Duration of the plan."
+                            },
+                            {
+                                "name": "recurring",
+                                "type": "boolean",
+                                "mandatory": true,
+                                "description": "Denotes if the billing plan should repeat at regular intervals."
+                            },
+                            {
+                                "name": "bindingPeriod",
+                                "type": "number",
+                                "mandatory": true,
+                                "description": "A binding period is a set timeframe for a billing plan to which the customer is expected to adhere."
+                            },
+                            {
+                                "name": "earlyTerminationPenalty",
+                                "type": "number",
+                                "mandatory": true,
+                                "description": "It is the additional amount charged in case of early termination if applicable."
+                            },
+                            {
+                                "name": "earlyTermination",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Defines the intended action to be taken if the plan is terminated early.",
+                                "possibleValues": [
+                                    {
+                                        "value": "NO_PENALTY",
+                                        "description": "No penalty charged for early termination."
+                                    },
+                                    {
+                                        "value": "BALANCE_AMOUNT",
+                                        "description": "Customer has to pay the balance amount id terminated early."
+                                    },
+                                    {
+                                        "value": "BALANCE_AMOUNT_PLUS_PENALTY",
+                                        "description": "Customer has the pay the remaining amount plus a penalty amount."
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data",
+                        "resParams": [
+                            {
+                                "name": "productId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Unique ID of the newly added product."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        },
+        {
+            "id": "fetch-product-by-id",
+            "name": "Fetch Product by Id",
+            "description": "Fetch Product by Id",
+            "order": 2,
+            "method": "GET",
+            "endpoint": "catalog/{{catalogId}}/products/{{productId}}",
+            "guidePath": "/carbon/additional-operations/fetch-product-by-id",
+            "payload": {
+                "productId": "8136a645a2c2d1bb0f"
+            },
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data containing the product details.",
+                        "resParams": [
+                            {
+                                "name": "id",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Unique identifier of the product."
+                            },
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Name of the product."
+                            },
+                            {
+                                "name": "sellingPrice",
+                                "type": "number",
+                                "mandatory": true,
+                                "description": "Selling price of the product."
+                            },
+                            {
+                                "name": "currencyCode",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Currency code for the product price."
+                            },
+                            {
+                                "name": "description",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Description of the product."
+                            },
+                            {
+                                "name": "category",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Category of the product."
+                            },
+                            {
+                                "name": "popularity",
+                                "type": "number",
+                                "mandatory": true,
+                                "description": "Popularity score of the product."
+                            },
+                            {
+                                "name": "unit",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Unit of measurement for the product."
+                            },
+                            {
+                                "name": "hsnCode",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "HSN code of the product."
+                            },
+                            {
+                                "name": "barcode",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Barcode of the product."
+                            },
+                            {
+                                "name": "type",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Type of the product."
+                            },
+                            {
+                                "name": "unitType",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Unit type of the product."
+                            },
+                            {
+                                "name": "attributeValues",
+                                "type": "array",
+                                "mandatory": true,
+                                "description": "Array of attribute values for the product.",
+                                "resParams": [
+                                    {
+                                        "name": "attributeKey",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Key of the attribute."
+                                    },
+                                    {
+                                        "name": "displayName",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Display name of the attribute."
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Value of the attribute."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "tax",
+                                "type": "array",
+                                "mandatory": true,
+                                "description": "Array of tax information for the product.",
+                                "resParams": [
+                                    {
+                                        "name": "type",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Type of tax."
+                                    },
+                                    {
+                                        "name": "percentage",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Tax percentage."
+                                    },
+                                    {
+                                        "name": "amount",
+                                        "type": "number",
+                                        "mandatory": true,
+                                        "description": "Tax amount."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

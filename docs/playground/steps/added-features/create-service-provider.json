@@ -1,0 +1,96 @@
+{
+    "scenarioId": "create-service-provider",
+    "scenarioName": "Create Service Provider",
+    "steps": [
+        {
+            "id": "create-service-provider",
+            "name": "Create Service Provider",
+            "description": "Create Service Provider",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "partners/{{partnerId}}/service-providers",
+            "guidePath": "/carbon/added-features/create-service-provider",
+            "payload": {
+                "country": "SE",
+                "organisation": {
+                    "corporateId": "3532007322"
+                },
+                "controlFields": {
+                    "isServiceProvider": true
+                }
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "country",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Two-letter ISO country code where the service provider operates."
+                    },
+                    {
+                        "name": "organisation",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Organization details for the service provider.",
+                        "reqParams": [
+                            {
+                                "name": "corporateId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Corporate identification number of the organization."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "controlFields",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Control fields for service provider configuration.",
+                        "reqParams": [
+                            {
+                                "name": "isServiceProvider",
+                                "type": "boolean",
+                                "mandatory": true,
+                                "description": "Flag indicating whether this entity is a service provider."
+                            }
+                        ]
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data containing the application details.",
+                        "resParams": [
+                            {
+                                "name": "applicationId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Unique identifier for the created service provider application."
+                            },
+                            {
+                                "name": "webKybUrl",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "URL for the web-based KYB (Know Your Business) process."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

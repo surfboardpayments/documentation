@@ -1,0 +1,134 @@
+{
+    "scenarioId": "fetch-promotion-by-id",
+    "scenarioName": "Fetch Promotion by Id",
+    "steps": [
+        {
+            "id": "fetch-promotion-by-id",
+            "name": "Fetch Promotion by Id",
+            "description": "Fetch a promotion by id.",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "merchants/{{mId}}/stores/{{sId}}/promotions/{{promotionId}}",
+            "guidePath": "/carbon/advanced-customizations/fetch-promotion-by-id",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "array",
+                        "description": "Response data",
+                        "resParams": [
+                            {
+                                "name": "promotionId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Unique identifier of the promotion."
+                            },
+                            {
+                                "name": "merchantId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Unique identifier of the merchant associated with the promotion."
+                            },
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Name of the promotion."
+                            },
+                            {
+                                "name": "title",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Title of the promotion."
+                            },
+                            {
+                                "name": "description",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Description of the promotion."
+                            },
+                            {
+                                "name": "storeId",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Unique identifier of the store where the promotion is running."
+                            },
+                            {
+                                "name": "assetUrl",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "URL of the promotion image."
+                            },
+                            {
+                                "name": "endProduct",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Product ID associated with the promotion."
+                            },
+                            {
+                                "name": "buttonLabel",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Label for the action button in the promotion."
+                            },
+                            {
+                                "name": "startDate",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Start date of the promotion in ISO 8601 format."
+                            },
+                            {
+                                "name": "endDate",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "End date of the promotion in ISO 8601 format."
+                            },
+                            {
+                                "name": "priority",
+                                "type": "string",
+                                "mandatory": true,
+                                "description": "Priority of the promotion, where lower numbers represent higher priority."
+                            },
+                            {
+                                "name": "assetOpacity",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Opacity of the promotion image, ranging from 0 (fully transparent) to 1 (fully opaque)."
+                            },
+                            {
+                                "name": "backgroundColor",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Background color for the promotion, in hex format."
+                            },
+                            {
+                                "name": "contentTextColor",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "Text color for the promotion content, in hex format."
+                            },
+                            {
+                                "name": "endProductUrl",
+                                "type": "string",
+                                "mandatory": false,
+                                "description": "URL of the product linked to the promotion."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

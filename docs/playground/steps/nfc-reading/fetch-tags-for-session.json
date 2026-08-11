@@ -1,0 +1,50 @@
+{
+    "scenarioId": "fetch-tags-for-session",
+    "scenarioName": "Fetch Tags for Session",
+    "steps": [
+        {
+            "id": "fetch-tags-for-session",
+            "name": "Fetch Tags for Session",
+            "description": "Retrieve all NFC tags read under the session.",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "terminals/{{terminalId}}/sessions/{{sessionId}}/tags",
+            "guidePath": "/carbon/nfc-reading/fetch-tags-for-session",
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "array",
+                        "mandatory": true,
+                        "description": "Response data.",
+                        "resParams": [
+                            {
+                                "name": "sessionId",
+                                "type": "string",
+                                "description": "A unique identifier for the RFID reading session."
+                            },
+                            {
+                                "name": "tagId",
+                                "type": "string",
+                                "description": "The unique identifier of the tag read."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

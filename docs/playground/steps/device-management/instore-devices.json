@@ -1,0 +1,76 @@
+{
+    "scenarioId": "instore-devices",
+    "scenarioName": "Register Device",
+    "steps": [
+        {
+            "id": "instore-devices",
+            "name": "Register Device",
+            "description": "Registering the instore terminals",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "merchants/{{merchantId}}/stores/{{storeId}}/devices",
+            "guidePath": "/carbon/device-management/instore-devices/home",
+            "payload": {
+                "registrationIdentifier": "",
+                "terminalName": "Kiosk One"
+            },
+                "specifications": {
+                    "reqParams": [
+                        {
+                            "name": "registrationIdentifier",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Usually, the registrationIdentifier is a 6-digit code found upon starting the terminal. For the SurfPad and Printer, you need to use the serial number from the back of the device."
+                        },
+                        {
+                            "name": "terminalName",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Assign a name for your terminal. An optional param to identify a terminal for the user."
+                        }
+                    ],
+    
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "String",
+                        "description": "Status of the terminal registration."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "description": "Response data.",
+                        "resParams": [
+                            {
+                                "name": "terminalId",
+                                "type": "String",
+                                "description": "Terminal ID of the registered terminal."
+                            },
+                            {
+                                "name": "registrationStatus",
+                                "type": "string",
+                                "description": "Represents the current status of the terminal. The possible values are:",
+                                "possibleValues": [
+                                    {
+                                        "value": "REGISTERED",
+                                        "description": "The terminal has been successfully registered."
+                                    },
+                                    {
+                                        "value": "ALREADY_REGISTERED",
+                                        "description": "The terminal is already registered."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the terminal registration."
+                    }
+                ]
+                }
+        }
+    ]
+}

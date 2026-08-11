@@ -1,0 +1,1 @@
+Send a `PUT` request to the Update Store API, providing the storeId and the updated details in the request body

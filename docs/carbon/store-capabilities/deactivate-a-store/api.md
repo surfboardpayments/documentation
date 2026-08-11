@@ -1,0 +1,1 @@
+Create a `DELETE` request with the storeId to the Delete Store API.

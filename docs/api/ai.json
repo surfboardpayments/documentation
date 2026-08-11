@@ -1,0 +1,268 @@
+{
+    "title": "AI API",
+    "description": "The AI API provides powerful artificial intelligence capabilities for merchants to enhance their product management and branding. Generate compelling product descriptions, create professional product images, extract catalog data from images, and develop branding options using advanced AI technology.",
+    "endpoints": [
+        {
+            "fragment": "Generate Branding Options",
+            "method": "POST",
+            "link": "API_URL/ai/branding"
+        },
+        {
+            "fragment": "Enhance Image",
+            "method": "POST",
+            "link": "API_URL/ai/enhance-image"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Generate Branding Options",
+            "description": "Generate AI-powered branding options and color schemes based on a website URL. Use this API to automatically create cohesive branding themes that match your business identity and enhance your merchant portal appearance.",
+            "new": true,
+            "reqParams": [
+                {
+                    "name": "url",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Website URL to analyze for branding inspiration and color scheme generation."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data containing generated branding options.",
+                    "resParams": [
+                        {
+                            "name": "options",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "Array of branding option sets with metadata.",
+                            "resParams": [
+                                {
+                                    "name": "brandingOptions",
+                                    "type": "array",
+                                    "mandatory": true,
+                                    "description": "Array of branding configuration options.",
+                                    "resParams": [
+                                        {
+                                            "name": "backgroundColor",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Hex color code for the background color."
+                                        },
+                                        {
+                                            "name": "brandColor",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Hex color code for the primary brand color."
+                                        },
+                                        {
+                                            "name": "accentColor",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Hex color code for accent elements."
+                                        },
+                                        {
+                                            "name": "rectShape",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Shape style for rectangular elements (e.g., 'rounded', 'square')."
+                                        },
+                                        {
+                                            "name": "fontType",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Font family type for text elements (e.g., 'mono', 'serif', 'sans-serif')."
+                                        },
+                                        {
+                                            "name": "logoUrl",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "URL of the generated or suggested logo image."
+                                        },
+                                        {
+                                            "name": "iconUrl",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "URL of the generated or suggested icon image."
+                                        },
+                                        {
+                                            "name": "footerColor",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Hex color code for footer elements."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "metadata",
+                                    "type": "object",
+                                    "mandatory": true,
+                                    "description": "Metadata about the AI generation process.",
+                                    "resParams": [
+                                        {
+                                            "name": "inputTokens",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Number of input tokens used in the AI generation."
+                                        },
+                                        {
+                                            "name": "outputTokens",
+                                            "type": "number",
+                                            "mandatory": true,
+                                            "description": "Number of output tokens generated by the AI."
+                                        },
+                                        {
+                                            "name": "outputType",
+                                            "type": "string",
+                                            "mandatory": true,
+                                            "description": "Type of output generated (e.g., 'text', 'image')."
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/ai/branding",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\n\t\"url\": \"https://example-company.com\"\n}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"options\": [\n\t\t\t{\n\t\t\t\t\"brandingOptions\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"backgroundColor\": \"#FDFDFF\",\n\t\t\t\t\t\t\"brandColor\": \"#38488F\",\n\t\t\t\t\t\t\"accentColor\": \"#38488F\",\n\t\t\t\t\t\t\"rectShape\": \"rounded\",\n\t\t\t\t\t\t\"fontType\": \"mono\",\n\t\t\t\t\t\t\"logoUrl\": \"\",\n\t\t\t\t\t\t\"iconUrl\": \"\",\n\t\t\t\t\t\t\"footerColor\": \"#F0F0F2\"\n\t\t\t\t\t}\n\t\t\t\t],\n\t\t\t\t\"metadata\": {\n\t\t\t\t\t\"inputTokens\": 1043,\n\t\t\t\t\t\"outputTokens\": 85,\n\t\t\t\t\t\"outputType\": \"text\"\n\t\t\t\t}\n\t\t\t}\n\t\t]\n\t},\n\t\"message\": \"Branding generated successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Enhance Image",
+            "description": "Enhance product images using AI-powered image processing. This API takes a product image URL and generates enhanced versions of the image. Choose between STANDARD mode for basic enhancements or SCENE mode for contextual scene generation.",
+            "new": true,
+            "reqParams": [
+                {
+                    "name": "productName",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Name of the product to provide context for image enhancement."
+                },
+                {
+                    "name": "url",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "URL of the product image to be enhanced."
+                },
+                {
+                    "name": "mode",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Enhancement mode to apply to the image.",
+                    "possibleValues": [
+                        {
+                            "value": "STANDARD",
+                            "description": "Apply standard image enhancements including lighting, color correction, and quality improvements."
+                        },
+                        {
+                            "value": "SCENE",
+                            "description": "Generate contextual scene backgrounds and lifestyle imagery for the product."
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data containing enhanced image URLs.",
+                    "resParams": [
+                        {
+                            "name": "imageUrls",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "Array of URLs pointing to the enhanced product images."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/ai/enhance-image",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\n\t\"productName\": \"Wireless Bluetooth Headphones\",\n\t\"url\": \"https://example.com/images/product-12345.jpg\",\n\t\"mode\": \"STANDARD\"\n}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"imageUrls\": [\n\t\t\t\"https://cdn.example.com/enhanced/image-abc123-v1.jpg\",\n\t\t\t\"https://cdn.example.com/enhanced/image-abc123-v2.jpg\",\n\t\t\t\"https://cdn.example.com/enhanced/image-abc123-v3.jpg\"\n\t\t]\n\t},\n\t\"message\": \"Image enhanced successfully\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

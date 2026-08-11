@@ -1,0 +1,1 @@
+Sets tips configuration for an individual terminal. Use this API to configure tips for a particular terminal.

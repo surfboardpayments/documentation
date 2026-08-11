@@ -1,0 +1,70 @@
+{
+    "scenarioId": "client-auth-token",
+    "scenarioName": "Create Token",
+    "steps": [
+        {
+            "id": "create-token",
+            "name": "Create Token",
+            "description": "Create a client auth token to authenticate directly with the Surfboard API without using sensitive API-KEY or API-SECRET.",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "partners/{{partnerId}}/token",
+            "guidePath": "/carbon/client-side-auth-token/home",
+            "payload": {
+                "providerId": "providerId",
+                "providerCertificate": "providerCertificate",
+                "externalUserId": "externalUserId"
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "providerId",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Provider ID of the auth provider"
+                    },
+                    {
+                        "name": "providerCertificate",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Certificate of the auth provider"
+                    },
+                    {
+                        "name": "externalUserId",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "ExternalUserId ID to be assigned to the user who requires auth token"
+                    },
+                    {
+                        "name": "email",
+                        "type": "string",
+                        "mandatory": false,
+                        "description": "Email address of the user"
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "token",
+                        "type": "string",
+                        "description": "The generated client auth token."
+                    },
+                    {
+                        "name": "validUntil",
+                        "type": "string",
+                        "description": "The validity period of the token in seconds."
+                    },
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "description": "The status of the request (SUCCESS/FAILURE)."
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

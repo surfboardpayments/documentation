@@ -1,0 +1,1 @@
+Sets configurations for all the terminals registered to a specific store. Use this API to configure uniform settings and parameters across all the terminals associated with a specific store.

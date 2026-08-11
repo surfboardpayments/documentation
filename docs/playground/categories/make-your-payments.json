@@ -1,0 +1,55 @@
+{
+    "id": "make-your-payments",
+    "name": "Make Your Payments",
+    "description": "Learn how to create orders and process payments",
+    "scenarios": [
+        {
+            "id": "basic-create-order",
+            "name": "Basic Create Order",
+            "description": "Simple order creation with minimal fields",
+            "order": 1
+        },
+        {
+            "id": "full-create-order",
+            "name": "Full Create Order",
+            "description": "Order creation with all fields",
+            "order": 2
+        },
+        {
+            "id": "refund-order",
+            "name": "Refund Order",
+            "description": "Refund an order",
+            "order": 3
+        },
+        {
+            "id": "partial-payments",
+            "name": "Partial Payments",
+            "description": "Partial payments",
+            "order": 4
+        },
+        {
+            "id": "partial-refund-order",
+            "name": "Partial Refund Order",
+            "description": "Partial refund order",
+            "order": 5
+        },
+        {
+            "id": "void-a-payment",
+            "name": "Void a Payment",
+            "description": "Void a payment",
+            "order": 6
+        },
+        {
+            "id": "cancel-a-payment",
+            "name": "Cancel a Payment",
+            "description": "Cancel a payment",
+            "order": 7
+        },
+        {
+            "id": "capture-a-payment",
+            "name": "Capture a Payment",
+            "description": "Capture a payment",
+            "order": 8
+        }
+    ]
+}

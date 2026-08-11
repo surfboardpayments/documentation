@@ -1,0 +1,1 @@
+Retrieves information for a specific store. Use this API to get information regarding a particular store created under a merchant.

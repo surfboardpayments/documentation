@@ -1,0 +1,55 @@
+{
+    "scenarioId": "print-receipt",
+    "scenarioName": "Print Receipt",
+    "steps": [
+        {
+            "id": "print-receipt",
+            "name": "Print Receipt",
+            "description": "Print receipts from the terminals.",
+            "order": 1,
+            "method": "PUT",
+            "endpoint": "receipts/{{id}}/print",
+            "guidePath": "/carbon/receipts/print-receipt/home",
+            "payload": {
+                "language": "sv"
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "templateId",
+                        "type": "String",
+                        "comingSoon": true,
+                        "mandatory": false,
+                        "description": "Select from a default set of templates offered by Surfboard."
+                    },
+                    {
+                        "name": "terminalId",
+                        "type": "String",
+                        "mandatory": false,
+                        "description": "Print receipt on any printing enabled Surfboard terminal using this param."
+                    },
+                    {
+                        "name": "language",
+                        "type": "String",
+                        "mandatory": false,
+                        "description": "Prints the receipt in the given language. The available languages are, 'sv' , 'da' , 'fi' , 'en'. Default is the merchant language."
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request."
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the print receipt request."
+                    }
+                ]
+            }
+        }
+    ]
+}

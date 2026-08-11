@@ -1,0 +1,1710 @@
+{
+    "title": "Changelogs",
+    "description": "Released changes for publicly available interfaces and apps.",
+    "logs": [
+        {
+            "title": "New Gift Cards API",
+            "product": "API",
+            "version": "Version Carbon",
+            "updatedOn": 1731847800000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added **Create Gift Card API** for creating gift cards with monetary value (FUND) or usage-based limits (ENTITLEMENT).",
+                        "targetLink": ["Create Gift Card API"],
+                        "url": ["api/gift-cards#Create-Gift-Card"]
+                    },
+                    {
+                        "description": "Added **Get All Gift Cards API** for retrieving paginated list of gift cards with filtering by type and status.",
+                        "targetLink": ["Get All Gift Cards API"],
+                        "url": ["api/gift-cards#Get-All-Gift-Cards"]
+                    },
+                    {
+                        "description": "Added **Get Gift Card Details API** for retrieving detailed gift card information including customer details and transaction history.",
+                        "targetLink": ["Get Gift Card Details API"],
+                        "url": ["api/gift-cards#Get-Gift-Card-Details"]
+                    },
+                    {
+                        "description": "Added **Get Gift Card Transactions API** for retrieving paginated transaction history with filtering by transaction type (ISSUED, CREDIT, DEBIT).",
+                        "targetLink": ["Get Gift Card Transactions API"],
+                        "url": ["api/gift-cards#Get-Gift-Card-Transactions"]
+                    }
+                ],
+                "updates": [],
+                "fixed": []
+            }
+        },
+        {
+            "title": "Payment Methods API V2 Update",
+            "product": "API",
+            "version": "Version Carbon",
+            "updatedOn": 1729159800000,
+            "changes": {
+                "new": [],
+                "updates": [
+                    {
+                        "description": "Updated **Activate Payment Method API** to support unified payment method registration in a single request.",
+                        "targetLink": ["Activate Payment Method API"],
+                        "url": ["api/payment-methods#Activate-Payment-Method"]
+                    }
+                ],
+                "fixed": []
+            }
+        },
+        {
+            "title": "Product Catalogue API Updates",
+            "product": "API",
+            "version": "Version Carbon",
+            "updatedOn": 1728540454000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added comprehensive **Product Catalogue API** with 17 endpoints for complete product catalog management including AI-powered features.",
+                        "targetLink": ["Product Catalogue API"],
+                        "url": ["api/product-catalogue"]
+                    },
+                    {
+                        "description": "Added **Create Product Catalog API** for creating product catalogs under stores.",
+                        "targetLink": ["Create Product Catalog API"],
+                        "url": ["api/product-catalogue#Create-Product-Catalog"]
+                    },
+                    {
+                        "description": "Added **Fetch Product Catalogs API** for retrieving all catalogs under a store.",
+                        "targetLink": ["Fetch Product Catalogs API"],
+                        "url": ["api/product-catalogue#Fetch-Product-Catalogs"]
+                    },
+                    {
+                        "description": "Added **Create Product API**, **Update Product API**, and **Fetch Product by Id API** for complete product management.",
+                        "targetLink": [
+                            "Create Product API",
+                            "Update Product API",
+                            "Fetch Product by Id API"
+                        ],
+                        "url": [
+                            "api/product-catalogue#Create-Product",
+                            "api/product-catalogue#Update-Product",
+                            "api/product-catalogue#Fetch-Product-by-Id"
+                        ]
+                    },
+                    {
+                        "description": "Added **Add Variant For Product API**, **Update Variant API**, and **Update Variant Inventory API** for product variant management.",
+                        "targetLink": [
+                            "Add Variant For Product API",
+                            "Update Variant API",
+                            "Update Variant Inventory API"
+                        ],
+                        "url": [
+                            "api/product-catalogue#Add-Variant-For-Product",
+                            "api/product-catalogue#Update-Variant",
+                            "api/product-catalogue#Update-Variant-Inventory"
+                        ]
+                    },
+                    {
+                        "description": "Added **Generate Product Description API** for AI-powered product description generation based on product name and language preferences.",
+                        "targetLink": ["Generate Product Description API"],
+                        "url": [
+                            "api/product-catalogue#Generate-Product-Description"
+                        ]
+                    },
+                    {
+                        "description": "Added **Generate Product Images API** for AI-powered product image generation with custom prompts and specifications.",
+                        "targetLink": ["Generate Product Images API"],
+                        "url": ["api/product-catalogue#Generate-Product-Images"]
+                    },
+                    {
+                        "description": "Added **Generate Product Catalog from Images API** for extracting structured product information from menu images or catalog photos using AI.",
+                        "targetLink": [
+                            "Generate Product Catalog from Images API"
+                        ],
+                        "url": [
+                            "api/product-catalogue#Generate-Product-Catalog-from-Images"
+                        ]
+                    }
+                ],
+                "updates": [],
+                "fixed": []
+            }
+        },
+        {
+            "title": "Service Providers API",
+            "product": "API",
+            "version": "Version Carbon",
+            "updatedOn": 1728540454000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added **Create Service Provider API** for creating new service provider applications with company information.",
+                        "targetLink": ["Create Service Provider API"],
+                        "url": ["api/service-providers#Create-Service-Provider"]
+                    },
+                    {
+                        "description": "Added **Fetch Service Provider for Partner API** and **Fetch Service Provider for Merchant API** for retrieving service provider information.",
+                        "targetLink": [
+                            "Fetch Service Provider for Partner API",
+                            "Fetch Service Provider for Merchant API"
+                        ],
+                        "url": [
+                            "api/service-providers#Fetch-Service-Provider-for-Partner",
+                            "api/service-providers#Fetch-Service-Provider-for-Merchant"
+                        ]
+                    },
+                    {
+                        "description": "Added **Get All Service Provider Applications API** with filtering support for ONBOARDING and RENEWAL application types.",
+                        "targetLink": [
+                            "Get All Service Provider Applications API"
+                        ],
+                        "url": [
+                            "api/service-providers#Get-All-Service-Provider-Applications"
+                        ]
+                    },
+                    {
+                        "description": "Added **Fetch Service Provider Application Status API** for retrieving application status and onboarding progress.",
+                        "targetLink": [
+                            "Fetch Service Provider Application Status API"
+                        ],
+                        "url": [
+                            "api/service-providers#Fetch-Service-Provider-Application-Status"
+                        ]
+                    }
+                ],
+                "updates": [],
+                "fixed": []
+            }
+        },
+        {
+            "title": "Terminals API Update",
+            "product": "API",
+            "version": "Version Carbon",
+            "updatedOn": 1728540454000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added **Get Device Registration Code API** for generating registration codes and deep links for device onboarding.",
+                        "targetLink": ["Get Device Registration Code API"],
+                        "url": ["api/terminals#Get-Device-Registration-Code"]
+                    }
+                ],
+                "updates": [],
+                "fixed": []
+            }
+        },
+        {
+            "title": "New AI API",
+            "product": "API",
+            "version": "Version Carbon",
+            "updatedOn": 1727606722000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added **Generate Branding Options API** to create AI-powered branding themes and color schemes based on website URLs.",
+                        "targetLink": ["Generate Branding Options API"],
+                        "url": ["api/ai#Generate-Branding-Options"]
+                    }
+                ],
+                "updates": [],
+                "fixed": []
+            }
+        },
+        {
+            "title": "New Admin Functions API",
+            "product": "API",
+            "version": "Version Carbon",
+            "updatedOn": 1728310800000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added **Create Merchant Account API** for creating new merchant accounts with email and role assignment.",
+                        "targetLink": ["Create Merchant Account API"],
+                        "url": ["api/admin-functions#Create-Merchant-Account"]
+                    },
+                    {
+                        "description": "Added **Create Partner Account API** for creating new partner accounts with email and role assignment.",
+                        "targetLink": ["Create Partner Account API"],
+                        "url": ["api/admin-functions#Create-Partner-Account"]
+                    }
+                ],
+                "updates": [],
+                "fixed": []
+            }
+        },
+        {
+            "title": "New Notifications API",
+            "product": "API",
+            "version": "Version Carbon",
+            "updatedOn": 1728269400000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added **Subscribe to Merchant Reports API** for configuring automated merchant event reports via SFTP.",
+                        "targetLink": ["Subscribe to Merchant Reports API"],
+                        "url": [
+                            "api/notifications#Subscribe-to-Merchant-Reports"
+                        ]
+                    },
+                    {
+                        "description": "Added **Subscribe to Partner Reports API** for configuring automated partner event reports via SFTP.",
+                        "targetLink": ["Subscribe to Partner Reports API"],
+                        "url": [
+                            "api/notifications#Subscribe-to-Partner-Reports"
+                        ]
+                    }
+                ],
+                "updates": [],
+                "fixed": []
+            }
+        },
+        {
+            "title": "Activate Payment Method",
+            "product": "API",
+            "version": "Version Carbon",
+            "updatedOn": 1727700000000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "New Activate Payment Method API to activate available payment methods (AMEX, SWISH, KLARNA, VIPPS, MOBILEPAY, ACCTOACC) for a merchant.",
+                        "targetLink": ["Activate Payment Method API"],
+                        "url": ["api/payment-methods#Activate-Payment-Method"]
+                    }
+                ],
+                "updates": [],
+                "fixed": []
+            }
+        },
+        {
+            "title": "New API and parameter updates.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1688149800000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added new **Get Payment by ID API** to the **Payments APIs**.",
+                        "targetLink": [
+                            "Get Payment by ID API",
+                            "Payments APIs"
+                        ],
+                        "url": [
+                            "api/payments#Get-Payment-by-ID",
+                            "api/payments"
+                        ]
+                    }
+                ],
+                "updates": [
+                    {
+                        "description": "Renamed the request parameter `pfMerchantId` to `acquirerMID` in **Create Merchant API** .",
+                        "targetLink": ["Create Merchant API"],
+                        "url": ["api/merchants#Create-Merchant"]
+                    },
+                    {
+                        "description": "Support for `pfMerchantId` will be continued for the time being, but we recommend transitioning to `acquirerMID` for future-proof compatibility.",
+                        "targetLink": [],
+                        "url": []
+                    }
+                ],
+                "fixed": [
+                    {
+                        "description": "Various bug fixes."
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Request parameter updates.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1688322600000,
+            "changes": {
+                "new": [],
+                "updates": [
+                    {
+                        "description": "Updated the type of request parameter `address` from string to object in the **Fetch All Merchants API** and **Fetch Merchant Details API**.",
+                        "targetLink": [
+                            "Fetch All Merchants API",
+                            "Fetch Merchant Details API"
+                        ],
+                        "url": [
+                            "api/merchants#Fetch-All-Merchants",
+                            "api/merchants#Fetch-Merchant-Details"
+                        ]
+                    }
+                ],
+                "fixed": [
+                    {
+                        "description": "Various bug fixes."
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New APIs and request parameter updates.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1689532200000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added **Set Terminal Config API**, **Set Merchant Terminal Config API**, **Set Store Terminal Config API** APIs to the **Terminals APIs**.",
+                        "targetLink": [
+                            "Set Terminal Config API",
+                            "Set Merchant Terminal Config API",
+                            "Set Store Terminal Config API",
+                            "Terminals APIs"
+                        ],
+                        "url": [
+                            "api/terminals#Set-Terminal-Config",
+                            "api/terminals#Set-Merchant-Terminal-Config",
+                            "api/terminals#Set-Store-Terminal-Config",
+                            "api/terminals"
+                        ]
+                    }
+                ],
+                "updates": [
+                    {
+                        "description": "Removed the `merchantType` response parameter from the **Fetch All Merchants API**.",
+                        "targetLink": ["Fetch All Merchants API"],
+                        "url": ["api/merchants#Fetch-All-Merchants"]
+                    },
+                    {
+                        "description": "Added `merchantLanguage` and `mccCode` response parameters to the **Fetch All Merchants API**.",
+                        "targetLink": ["Fetch All Merchants API"],
+                        "url": ["api/merchants#Fetch-All-Merchants"]
+                    }
+                ],
+                "fixed": [
+                    {
+                        "description": "Various bug fixes."
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New language support and various performance improvements.",
+            "product": "SurfPad",
+            "version": "Version 3.0.1.36",
+            "updatedOn": 1689618600000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added language support for **Finnish** and **Danish**.",
+                        "targetLink": [],
+                        "url": []
+                    },
+                    {
+                        "description": "Added power modes to improve performance when the battery is charged and there is an external power source connected."
+                    },
+                    {
+                        "description": "Added visual event using LEDs when configuration is changed."
+                    }
+                ],
+                "updates": [
+                    {
+                        "description": "Made changes to the status bar immediately visible.",
+                        "targetLink": [],
+                        "url": []
+                    }
+                ],
+                "fixed": [
+                    {
+                        "description": "Various bug fixes."
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Response parameter updates.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1689877800000,
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Added `rrn` response parameter to the **Fetch All Transactions API**.",
+                        "targetLink": ["Fetch All Transactions API"],
+                        "url": ["api/transactions#Fetch-All-Transactions"]
+                    }
+                ],
+                "fixed": [
+                    {
+                        "description": "Various bug fixes."
+                    }
+                ]
+            }
+        },
+        {
+            "title": "User guide for SurfPad.",
+            "product": "SurfPad",
+            "version": "Version 3.0.1.36",
+            "updatedOn": 1690741800000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added user guide for **SurfPad**.",
+                        "targetLink": ["SurfPad"],
+                        "url": ["docs/terminals/surfpad"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Response parameter updates.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1691433000000,
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Added `transactionId` response parameter to the **Check Payment Status API**.",
+                        "targetLink": ["Check Payment Status API"],
+                        "url": ["api/payments#Check-Payment-Status"]
+                    },
+                    {
+                        "description": "`transactionId` will be returned when the payment status is ‘PAYMENT_COMPLETED’.",
+                        "targetLink": [],
+                        "url": []
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Response parameter updates.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1691519400000,
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Added new response parameters `totalNumberOfTransaction`, `totalAmountOfTransaction`, `lastTransactionAt`, `phoneNumber`, and `acquirerMID` to the **Fetch Merchant Details API**.",
+                        "targetLink": ["Fetch Merchant Details API"],
+                        "url": ["api/merchants#Fetch-Merchant-Details"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New API in Payments APIs.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1691951400000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added **Reboot Terminal API** to the **Terminals APIs**.",
+                        "targetLink": ["Reboot Terminal API", "Terminals APIs"],
+                        "url": [
+                            "api/terminals#Reboot-Terminal",
+                            "api/terminals"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Added Support for Terminal names.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1693333800000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added support for using **Terminal name**(`terminalName`) to identify individual terminals.",
+                        "targetLink": [],
+                        "url": []
+                    }
+                ],
+                "updates": [
+                    {
+                        "description": "Added new optional request parameter `terminalName` to the **Register Terminal API**.",
+                        "targetLink": ["Register Terminal API"],
+                        "url": ["api/terminals#Register-Terminal"]
+                    },
+                    {
+                        "description": "Added new response parameter `terminalName` to the **Fetch All Merchant Terminals API**.",
+                        "targetLink": ["Fetch All Merchant Terminals API"],
+                        "url": ["api/merchants#Fetch-All-Merchant-Terminals"]
+                    },
+                    {
+                        "description": "Added new response parameter `terminalName` to the **Fetch All Store Terminals API**.",
+                        "targetLink": ["Fetch All Store Terminals API"],
+                        "url": [
+                            "api/stores?lang=cURL#Fetch-All-Store-Terminals"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "API features and availability updates.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1693506600000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added support for **partial payments** in **Payments APIs**.",
+                        "targetLink": ["partial payments", "Payments APIs"],
+                        "url": ["docs/payments/partialpayments", "api/payments"]
+                    },
+                    {
+                        "description": "Added new **Update Terminal Name API** for updating terminal name.",
+                        "targetLink": ["Update Terminal Name API"],
+                        "url": ["api/terminals#Update-Terminal-Name"]
+                    },
+                    {
+                        "description": "**Logistics APIs** are now available.",
+                        "targetLink": ["Logistics APIs"],
+                        "url": ["api/logistics"]
+                    }
+                ],
+                "updates": [
+                    {
+                        "description": "Added optional parameter `amount` for partial payments in **Initiate a Payment API**.",
+                        "targetLink": ["Initiate a Payment API"],
+                        "url": ["api/payments#Initiate-a-Payment"]
+                    },
+                    {
+                        "description": "Added new order status(`orderStatus`)value `PARTIAL_PAYMENT_COMPLETED` in **Fetch Order Status API**.",
+                        "targetLink": ["Fetch Order Status API"],
+                        "url": ["api/orders#Fetch-Order-Status"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Support for pre-entered information in KYB",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1693765800000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added support for pre-entered information to simplify the KYB process for merchants.",
+                        "targetLink": [],
+                        "url": []
+                    },
+                    {
+                        "description": "This allows partners to pre-enter opening information, gift cards, prepayments, and funds information fields in the KYB.",
+                        "targetLink": [],
+                        "url": []
+                    }
+                ],
+                "updates": [
+                    {
+                        "description": "Updated **Create Merchant API** to support optional object parameter `preEnteredInformation` in the control fields.",
+                        "targetLink": ["Create Merchant API"],
+                        "url": ["api/merchants?#Create-Merchant"]
+                    },
+                    {
+                        "description": "Partners can use this parameter to pre-enter `openingInfo` , `giftcards` , `prePayments` , and `fundsInfo`.",
+                        "targetLink": [],
+                        "url": []
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Request parameter updates in Logistics APIs.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1694025000000,
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Email address ( `email` )  is now mandatory for creating a shipment order using **Create Shipment API**.",
+                        "targetLink": ["Create Shipment API"],
+                        "url": ["api/logistics?lang=cURL#Create-Shipment"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New API in Transactions APIs.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1694370600000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added new **Fetch Transactions by ID API** in **Transactions APIs**.",
+                        "targetLink": [
+                            "Fetch Transactions by ID API",
+                            "Transactions APIs"
+                        ],
+                        "url": [
+                            "api/transactions#Fetch-Transactions-by-ID",
+                            "api/transactions"
+                        ]
+                    },
+                    {
+                        "description": "You can use the **Fetch Transactions by ID API** to retrieve a list of all transactions associated with an order.",
+                        "targetLink": ["Fetch Transactions by ID API"],
+                        "url": ["api/transactions#Fetch-Transactions-by-ID"]
+                    },
+                    {
+                        "description": "This is useful in cases where a single order was paid through multiple **partial payments**.",
+                        "targetLink": ["partial payments"],
+                        "url": ["docs/payments/partialpayments"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New terminal configurations.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1694975400000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added support for new terminal configurations at **merchant**, **store**, and **terminal level** in **Terminals APIs**",
+                        "targetLink": [
+                            "merchant",
+                            "store",
+                            "terminal level",
+                            "Terminals APIs"
+                        ],
+                        "url": [
+                            "api/terminals#Set-Merchant-Terminal-Config",
+                            "api/terminals#Set-Store-Terminal-Config",
+                            "api/terminals#Set-Terminal-Config",
+                            "api/terminals"
+                        ]
+                    },
+                    {
+                        "description": "Tap before amount ( `tapBeforeAmount` ) : Configure card tapping before amount is displayed.",
+                        "targetLink": [],
+                        "url": []
+                    },
+                    {
+                        "description": "Power mode ( `powerMode` ) : Configure performance modes for terminals.",
+                        "targetLink": [],
+                        "url": []
+                    },
+                    {
+                        "description": "Status bar background color ( `statusBarBackground` ) : Configure status bar background color.",
+                        "targetLink": [],
+                        "url": []
+                    },
+                    {
+                        "description": "Status bar foreground color ( `statusBarForeground` ) : Configure status bar background color.",
+                        "targetLink": [],
+                        "url": []
+                    },
+                    {
+                        "description": "Status bar battery low icon color ( `statusBarBatteryLow` ) : Configure custom color for the status bar battery icon when the battery level drops to 20% or lower.",
+                        "targetLink": [],
+                        "url": []
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Response parameter updates in Fetch All Transactions API.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1695234600000,
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Added settlement data to **Fetch All Transactions API**.",
+                        "targetLink": ["Fetch All Transactions API"],
+                        "url": ["api/transactions#Fetch-All-Transactions"]
+                    },
+                    {
+                        "description": "Settlement data includes, settlement status ( `settlementStatus` ), payout ( `payout` ), and fee ( `fee` ).",
+                        "targetLink": [],
+                        "url": []
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Support for querying in Transaction APIs.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1697974023000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "You can now use queries in the **Fetch All Transactions API** to retrieve all transaction within a particular date range.",
+                        "targetLink": ["Fetch All Transactions API"],
+                        "url": ["api/transactions#Fetch-All-Transactions"]
+                    },
+                    {
+                        "description": "Specify the start and end dates in the `startDate` and `endDate` parameters to retrieve all transactions within that date range.",
+                        "targetLink": [],
+                        "url": []
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Response parameter updates in Transaction APIs.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1699427648958,
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Added  `cardBrand` field to the response parameters of the **Fetch One Transaction API** and **Fetch Transactions by ID API**.",
+                        "targetLink": [
+                            "Fetch One Transaction API",
+                            "Fetch Transactions by ID API"
+                        ],
+                        "url": [
+                            "api/transactions#Fetch-One-Transaction",
+                            "api/transactions#Fetch-Transactions-by-ID"
+                        ]
+                    },
+                    {
+                        "description": "This field returns the card brand used for the transaction such as Visa, Mastercard, or Amex.",
+                        "targetLink": [],
+                        "url": []
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New API in Merchants APIs.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1699526487910,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added new **Fetch All Multi-Merchant Groups API** to **Merchants APIs**.",
+                        "targetLink": [
+                            "Fetch All Multi-Merchant Groups API",
+                            "Merchants APIs"
+                        ],
+                        "url": [
+                            "api/transactions#Fetch-All-Multi-Merchant-Groups",
+                            "api/merchants"
+                        ]
+                    },
+                    {
+                        "description": "You can use this API to retrieve a list of all multi-merchant groups associated with a specific partner.",
+                        "targetLink": [],
+                        "url": []
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Response parameter updates in Merchants, Stores, and Transactions APIs.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1702405800000,
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Added `terminalType` and `osType` fields to the response parameters of the **Fetch All Merchant Terminals API** and **Fetch All Store Terminals API**.",
+                        "targetLink": [
+                            "Fetch All Merchant Terminals API",
+                            "Fetch All Store Terminals API"
+                        ],
+                        "url": [
+                            "api/merchants#Fetch-All-Merchant-Terminals",
+                            "api/stores#Fetch-All-Store-Terminals"
+                        ]
+                    },
+                    {
+                        "description": "The `terminalType` field returns the type of the terminal.",
+                        "targetLink": [],
+                        "url": []
+                    },
+                    {
+                        "description": "The `osType` field returns the type of operating system running on the terminal.",
+                        "targetLink": [],
+                        "url": []
+                    },
+                    {
+                        "description": "Added `storeId` field to the response parameters of the **Fetch All Transactions API**.",
+                        "targetLink": ["Fetch All Transactions API"],
+                        "url": ["api/transactions#Fetch-All-Transactions"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Response parameter updates in Transaction APIs.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1703304264000,
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Added  `paymentId` and `rrn` field to the response parameters of the **Fetch One Transaction API** and **Fetch Transactions by ID API**.",
+                        "targetLink": [
+                            "Fetch One Transaction API",
+                            "Fetch Transactions by ID API"
+                        ],
+                        "url": [
+                            "api/transactions#Fetch-One-Transaction",
+                            "api/transactions#Fetch-Transactions-by-ID"
+                        ]
+                    },
+                    {
+                        "description": "These fields return the unique payment ID of the transaction and the Retrieval Reference Number(RRN) of the transaction respectively.",
+                        "targetLink": [],
+                        "url": []
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New API in Merchants APIs.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1703304264000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added new **Fetch All Merchant Contracts API** to **Merchants APIs**.",
+                        "targetLink": ["Fetch All Merchant Contracts API"],
+                        "url": ["api/merchants#Fetch-All-Merchant-Contracts"]
+                    },
+                    {
+                        "description": "You can use this API to retrieve a list of all contracts associated with the merchant.",
+                        "targetLink": [],
+                        "url": []
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Response parameter update in Transaction API.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1704711201000,
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Added  `paymentId` field to the response parameters of the **Fetch All Transactions API**",
+                        "targetLink": ["Fetch All Transactions API"],
+                        "url": ["api/transactions#Fetch-All-Transactions"]
+                    },
+                    {
+                        "description": "This field returns the unique payment ID of the transaction.",
+                        "targetLink": [],
+                        "url": []
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New API in Orders APIs.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1704794360000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added new **Add Receipt Information API** to **Orders APIs**.",
+                        "targetLink": ["Add Receipt Information API"],
+                        "url": ["api/orders#Add-Receipt-Information"]
+                    },
+                    {
+                        "description": "You can use this API to store cash register details for receipts.",
+                        "targetLink": [],
+                        "url": []
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New API in Terminal APIs.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1706597625000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added new **Fetch APN List API** to **Terminal APIs**.",
+                        "targetLink": ["Fetch APN List API"],
+                        "url": ["api/terminals#Fetch-APN-List"]
+                    },
+                    {
+                        "description": "You can use this API to fetch APN list for an active terminal.",
+                        "targetLink": [],
+                        "url": []
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New API in Transaction APIs.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1706597625000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added new **Email Receipt API** to **Transaction APIs**.",
+                        "targetLink": ["Email Receipt API"],
+                        "url": ["api/transactions#Email-Receipt"]
+                    },
+                    {
+                        "description": "You can use this API to email receipts to users.",
+                        "targetLink": [],
+                        "url": []
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Response parameter updates in Transaction and Payment API's.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": 1707722807000,
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Added  `voided` flag to response parameters of the **Fetch Transactions by ID API**, **Fetch All Transactions API**, **Fetch One Transaction API** and **Get Payment by ID API**.",
+                        "targetLink": [
+                            "Fetch Transactions by ID API",
+                            "Fetch All Transactions API",
+                            "Fetch One Transaction API",
+                            "Get Payment by ID API"
+                        ],
+                        "url": [
+                            "api/transactions#Fetch-Transactions-by-ID",
+                            "api/transactions#Fetch-All-Transactions",
+                            "api/transactions#Fetch-One-Transactions",
+                            "api/payments#Get-Payment-by-ID"
+                        ]
+                    },
+                    {
+                        "description": "The voided flag denotes if the transaction has been voided or not.",
+                        "targetLink": [],
+                        "url": []
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New Adjustments and Tips API's",
+            "product": "API",
+            "version": "Version Lithium",
+            "updatedOn": 1708326636000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added new **Adjustments API** and **Tips API**.",
+                        "targetLink": ["Adjustments API", "Tips API"],
+                        "url": ["api/adjustments", "api/tips"]
+                    },
+                    {
+                        "description": "Adjustments API takes care of handling additional amounts to orders like tips, surcharges, insurance payments etc included while performing a transaction.",
+                        "targetLink": [],
+                        "url": []
+                    },
+                    {
+                        "description": "Tips APIs enable merchants to integrate tipping functionality directly into the payment terminals.",
+                        "targetLink": [],
+                        "url": []
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New API added under Orders API",
+            "product": "API",
+            "version": "Version Lithium",
+            "updatedOn": 1708326636000,
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added **Fetch Order Adjustments** in **Orders API**.",
+                        "targetLink": ["Fetch Order Adjustments", "Orders API"],
+                        "url": [
+                            "api/orders#Fetch-Order-Adjustments",
+                            "api/orders"
+                        ]
+                    },
+                    {
+                        "description": "Fetch all adjustments created under an order.",
+                        "targetLink": [],
+                        "url": []
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New parameters added in Fetch Terminal by ID.",
+            "product": "API",
+            "version": "Version Lithium",
+            "updatedOn": 1708665600000,
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Added `lastAliveAt` , `isCharging` , `batteryPercentage` , `powerSource` , `deviceNetwork` , `turnOnTime` to response parameters of the **Fetch Terminal by ID**.",
+                        "targetLink": ["Fetch Terminal by ID"],
+                        "url": ["api/terminals#Fetch-Terminal-by-ID"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New Parameters added in Transaction APIs.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1709716925000",
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Added `issuerCountry` , `interchangeDomain` , `cardCategory` , `cardUsage` to response parameters of the **Fetch One Transaction** , **Fetch All Transactions** , **Fetch Transactions by ID**.",
+                        "targetLink": [
+                            "Fetch One Transaction",
+                            "Fetch All Transactions",
+                            "Fetch Transactions by ID"
+                        ],
+                        "url": [
+                            "api/transactions#Fetch-One-Transaction",
+                            "api/transactions#Fetch-All-Transactions",
+                            "api/transactions#Fetch-Transactions-by-ID"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New Parameters added in Stores APIs.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1709716925000",
+            "changes": {
+                "updates": [
+                    {
+                        "description": "New response parameters added under **Create Store** , **Update Store Details** , **Fetch Store Details** , **Fetch Stores** to setup online payments.",
+                        "targetLink": [
+                            "Create Store",
+                            "Update Store Details",
+                            "Fetch Store Details",
+                            "Fetch Stores"
+                        ],
+                        "url": [
+                            "api/stores#Create-Store",
+                            "api/stores#Update-Store-Details",
+                            "api/stores#Fetch-Store-Details",
+                            "api/stores#Fetch-Stores"
+                        ]
+                    },
+                    {
+                        "description": " `merchantWebShopUrl` is the web-shop URL of the merchant. ",
+                        "targetLink": [],
+                        "url": []
+                    },
+                    {
+                        "description": " `paymentPageHostURL`  is the URL of the payment page. ",
+                        "targetLink": [],
+                        "url": []
+                    },
+                    {
+                        "description": " `termsAndConditionsURL` is the URL of the T&C of the merchant’s web-shop, it has to contain the refund policy.",
+                        "targetLink": [],
+                        "url": []
+                    },
+                    {
+                        "description": " `privacyPolicyURL` is the URL of the privacy policy of the merchant. ",
+                        "targetLink": [],
+                        "url": []
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New Parameters added in Order APIs.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1709716925000",
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Added `includeAdjustments` , `delayCapture` , `enforceTokenization` , `enforce3DSecure` , `lockToPaymentMethod` , `callBackUrl` , `throwErrorIfTerminalInactiveFor` , `paymentPageValidFor` response parameters to **Create New Order** and **Update Order**.",
+                        "targetLink": ["Create New Order", "Update Order"],
+                        "url": [
+                            "api/orders#Create-New-Order",
+                            "api/orders#Update-Order"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New updates in SurfPad",
+            "product": "SurfPad",
+            "version": " Version v4.0.15.0",
+            "updatedOn": "1709886644000",
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added support for operator selection on the terminal."
+                    }
+                ],
+                "updates": [
+                    {
+                        "description": "Ensures transaction goes to success/failure on certain Network disconnect edge cases."
+                    },
+                    {
+                        "description": "Wifi Symbol is shown even if signal strength is very weak."
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New updates in SurfTouch",
+            "product": "SurfTouch",
+            "version": " Version v2.8.7.0",
+            "updatedOn": "1709886644000",
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added the functionality to change tips config using APIs."
+                    }
+                ],
+                "updates": [
+                    {
+                        "description": "Removed cancelling of transaction in the tips screen which lead to a race condition, instead provided cancelling of the tip."
+                    }
+                ],
+                "fixed": [
+                    {
+                        "description": "Code optimization to ensure data flow and data sync with backend."
+                    },
+                    {
+                        "description": "Other bug fixes and improvements."
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New API in Merchant API's",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1709886644000",
+            "changes": {
+                "new": [
+                    {
+                        "description": "New **Activate Terminal** API for merchant added under Merchant API's.",
+                        "targetLink": ["Activate Terminal"],
+                        "url": ["api/merchants#Activate-Terminal"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New Branding API's",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1710237562000",
+            "changes": {
+                "new": [
+                    {
+                        "description": "New **Branding API's** added to customize all customer facing pages provided by Surfboard.",
+                        "targetLink": ["Branding API's"],
+                        "url": ["api/branding"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New Printing API",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1710849713000",
+            "changes": {
+                "new": [
+                    {
+                        "description": "New **Printing API** added under Transaction API's.",
+                        "targetLink": ["Printing API"],
+                        "url": ["api/transactions#Print-Receipt"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New parameters added in Fetch all Transactions.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1712299315000",
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added  `referenceId` , `truncatedPan` , `cardLabel` , `posEntryMode` , `issuerApplication` , `terminalVerificationCode` , `aid` , `customerResponseCode` , `cvmMethod` , `authMode` , `cardBrand` response parameters to **Fetch All Transactions**.",
+                        "targetLink": ["Fetch All Transactions"],
+                        "url": ["api/transactions#Fetch-All-Transactions"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Update in Orders API",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1712298787000",
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Added new `orderLineLevelCalculation` param under **Create New Order** and **Update Order** APIs",
+                        "targetLink": ["Create New Order", "Update Order"],
+                        "url": [
+                            "api/orders#Create-New-Order",
+                            "api/orders#Update-Order"
+                        ]
+                    },
+                    {
+                        "description": "This boolean value when set to true, enables support for row level campaign and shipping calculations.",
+                        "targetLink": [],
+                        "url": []
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New API in Transactions and Terminals API.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1713249941000",
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added **Transaction Search** in **Transactions API**.",
+                        "targetLink": [
+                            "Transaction Search",
+                            "Transactions APIs"
+                        ],
+                        "url": [
+                            "api/transactions#Transaction-Search",
+                            "api/transactions"
+                        ]
+                    },
+                    {
+                        "description": "Added **Get Interapp Code** in **Terminals API**.",
+                        "targetLink": ["Get Interapp Code", "Terminals APIs"],
+                        "url": [
+                            "api/terminals#Get-Interapp-Code",
+                            "api/terminals"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New terminal type introduced.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1714048834000",
+            "changes": {
+                "new": [
+                    {
+                        "description": "Introduced new terminal type softpos under **Fetch All Merchant Terminals** , **Fetch All Store Terminals** , **Fetch Terminal by ID**.",
+                        "targetLink": [
+                            "Fetch All Merchant Terminals",
+                            "Fetch All Store Terminals",
+                            "Fetch Terminal by ID"
+                        ],
+                        "url": [
+                            "api/merchants#Fetch-All-Merchant-Terminals",
+                            "api/stores#Fetch-All-Store-Terminals",
+                            "api/terminals#Fetch-Terminal-by-ID"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New API in Payments APIs.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1714048834000",
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added new **Capture Payment** , **Check Capture Status** , **Complete Payment** in Payment APIs.",
+                        "targetLink": [
+                            "Capture Payment",
+                            "Check Capture Status",
+                            "Complete Payment"
+                        ],
+                        "url": [
+                            "api/payments#Capture-Payment",
+                            "api/payments#Check-Capture-Status",
+                            "api/payments#Complete-Payment"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Update in Transaction Search API.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1714376531000",
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Included additional details about the transaction in **Transaction Search API** .",
+                        "targetLink": ["Transaction Search API"],
+                        "url": ["api/transactions#Transaction-Search"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New API in Terminal APIs.",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1714988830000",
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Added **Get Interapp Details** in Terminal APIs.",
+                        "targetLink": ["Get Interapp Details"],
+                        "url": ["api/terminals#Get-Interapp-Details"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Update in Orders API",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1717758889000",
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Added new `unit` , `generateShortLink` , `delayPayout` , ` payButtonType` params under **Create New Order** and **Update Order** APIs",
+                        "targetLink": ["Create New Order", "Update Order"],
+                        "url": [
+                            "api/orders#Create-New-Order",
+                            "api/orders#Update-Order"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Update in Orders API",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1718355625000",
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Added new `includeAdjustments` , `delayCapture` , `enforceTokeization` , `enforce3DSecure` , `lockToPaymentMethods` , ` callBackUrl` , ` throwErrorIfTerminalInactiveFor` , `paymentPageValidFor` , `authMode` params under **Create New Order** and **Update Order** APIs",
+                        "targetLink": ["Create New Order", "Update Order"],
+                        "url": [
+                            "api/orders#Create-New-Order",
+                            "api/orders#Update-Order"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Update in Orders API",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1720419940000",
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Added **Fetch Online Orders** in Order APIs.",
+                        "targetLink": ["Fetch Online Orders"],
+                        "url": ["api/orders#Fetch-Online-Orders"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Update in Stores API",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1720787236000",
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Added **Verify Store Domain** , **Fetch Store Domains** in Stores APIs.",
+                        "targetLink": [
+                            "Verify Store Domain",
+                            "Fetch Store Domains"
+                        ],
+                        "url": [
+                            "api/stores#Verify-Store-Domain",
+                            "api/stores#Fetch-Store-Domains"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Update in Merchant APIs",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1731024000000",
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added **Fetch Transaction Analytics** in Merchants APIs.",
+                        "targetLink": ["Fetch Transaction Analytics"],
+                        "url": ["api/merchants#Fetch-Transaction-Analytics"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Console Module Added",
+            "product": "Surfboard for Developers",
+            "version": " Version 1.0.0.0",
+            "updatedOn": "1735804238000",
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added Console module to the Documentation site, this will allow you to create api keys and configure webhooks by yourself. To get access to console please signUp and fill up the developer onboarding form.",
+                        "targetLink": ["Console"],
+                        "url": ["console/dashboard"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Added new NFC reading API's",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1736112000000",
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added new *NFC Reading APIs* that allow you to scan and read NFC tags associated with an order.",
+                        "targetLink": ["NFC Reading APIs"],
+                        "url": ["/api/nfc-reading"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New Billing API's",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1739776958000",
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added new API's to create, update and fetch Charges for Merchants.",
+                        "targetLink": ["Charges"],
+                        "url": ["/api/billing"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Tap to Pay on iPhone",
+            "product": "CheckoutX",
+            "version": " Version 1.1.0",
+            "updatedOn": "1739879328000",
+            "changes": {
+                "new": [
+                    {
+                        "description": "Tap to Pay on iPhone accepts physical debit and credit cards, as well as Apple Pay and other digital wallets. No extra hardware needed. It’s easy, private, secure."
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Online Terminal Events",
+            "product": "Webhooks",
+            "version": "Version All",
+            "updatedOn": "1740993684000",
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added new Online Terminal related events to the Order Terminal Event Webhook.",
+                        "targetLink": ["Order Terminal Event"],
+                        "url": ["/webhooks/orders#Order-Terminal-Event"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Added transaction details to webhook",
+            "product": "API",
+            "version": " Version All",
+            "updatedOn": "1741244310000",
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Added transaction details to the 'order.paymentcompleted' event data.",
+                        "targetLink": ["order.paymentcompleted"],
+                        "url": ["webhooks/orders#Order-Payment-Completed"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Added transaction details to status check calls",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1741244310000",
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Added transaction details in the response of Check Payment Status API and Fetch Order Status API.",
+                        "targetLink": [
+                            "Check Payment Status API",
+                            "Fetch Order Status API"
+                        ],
+                        "url": [
+                            "api/order#Fetch-Order-Status",
+                            "api/payments#Check-Payment-Status"
+                        ]
+                    },
+                    {
+                        "description": "Note that the transaction details are only available when the status is 'PAYMENT_COMPLETED'."
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New Remove Branding API's",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1741244310000",
+            "changes": {
+                "new": [
+                    {
+                        "description": "Added new API's to Remove Branding configuration at partner, merchant and store level.",
+                        "targetLink": ["Remove Branding"],
+                        "url": ["/api/branding#Remove-Branding-for-Merchant"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Added interAppJWT to payment API",
+            "product": "API",
+            "version": " Version Lithium",
+            "updatedOn": "1741345119000",
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Added interAppJWT to the Initiate Payment API to improve inter-app transaction initiation performance",
+                        "targetLink": ["Initiate Payment API"],
+                        "url": ["api/payments?lang=cURL#Initiate-a-Payment"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Updated Payment Failure webhook",
+            "product": "API",
+            "version": " Version All",
+            "updatedOn": "1745995455000",
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Enhanced webhook payload to include payment details for failed payments",
+                        "targetLink": ["order.paymentfailed"],
+                        "url": ["api/payments?lang=cURL#Order-Payment-Failed"]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Updated Payment Cancelled webhook",
+            "product": "API",
+            "version": " Version All",
+            "updatedOn": "1745995455000",
+            "changes": {
+                "updates": [
+                    {
+                        "description": "Enhanced webhook payload to include payment details for cancelled payments",
+                        "targetLink": ["order.paymentcancelled"],
+                        "url": [
+                            "api/payments?lang=cURL#Order-Payment-Cancelled"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New SurfTouch Version",
+            "product": "SurfTouch",
+            "version": " Version v4.9.2.0",
+            "updatedOn": "1746427455000",
+            "changes": {
+                "new": [
+                    {
+                        "description": "Refined transaction animations for a more seamless user experience."
+                    },
+                    {
+                        "description": "Optimized tap area detection for improved responsiveness on both SurfTouch and SurfPrint."
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New SurfTouch Version",
+            "product": "SurfTouch",
+            "version": " Version v4.9.4.0",
+            "updatedOn": "1748241855000",
+            "changes": {
+                "new": [
+                    {
+                        "description": "You can now cancel payments made with Swish and Klarna using the new cancellation button."
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New SurfTouch Version",
+            "product": "SurfTouch",
+            "version": " Version v4.9.5.0",
+            "updatedOn": "1748501055000",
+            "changes": {
+                "new": [
+                    {
+                        "description": "Refreshed UI texts across the cash register for improved clarity."
+                    },
+                    {
+                        "description": "Unified payment animation screen design across both standalone and attached modes for a consistent experience."
+                    },
+                    {
+                        "description": "Card brands are now displayed during card payment presentation for better transparency."
+                    }
+                ],
+                "updates": [
+                    {
+                        "description": "Addressed localization issues in the \"Add Product Category\" section."
+                    },
+                    {
+                        "description": "Fixed the error message display on transaction failure screens when receipt printing is disabled."
+                    }
+                ]
+            }
+        },
+        {
+            "title": "New SurfTouch Version",
+            "product": "SurfTouch",
+            "version": " Version v4.9.6.0",
+            "updatedOn": "1749192255000",
+            "changes": {
+                "new": [
+                    {
+                        "description": "Introduced a revamped Change Payment Method screen for a more intuitive user experience."
+                    },
+                    {
+                        "description": "Added a PIN verification screen to securely exit the app when lockToPos is enabled."
+                    }
+                ],
+                "fixed": [
+                    {
+                        "description": "Included missing localizations to ensure complete multilingual support."
+                    },
+                    {
+                        "description": "Resolved an issue where the terminal would automatically log out upon reconnecting, if it was deregistered while offline."
+                    }
+                ]
+            }
+        }
+    ]
+}

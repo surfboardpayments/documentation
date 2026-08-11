@@ -1,0 +1,52 @@
+{
+    "scenarioId": "delink-terminal-from-store",
+    "scenarioName": "Delink Terminal from Store",
+    "steps": [
+        {
+            "id": "delink-terminal-from-store",
+            "name": "Delink Terminal from Store",
+            "description": "Delinks the terminal from store and deactivates the terminal.",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "terminals/deactivate",
+            "readOnly": true,
+            "response": {
+                "status": "SUCCESS",
+                "message": "Terminal removed from store"
+            },
+            "guidePath": "/carbon/device-handling/delink-terminal-from-store/delink-terminal-from-store",
+            "payload": {
+                "terminal$id": "{{terminalId}}",
+                "storeId": "{{storeId}}"
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "terminal$id",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Terminal ID of the terminal that has to be delinked."
+                    },
+                    {
+                        "name": "storeId",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Store ID of the store from which the terminal needs to be delinked."
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "description": "Status of the request."
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "description": "A message that describes the status of the terminal delinking."
+                    }
+                ]
+            }
+        }
+    ]
+}

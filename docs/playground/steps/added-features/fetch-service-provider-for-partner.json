@@ -1,0 +1,149 @@
+{
+    "scenarioId": "fetch-service-provider-for-partner",
+    "scenarioName": "Fetch Service Provider For Partner",
+    "steps": [
+        {
+            "id": "fetch-service-provider-for-partner",
+            "name": "Fetch Service Provider For Partner",
+            "description": "Fetch Service Provider For Partner",
+            "order": 1,
+            "method": "GET",
+            "endpoint": "partners/{{partnerId}}/service-providers",
+            "guidePath": "/carbon/added-features/fetch-service-provider-for-partner",
+            "payload": {},
+            "specifications": {
+                "reqParams": [],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data containing service provider information.",
+                        "resParams": [
+                            {
+                                "name": "serviceProviders",
+                                "type": "array",
+                                "mandatory": true,
+                                "description": "Array of service provider details.",
+                                "resParams": [
+                                    {
+                                        "name": "serviceProviderId",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Unique identifier of the service provider."
+                                    },
+                                    {
+                                        "name": "personId",
+                                        "type": "string",
+                                        "mandatory": false,
+                                        "description": "Person identifier if applicable, null otherwise."
+                                    },
+                                    {
+                                        "name": "corporateId",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Corporate identification number."
+                                    },
+                                    {
+                                        "name": "nationalId",
+                                        "type": "string",
+                                        "mandatory": false,
+                                        "description": "National identification number if applicable, null otherwise."
+                                    },
+                                    {
+                                        "name": "serviceType",
+                                        "type": "string",
+                                        "mandatory": false,
+                                        "description": "Type of service provided, null if not specified."
+                                    },
+                                    {
+                                        "name": "name",
+                                        "type": "string",
+                                        "mandatory": false,
+                                        "description": "Name of the service provider, null if not specified."
+                                    },
+                                    {
+                                        "name": "address",
+                                        "type": "object",
+                                        "mandatory": true,
+                                        "description": "Address information of the service provider.",
+                                        "resParams": [
+                                            {
+                                                "name": "addressLine1",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "First line of the address."
+                                            },
+                                            {
+                                                "name": "city",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "City of the address."
+                                            },
+                                            {
+                                                "name": "countryCode",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "Two-letter ISO country code."
+                                            },
+                                            {
+                                                "name": "postalCode",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "Postal code of the address."
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "phoneNumber",
+                                        "type": "object",
+                                        "mandatory": true,
+                                        "description": "Phone number information.",
+                                        "resParams": [
+                                            {
+                                                "name": "number",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "Phone number."
+                                            },
+                                            {
+                                                "name": "code",
+                                                "type": "string",
+                                                "mandatory": true,
+                                                "description": "Country code for the phone number."
+                                            },
+                                            {
+                                                "name": "role",
+                                                "type": "string",
+                                                "mandatory": false,
+                                                "description": "Role associated with the phone number, null if not specified."
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "email",
+                                        "type": "string",
+                                        "mandatory": true,
+                                        "description": "Email address of the service provider."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

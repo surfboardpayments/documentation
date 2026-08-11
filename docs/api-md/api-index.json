@@ -1,0 +1,2106 @@
+{
+  "title": "Surfboard Payments API Reference",
+  "description": "Complete API reference for Surfboard Payments platform",
+  "lastUpdated": "2026-01-21T08:56:04.591Z",
+  "apis": [
+    {
+      "title": "Adjustments API",
+      "description": "Adjustments API takes care of handling additional amounts to orders like tips, surcharges, insurance payments etc included while performing a transaction.",
+      "sourceFile": "api/adjustments.json",
+      "endpoints": [
+        {
+          "title": "Fetch Adjustments",
+          "method": "GET",
+          "path": "/adjustments/:id",
+          "description": "Fetch all adjustments created under a merchant or store.",
+          "mdFile": "api-md/adjustments-fetch-adjustments.md",
+          "hasPagination": true
+        }
+      ]
+    },
+    {
+      "title": "Admin Functions API",
+      "description": "The Admin Functions API provides comprehensive administrative capabilities for managing user accounts, roles, permissions, and system configurations. These APIs enable partners and merchants to perform administrative operations programmatically, including user account management, role assignments, and system-level configurations with flexible permission controls.",
+      "sourceFile": "api/admin-functions.json",
+      "endpoints": [
+        {
+          "title": "Create Merchant Account",
+          "method": "POST",
+          "path": "/merchants/:merchantId/accounts",
+          "description": "Create a new account for a merchant with specified email and role permissions.",
+          "mdFile": "api-md/admin-functions-create-merchant-account.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Create Partner Account",
+          "method": "POST",
+          "path": "/partners/:partnerId/accounts",
+          "description": "Create a new account for a partner with specified email and role permissions.",
+          "mdFile": "api-md/admin-functions-create-partner-account.md",
+          "hasPagination": false
+        }
+      ]
+    },
+    {
+      "title": "AI API",
+      "description": "The AI API provides powerful artificial intelligence capabilities for merchants to enhance their product management and branding. Generate compelling product descriptions, create professional product images, extract catalog data from images, and develop branding options using advanced AI technology.",
+      "sourceFile": "api/ai.json",
+      "endpoints": [
+        {
+          "title": "Generate Branding Options",
+          "method": "POST",
+          "path": "/ai/branding",
+          "description": "Generate AI-powered branding options and color schemes based on a website URL. Use this API to automatically create cohesive branding themes that match your business identity and enhance your merchant portal appearance.",
+          "mdFile": "api-md/ai-generate-branding-options.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Enhance Image",
+          "method": "POST",
+          "path": "/ai/enhance-image",
+          "description": "Enhance product images using AI-powered image processing. This API takes a product image URL and generates enhanced versions of the image. Choose between STANDARD mode for basic enhancements or SCENE mode for contextual scene generation.",
+          "mdFile": "api-md/ai-enhance-image.md",
+          "hasPagination": false
+        }
+      ]
+    },
+    {
+      "title": "Bin Ranges API",
+      "description": "The Bin Ranges API manages the BIN (Bank Identification Number) ranges owned by a partner, including the card-number sub-ranges that each range covers.",
+      "sourceFile": "api/bin-ranges.json",
+      "endpoints": [
+        {
+          "title": "Create Bin Range",
+          "method": "POST",
+          "path": "/bin-ranges",
+          "description": "Create a new bin range together with the card-number sub-ranges it covers.",
+          "mdFile": "api-md/bin-ranges-create-bin-range.md",
+          "hasPagination": false
+        },
+        {
+          "title": "List Bin Ranges",
+          "method": "GET",
+          "path": "/bin-ranges",
+          "description": "Fetch a paginated list of the partner's bin ranges.",
+          "mdFile": "api-md/bin-ranges-list-bin-ranges.md",
+          "hasPagination": true
+        }
+      ]
+    },
+    {
+      "title": "Branding APIs",
+      "description": "Branding APIs enable you to customize all customer facing pages provided by Surfboard. The branding can be configured at various levels similar to the terminal config.",
+      "sourceFile": "api/branding.json",
+      "endpoints": [
+        {
+          "title": "Create Branding for Merchant",
+          "method": "PATCH",
+          "path": "/merchants/:merchantId/branding",
+          "description": "Create a branding configuration for customizable pages at merchant level",
+          "mdFile": "api-md/branding-create-branding-for-merchant.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Create Branding for Store",
+          "method": "PATCH",
+          "path": "/merchants/:merchantId/stores/:storeId/branding",
+          "description": "Create a branding configuration for customizable pages at store level",
+          "mdFile": "api-md/branding-create-branding-for-store.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Create Branding for Terminal",
+          "method": "PATCH",
+          "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/branding",
+          "description": "Create a branding configuration for customizable pages at terminal level",
+          "mdFile": "api-md/branding-create-branding-for-terminal.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Create Branding for Partner",
+          "method": "PATCH",
+          "path": "/partners/:partnerId/branding",
+          "description": "Create a branding configuration for customizable pages at partner level",
+          "mdFile": "api-md/branding-create-branding-for-partner.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Branding for Merchant",
+          "method": "GET",
+          "path": "/merchants/:merchantId/branding",
+          "description": "Fetch existing branding configuration at merchant level.",
+          "mdFile": "api-md/branding-fetch-branding-for-merchant.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Branding for Store",
+          "method": "GET",
+          "path": "/merchants/:merchantId/stores/:storeId/branding",
+          "description": "Fetch existing branding configuration at store level.",
+          "mdFile": "api-md/branding-fetch-branding-for-store.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Branding for Terminal",
+          "method": "GET",
+          "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/branding",
+          "description": "Fetch existing branding configuration at terminal level.",
+          "mdFile": "api-md/branding-fetch-branding-for-terminal.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Branding for Partner",
+          "method": "GET",
+          "path": "/partners/:partnerId/branding",
+          "description": "Fetch existing branding configuration at partner level.",
+          "mdFile": "api-md/branding-fetch-branding-for-partner.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Remove Branding for Merchant",
+          "method": "DELETE",
+          "path": "/merchants/:merchantId/branding",
+          "description": "Removes the existing branding configuration at the merchant level.",
+          "mdFile": "api-md/branding-remove-branding-for-merchant.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Remove Branding for Store",
+          "method": "DELETE",
+          "path": "/merchants/:merchantId/stores/:storeId/branding",
+          "description": "Removes the existing branding configuration at the store level.",
+          "mdFile": "api-md/branding-remove-branding-for-store.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Remove Branding for Terminal",
+          "method": "DELETE",
+          "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/branding",
+          "description": "Removes the existing branding configuration at the terminal level.",
+          "mdFile": "api-md/branding-remove-branding-for-terminal.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Remove Branding for Partner",
+          "method": "DELETE",
+          "path": "/partners/:partnerId/branding",
+          "description": "Removes the existing branding configuration at the partner level.",
+          "mdFile": "api-md/branding-remove-branding-for-partner.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Generate Branding with AI for Partner",
+          "method": "POST",
+          "path": "/partners/:partnerId/ai/branding",
+          "description": "Generate ready-to-use branding suggestions for a partner from a website. Supply the URL of a site and Surfboard analyzes it to propose one or more complete branding options — colors, button shape, font, logo and icon — that you can apply to a partner, merchant, store, or terminal.",
+          "mdFile": "api-md/branding-generate-branding-with-ai-for-partner.md",
+          "hasPagination": false
+        }
+      ]
+    },
+    {
+      "title": "Client Auth Tokens API",
+      "description": "These APIs are used when you would like to make requests from the client directly to Surfboard without using the API-Key and API-Secret. The generated token is restricted to perform calls limited to orders, payments and transactions.",
+      "sourceFile": "api/auth.json",
+      "endpoints": [
+        {
+          "title": "Create Token",
+          "method": "POST",
+          "path": "/partners/:partnerId/token",
+          "description": "Creates a token for a given externalUserID. The token must be passed via the authorization header as a bearer token in subsequent requests. ",
+          "mdFile": "api-md/auth-create-token.md",
+          "hasPagination": false
+        }
+      ]
+    },
+    {
+      "title": "Customers API",
+      "description": "The Customers API enables merchants to manage customer information including personal details, addresses, contact information, and associated payment cards. This API provides functionality to create customer profiles and retrieve detailed customer information for enhanced customer relationship management.",
+      "sourceFile": "api/customers.json",
+      "endpoints": [
+        {
+          "title": "Add Customer Details",
+          "method": "POST",
+          "path": "/customers",
+          "description": "Creates a new customer profile with personal information, addresses, contact details, and associated payment cards. Use this API to register new customers and store their comprehensive information for future transactions and customer management.",
+          "mdFile": "api-md/customers-add-customer-details.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Customer Details by ID",
+          "method": "GET",
+          "path": "/customers/:customerId",
+          "description": "Retrieves customer information using the customer ID. Use this API to get detailed customer profile including personal information, addresses, contact details, and associated payment cards for customer management and transaction processing.",
+          "mdFile": "api-md/customers-fetch-customer-details-by-id.md",
+          "hasPagination": false
+        }
+      ]
+    },
+    {
+      "title": "Electronic Cash Register (ECR) V2 API",
+      "description": "The ECR V2 API enables merchants to manage electronic cash registers for daily operations. This includes subscribing cash registers, opening/closing registers and shifts, managing cash deposits and withdrawals, and tracking register state. The API follows a sequential flow matching natural business day operations.",
+      "sourceFile": "api/electronic-cash-register.json",
+      "endpoints": [
+        {
+          "title": "Create Cash Register",
+          "method": "POST",
+          "path": "/merchants/:merchantId/stores/:storeId/cash-register",
+          "description": "Register a terminal as an Electronic Cash Register (ECR) for a specific store.",
+          "mdFile": "api-md/electronic-cash-register-create-cash-register.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Withdraw Cash",
+          "method": "PUT",
+          "path": "/merchants/:merchantId/stores/:storeId/cash-register/withdraw",
+          "description": "Record a cash withdrawal taken out of the cash register during an active shift.",
+          "mdFile": "api-md/electronic-cash-register-withdraw-cash.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Cash Registers",
+          "method": "GET",
+          "path": "/merchants/:merchantId/cash-register",
+          "description": "Retrieve all cash registers associated with a merchant. This API is useful for verifying registered cash registers and fetching their details.",
+          "mdFile": "api-md/electronic-cash-register-fetch-cash-registers.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Delete Cash Register",
+          "method": "DELETE",
+          "path": "/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId",
+          "description": "Deactivate a cash register. The register is identified by the :cashRegisterId path parameter.",
+          "mdFile": "api-md/electronic-cash-register-delete-cash-register.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Get Cash Register State",
+          "method": "GET",
+          "path": "/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId/state-info",
+          "description": "Retrieve the current state of a cash register, including its active shift, identified by the :cashRegisterId path parameter.",
+          "mdFile": "api-md/electronic-cash-register-get-cash-register-state.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Open-Shift",
+          "method": "PUT",
+          "path": "/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId/open-shift",
+          "description": "Open a cashier shift on the cash register identified by the :cashRegisterId path parameter.",
+          "mdFile": "api-md/electronic-cash-register-open-shift.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Close-Shift",
+          "method": "PUT",
+          "path": "/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId/close-shift",
+          "description": "Close the active shift on the cash register identified by the :cashRegisterId path parameter.",
+          "mdFile": "api-md/electronic-cash-register-close-shift.md",
+          "hasPagination": false
+        },
+        {
+          "title": "End of Day",
+          "method": "PUT",
+          "path": "/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId/end-of-day",
+          "description": "Perform the end-of-day close on the cash register identified by the :cashRegisterId path parameter.",
+          "mdFile": "api-md/electronic-cash-register-end-of-day.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Get Cash Register by ID",
+          "method": "GET",
+          "path": "/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId",
+          "description": "Retrieve the full cash-register record, including its control-unit details, identified by the :cashRegisterId path parameter.",
+          "mdFile": "api-md/electronic-cash-register-get-cash-register-by-id.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Update Scheduled Close Time",
+          "method": "PATCH",
+          "path": "/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId/closing-time",
+          "description": "Update the automatic closing time for a cash register. Sending a closing time sets the shift close type to CUSTOM. The register is identified by the :cashRegisterId path parameter.",
+          "mdFile": "api-md/electronic-cash-register-update-scheduled-close-time.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Deposit Petty Cash",
+          "method": "POST",
+          "path": "/merchants/:merchantId/stores/:storeId/cash-register/deposit-petty-cash",
+          "description": "Deposit petty cash into the cash register during an active shift.",
+          "mdFile": "api-md/electronic-cash-register-deposit-petty-cash.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Get Cash Register Files",
+          "method": "GET",
+          "path": "/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId/files",
+          "description": "Retrieve the files generated for a cash register, identified by the :cashRegisterId path parameter.",
+          "mdFile": "api-md/electronic-cash-register-get-cash-register-files.md",
+          "hasPagination": true
+        }
+      ]
+    },
+    {
+      "title": "Gift Cards API",
+      "description": "The Gift Cards API enables merchants to create, manage, and track gift cards. Gift cards can be of two types: FUND (monetary value) or ENTITLEMENT (usage-based). The API supports creating gift cards, retrieving gift card information, and tracking transactions.",
+      "sourceFile": "api/gift-cards.json",
+      "endpoints": [
+        {
+          "title": "Create Gift Card",
+          "method": "POST",
+          "path": "/giftcards",
+          "description": "Creates a new gift card with specified type and configuration. Gift cards can be FUND type (with monetary value) or ENTITLEMENT type (with usage limits).",
+          "mdFile": "api-md/gift-cards-create-gift-card.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Get All Gift Cards",
+          "method": "GET",
+          "path": "/giftcards",
+          "description": "Retrieves a paginated list of all gift cards for a merchant. Supports filtering by type and status.",
+          "mdFile": "api-md/gift-cards-get-all-gift-cards.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Get Gift Card Details",
+          "method": "GET",
+          "path": "/giftcards/:id",
+          "description": "Retrieves detailed information for a specific gift card using its ID or PAN. Includes customer details, transaction history summary, and format representations.",
+          "mdFile": "api-md/gift-cards-get-gift-card-details.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Get Gift Card Transactions",
+          "method": "GET",
+          "path": "/giftcards/:giftCardId/transactions",
+          "description": "Retrieves a paginated list of transactions for a specific gift card. Supports filtering by transaction type.",
+          "mdFile": "api-md/gift-cards-get-gift-card-transactions.md",
+          "hasPagination": true
+        }
+      ]
+    },
+    {
+      "title": "Logistics API",
+      "description": "Partners can place orders for products (terminals and other accessories) from Surfboard. As a partner, you can provide a product catalog containing a range of product options for merchants to choose from.",
+      "sourceFile": "api/logistics.json",
+      "endpoints": [
+        {
+          "title": "Create Shipment",
+          "method": "POST",
+          "path": "/partners/:partnerId/merchants/:merchantId/shipment",
+          "description": "Creates a shipment order for terminals and other accessories. Use this API to initiate an order to ship terminals and other accessories to merchants.",
+          "mdFile": "api-md/logistics-create-shipment.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Get Shipment Status",
+          "method": "GET",
+          "path": "/partners/:partnerId/merchants/:merchantId/shipment/:orderId",
+          "description": "Retrieves the status of the shipment order. Use this API to get the shipment status of ordered terminals and other accessories.",
+          "mdFile": "api-md/logistics-get-shipment-status.md",
+          "hasPagination": false
+        },
+        {
+          "title": "List Manufactured Hardware",
+          "method": "GET",
+          "path": "/partners/:partnerId/manufactured-hardware",
+          "description": "Retrieves the terminals and devices Surfboard has manufactured for a partner, together with their hardware, network, and software details. Narrow the results by serial number, terminal, device model or vendor, or the merchant a device is assigned to, and sort the list to build inventory reports or reconcile your device fleet.",
+          "mdFile": "api-md/logistics-list-manufactured-hardware.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Change Merchant for Terminal",
+          "method": "POST",
+          "path": "/partners/:partnerId/change-merchant",
+          "description": "Reassigns an already-shipped terminal to a different merchant. Use this when a device needs to be moved from one merchant to another, for example when hardware is redeployed across your merchant portfolio.",
+          "mdFile": "api-md/logistics-change-merchant-for-terminal.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Ship Manufactured Hardware",
+          "method": "POST",
+          "path": "/partners/:partnerId/merchants/:merchantId/ship-hardware",
+          "description": "Activates and ships a manufactured device to a specific merchant. Provide the device's serial number and the target merchant is taken from the path to hand the terminal over to that merchant.",
+          "mdFile": "api-md/logistics-ship-manufactured-hardware.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Ship Terminals in Bulk",
+          "method": "POST",
+          "path": "/partners/:partnerId/logistics/orders",
+          "description": "Creates bulk shipment orders for terminals and other accessories to partners. Use this API to initiate orders to ship multiple terminals and accessories in bulk.",
+          "mdFile": "api-md/logistics-ship-terminals-in-bulk.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Partner Orders",
+          "method": "GET",
+          "path": "/partners/:partnerId/logistics/orders",
+          "description": "Retrieves all orders placed by a partner for terminals and accessories. Use this API to get the status and details of all orders under a partner.",
+          "mdFile": "api-md/logistics-fetch-partner-orders.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Create Return",
+          "method": "POST",
+          "path": "/partners/:partnerId/logistics/returns",
+          "description": "Creates a return request for terminals using the API. This enhanced version allows for more detailed merchant information and multiple return order lines.",
+          "mdFile": "api-md/logistics-create-return.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Get Returns",
+          "method": "GET",
+          "path": "/partners/:partnerId/logistics/returns",
+          "description": "Retrieves return requests for a specific merchant using the API. Supports filtering by status and provides detailed return information.",
+          "mdFile": "api-md/logistics-get-returns.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Fetch Merchant Orders",
+          "method": "GET",
+          "path": "/merchants/:merchantId/logistics/orders",
+          "description": "Retrieves all orders placed for a specific merchant. Use this API to get the status and details of all orders for a particular merchant.",
+          "mdFile": "api-md/logistics-fetch-merchant-orders.md",
+          "hasPagination": false
+        }
+      ]
+    },
+    {
+      "title": "Merchant Charge & Billing Plans",
+      "description": "This section covers the APIs used to create, update, and retrieve charges associated with a merchant, as well as manage billing plans for partners. Charges can be one-time or subscription-based, while billing plans define pricing structures for different payment methods and card brands.",
+      "sourceFile": "api/billing.json",
+      "endpoints": [
+        {
+          "title": "Create Merchant Charge",
+          "method": "POST",
+          "path": "/partners/:partnerId/merchants/:merchantId/charges",
+          "description": "Creates a new charge for a merchant. Partners can specify the charge details.",
+          "mdFile": "api-md/billing-create-merchant-charge.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Update Merchant Charge",
+          "method": "PUT",
+          "path": "/partners/:partnerId/merchants/:merchantId/charges/:chargeId",
+          "description": "Updates an existing charge for a merchant. Partners can modify the amount, VAT, and optionally adjust the recurring settings.",
+          "mdFile": "api-md/billing-update-merchant-charge.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Merchant Charge by ID",
+          "method": "GET",
+          "path": "/partners/:partnerId/merchants/:merchantId/charges/:chargeId",
+          "description": "Retrieves detailed information about a specific merchant charge, including subscription details, amount, VAT, frequency, and any associated sub-charges.",
+          "mdFile": "api-md/billing-fetch-merchant-charge-by-id.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch All Merchant Charges",
+          "method": "GET",
+          "path": "/partners/:partnerId/merchants/:merchantId/charges",
+          "description": "Retrieves a list of all charges associated with a particular merchant. This includes both one-time and subscription-based charges.",
+          "mdFile": "api-md/billing-fetch-all-merchant-charges.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Create Billing Plans",
+          "method": "POST",
+          "path": "/partners/:partnerId/billing-plans",
+          "description": "Creates new billing plans for a partner. Billing plans define pricing structures for different payment methods, card brands, and terminal types.",
+          "mdFile": "api-md/billing-create-billing-plans.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Billing Plans",
+          "method": "GET",
+          "path": "/partners/:partnerId/billing-plans",
+          "description": "Retrieves all billing plans associated with a partner. Returns detailed information about each plan including pricing structures for different transaction types. Supports pagination through page number headers.",
+          "mdFile": "api-md/billing-fetch-billing-plans.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Fetch Billing Plans for Merchant",
+          "method": "GET",
+          "path": "/partners/:partnerId/merchants/:merchantId/plans",
+          "description": "Retrieves billing plans specifically assigned to a merchant under a partner. This endpoint returns the billing plans that are applicable to the specified merchant.",
+          "mdFile": "api-md/billing-fetch-billing-plans-for-merchant.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Billing Plan by ID",
+          "method": "GET",
+          "path": "/partners/:partnerId/billing-plans/:id",
+          "description": "Fetches detailed information for a specific billing plan using its ID.",
+          "mdFile": "api-md/billing-fetch-billing-plan-by-id.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Remove Billing Plan by ID",
+          "method": "DELETE",
+          "path": "/partners/:partnerId/billing-plans/:id",
+          "description": "Removes one or more billing plans by their IDs for a specific partner.",
+          "mdFile": "api-md/billing-remove-billing-plan-by-id.md",
+          "hasPagination": false
+        }
+      ]
+    },
+    {
+      "title": "Merchants API",
+      "description": "A merchant is created in Surfboard with the completion of an onboarding process. Merchant creation can be initiated through ISVs who have partnered with Surfboard to offer payment solutions to their merchants in addition to their existing products.",
+      "sourceFile": "api/merchants.json",
+      "endpoints": [
+        {
+          "title": "Create Merchant",
+          "method": "POST",
+          "path": "/partners/:partnerId/merchants",
+          "description": "As a partner, use the Create Merchant API to onboard your sub-merchants for using Surfboard's payment solutions. You can also display products ( terminals, accessories etc. from Surfboard) for your merchants to choose, set product pricing plans for your merchant, display the product catalog, and pre-select products for your merchants.",
+          "mdFile": "api-md/merchants-create-merchant.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Check Application Status",
+          "method": "GET",
+          "path": "/partners/:partnerId/merchants/:applicationId/status",
+          "description": "Retrieves the status of the merchant onboarding. After initiating the onboarding for the sub-merchant, use the Check Application Status API to get updates regarding the application’s progress. After the merchant is created, the Merchant ID and Store ID are also available through the webhook.",
+          "mdFile": "api-md/merchants-check-application-status.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Create Multi-merchant Group",
+          "method": "POST",
+          "path": "/partners/:partnerId/multi-merchant",
+          "description": "Creates a multi-merchant group. Partners can use this API to create a multi-merchant group that enables multiple merchants to use the same terminal. Individual merchants are tagged to this group, enabling access to all the terminals registered in this group.",
+          "mdFile": "api-md/merchants-create-multi-merchant-group.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch All Merchant Applications",
+          "method": "GET",
+          "path": "/partners/:partnerId/applications",
+          "description": "Retrieves a list of all merchants applications with a specific partner.",
+          "mdFile": "api-md/merchants-fetch-all-merchant-applications.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Fetch Merchant Details",
+          "method": "GET",
+          "path": "/partners/:partnerId/merchants/:merchantId",
+          "description": "Retrieves information for a specific merchant. As a partner you can use this API to get information regarding your sub-merchants",
+          "mdFile": "api-md/merchants-fetch-merchant-details.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch All Multi-Merchant Groups",
+          "method": "GET",
+          "path": "/partners/:partnerId/multi-merchants",
+          "description": "Fetch all existing multi-merchant groups under a partner.",
+          "mdFile": "api-md/merchants-fetch-all-multi-merchant-groups.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Update Merchant Details",
+          "method": "PUT",
+          "path": "/partners/:partnerId/merchants/:merchantId",
+          "description": "Updates the merchant details. You can use this API to edit the merchant name, preferred language, email address, merchant logo URL, and phone number of a merchant.",
+          "mdFile": "api-md/merchants-update-merchant-details.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch All Merchants",
+          "method": "GET",
+          "path": "/partners/:partnerId/merchants",
+          "description": "Retrieves a list of all merchants associated with a specific partner. Partners can use this API to get information regarding all their sub-merchants.",
+          "mdFile": "api-md/merchants-fetch-all-merchants.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Fetch All Merchant Contracts",
+          "method": "GET",
+          "path": "/merchants/:merchantId/contracts",
+          "description": "Retrieves the list of all contracts under the specific merchant.",
+          "mdFile": "api-md/merchants-fetch-all-merchant-contracts.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Transaction Analytics",
+          "method": "GET",
+          "path": "/merchants/:merchantId/analytics",
+          "description": "Retrieves aggregated transaction analytics for a specific merchant. This can include analytics by store, terminal, date range, card brand, and more.",
+          "mdFile": "api-md/merchants-fetch-transaction-analytics.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Fetch Merchant",
+          "method": "GET",
+          "path": "/merchants/:merchantId",
+          "description": "Retrieve the profile and lifetime transaction summary for the authenticated merchant, including contact details, address, and current/previous-month sales analytics. Use this to display merchant information in your own dashboards.",
+          "mdFile": "api-md/merchants-fetch-merchant.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Merchant Users",
+          "method": "GET",
+          "path": "/merchants/:merchantId/users",
+          "description": "Retrieve the list of user accounts that have access to the authenticated merchant. Use this to review who can operate the merchant's terminals and back-office tools.",
+          "mdFile": "api-md/merchants-fetch-merchant-users.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Renewal Application",
+          "method": "GET",
+          "path": "/merchants/:merchantId/renewal-application",
+          "description": "Retrieve the merchant's most recent active renewal application, including its status and the KYB continuation link. Returns null when the merchant has no active renewal in progress.",
+          "mdFile": "api-md/merchants-fetch-renewal-application.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Create Merchant Account",
+          "method": "POST",
+          "path": "/merchants/:merchantId/accounts",
+          "description": "Invite a new user to the merchant by initiating a sign-up. Surfboard sends the user an activation email; only the email address is required, with an optional role and name.",
+          "mdFile": "api-md/merchants-create-merchant-account.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Update Merchant Configuration",
+          "method": "PATCH",
+          "path": "/merchants/:merchantId/configuration",
+          "description": "Update the merchant's operational configuration, such as terminal display options, settlement behavior, and the default receipt template. Only the fields you send are updated.",
+          "mdFile": "api-md/merchants-update-merchant-configuration.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Merchant Service Providers",
+          "method": "GET",
+          "path": "/merchants/:merchantId/service-providers",
+          "description": "Retrieve the service providers configured for the authenticated merchant, including their identifiers, contact details, and address. Service providers are third parties that receive a share of the merchant's transaction fees.",
+          "mdFile": "api-md/merchants-fetch-merchant-service-providers.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Multi-merchant Group",
+          "method": "GET",
+          "path": "/partners/:partnerId/multi-merchants/:merchantId",
+          "description": "Retrieve the merchants that belong to a single multi-merchant group. A multi-merchant group lets several merchants share the same terminals; this endpoint returns each member merchant of the given group.",
+          "mdFile": "api-md/merchants-fetch-multi-merchant-group.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Update Multi-merchant Group",
+          "method": "PUT",
+          "path": "/partners/:partnerId/multi-merchants/:merchantId",
+          "description": "Rename a multi-merchant group. Send the new name to update the group that the given multi-merchant ID refers to.",
+          "mdFile": "api-md/merchants-update-multi-merchant-group.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Application Signing Links",
+          "method": "GET",
+          "path": "/partners/:partnerId/applications/:applicationId/signing-links",
+          "description": "Retrieve the signing links generated for a merchant application, so the merchant signatories and ultimate beneficial owners (UBOs) can each sign the application. Each entry includes the signer and the link to complete their signature.",
+          "mdFile": "api-md/merchants-fetch-application-signing-links.md",
+          "hasPagination": false
+        }
+      ]
+    },
+    {
+      "title": "Notifications API",
+      "description": "The Notifications API enables merchants and partners to subscribe to event notifications via SFTP or email. It allows you to configure automated notifications for various events and manage your notification subscriptions.",
+      "sourceFile": "api/notifications.json",
+      "endpoints": [
+        {
+          "title": "Subscribe to Merchant Reports",
+          "method": "POST",
+          "path": "/merchants/:merchantId/notifications/reports",
+          "description": "Subscribe to receive automated notifications for merchant events. You must provide at least one notification channel: email, slackUrl, or sftpInfo to create a notification subscription. This endpoint supports multiple notification channels including EMAIL, SLACK, and SFTP.",
+          "mdFile": "api-md/notifications-subscribe-to-merchant-reports.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch External Notifications for Merchant",
+          "method": "GET",
+          "path": "/merchants/:merchantId/notifications",
+          "description": "Retrieves all external notifications configured for a merchant. Supports filtering by event type, notification channel, and notification ID",
+          "mdFile": "api-md/notifications-fetch-external-notifications-for-merchant.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Unsubscribe Notification for Merchant",
+          "method": "DELETE",
+          "path": "/merchants/:merchantId/notifications/:notificationId",
+          "description": "Unsubscribe from a specific notification for a merchant. This endpoint removes the notification subscription identified by the notification ID",
+          "mdFile": "api-md/notifications-unsubscribe-notification-for-merchant.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Subscribe to Partner Notifications",
+          "method": "POST",
+          "path": "/partners/:partnerId/notifications/reports",
+          "description": "Subscribe to receive automated notifications for partner events. You must provide at least one notification channel: email, slackUrl, or sftpInfo to create a notification subscription. This endpoint supports multiple notification channels including EMAIL, SLACK, and SFTP.",
+          "mdFile": "api-md/notifications-subscribe-to-partner-notifications.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch External Notifications for Partner",
+          "method": "GET",
+          "path": "/partners/:partnerId/notifications",
+          "description": "Retrieves all external notifications configured for a partner. Supports filtering by event type, notification channel, and notification ID",
+          "mdFile": "api-md/notifications-fetch-external-notifications-for-partner.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Unsubscribe Notifications for Partner",
+          "method": "DELETE",
+          "path": "/partners/:partnerId/notifications/:notificationId",
+          "description": "Unsubscribe from a specific notification for a partner. This endpoint removes the notification subscription identified by the notification ID",
+          "mdFile": "api-md/notifications-unsubscribe-notifications-for-partner.md",
+          "hasPagination": false
+        }
+      ]
+    },
+    {
+      "title": "Orders API",
+      "description": "The Orders API enables merchants to create and manage orders. Orders must be created to initiate payments because each payment is assigned to a specific order. In this way, each payment is coupled with the total payable amount and detailed line items like products purchased, the quantity of products, the individual price per item etc. This streamlines the payment operations (tracking, receipts, refunds etc.).",
+      "sourceFile": "api/orders.json",
+      "endpoints": [
+        {
+          "title": "Create Order",
+          "method": "POST",
+          "path": "/orders",
+          "description": "The createOrder API lets you create and pay for an order in a single call—supporting purchases, returns, and multiple payment methods for faster checkout.",
+          "mdFile": "api-md/orders-create-order.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Update Order",
+          "method": "PUT",
+          "path": "/orders/:orderId",
+          "description": "Updates the details of an existing order. This API allows you to modify order information while retaining the same Order ID as the original order. Once a payment has been initiated for the order, further updates are no longer permitted.",
+          "mdFile": "api-md/orders-update-order.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Order Status",
+          "method": "GET",
+          "path": "/orders/:orderId/status",
+          "description": "Retrieves the status of the given order. Use this API to obtain information about the current status of the order including the respective payment and transaction details.",
+          "mdFile": "api-md/orders-fetch-order-status.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Order By Id",
+          "method": "GET",
+          "path": "/orders/:orderId",
+          "description": "Retrieves the details of an existing order using its Order Id.",
+          "mdFile": "api-md/orders-fetch-order-by-id.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Update Customer Details",
+          "method": "PUT",
+          "path": "/orders/:orderId/customer",
+          "description": "Replaces the customer, billing and shipping contact details on an existing order. Use this API to set or correct who the order is for and where it is billed and shipped, identified by the Order ID in the URL.",
+          "mdFile": "api-md/orders-update-customer-details.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Cancel an Order",
+          "method": "DELETE",
+          "path": "/orders/:orderId",
+          "description": "Cancels a specific order. Use this API to cancel any created order using its Order ID. However, you cannot cancel orders that are already completed.",
+          "mdFile": "api-md/orders-cancel-an-order.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Add Receipt Information",
+          "method": "PUT",
+          "path": "/orders/:orderId/receipt",
+          "description": "This API allows you to store cash register details for receipts.",
+          "mdFile": "api-md/orders-add-receipt-information.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Order Adjustments",
+          "method": "GET",
+          "path": "/orders/:orderId/adjustments",
+          "description": "Fetch all adjustments created under an order.",
+          "mdFile": "api-md/orders-fetch-order-adjustments.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Fetch Tokens from Order",
+          "method": "GET",
+          "path": "/orders/:orderId/tokens",
+          "description": "Fetch all tokenized card information collected for online orders.",
+          "mdFile": "api-md/orders-fetch-tokens-from-order.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Online Orders",
+          "method": "GET",
+          "path": "/orders/:terminalId/online",
+          "description": "This API retrieves a list of all online orders created under a terminal.",
+          "mdFile": "api-md/orders-fetch-online-orders.md",
+          "hasPagination": false
+        }
+      ]
+    },
+    {
+      "title": "Partners API",
+      "description": "The Partners API lets a Surfboard partner manage the merchants, users, and analytics that sit under their partner account. Look up partner details and configuration, pull partner, transaction and application analytics, search across everything a partner owns, look up companies during onboarding, and list and update users.",
+      "sourceFile": "api/partners.json",
+      "endpoints": [
+        {
+          "title": "Get Partner Details",
+          "method": "GET",
+          "path": "/partners/:partnerId",
+          "description": "Retrieve the core details of a partner account, including its onboarding URL, supported billing plans, enabled payment methods, and the acquirer configured for each country the partner operates in.",
+          "mdFile": "api-md/partners-get-partner-details.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Get Partner Config",
+          "method": "GET",
+          "path": "/partners/:partnerId/config",
+          "description": "Retrieve the partner-level feature toggles that control how the partner portal and onboarding behave, such as whether terminals can be activated from the portal and whether the cash-register features are available.",
+          "mdFile": "api-md/partners-get-partner-config.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Get Partner Analytics",
+          "method": "GET",
+          "path": "/partners/:partnerId/analytics",
+          "description": "Retrieve a high-level summary of the partner's onboarding and transaction activity, including application counts by status, merchants created, and transaction volumes and amounts across purchases and returns.",
+          "mdFile": "api-md/partners-get-partner-analytics.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Get Transaction Analytics",
+          "method": "GET",
+          "path": "/partners/:partnerId/transaction-analytics",
+          "description": "Retrieve aggregated transaction analytics across the partner's merchants. Narrow the results with filters such as store, terminal, payment method, card brand, or date range, and group the totals by one or more dimensions to build reporting dashboards.",
+          "mdFile": "api-md/partners-get-transaction-analytics.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Get Application Analytics",
+          "method": "GET",
+          "path": "/partners/:partnerId/partner-analytics",
+          "description": "Retrieve aggregated merchant onboarding analytics for the partner, such as application counts by status, conversion and rejection rates, and merchants created. Filter by country, application type, or status group, choose a time frame, and group by dimensions like country or month for onboarding reporting.",
+          "mdFile": "api-md/partners-get-application-analytics.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Global Search",
+          "method": "GET",
+          "path": "/partners/:partnerId/global-search",
+          "description": "Run a free-text search across everything the partner owns — merchants, stores, terminals, applications, and companies — and get back the matching records grouped by type, along with the fields that matched. Narrow the search with filters such as merchant, store, or status.",
+          "mdFile": "api-md/partners-global-search.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Search Companies",
+          "method": "GET",
+          "path": "/partners/:partnerId/companies/search",
+          "description": "Search a company registry by name to find businesses during merchant onboarding, returning matching companies with their registry identifiers, legal form, and registered address. Optionally restrict the search to one or more countries.",
+          "mdFile": "api-md/partners-search-companies.md",
+          "hasPagination": false
+        },
+        {
+          "title": "List Partner Users",
+          "method": "GET",
+          "path": "/partners/:partnerId/users",
+          "description": "Retrieve all users that belong to the partner account, including their names, contact details, and role. Use this to manage the partner's team members.",
+          "mdFile": "api-md/partners-list-partner-users.md",
+          "hasPagination": false
+        },
+        {
+          "title": "List Merchant Users",
+          "method": "GET",
+          "path": "/partners/:partnerId/merchants/:merchantId/users",
+          "description": "Retrieve all users that belong to a specific merchant under the partner, including their names, contact details, and role. Use this to manage the staff of one of your merchants.",
+          "mdFile": "api-md/partners-list-merchant-users.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Update Merchant User",
+          "method": "PUT",
+          "path": "/partners/:partnerId/merchants/:merchantId/users/:userId",
+          "description": "Update the profile of a user belonging to one of the partner's merchants. Any combination of first name, last name, profile image, and address can be updated; omitted fields are left unchanged.",
+          "mdFile": "api-md/partners-update-merchant-user.md",
+          "hasPagination": false
+        }
+      ]
+    },
+    {
+      "title": "Payment Methods API",
+      "description": "The Payment Methods API enables you to add, manage, and remove additional payments methods offered by Surfboard. While the CARD is the default payment method, these APIs allows for the addition and removal of other payment methods such as AMEX and SWISH. These payment methods can be added to specific merchants and/or stores, offering versatility in payment strategies.",
+      "sourceFile": "api/payment-methods.json",
+      "endpoints": [
+        {
+          "title": "Activate Payment Method",
+          "method": "POST",
+          "path": "/merchants/:merchantId/payment-methods",
+          "description": "Activates multiple payment methods for a merchant in a single request. Each payment method can be enabled with a boolean value or configured with specific settings using an object.",
+          "mdFile": "api-md/payment-methods-activate-payment-method.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Activate Payment Method for a Store",
+          "method": "POST",
+          "path": "/merchants/:merchantId/stores/:storeId/payment-methods",
+          "description": "Activates a single payment method for a specific store under a merchant. Only AMEX and SWISH can be activated at the store level; the store is taken from the URL path. Configuration values such as the AMEX merchant id or Swish number can be supplied alongside the payment method.",
+          "mdFile": "api-md/payment-methods-activate-payment-method-for-a-store.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Deactivate Payment Method",
+          "method": "DELETE",
+          "path": "/merchants/:merchantId/payment-methods/:paymentMethodId",
+          "description": "Deactivates a specific payment method. Use this API to deactivate the payment method added to the merchant or store using its Payment Method ID.",
+          "mdFile": "api-md/payment-methods-deactivate-payment-method.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Payment Method Details",
+          "method": "GET",
+          "path": "/merchants/:merchantId/payment-methods/:paymentMethodId",
+          "description": "Retrieves information for a specific payment method. Use this API to get information regarding the payment method using its Payment Method ID.",
+          "mdFile": "api-md/payment-methods-fetch-payment-method-details.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch All Payment Methods",
+          "method": "GET",
+          "path": "/merchants/:merchantId/payment-methods",
+          "description": "Retrieves a list of all payment methods activated for a specific merchant. You can use this API to get information regarding all the payment methods added for the merchant.",
+          "mdFile": "api-md/payment-methods-fetch-all-payment-methods.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Payment Methods with Status",
+          "method": "GET",
+          "path": "/merchants/:merchantId/all-payment-methods",
+          "description": "Retrieves every payment method configured for a merchant, including each method's activation status. Use this when you need to see both active and deactivated payment methods, for example to build a settings screen.",
+          "mdFile": "api-md/payment-methods-fetch-payment-methods-with-status.md",
+          "hasPagination": false
+        },
+        {
+          "title": "List Payment Methods",
+          "method": "GET",
+          "path": "/merchants/:merchantId/payment-methods/list",
+          "description": "Retrieves every payment method configured for a merchant along with its activation status. This is an alias of the Fetch Payment Methods with Status endpoint and returns the same response.",
+          "mdFile": "api-md/payment-methods-list-payment-methods.md",
+          "hasPagination": false
+        }
+      ]
+    },
+    {
+      "title": "Payments API",
+      "description": "The Payments API enables merchants to initiate, check the status of, cancel, and void payments. The payment operations are performed for the orders created by the merchants. This ensures that each payment is associated with a specific order and has rich data associated with it.",
+      "sourceFile": "api/payments.json",
+      "endpoints": [
+        {
+          "title": "Initiate a Payment",
+          "method": "POST",
+          "path": "/payments",
+          "description": "Initiates a payment for a specific order. Use this API to initiate a payment for the order created. The default method for processing the initiated payment is via card. Additional payment methods can be enabled using the Payment Methods API.",
+          "mdFile": "api-md/payments-initiate-a-payment.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Check Payment Status",
+          "method": "GET",
+          "path": "/payments/:paymentId/status",
+          "description": "Returns the current status of a payment. Use this API to poll the result of a payment after initiation. When the payment has completed, the response also includes the detailed transaction information.",
+          "mdFile": "api-md/payments-check-payment-status.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Get Payment Details",
+          "method": "GET",
+          "path": "/payments/:paymentId",
+          "description": "Fetches the full payment slip and detail record for a payment. Use this API to retrieve the data needed for receipts and reconciliation.",
+          "mdFile": "api-md/payments-get-payment-details.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Cancel a Payment",
+          "method": "DELETE",
+          "path": "/payments/:paymentId",
+          "description": "Cancels the initiated payment. You can use this API to cancel the payment instance created. However, you cannot cancel a completed payment. If the payment is already completed, you can use the Void a Payment API to void the specific payment.",
+          "mdFile": "api-md/payments-cancel-a-payment.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Void a Payment",
+          "method": "PUT",
+          "path": "/payments/:paymentId/void",
+          "description": "Voids a completed payment. If a merchant identifies an issue with a payment soon after it has been completed, use this API to promptly void the payment, thereby preventing potential issues arising from incorrect payments. Note that payment has to be in status 'PAYMENT_COMPLETED' and void triggered before 23:50 CET. For orders with delayCapture set to true, void can be initiated anytime before the capture call.",
+          "mdFile": "api-md/payments-void-a-payment.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Capture Payment",
+          "method": "POST",
+          "path": "/payments/:paymentId/capture",
+          "description": "Use this API to complete the authorization and capture a payment while using the pre-auth flow or to capture a payment when the delayCapture flag is set.",
+          "mdFile": "api-md/payments-capture-payment.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Check Capture Status",
+          "method": "GET",
+          "path": "/payments/:paymentId/capture",
+          "description": "Retrieves the status of the capture payment request. Capture payments for delayed capture is an asynchronous request that is processed in batches. Once the initial capture request is made, make this call after approximately 30 minutes to get the response.",
+          "mdFile": "api-md/payments-check-capture-status.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Complete Payment",
+          "method": "PUT",
+          "path": "/payments/:paymentId/complete",
+          "description": "Finalizes a payment that requires an explicit completion step, such as after an external authorization or redirect returns. Use this API to move the payment to its final state.",
+          "mdFile": "api-md/payments-complete-payment.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Place Klarna Order",
+          "method": "POST",
+          "path": "/payments/:paymentId/klarna/place-order",
+          "description": "Places and authorizes a Klarna order against an already-initiated Klarna payment. Use this API to exchange the Klarna SDK authorization token for a created Klarna order.",
+          "mdFile": "api-md/payments-place-klarna-order.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Update Payment Method",
+          "method": "PUT",
+          "path": "/payments/:paymentId/update/payment-method",
+          "description": "Switches the payment method on an in-flight payment, for example when a customer changes from card to Klarna at the payment page. Use this API to set a new payment method and re-apply initiation-style parameters.",
+          "mdFile": "api-md/payments-update-payment-method.md",
+          "hasPagination": false
+        }
+      ]
+    },
+    {
+      "title": "Product Catalog API",
+      "description": "The product catalog API allows the merchants to create a catalog and organize the products with detailed specifications under their store.",
+      "sourceFile": "api/product-catalog.json",
+      "endpoints": [
+        {
+          "title": "Create Product Catalog",
+          "method": "POST",
+          "path": "/catalog",
+          "description": "This API lets you to create a product catalog for your store to make an effortless product organization in the catalog.",
+          "mdFile": "api-md/product-catalog-create-product-catalog.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Product Catalogs",
+          "method": "GET",
+          "path": "/catalog",
+          "description": "Retrieves all product catalogs under the store.",
+          "mdFile": "api-md/product-catalog-fetch-product-catalogs.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Create Product",
+          "method": "POST",
+          "path": "/catalog/:catalogId/products",
+          "description": "This API allows you to create a product in the product catalog.",
+          "mdFile": "api-md/product-catalog-create-product.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Update Product",
+          "method": "PATCH",
+          "path": "/catalog/:catalogId/products/:productId",
+          "description": "You can use this API to modify the products.",
+          "mdFile": "api-md/product-catalog-update-product.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch all products",
+          "method": "GET",
+          "path": "/catalog/:catalogId/products",
+          "description": "This API allows you to retrieve all products associated with a product catalog.",
+          "mdFile": "api-md/product-catalog-fetch-all-products.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Fetch Product by Id",
+          "method": "GET",
+          "path": "/catalog/:catalogId/products/:productId",
+          "description": "This API allows you to retrieve a specific product by its ID.",
+          "mdFile": "api-md/product-catalog-fetch-product-by-id.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Add Variant For Product",
+          "method": "POST",
+          "path": "/catalog/:catalogId/products/:productId/variants",
+          "description": "This API allows you to add a variant to an existing product in the product catalog.",
+          "mdFile": "api-md/product-catalog-add-variant-for-product.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Add Related Products",
+          "method": "POST",
+          "path": "/catalog/:catalogId/products/:productId/related-products",
+          "description": "This API helps you to tag the product with other relatable products in the catalog.",
+          "mdFile": "api-md/product-catalog-add-related-products.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Update Product Inventory",
+          "method": "PATCH",
+          "path": "/catalog/:catalogId/products/:productId/inventory",
+          "description": "Update available stocks in the product inventory using this API.",
+          "mdFile": "api-md/product-catalog-update-product-inventory.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Update Variant",
+          "method": "PATCH",
+          "path": "/catalog/:catalogId/products/:productId/variants/:variantId",
+          "description": "You can use this API to modify the product variants.",
+          "mdFile": "api-md/product-catalog-update-variant.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Update Variant Inventory",
+          "method": "PATCH",
+          "path": "/catalog/:catalogId/products/:productId/variants/:variantId/inventory",
+          "description": "Update available stocks in the variant inventory using this API.",
+          "mdFile": "api-md/product-catalog-update-variant-inventory.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Generate Product Description",
+          "method": "POST",
+          "path": "/catalog/ai/description",
+          "description": "Generate AI-powered product descriptions based on product name, word length, and language preferences. Use this API to create compelling, professional product descriptions that enhance your product listings and improve customer engagement.",
+          "mdFile": "api-md/product-catalog-generate-product-description.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Generate Product Images",
+          "method": "POST",
+          "path": "/catalog/ai/image",
+          "description": "Generate AI-powered product images based on product name, custom prompts, and specifications. Use this API to create professional product images that enhance your product catalog and marketing materials.",
+          "mdFile": "api-md/product-catalog-generate-product-images.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Generate Product Catalog from Images",
+          "method": "POST",
+          "path": "/catalog/ai/scan",
+          "description": "Generate product catalog data with images and menu information from existing image data. Use this API to extract structured product information from menu images or catalog photos, automatically creating product listings with descriptions and pricing.",
+          "mdFile": "api-md/product-catalog-generate-product-catalog-from-images.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Get Product Statistics",
+          "method": "GET",
+          "path": "/catalog/:catalogId/products/:productId/statistics",
+          "description": "Retrieve comprehensive statistics for a specific product including sales data, inventory status, VAT breakdown, and variant performance metrics within an optional date range.",
+          "mdFile": "api-md/product-catalog-get-product-statistics.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Get Product catalog Statistics",
+          "method": "GET",
+          "path": "/catalog/:catalogId/statistics",
+          "description": "Retrieve comprehensive statistics for an entire product catalog including summary metrics, VAT breakdown, and top-selling products within an optional date range.",
+          "mdFile": "api-md/product-catalog-get-product-catalog-statistics.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Get Related Products",
+          "method": "GET",
+          "path": "/catalog/:catalogId/products/:productId/related-products",
+          "description": "Retrieve the products that have been tagged as related to a given product, for example accessories or recommended pairings shown alongside it.",
+          "mdFile": "api-md/product-catalog-get-related-products.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Update Related Products",
+          "method": "PATCH",
+          "path": "/catalog/:catalogId/products/:productId/related-products",
+          "description": "Replace the set of products tagged as related to a given product. The list you send becomes the new complete set of related products.",
+          "mdFile": "api-md/product-catalog-update-related-products.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Remove Related Products",
+          "method": "DELETE",
+          "path": "/catalog/:catalogId/products/:productId/related-products",
+          "description": "Remove one or more products from the set tagged as related to a given product.",
+          "mdFile": "api-md/product-catalog-remove-related-products.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Delete Product",
+          "method": "DELETE",
+          "path": "/catalog/:catalogId/products/:productId",
+          "description": "Remove a product from a catalog. Pass the store the product belongs to as a query parameter.",
+          "mdFile": "api-md/product-catalog-delete-product.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Add Product Campaign",
+          "method": "POST",
+          "path": "/catalog/:catalogId/products/:productId/campaign",
+          "description": "Attach a promotional campaign to a product, offering either a fixed reduced price or a percentage discount while the campaign is active.",
+          "mdFile": "api-md/product-catalog-add-product-campaign.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Remove Product Campaign",
+          "method": "DELETE",
+          "path": "/catalog/:catalogId/products/:productId/campaign/:campaignId",
+          "description": "Remove a promotional campaign from a product, ending the discount it applied.",
+          "mdFile": "api-md/product-catalog-remove-product-campaign.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Generate Description for Existing Product",
+          "method": "POST",
+          "path": "/catalog/:catalogId/products/:productId/ai/description",
+          "description": "Generate an AI-written description for a product that already exists in a catalog. The product name and details are read from the catalog, so you only need to supply the desired length and language.",
+          "mdFile": "api-md/product-catalog-generate-description-for-existing-product.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Generate Images for Existing Product",
+          "method": "POST",
+          "path": "/catalog/:catalogId/products/:productId/ai/image",
+          "description": "Generate AI-created images for a product that already exists in a catalog. The product name and details are read from the catalog; supply an optional prompt to steer the style and the number of images to produce.",
+          "mdFile": "api-md/product-catalog-generate-images-for-existing-product.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Products for Partner",
+          "method": "GET",
+          "path": "/partners/:partnerId/product-catalogue",
+          "description": "Retrieve a paginated list of the products and bundles available across a partner's merchants. Use this to build a partner-wide product catalog view.",
+          "mdFile": "api-md/product-catalog-fetch-products-for-partner.md",
+          "hasPagination": true
+        }
+      ]
+    },
+    {
+      "title": "Promotions API",
+      "description": "The Promotions API lets merchants run marketing campaigns that are shown to customers across their stores and terminals — for example on a terminal’s idle screen or printed on a receipt. A promotion defines what is displayed (its visual assets), when it runs (its schedule), and how it rewards customers: either a promo code that applies a discount at checkout or a redirect link that sends customers to a destination. After it is created, a promotion is assigned to one or more stores and synced to their terminals to go live, and it keeps running within its schedule until it expires or its budget or redemption limits are reached.",
+      "sourceFile": "api/promotions.json",
+      "endpoints": [
+        {
+          "title": "Create Promotion",
+          "method": "POST",
+          "path": "/merchants/:merchantId/promotions/v2",
+          "description": "Creates a new promotion for a merchant. Set `promoType` to choose the mechanism — a promo code that discounts a customer’s order, or a redirect link that sends customers to a destination — then define the schedule, the visual assets shown to customers, and any eligibility, redemption, and usage rules. A newly created promotion is not yet visible to customers: assign it to one or more stores and sync it to their terminals to make it live. The promotion type is fixed once the promotion is created.",
+          "mdFile": "api-md/promotions-create-promotion.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Update Promotion",
+          "method": "PUT",
+          "path": "/merchants/:merchantId/promotions/:promotionId",
+          "description": "Updates an existing promotion. Only the fields included in the request are changed; any omitted field is left as it was. Updated content is then synced to the terminals where the promotion is displayed.",
+          "mdFile": "api-md/promotions-update-promotion.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Delete Promotion",
+          "method": "DELETE",
+          "path": "/merchants/:merchantId/promotions/:promotionId",
+          "description": "Permanently deletes a promotion. It is removed from every store it was assigned to and can no longer be displayed or redeemed. This action cannot be undone.",
+          "mdFile": "api-md/promotions-delete-promotion.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Promotion by ID",
+          "method": "GET",
+          "path": "/merchants/:merchantId/promotions/:promotionId",
+          "description": "Returns the full configuration of a single promotion — its schedule, visual assets, discount or redirect details, rules, and current status. The promotion is returned inside the `data` array.",
+          "mdFile": "api-md/promotions-fetch-promotion-by-id.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Promotions",
+          "method": "GET",
+          "path": "/merchants/:merchantId/v2/promotions",
+          "description": "Returns a paginated list of the merchant’s promotions with their full configuration and current store/terminal assignments. Optionally filter by status, for example to show only ACTIVE promotions.",
+          "mdFile": "api-md/promotions-fetch-promotions.md",
+          "hasPagination": true
+        }
+      ]
+    },
+    {
+      "title": "Receipts API",
+      "description": "The Receipts API lets you fetch receipt data, add data Surfboard does not hold, print receipts (including raw ESC/POS), email receipts, and get a shareable receipt link.",
+      "sourceFile": "api/receipts.json",
+      "endpoints": [
+        {
+          "title": "Fetch Receipt Data",
+          "method": "GET",
+          "path": "/receipts/:id",
+          "description": "Fetch the raw receipt data for a completed transaction. Use this when you want to print the receipt yourself or render your own digital receipt.",
+          "mdFile": "api-md/receipts-fetch-receipt-data.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Add Receipt Data",
+          "method": "POST",
+          "path": "/receipts/:id",
+          "description": "Add receipt data that Surfboard does not hold — for example fiscal data from your own control unit — when you use Surfboard's digital-receipt or print APIs but keep some data on your side.",
+          "mdFile": "api-md/receipts-add-receipt-data.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Print Receipt",
+          "method": "POST",
+          "path": "/receipts/:id/print",
+          "description": "Print the receipt for a transaction. By default it prints on the terminal that processed the transaction; optionally target a different terminal or choose a template type.",
+          "mdFile": "api-md/receipts-print-receipt.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Email Receipt",
+          "method": "PUT",
+          "path": "/receipts/:id/email",
+          "description": "Send the receipt for a transaction as an email to the address provided in the body.",
+          "mdFile": "api-md/receipts-email-receipt.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Receipt Link",
+          "method": "GET",
+          "path": "/receipts/:id/link",
+          "description": "Return a shareable link to the digital receipt for a transaction.",
+          "mdFile": "api-md/receipts-fetch-receipt-link.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Print ESC/POS Receipt",
+          "method": "PUT",
+          "path": "/receipts/:terminalId/escpos",
+          "description": "Send raw ESC/POS commands (base64-encoded) to a terminal for printing. This endpoint takes a terminal ID in the path, not a receipt or transaction ID.",
+          "mdFile": "api-md/receipts-print-escpos-receipt.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Update Receipt Host Data",
+          "method": "PUT",
+          "path": "/receipts/:orderId",
+          "description": "Legacy. Update order data that Surfboard does not hold but that the receipt needs. Superseded by Add Receipt Data (POST /receipts/:id).",
+          "mdFile": "api-md/receipts-update-receipt-host-data.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Print Receipt (Legacy)",
+          "method": "PUT",
+          "path": "/receipts/:id/print",
+          "description": "Legacy. Print the receipt using the older print API. Superseded by Print Receipt (POST /receipts/:id/print).",
+          "mdFile": "api-md/receipts-print-receipt-legacy.md",
+          "hasPagination": false
+        }
+      ]
+    },
+    {
+      "title": "Reporting APIs",
+      "description": "Reporting APIs enable merchants to generate actionable reports about various aspects of their business. Through these APIs you gain access to precise data, enabling you to track revenue, monitor transaction volume, identify fraud, reconcile financial records, and make informed decisions for your business.",
+      "sourceFile": "api/reporting.json",
+      "endpoints": [
+        {
+          "title": "Fetch Settlement Reports",
+          "method": "GET",
+          "path": "/partners/:partnerId/merchants/:merchantId/reports",
+          "description": "Retrieves the list of settlement reports for a merchant. Use this API to get a summary of the merchant’s settled transactions within a specific time frame, which can be daily or monthly depending on the report type opted for the merchant.",
+          "mdFile": "api-md/reporting-fetch-settlement-reports.md",
+          "hasPagination": true
+        }
+      ]
+    },
+    {
+      "title": "RFID API",
+      "description": "APIs for managing RFID reading sessions on a terminal. Start a reading session, query its status, list sessions, read the captured tags, and complete a session.",
+      "sourceFile": "api/rfid.json",
+      "endpoints": [
+        {
+          "title": "Start RFID Session",
+          "method": "POST",
+          "path": "/terminals/:terminalId/sessions",
+          "description": "Starts a new RFID reading session on the specified terminal. The terminal reads RFID tags in the selected mode until the session is completed.",
+          "mdFile": "api-md/rfid-start-rfid-session.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch RFID Session Status",
+          "method": "GET",
+          "path": "/terminals/:terminalId/sessions/:sessionId/status",
+          "description": "Retrieves the current status of an RFID reading session, including the RFID tags read so far.",
+          "mdFile": "api-md/rfid-fetch-rfid-session-status.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch All RFID Sessions",
+          "method": "GET",
+          "path": "/terminals/:terminalId/sessions",
+          "description": "Retrieves all RFID reading sessions for the specified terminal.",
+          "mdFile": "api-md/rfid-fetch-all-rfid-sessions.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Get RFID Session Details",
+          "method": "GET",
+          "path": "/terminals/:terminalId/sessions/:sessionId",
+          "description": "Retrieves the details of a specific RFID reading session.",
+          "mdFile": "api-md/rfid-get-rfid-session-details.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch RFID Tags",
+          "method": "GET",
+          "path": "/terminals/:terminalId/sessions/:sessionId/tags",
+          "description": "Retrieves all RFID tags read during the specified session.",
+          "mdFile": "api-md/rfid-fetch-rfid-tags.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Complete RFID Session",
+          "method": "POST",
+          "path": "/terminals/:terminalId/sessions/:sessionId/complete",
+          "description": "Completes an active RFID reading session. Optionally provide the final result of the session.",
+          "mdFile": "api-md/rfid-complete-rfid-session.md",
+          "hasPagination": false
+        }
+      ]
+    },
+    {
+      "title": "Service Providers API",
+      "description": "The Service Providers API lets partners onboard service providers, track their application progress, and link them to the merchants they serve. Use it to submit company or individual service provider applications, follow each application through KYB and signing, and manage which service providers are active on a merchant account.",
+      "sourceFile": "api/service-providers.json",
+      "endpoints": [
+        {
+          "title": "Create Service Provider",
+          "method": "POST",
+          "path": "/partners/:partnerId/service-providers",
+          "description": "Start a company service provider application under a partner. Supply the company's country and corporate identifier, and Surfboard returns an application record together with a hosted KYB (Know Your Business) link that the service provider completes to finish onboarding.",
+          "mdFile": "api-md/service-providers-create-service-provider.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Initiate Individual Service Provider Onboarding",
+          "method": "POST",
+          "path": "/partners/:partnerId/service-providers/individual",
+          "description": "Begin onboarding an individual service provider for a specific merchant. Surfboard sends the individual through a signing flow and returns the application and signing session so you can track the agreement to completion. Optionally attach fee configuration that applies to the service provider.",
+          "mdFile": "api-md/service-providers-initiate-individual-service-provider-onboarding.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Get All Service Provider Applications",
+          "method": "GET",
+          "path": "/partners/:partnerId/service-providers/applications",
+          "description": "Retrieve every service provider application under a partner, optionally filtered by application type. Use this to monitor onboarding and renewal progress across all of a partner's service providers.",
+          "mdFile": "api-md/service-providers-get-all-service-provider-applications.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Service Provider Application Status",
+          "method": "GET",
+          "path": "/partners/:partnerId/service-providers/applications/:applicationId",
+          "description": "Retrieve the current status of a single service provider application by its ID. Use this to check where an application sits in the onboarding lifecycle and to obtain the resulting service provider ID once the application is approved.",
+          "mdFile": "api-md/service-providers-fetch-service-provider-application-status.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Link Service Provider to Merchant",
+          "method": "POST",
+          "path": "/partners/:partnerId/merchants/:merchantId/service-providers/link",
+          "description": "Associate an existing service provider with a merchant so the service provider becomes active on that merchant account. Use this once a service provider has been onboarded to start routing the merchant's applicable business through it.",
+          "mdFile": "api-md/service-providers-link-service-provider-to-merchant.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Unlink Service Provider from Merchant",
+          "method": "DELETE",
+          "path": "/partners/:partnerId/merchants/:merchantId/service-providers/unlink",
+          "description": "Remove the association between a service provider and a merchant so the service provider is no longer active on that merchant account. Use this to stop routing the merchant's business through a service provider.",
+          "mdFile": "api-md/service-providers-unlink-service-provider-from-merchant.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Service Providers for Merchant",
+          "method": "GET",
+          "path": "/partners/:partnerId/merchants/:merchantId/service-providers",
+          "description": "Retrieve the service providers currently active on a merchant account. Use this to see which service providers a merchant is linked to and whether each link is active.",
+          "mdFile": "api-md/service-providers-fetch-service-providers-for-merchant.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Service Providers for Partner",
+          "method": "GET",
+          "path": "/partners/:partnerId/service-providers",
+          "description": "Retrieve all service providers registered under a partner, including their company details, contact information, and address. Use this to review the full roster of service providers a partner manages.",
+          "mdFile": "api-md/service-providers-fetch-service-providers-for-partner.md",
+          "hasPagination": false
+        }
+      ]
+    },
+    {
+      "title": "Stores API",
+      "description": "Stores represent the physical or virtual location of sales. Stores have to be created for each merchant before they can register terminals to accept payments. Onboarded merchants can have one or more stores created under them based on their business requirements.",
+      "sourceFile": "api/stores.json",
+      "endpoints": [
+        {
+          "title": "Create Store",
+          "method": "POST",
+          "path": "/partners/:partnerId/merchants/:merchantId/stores",
+          "description": "Creates a store under a merchant. Use this API to create a store to which you can register your terminals. You can create a single store or multiple stores under a merchant based on your requirements.",
+          "mdFile": "api-md/stores-create-store.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Deactivate a Store",
+          "method": "DELETE",
+          "path": "/partners/:partnerId/merchants/:merchantId/stores/:storeId",
+          "description": "Deactivates a store. Use this API to deactivate any store under a merchant. You can delete a store instantly or schedule it to be deleted at a later date. Stores can be deleted only if there are no terminals registered to it. If a store has terminals registered to it, you will have to delink the terminal from the store or change the terminal to another store under the same merchant.",
+          "mdFile": "api-md/stores-deactivate-a-store.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Store Details",
+          "method": "GET",
+          "path": "/partners/:partnerId/merchants/:merchantId/stores/:storeId",
+          "description": "Retrieves information for a specific store. Use this API to get information regarding a particular store created under a merchant.",
+          "mdFile": "api-md/stores-fetch-store-details.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Update Store Details",
+          "method": "PUT",
+          "path": "/partners/:partnerId/merchants/:merchantId/stores/:storeId",
+          "description": "Updates the store details. You can use this API to edit the name, address information,  email address, and phone number of a store.",
+          "mdFile": "api-md/stores-update-store-details.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch All Store Terminals",
+          "method": "GET",
+          "path": "/merchants/:merchantId/stores/:storeId/terminals",
+          "description": "Retrieves a list of all terminals associated with a specific store. You can use this API to get information regarding all the terminals registered under a store.",
+          "mdFile": "api-md/stores-fetch-all-store-terminals.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Fetch Stores",
+          "method": "GET",
+          "path": "/partners/:partnerId/merchants/:merchantId/stores",
+          "description": "Retrieves a list of all stores associated with a specific merchant. You can use this API to get information regarding all the stores created under a particular merchant.",
+          "mdFile": "api-md/stores-fetch-stores.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Verify Store Domain",
+          "method": "POST",
+          "path": "/partners/:partnerId/merchants/:merchantId/stores/:storeId/verify",
+          "description": "Use this API to trigger a verify domain request with Surfboard.",
+          "mdFile": "api-md/stores-verify-store-domain.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Store Domains",
+          "method": "GET",
+          "path": "/partners/:partnerId/merchants/:merchantId/stores/:storeId/online",
+          "description": "This API retrieves the details of the store's domain.",
+          "mdFile": "api-md/stores-fetch-store-domains.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Create Store (Merchant Scoped)",
+          "method": "POST",
+          "path": "/stores",
+          "description": "Creates a store directly under the authenticated merchant, without addressing the partner and merchant in the path. Use this when you are operating on behalf of a single merchant and want to spin up a new store to register terminals against. Supplying online store details also triggers domain verification so the store can accept online payments.",
+          "mdFile": "api-md/stores-create-store-merchant-scoped.md",
+          "hasPagination": false
+        },
+        {
+          "title": "List Stores (Merchant Scoped)",
+          "method": "GET",
+          "path": "/stores",
+          "description": "Retrieves a paginated list of all stores that belong to the authenticated merchant. Use this to see every store you can register terminals against without addressing the partner and merchant in the path.",
+          "mdFile": "api-md/stores-list-stores-merchant-scoped.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Deactivate Store (Merchant Scoped)",
+          "method": "POST",
+          "path": "/stores/deactivate",
+          "description": "Deactivates a store belonging to the authenticated merchant. You can deactivate immediately or schedule deactivation for a future date. A store can only be deactivated once it has no terminals registered to it, so first delink or move any terminals to another store under the same merchant.",
+          "mdFile": "api-md/stores-deactivate-store-merchant-scoped.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch One Store (Merchant Scoped)",
+          "method": "GET",
+          "path": "/stores/:storeId",
+          "description": "Retrieves the full details of a single store belonging to the authenticated merchant, including its address, contact details, lifecycle status, and any online store configuration.",
+          "mdFile": "api-md/stores-fetch-one-store-merchant-scoped.md",
+          "hasPagination": false
+        }
+      ]
+    },
+    {
+      "title": "Templates API",
+      "description": "The POS Template API allows you to customize and manage the content displayed on your POS screen.",
+      "sourceFile": "api/templates.json",
+      "endpoints": [
+        {
+          "title": "Create Template",
+          "method": "POST",
+          "path": "/merchants/:merchantId/stores/:storeId/templates",
+          "description": "This API allows you to create a new POS template.",
+          "mdFile": "api-md/templates-create-template.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Update Template",
+          "method": "PUT",
+          "path": "/merchants/:merchantId/stores/:sId/templates/:templateId",
+          "description": "This API allows you to update an existing POS template.",
+          "mdFile": "api-md/templates-update-template.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Template by ID",
+          "method": "GET",
+          "path": "/merchants/:merchantId/stores/:sId/templates/:templateId",
+          "description": "This API retrieves the details of a specific POS template using its ID.",
+          "mdFile": "api-md/templates-fetch-template-by-id.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Templates",
+          "method": "GET",
+          "path": "/merchants/:merchantId/stores/:sId/templates",
+          "description": "This API retrieves all the POS templates created under the user.",
+          "mdFile": "api-md/templates-fetch-templates.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Delete Template by ID",
+          "method": "DELETE",
+          "path": "/merchants/:merchantId/stores/:sId/templates/:templateId",
+          "description": "Use this API to delete an existing template by Template ID.",
+          "mdFile": "api-md/templates-delete-template-by-id.md",
+          "hasPagination": false
+        }
+      ]
+    },
+    {
+      "title": "Terminals API",
+      "description": "Surfboard offers a diverse range of hardware terminals along with the SoftPOS terminal that can be integrated with your existing ECRs and checkout systems. The Terminals API allows you to register and manage these terminals. For CheckoutPro integration, you can use the Terminals APIs to link the terminal to your CheckoutPro, check the linkage status, and delink the terminal from your CheckoutPro.",
+      "sourceFile": "api/terminals.json",
+      "endpoints": [
+        {
+          "title": "Register Device",
+          "method": "POST",
+          "path": "/merchants/:merchantId/stores/:storeId/devices",
+          "description": "Registers a new terminal to store. For SDK-based workflows, this API call is unnecessary as SDK methods cover terminal registration. After the terminal is registered to a store under the merchant, it cannot be repurposed to be used by another merchant. However, you can use the Change Store API to transfer the terminal to another store under the same merchant.",
+          "mdFile": "api-md/terminals-register-device.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Get Device Registration Code",
+          "method": "GET",
+          "path": "/merchants/:merchantId/stores/:storeId/device-registration",
+          "description": "This API generates a registration code and link that can be used to register devices to the store. The registration code can be entered manually on the device, or the registration link can be used for automatic registration via a QR code.",
+          "mdFile": "api-md/terminals-get-device-registration-code.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Register Online Terminal",
+          "method": "POST",
+          "path": "/merchants/:merchantId/stores/:storeId/online-terminals",
+          "description": "Registers a terminal with an online store so it can accept online payments.",
+          "mdFile": "api-md/terminals-register-online-terminal.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Delink Terminal from Store",
+          "method": "POST",
+          "path": "/terminals/deactivate",
+          "description": "Delinks the terminal from its registered store. Use this API to remove a terminal from its registered store. You cannot use this delinked terminal for another merchant. However, if you want to use this terminal in another store created under the same merchant, you can use the Change Store API.",
+          "mdFile": "api-md/terminals-delink-terminal-from-store.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Change Store",
+          "method": "POST",
+          "path": "/terminals/change",
+          "description": "Changes the store to which the terminal is registered. You can use this API to utilize the terminal in another store created under the same merchant. However, the Terminal ID remains unchanged.",
+          "mdFile": "api-md/terminals-change-store.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Link Terminal",
+          "method": "PUT",
+          "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/link",
+          "description": "Links the terminal to the CheckoutPro. You can use this API to link the terminal to a CheckoutPro integration to accept payments.",
+          "mdFile": "api-md/terminals-link-terminal.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Delink Terminal",
+          "method": "DELETE",
+          "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/link",
+          "description": "Delinks the terminal from its linked CheckoutPro. Use this API to swap the terminal between different Checkouts.",
+          "mdFile": "api-md/terminals-delink-terminal.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Check Link Status",
+          "method": "GET",
+          "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/link",
+          "description": "Retrieves the linkage status between the terminal and CheckoutPro. Use this API to obtain the current link state between the terminal and CheckoutPro.",
+          "mdFile": "api-md/terminals-check-link-status.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Update Terminal Name",
+          "method": "PUT",
+          "path": "/terminals/:terminalId",
+          "description": "Updates the display name of a registered terminal.",
+          "mdFile": "api-md/terminals-update-terminal-name.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Move Terminal",
+          "method": "PUT",
+          "path": "/partners/:partnerId/terminals/:serialNo/move",
+          "description": "Use this API to reassign a hardware terminal to another merchant. This is limited to partners who handle their own storage and deal with terminals in bulk.",
+          "mdFile": "api-md/terminals-move-terminal.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Set Terminal Config",
+          "method": "PATCH",
+          "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId",
+          "description": "Sets specific configurations for an individual terminal. Use this API to configure settings and parameters for a particular terminal.",
+          "mdFile": "api-md/terminals-set-terminal-config.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Set Merchant Terminal Config",
+          "method": "PATCH",
+          "path": "/merchants/:merchantId/terminals",
+          "description": "Sets configurations for all the terminals registered to a specific merchant. Use this API to configure uniform settings and parameters across multiple terminals associated with a specific merchant.",
+          "mdFile": "api-md/terminals-set-merchant-terminal-config.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Set Store Terminal Config",
+          "method": "PATCH",
+          "path": "/merchants/:merchantId/stores/:storeId/terminals",
+          "description": "Sets configurations for all the terminals registered to a specific store. Use this API to configure uniform settings and parameters across all the terminals associated with a specific store.",
+          "mdFile": "api-md/terminals-set-store-terminal-config.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Terminal Config",
+          "method": "GET",
+          "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/config",
+          "description": "Use this API to fetch all currently active configurations for the terminal.",
+          "mdFile": "api-md/terminals-fetch-terminal-config.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Merchant Terminal Config",
+          "method": "GET",
+          "path": "/merchants/:merchantId/terminals/config",
+          "description": "Use this API to fetch all currently active terminal configurations for the merchant.",
+          "mdFile": "api-md/terminals-fetch-merchant-terminal-config.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Store Terminal Config",
+          "method": "GET",
+          "path": "/merchants/:merchantId/stores/:storeId/terminals/config",
+          "description": "Use this API to fetch all currently active configurations for the store.",
+          "mdFile": "api-md/terminals-fetch-store-terminal-config.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Terminal by ID",
+          "method": "GET",
+          "path": "/terminals/:terminalId",
+          "description": "Retrieves information about a specific terminal. Use this API to get information regarding a particular terminal registered under a merchant.",
+          "mdFile": "api-md/terminals-fetch-terminal-by-id.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch APN List",
+          "method": "GET",
+          "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/apns",
+          "description": "Retrieves the list of APNs of the terminal. The terminal has to be active for a successful read, and the response will be received in exactly 10 seconds.",
+          "mdFile": "api-md/terminals-fetch-apn-list.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Get Interapp Code",
+          "method": "GET",
+          "path": "/merchants/:merchantId/stores/:storeId/terminals/interapp",
+          "description": "Use this API to generate the registration code used for interapp registration.",
+          "mdFile": "api-md/terminals-get-interapp-code.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Get Interapp Details",
+          "method": "GET",
+          "path": "/merchants/:merchantId/stores/:storeId/terminals/interapp/:registrationCode",
+          "description": "Fetches the current status of the interapp registration for a terminal.",
+          "mdFile": "api-md/terminals-get-interapp-details.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Get Entry Code",
+          "method": "GET",
+          "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/entry-code",
+          "description": "Generates an entry code for a terminal under a merchant's store. Use this API to obtain the entry code, its registration code identifier, and the validity window for the terminal.",
+          "mdFile": "api-md/terminals-get-entry-code.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Query Terminals Under Merchant",
+          "method": "GET",
+          "path": "/merchants/:merchantId/terminals",
+          "description": "Retrieves all the terminals registered under a merchant. Use this API to list every terminal associated with the merchant. You can optionally filter the results by terminal type.",
+          "mdFile": "api-md/terminals-query-terminals-under-merchant.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Fetch Terminal by ID under Store",
+          "method": "GET",
+          "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId",
+          "description": "Retrieves information about a specific terminal registered under a merchant's store. Use this API to get the details of a particular terminal scoped to a store.",
+          "mdFile": "api-md/terminals-fetch-terminal-by-id-under-store.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Deactivate Terminal under Store",
+          "method": "DELETE",
+          "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId",
+          "description": "Removes a terminal from a merchant's store. Use this API to deregister a terminal scoped to a specific store. You cannot reuse this terminal for another merchant, but you can use the Change Terminal Store API to move it to another store under the same merchant.",
+          "mdFile": "api-md/terminals-deactivate-terminal-under-store.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Change Terminal Store",
+          "method": "POST",
+          "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/change",
+          "description": "Changes the store to which a terminal is registered under a merchant. Use this API to move a terminal to another store created under the same merchant. The Terminal ID remains unchanged.",
+          "mdFile": "api-md/terminals-change-terminal-store.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Query Partner Terminal Configs",
+          "method": "GET",
+          "path": "/partners/:partnerId/terminal-configs",
+          "description": "Retrieves the allowed external software versions for a partner. Use this API to fetch the configurations applicable at the partner, merchant, store, or terminal scope. The scope is selected based on the query param provided, in priority order: terminalId, then storeId, then merchantId, otherwise the partner scope.",
+          "mdFile": "api-md/terminals-query-partner-terminal-configs.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Partner Terminal Config",
+          "method": "GET",
+          "path": "/partners/:partnerId/terminals/config",
+          "description": "Use this API to fetch all currently active terminal configurations for the partner.",
+          "mdFile": "api-md/terminals-fetch-partner-terminal-config.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Query Terminals Under Partner",
+          "method": "GET",
+          "path": "/partners/:partnerId/terminals/:terminalId",
+          "description": "Retrieves the terminals registered under a partner. Use this API to look up a terminal by its Terminal ID or serial number. When the path value is longer than 13 characters it is treated as a Terminal ID, otherwise it is treated as a serial number.",
+          "mdFile": "api-md/terminals-query-terminals-under-partner.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Update Partner Terminal Config",
+          "method": "PATCH",
+          "path": "/partners/:partnerId/terminals",
+          "description": "Sets terminal configuration for the terminals under a partner. All config fields are optional and only the provided ones are applied.",
+          "mdFile": "api-md/terminals-update-partner-terminal-config.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Port Partner Terminals",
+          "method": "PUT",
+          "path": "/partners/:partnerId/terminals/port",
+          "description": "Ports a batch of terminals to a target merchant under a partner. Use this API to bulk reassign terminals, specifying the destination store for each terminal. This is limited to partners who handle their own storage and deal with terminals in bulk.",
+          "mdFile": "api-md/terminals-port-partner-terminals.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Publish Terminal Image and Config",
+          "method": "PUT",
+          "path": "/partners/:partnerId/merchants/:merchantId/stores/:storeId/terminals/:terminalId/config",
+          "description": "Publishes the configuration and idle screen image to a terminal under a partner's merchant and store. Use this API to push the currently configured terminal settings and image to a specific terminal.",
+          "mdFile": "api-md/terminals-publish-terminal-image-and-config.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Reboot Terminal",
+          "method": "POST",
+          "path": "/terminals/:terminalId/reboot",
+          "description": "Publishes a reboot command to a terminal. Use this API to remotely restart a terminal. The command is delivered asynchronously, so a SUCCESS response confirms the command was published, not that the device has rebooted.",
+          "mdFile": "api-md/terminals-reboot-terminal.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Terminal Metrics",
+          "method": "GET",
+          "path": "/terminals/:terminalId/metrics",
+          "description": "Retrieves metric time-series data for a terminal, such as battery status and network strength. Use this API to monitor the health and connectivity of a terminal over time. You can optionally filter the metrics by event type and date range.",
+          "mdFile": "api-md/terminals-fetch-terminal-metrics.md",
+          "hasPagination": true
+        }
+      ]
+    },
+    {
+      "title": "Tips APIs",
+      "description": "Tips APIs enable merchants to integrate tipping functionality directly into the payment terminals. These APIs provide options for adding either preset or custom tip amounts to the overall payment amount on the terminal screen. When customers make payments, they can choose from these displayed preset tip values or decide to enter a custom amount based on their preference. Tips can be configured at the merchant, store, or terminal levels, allowing for flexibility to match your unique operational requirements.",
+      "sourceFile": "api/tips.json",
+      "endpoints": [
+        {
+          "title": "Set Merchant Tips Config",
+          "method": "PATCH",
+          "path": "/merchants/:merchantId/tips",
+          "description": "Sets the merchant-level tips configuration inherited by all stores and terminals registered to the merchant. Use this API to apply the same tips configuration across every terminal associated with a merchant.",
+          "mdFile": "api-md/tips-set-merchant-tips-config.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Set Store Tips Config",
+          "method": "PATCH",
+          "path": "/merchants/:merchantId/stores/:storeId/tips",
+          "description": "Sets the store-level tips configuration applied to every terminal registered to the store. Use this API to apply the same tips configuration across every terminal associated with a store.",
+          "mdFile": "api-md/tips-set-store-tips-config.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Set Terminal Tips Config",
+          "method": "PATCH",
+          "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/tips",
+          "description": "Sets the tips configuration for an individual terminal. Use this API to configure tips for a particular terminal.",
+          "mdFile": "api-md/tips-set-terminal-tips-config.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Merchant Tips Config",
+          "method": "GET",
+          "path": "/merchants/:merchantId/tips",
+          "description": "Retrieves the merchant-level tips configuration inherited by all terminals registered to the merchant. Use this API to get the tips configuration applied across the merchant.",
+          "mdFile": "api-md/tips-fetch-merchant-tips-config.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Store Tips Config",
+          "method": "GET",
+          "path": "/merchants/:merchantId/stores/:storeId/tips",
+          "description": "Retrieves the store-level tips configuration applied to all terminals registered to the store. Use this API to get the tips configuration applied across the store.",
+          "mdFile": "api-md/tips-fetch-store-tips-config.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Fetch Terminal Tips Config",
+          "method": "GET",
+          "path": "/merchants/:merchantId/stores/:storeId/terminals/:terminalId/tips",
+          "description": "Retrieves the tips configuration for an individual terminal. Use this API to get the tips configuration applied to a particular terminal.",
+          "mdFile": "api-md/tips-fetch-terminal-tips-config.md",
+          "hasPagination": false
+        }
+      ]
+    },
+    {
+      "title": "Transactions API",
+      "description": "The Transactions API lets you retrieve a merchant's card and payment transactions. Fetch a paginated transaction list — optionally narrowed to a date range, store, or terminal — or run a free-text search across a merchant's transactions to reconcile payments, build reporting, or look up an individual sale.",
+      "sourceFile": "api/transactions.json",
+      "endpoints": [
+        {
+          "title": "List Transactions",
+          "method": "GET",
+          "path": "/transactions",
+          "description": "Retrieve a paginated list of the authenticated merchant's transactions. Narrow the results to a date range, a single store, or a single terminal. When a start date is given without an end date, a 24-hour window from the start date is used.",
+          "mdFile": "api-md/transactions-list-transactions.md",
+          "hasPagination": true
+        },
+        {
+          "title": "List Transactions by Date Range",
+          "method": "GET",
+          "path": "/transactions/range",
+          "description": "The same paginated transaction list as List Transactions, but the date range is supplied as `start` and `end` query parameters. The response is identical; use whichever parameter names fit your integration.",
+          "mdFile": "api-md/transactions-list-transactions-by-date-range.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Search Transactions",
+          "method": "GET",
+          "path": "/transactions/search",
+          "description": "Run a free-text search across the merchant's transactions — for example by order reference, RRN, or card label — and get back the matching transactions along with the fields that matched and a short snippet for each.",
+          "mdFile": "api-md/transactions-search-transactions.md",
+          "hasPagination": false
+        }
+      ]
+    },
+    {
+      "title": "Webhooks API",
+      "description": "The Webhooks API lets you register and manage HTTPS endpoints that Surfboard calls when events happen on a merchant account. Create a webhook to subscribe to the events you care about, list your configured webhooks, update a webhook's URL, name, alert email or event subscriptions, activate a webhook against your demo or live environment, and disable one you no longer need. Webhooks are managed at partner level by default, or scoped to a merchant by sending the `MERCHANT-ID` header.",
+      "sourceFile": "api/webhooks.json",
+      "endpoints": [
+        {
+          "title": "List Webhooks",
+          "method": "GET",
+          "path": "/webhooks",
+          "description": "Retrieve a paginated list of the webhooks configured on the authenticated account, including each webhook's URL, subscribed events, alert email, and whether it is active and has passed its delivery test. Send the `MERCHANT-ID` header to manage a specific merchant's webhooks; omit it to manage the partner's own webhooks.",
+          "mdFile": "api-md/webhooks-list-webhooks.md",
+          "hasPagination": true
+        },
+        {
+          "title": "Create Webhook",
+          "method": "POST",
+          "path": "/webhooks",
+          "description": "Register a new webhook so Surfboard can deliver events to your endpoint. Supply the HTTPS URL to deliver to, a display name, the event types to subscribe to, and an email to alert on repeated delivery failures. The response returns the new webhook's identifier and the signing certificate you use to verify that incoming deliveries came from Surfboard. Send the `MERCHANT-ID` header to manage a specific merchant's webhooks; omit it to manage the partner's own webhooks.",
+          "mdFile": "api-md/webhooks-create-webhook.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Update Webhook",
+          "method": "PUT",
+          "path": "/webhooks/:webhookId",
+          "description": "Update a webhook's configuration. Supply the webhook identifier in the path and include only the fields you want to change; any field you omit is left untouched. Use this to point a webhook at a new URL, rename it, change the alert email, or adjust which events it is subscribed to. Send the `MERCHANT-ID` header to manage a specific merchant's webhooks; omit it to manage the partner's own webhooks.",
+          "mdFile": "api-md/webhooks-update-webhook.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Activate Webhook",
+          "method": "POST",
+          "path": "/webhooks/:webhookId/activate",
+          "description": "Activate a webhook against a specific environment so it begins receiving events. Supply the webhook identifier in the path and the target environment in the body. Use this once your endpoint is ready to accept live deliveries. Send the `MERCHANT-ID` header to manage a specific merchant's webhooks; omit it to manage the partner's own webhooks.",
+          "mdFile": "api-md/webhooks-activate-webhook.md",
+          "hasPagination": false
+        },
+        {
+          "title": "Disable Webhook",
+          "method": "DELETE",
+          "path": "/webhooks/:webhookId",
+          "description": "Disable a webhook so Surfboard stops delivering events to it. Supply the webhook identifier in the URL path. The webhook remains on the account and can be reactivated later. Send the `MERCHANT-ID` header to manage a specific merchant's webhooks; omit it to manage the partner's own webhooks.",
+          "mdFile": "api-md/webhooks-disable-webhook.md",
+          "hasPagination": false
+        }
+      ]
+    }
+  ]
+}

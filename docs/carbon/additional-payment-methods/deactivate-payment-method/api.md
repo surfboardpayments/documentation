@@ -1,0 +1,1 @@
+Create a `DELETE` request to **Deactivate Payment Method API** to deactivate the payment method added to the merchant or store using its Payment Method ID.

@@ -1,0 +1,1123 @@
+{
+    "title": "Electronic Cash Register (ECR) V2 API",
+    "description": "The ECR V2 API enables merchants to manage electronic cash registers for daily operations. This includes subscribing cash registers, opening/closing registers and shifts, managing cash deposits and withdrawals, and tracking register state. The API follows a sequential flow matching natural business day operations.",
+    "endpoints": [
+        {
+            "fragment": "Create Cash Register",
+            "method": "POST",
+            "link": "API_URL/merchants/:merchantId/stores/:storeId/cash-register"
+        },
+        {
+            "fragment": "Withdraw Cash",
+            "method": "PUT",
+            "link": "API_URL/merchants/:merchantId/stores/:storeId/cash-register/withdraw"
+        },
+        {
+            "fragment": "Fetch Cash Registers",
+            "method": "GET",
+            "link": "API_URL/merchants/:merchantId/cash-register"
+        },
+        {
+            "fragment": "Delete Cash Register",
+            "method": "DELETE",
+            "link": "API_URL/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId"
+        },
+        {
+            "fragment": "Get Cash Register State",
+            "method": "GET",
+            "link": "API_URL/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId/state-info"
+        },
+        {
+            "fragment": "Open-Shift",
+            "method": "PUT",
+            "link": "API_URL/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId/open-shift"
+        },
+        {
+            "fragment": "Close-Shift",
+            "method": "PUT",
+            "link": "API_URL/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId/close-shift"
+        },
+        {
+            "fragment": "End of Day",
+            "method": "PUT",
+            "link": "API_URL/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId/end-of-day"
+        },
+        {
+            "fragment": "Get Cash Register by ID",
+            "method": "GET",
+            "link": "API_URL/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId"
+        },
+        {
+            "fragment": "Update Scheduled Close Time",
+            "method": "PATCH",
+            "link": "API_URL/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId/closing-time"
+        },
+        {
+            "fragment": "Deposit Petty Cash",
+            "method": "POST",
+            "link": "API_URL/merchants/:merchantId/stores/:storeId/cash-register/deposit-petty-cash"
+        },
+        {
+            "fragment": "Get Cash Register Files",
+            "method": "GET",
+            "link": "API_URL/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId/files"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Create Cash Register",
+            "description": "Create a Cash Register for a specific store.",
+            "reqParams": [
+                {
+                    "name": "cashRegisterName",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Name of the cash register."
+                },
+                {
+                    "name": "deviceId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Terminal / device identifier."
+                },
+                {
+                    "name": "emails",
+                    "type": "array",
+                    "mandatory": false,
+                    "description": "List of email addresses for notifications."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "cashRegister",
+                            "type": "object",
+                            "mandatory": true,
+                            "description": "Cash register details.",
+                            "resParams": [
+                                {
+                                    "name": "cashRegisterId",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Unique identifier for the cash register. Save this ID as it is required for opening the register and shifts."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Response message."
+                }
+            ],
+            "method": "POST",
+            "path": "/merchants/:merchantId/stores/:storeId/cash-register",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"cashRegisterName\":\"Main Register\",\"deviceId\":\"{{terminalId}}\",\"emails\":[\"store.manager@example.com\"]}"
+                },
+                "response": [
+                    {
+                        "code": 201,
+                        "response": "\n{\n\t\"status\":\"SUCCESS\",\n\t\"data\":{\n\t\t\"cashRegister\":{\n\t\t\t\"cashRegisterId\":\"{{cashRegisterId}}\"\n\t\t}\n\t},\n\t\"message\":\"Cash register subscribed successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Withdraw Cash",
+            "description": "Record a cash withdrawal taken out of the cash register during an active shift.",
+            "reqParams": [
+                {
+                    "name": "amount",
+                    "type": "number",
+                    "mandatory": true,
+                    "description": "Amount to withdraw."
+                },
+                {
+                    "name": "terminalId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Terminal / device identifier."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Response message."
+                }
+            ],
+            "method": "PUT",
+            "path": "/merchants/:merchantId/stores/:storeId/cash-register/withdraw",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"amount\":500,\"terminalId\":\"{{terminalId}}\"}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\":\"SUCCESS\",\n\t\"message\":\"Cash withdrawn successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Fetch Cash Registers",
+            "description": "Retrieve all cash registers associated with a merchant. This API is useful for verifying registered cash registers and fetching their details.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Array of cash register objects.",
+                    "resParams": [
+                        {
+                            "name": "cashRegisterId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Unique identifier of the cash register."
+                        },
+                        {
+                            "name": "storeId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Store identifier."
+                        },
+                        {
+                            "name": "terminalId",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Associated terminal (may be null if not yet assigned)."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Merchant identifier."
+                        },
+                        {
+                            "name": "cashRegisterName",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Name of the cash register."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Response message."
+                }
+            ],
+            "method": "GET",
+            "path": "/merchants/:merchantId/cash-register",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\":\"SUCCESS\",\n\t\"data\":[\n\t\t{\n\t\t\t\"cashRegisterId\":\"{{cashRegisterId}}\",\n\t\t\t\"storeId\":\"{{storeId}}\",\n\t\t\t\"terminalId\":\"{{terminalId}}\",\n\t\t\t\"merchantId\":\"{{merchantId}}\",\n\t\t\t\"cashRegisterName\":\"Main Register\"\n\t\t}\n\t],\n\t\"message\":\"Cash registers fetched successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Delete Cash Register",
+            "new": true,
+            "description": "Delete a Cash Register. The register is identified by the :cashRegisterId path parameter.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Response message."
+                }
+            ],
+            "method": "DELETE",
+            "path": "/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\":\"SUCCESS\",\n\t\"message\":\"Cash register unsubscribed successfully.\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Get Cash Register State",
+            "new": true,
+            "description": "Retrieve the current state of a cash register, including its active shift, identified by the :cashRegisterId path parameter.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "cashRegisterState",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Current lifecycle state of the cash register."
+                        },
+                        {
+                            "name": "cashRegisterId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Cash register identifier."
+                        },
+                        {
+                            "name": "cashRegisterName",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Name of the cash register."
+                        },
+                        {
+                            "name": "currencyCode",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Currency in which the register operates."
+                        },
+                        {
+                            "name": "shiftInfo",
+                            "type": "object",
+                            "mandatory": true,
+                            "description": "Current or most recent shift information.",
+                            "resParams": [
+                                {
+                                    "name": "shiftNumber",
+                                    "type": "number",
+                                    "mandatory": true,
+                                    "description": "Shift number."
+                                },
+                                {
+                                    "name": "shiftState",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Current state of the shift."
+                                },
+                                {
+                                    "name": "cashierName",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Name of the cashier."
+                                },
+                                {
+                                    "name": "shiftOpenedAt",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Timestamp when the shift started."
+                                },
+                                {
+                                    "name": "shiftClosedAt",
+                                    "type": "string",
+                                    "mandatory": false,
+                                    "description": "Timestamp when the shift was closed."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "pettyCash",
+                            "type": "number",
+                            "mandatory": true,
+                            "description": "Current petty-cash balance held in the register."
+                        },
+                        {
+                            "name": "openedAt",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Timestamp when the register was opened."
+                        },
+                        {
+                            "name": "closedAt",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Timestamp when the register was closed."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Response message."
+                }
+            ],
+            "method": "GET",
+            "path": "/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId/state-info",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\":\"SUCCESS\",\n\t\"data\":{\n\t\t\"cashRegisterState\":\"CASH_REGISTER_OPEN\",\n\t\t\"cashRegisterId\":\"{{cashRegisterId}}\",\n\t\t\"cashRegisterName\":\"Main Register\",\n\t\t\"currencyCode\":\"SEK\",\n\t\t\"shiftInfo\":{\n\t\t\t\"shiftNumber\":1,\n\t\t\t\"shiftState\":\"SHIFT_OPEN\",\n\t\t\t\"cashierName\":\"John Doe\",\n\t\t\t\"shiftOpenedAt\":\"2026-04-15T12:00:00Z\",\n\t\t\t\"shiftClosedAt\":null\n\t\t},\n\t\t\"pettyCash\":5000,\n\t\t\"openedAt\":\"2026-04-15T08:00:00Z\",\n\t\t\"closedAt\":null\n\t},\n\t\"message\":\"Fetched cash register state successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Open-Shift",
+            "new": true,
+            "description": "Open a cashier shift on the cash register identified by the :cashRegisterId path parameter.",
+            "reqParams": [
+                {
+                    "name": "terminalId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Terminal / device identifier opening the shift."
+                },
+                {
+                    "name": "pettyCash",
+                    "type": "number",
+                    "mandatory": true,
+                    "description": "Opening petty-cash float for the shift."
+                },
+                {
+                    "name": "cashierName",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Name of the cashier opening the shift."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Opened shift details."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Response message."
+                }
+            ],
+            "method": "PUT",
+            "path": "/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId/open-shift",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"terminalId\":\"{{terminalId}}\",\"pettyCash\":5000,\"cashierName\":\"John Doe\"}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\":\"SUCCESS\",\n\t\"data\":{},\n\t\"message\":\"Shift opened successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Close-Shift",
+            "new": true,
+            "description": "Close the active shift on the cash register identified by the :cashRegisterId path parameter.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "cashRegisterId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Cash register identifier."
+                        },
+                        {
+                            "name": "shiftNumber",
+                            "type": "number",
+                            "mandatory": true,
+                            "description": "Number of the shift that was closed."
+                        },
+                        {
+                            "name": "pettyCash",
+                            "type": "number",
+                            "mandatory": true,
+                            "description": "Petty-cash balance recorded at shift close."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Response message."
+                }
+            ],
+            "method": "PUT",
+            "path": "/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId/close-shift",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\":\"SUCCESS\",\n\t\"data\":{\n\t\t\"cashRegisterId\":\"{{cashRegisterId}}\",\n\t\t\"shiftNumber\":1,\n\t\t\"pettyCash\":5000\n\t},\n\t\"message\":\"Shift closed successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "End of Day",
+            "new": true,
+            "description": "Perform the end-of-day close on the cash register identified by the :cashRegisterId path parameter.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Response message."
+                }
+            ],
+            "method": "PUT",
+            "path": "/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId/end-of-day",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\":\"SUCCESS\",\n\t\"message\":\"Cash register closed successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Get Cash Register by ID",
+            "new": true,
+            "description": "Retrieve the full cash-register record, including its control-unit details, identified by the :cashRegisterId path parameter.",
+            "reqParams": [],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "cashRegisterId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Cash register identifier."
+                        },
+                        {
+                            "name": "cashRegisterName",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Name of the cash register."
+                        },
+                        {
+                            "name": "activationDate",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Date the cash register was activated."
+                        },
+                        {
+                            "name": "closingTime",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Configured automatic closing time for the register."
+                        },
+                        {
+                            "name": "designation",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Designation of the cash register."
+                        },
+                        {
+                            "name": "modelOrProgram",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Model or program of the cash register."
+                        },
+                        {
+                            "name": "address",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Address associated with the cash register."
+                        },
+                        {
+                            "name": "email",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "Email addresses configured to receive this register's reports."
+                        },
+                        {
+                            "name": "controlUnitAddress",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Address of the paired fiscal control unit."
+                        },
+                        {
+                            "name": "controlUnitManufacturer",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Manufacturer of the control unit."
+                        },
+                        {
+                            "name": "controlUnitType",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Type of the control unit."
+                        },
+                        {
+                            "name": "controlUnitModel",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Model of the control unit."
+                        },
+                        {
+                            "name": "controlUnitSerialNumber",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Serial number of the paired fiscal control unit."
+                        },
+                        {
+                            "name": "notifications",
+                            "type": "array",
+                            "mandatory": true,
+                            "description": "Per-email notification subscriptions.",
+                            "resParams": [
+                                {
+                                    "name": "email",
+                                    "type": "string",
+                                    "mandatory": true,
+                                    "description": "Email address subscribed to the notification."
+                                },
+                                {
+                                    "name": "reports",
+                                    "type": "array",
+                                    "mandatory": true,
+                                    "description": "Report types this email receives."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Response message."
+                }
+            ],
+            "method": "GET",
+            "path": "/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\":\"SUCCESS\",\n\t\"data\":{\n\t\t\"cashRegisterId\":\"{{cashRegisterId}}\",\n\t\t\"cashRegisterName\":\"Main Register\",\n\t\t\"activationDate\":\"2026-04-15\",\n\t\t\"closingTime\":\"23:00\",\n\t\t\"designation\":\"Register 1\",\n\t\t\"modelOrProgram\":\"Surfboard ECR 1.0\",\n\t\t\"address\":\"Main Street 1, Stockholm\",\n\t\t\"email\":[\"store.manager@example.com\"],\n\t\t\"controlUnitAddress\":\"Main Street 1, Stockholm\",\n\t\t\"controlUnitManufacturer\":\"Surfboard\",\n\t\t\"controlUnitType\":\"SOFTWARE\",\n\t\t\"controlUnitModel\":\"CU-100\",\n\t\t\"controlUnitSerialNumber\":\"{{controlUnitSerialNumber}}\",\n\t\t\"notifications\":[\n\t\t\t{\n\t\t\t\t\"email\":\"store.manager@example.com\",\n\t\t\t\t\"reports\":[\"Z_REPORT\"]\n\t\t\t}\n\t\t]\n\t},\n\t\"message\":\"Fetched cash register successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Update Scheduled Close Time",
+            "new": true,
+            "description": "Update the scheduled close time for a cash-register. Sending a closing time sets the shift close type to CUSTOM, the default is 00:00 local time. The register is identified by the :cashRegisterId path parameter.",
+            "reqParams": [
+                {
+                    "name": "closingTime",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "New automatic closing time; sending it sets the shift close type to CUSTOM."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "cashRegisterId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Cash register identifier."
+                        },
+                        {
+                            "name": "newClosingTime",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Closing time now configured for the register."
+                        },
+                        {
+                            "name": "shiftCloseType",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Close type that was applied (CUSTOM)."
+                        },
+                        {
+                            "name": "scheduledClosingTime",
+                            "type": "string",
+                            "mandatory": false,
+                            "description": "Next scheduled automatic close, when applicable."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Response message."
+                }
+            ],
+            "method": "PATCH",
+            "path": "/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId/closing-time",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"closingTime\":\"23:00\"}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\":\"SUCCESS\",\n\t\"data\":{\n\t\t\"cashRegisterId\":\"{{cashRegisterId}}\",\n\t\t\"newClosingTime\":\"23:00\",\n\t\t\"shiftCloseType\":\"CUSTOM\",\n\t\t\"scheduledClosingTime\":\"2026-04-16T23:00:00Z\"\n\t},\n\t\"message\":\"Cash register closing time updated successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Deposit Petty Cash",
+            "new": true,
+            "description": "Deposit petty cash into the cash register during an active shift.",
+            "reqParams": [
+                {
+                    "name": "terminalId",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Terminal / device identifier depositing the petty cash."
+                },
+                {
+                    "name": "amount",
+                    "type": "number",
+                    "mandatory": true,
+                    "description": "Amount of petty cash to deposit into the register."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "mandatory": true,
+                    "description": "Response data.",
+                    "resParams": [
+                        {
+                            "name": "cashRegisterId",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Cash register identifier."
+                        },
+                        {
+                            "name": "newPettyCash",
+                            "type": "number",
+                            "mandatory": true,
+                            "description": "Petty-cash balance after the deposit."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Response message."
+                }
+            ],
+            "method": "POST",
+            "path": "/merchants/:merchantId/stores/:storeId/cash-register/deposit-petty-cash",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"terminalId\":\"{{terminalId}}\",\"amount\":1000}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\":\"SUCCESS\",\n\t\"data\":{\n\t\t\"cashRegisterId\":\"{{cashRegisterId}}\",\n\t\t\"newPettyCash\":6000\n\t},\n\t\"message\":\"Petty cash inserted successfully\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Get Cash Register Files",
+            "new": true,
+            "type": "note",
+            "note": "Pagination is sent via the <span class='font-semibold'>x-total-items</span> and <span class='font-semibold'>x-page-number</span> response headers; send the requested page in the <span class='font-semibold'>x-page-number</span> request header.",
+            "pagination": true,
+            "query": "Use <span class='font-semibold'>reportType</span> to filter by report type and <span class='font-semibold'>startDate</span>/<span class='font-semibold'>endDate</span> to filter by date range; each is applied only when present.",
+            "description": "Retrieve the files/reports generated for a cash register, identified by the :cashRegisterId path parameter.",
+            "reqParams": [
+                {
+                    "name": "reportType",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Filters files to a specific report type; applied only when present."
+                },
+                {
+                    "name": "startDate",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "Start of the date range to filter files by; applied only when present."
+                },
+                {
+                    "name": "endDate",
+                    "type": "string",
+                    "mandatory": false,
+                    "description": "End of the date range to filter files by; applied only when present."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Status of the request."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "Array of cash register file objects.",
+                    "resParams": [
+                        {
+                            "name": "fileName",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Name of the file."
+                        },
+                        {
+                            "name": "fileType",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Type of the file."
+                        },
+                        {
+                            "name": "reportType",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Report type the file belongs to."
+                        },
+                        {
+                            "name": "sequence",
+                            "type": "number",
+                            "mandatory": true,
+                            "description": "Ordinal sequence number of the file within its report type."
+                        },
+                        {
+                            "name": "fileUrl",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Download URL for the file."
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "Response message."
+                }
+            ],
+            "method": "GET",
+            "path": "/merchants/:merchantId/stores/:storeId/cash-register/:cashRegisterId/files",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "MERCHANT-ID",
+                            "value": "YOUR_MERCHANT_ID"
+                        }
+                    ],
+                    "body": "{\"reportType\":\"Z_REPORT\",\"startDate\":\"2026-04-01\",\"endDate\":\"2026-04-30\"}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n\t\"status\":\"SUCCESS\",\n\t\"data\":[\n\t\t{\n\t\t\t\"fileName\":\"z-report-2026-04-15.pdf\",\n\t\t\t\"fileType\":\"application/pdf\",\n\t\t\t\"reportType\":\"Z_REPORT\",\n\t\t\t\"sequence\":1,\n\t\t\t\"fileUrl\":\"https://files.example.com/z-report-2026-04-15.pdf\"\n\t\t}\n\t],\n\t\"message\":\"Cash register files fetched successfully.\"\n}"
+                    }
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,91 @@
+{
+  "scenarioId": "online-devices",
+  "scenarioName": "Register Online Terminal",
+  "steps": [
+    {
+      "id": "online-devices",
+      "name": "Register Online Terminal",
+      "description": "Registering the online terminals",
+      "order": 1,
+      "method": "POST",
+      "endpoint": "merchants/{{merchantId}}/stores/{{storeId}}/online-terminals",
+      "guidePath": "/carbon/device-management/online-terminals/home",
+      "payload": {
+        "onlineTerminalMode": "{{onlineTerminalMode}}"
+      },
+      "specifications": {
+        "reqParams": [
+          {
+            "name": "onlineTerminalMode",
+            "type": "string",
+            "mandatory": true,
+            "description": "Online payments can be carried out using any of these following modes.",
+            "possibleValues": [
+              {
+                "value": "PaymentPage",
+                "description": "In this mode, the payment page and all associated configuration is managed by Surfboard. This is the simplest mode to integrate as all that is required as an integrating partner is to redirect the customer to the payment page. The payment page needs to be the top level frame in any given context."
+              },
+              {
+                "value": "SelfHostedPage",
+                "description": "With SelfHostedPage, Surfboard renders the fields in your page. This provides you with maximum customization as to render the layout any way you want."
+              },
+              {
+                "value": "MerchantInitiated",
+                "description": "Set this type if you want to accept Merchant Initiated Transactions (MIT)."
+              }
+            ]
+          }
+        ],
+        "resParams": [
+          {
+            "name": "status",
+            "type": "String",
+            "description": "Status of the terminal registration."
+          },
+          {
+            "name": "data",
+            "type": "object",
+            "description": "Response data.",
+            "resParams": [
+              {
+                "name": "terminalId",
+                "type": "String",
+                "description": "Terminal ID of the registered terminal."
+              },
+              {
+                "name": "publicKey",
+                "type": "String",
+                "description": "For SelfHostedPage terminals use this key to initialize your Online SDK."
+              },
+              {
+                "name": "registrationStatus",
+                "type": "string",
+                "description": "Represents the current status of the terminal. The possible values are:",
+                "possibleValues": [
+                  {
+                    "value": "REGISTERED",
+                    "description": "The terminal has been successfully registered."
+                  },
+                  {
+                    "value": "DEREGISTERED",
+                    "description": "The terminal was previously registered but has now been removed from the system."
+                  },
+                  {
+                    "value": "FAILED",
+                    "description": "The registration was unsuccessful."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "message",
+            "type": "string",
+            "mandatory": true,
+            "description": "A message that describes the status of the terminal registration."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+    "scenarioId": "generate-product-images",
+    "scenarioName": "Generate Product Images",
+    "steps": [
+        {
+            "id": "generate-product-images",
+            "name": "Generate Product Images",
+            "description": "Generate Product Images",
+            "order": 1,
+            "method": "POST",
+            "endpoint": "catalog/ai/images",
+            "guidePath": "/carbon/advanced-customizations/generate-product-images",
+            "payload": {
+                "productName": "Gaming Laptop",
+                "prompt": "sleek modern design with RGB lighting",
+                "noOfImages": 3,
+                "langCode": "en"
+            },
+            "specifications": {
+                "reqParams": [
+                    {
+                        "name": "productName",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Name of the product for which to generate images."
+                    },
+                    {
+                        "name": "prompt",
+                        "type": "string",
+                        "description": "Custom prompt describing the desired image characteristics and style."
+                    },
+                    {
+                        "name": "noOfImages",
+                        "type": "number",
+                        "description": "Number of images to generate for the product."
+                    },
+                    {
+                        "name": "langCode",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Language code for image generation context (e.g., 'en' for English)."
+                    }
+                ],
+                "resParams": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                    },
+                    {
+                        "name": "data",
+                        "type": "object",
+                        "mandatory": true,
+                        "description": "Response data containing the generated image paths.",
+                        "resParams": [
+                            {
+                                "name": "imagePath",
+                                "type": "array",
+                                "mandatory": true,
+                                "description": "Array of URLs pointing to the generated product images."
+                            }
+                        ]
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "mandatory": true,
+                        "description": "A message that describes the status of the request."
+                    }
+                ]
+            }
+        }
+    ]
+}

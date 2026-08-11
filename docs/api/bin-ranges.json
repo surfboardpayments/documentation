@@ -1,0 +1,255 @@
+{
+    "title": "Bin Ranges API",
+    "description": "The Bin Ranges API manages the BIN (Bank Identification Number) ranges owned by a partner, including the card-number sub-ranges that each range covers.",
+    "endpoints": [
+        {
+            "fragment": "Create Bin Range",
+            "method": "POST",
+            "link": "API_URL/bin-ranges"
+        },
+        {
+            "fragment": "List Bin Ranges",
+            "method": "GET",
+            "link": "API_URL/bin-ranges"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Create Bin Range",
+            "description": "Create a new bin range together with the card-number sub-ranges it covers.",
+            "reqParams": [
+                {
+                    "name": "description",
+                    "type": "string",
+                    "mandatory": true,
+                    "description": "A description of the bin range."
+                },
+                {
+                    "name": "rangesIncluded",
+                    "type": "array",
+                    "mandatory": true,
+                    "description": "The card-number sub-ranges covered by this bin range.",
+                    "reqParams": [
+                        {
+                            "name": "start",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Inclusive start of the BIN sub-range."
+                        },
+                        {
+                            "name": "end",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "Inclusive end of the BIN sub-range."
+                        },
+                        {
+                            "name": "description",
+                            "type": "string",
+                            "mandatory": true,
+                            "description": "A description of this sub-range."
+                        }
+                    ]
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The created bin range.",
+                    "resParams": [
+                        {
+                            "name": "binRangeId",
+                            "type": "string",
+                            "description": "Unique identifier of the created bin range."
+                        },
+                        {
+                            "name": "partnerId",
+                            "type": "string",
+                            "description": "Identifier of the partner that owns the bin range."
+                        },
+                        {
+                            "name": "description",
+                            "type": "string",
+                            "description": "Description supplied when the bin range was created."
+                        },
+                        {
+                            "name": "rangesIncluded",
+                            "type": "array",
+                            "description": "The card-number sub-ranges stored for this bin range.",
+                            "resParams": [
+                                {
+                                    "name": "start",
+                                    "type": "string",
+                                    "description": "Inclusive start of the BIN sub-range."
+                                },
+                                {
+                                    "name": "end",
+                                    "type": "string",
+                                    "description": "Inclusive end of the BIN sub-range."
+                                },
+                                {
+                                    "name": "description",
+                                    "type": "string",
+                                    "description": "A description of this sub-range."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "POST",
+            "path": "/bin-ranges",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        }
+                    ],
+                    "body": "{\n\t\"description\": \"Visa consumer ranges\",\n\t\"rangesIncluded\": [\n\t\t{\n\t\t\t\"start\": \"400000\",\n\t\t\t\"end\": \"499999\",\n\t\t\t\"description\": \"Visa primary range\"\n\t\t}\n\t]\n}"
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": {\n\t\t\"binRangeId\": \"br_81efdbe975ebc800\",\n\t\t\"partnerId\": \"p_5f2c1a9b3d\",\n\t\t\"description\": \"Visa consumer ranges\",\n\t\t\"rangesIncluded\": [\n\t\t\t{\n\t\t\t\t\"start\": \"400000\",\n\t\t\t\t\"end\": \"499999\",\n\t\t\t\t\"description\": \"Visa primary range\"\n\t\t\t}\n\t\t]\n\t},\n\t\"message\": \"Bin range created successfully\"\n}"
+                    },
+                    {
+                        "code": 400,
+                        "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Failed to create bin range\"\n}"
+                    },
+                    {
+                        "code": 401,
+                        "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Authentication failed\"\n}"
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "List Bin Ranges",
+            "pagination": true,
+            "description": "Fetch a paginated list of the partner's bin ranges.",
+            "query": "To page through results send the requested page in the x-page-number header.",
+            "reqParams": [
+                {
+                    "name": "includeInactive",
+                    "type": "boolean",
+                    "mandatory": false,
+                    "description": "Whether inactive bin ranges are included in the results."
+                }
+            ],
+            "resParams": [
+                {
+                    "name": "status",
+                    "type": "string",
+                    "description": "Status of the request, indicated as either 'SUCCESS' or 'ERROR'."
+                },
+                {
+                    "name": "data",
+                    "type": "array",
+                    "description": "The list of bin ranges for the current page.",
+                    "resParams": [
+                        {
+                            "name": "binRangeId",
+                            "type": "string",
+                            "description": "Unique identifier of the bin range."
+                        },
+                        {
+                            "name": "partnerId",
+                            "type": "string",
+                            "description": "Identifier of the partner that owns the bin range."
+                        },
+                        {
+                            "name": "description",
+                            "type": "string",
+                            "description": "Description supplied when the bin range was created."
+                        },
+                        {
+                            "name": "rangesIncluded",
+                            "type": "array",
+                            "description": "The card-number sub-ranges stored for this bin range.",
+                            "resParams": [
+                                {
+                                    "name": "start",
+                                    "type": "string",
+                                    "description": "Inclusive start of the BIN sub-range."
+                                },
+                                {
+                                    "name": "end",
+                                    "type": "string",
+                                    "description": "Inclusive end of the BIN sub-range."
+                                },
+                                {
+                                    "name": "description",
+                                    "type": "string",
+                                    "description": "A description of this sub-range."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "message",
+                    "type": "string",
+                    "description": "A message that describes the status of the request."
+                }
+            ],
+            "method": "GET",
+            "path": "/bin-ranges",
+            "examples": {
+                "request": {
+                    "headers": [
+                        {
+                            "name": "API-KEY",
+                            "value": "YOUR_API_KEY"
+                        },
+                        {
+                            "name": "API-SECRET",
+                            "value": "YOUR_API_SECRET"
+                        },
+                        {
+                            "name": "x-page-number",
+                            "value": "1",
+                            "mandatory": false
+                        }
+                    ]
+                },
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "{\n\t\"status\": \"SUCCESS\",\n\t\"data\": [\n\t\t{\n\t\t\t\"binRangeId\": \"br_81efdbe975ebc800\",\n\t\t\t\"partnerId\": \"p_5f2c1a9b3d\",\n\t\t\t\"description\": \"Visa consumer ranges\",\n\t\t\t\"rangesIncluded\": [\n\t\t\t\t{\n\t\t\t\t\t\"start\": \"400000\",\n\t\t\t\t\t\"end\": \"499999\",\n\t\t\t\t\t\"description\": \"Visa primary range\"\n\t\t\t\t}\n\t\t\t]\n\t\t}\n\t],\n\t\"message\": \"Bin ranges fetched successfully\"\n}"
+                    },
+                    {
+                        "code": 400,
+                        "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Failed to fetch bin ranges\"\n}"
+                    },
+                    {
+                        "code": 401,
+                        "response": "{\n\t\"status\": \"ERROR\",\n\t\"message\": \"Authentication failed\"\n}"
+                    }
+                ]
+            },
+            "params": {
+                "includeInactive": false
+            }
+        }
+    ]
+}

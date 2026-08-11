@@ -1,0 +1,126 @@
+{
+    "title": "API Reference",
+    "description": "Complete API reference for Surfboard Payments",
+    "items": [
+        {
+            "title": "Adjustments API",
+            "description": "API for managing payment adjustments",
+            "path": "/api/adjustments.json",
+            "type": "api"
+        },
+        {
+            "title": "AI API",
+            "description": "API for AI-powered features including branding generation",
+            "path": "/api/ai.json",
+            "type": "api"
+        },
+        {
+            "title": "Authentication API",
+            "description": "API for authentication and authorization",
+            "path": "/api/auth.json",
+            "type": "api"
+        },
+        {
+            "title": "Billing API",
+            "description": "API for managing billing and invoices",
+            "path": "/api/billing.json",
+            "type": "api"
+        },
+        {
+            "title": "Branding API",
+            "description": "API for customizing merchant branding",
+            "path": "/api/branding.json",
+            "type": "api"
+        },
+        {
+            "title": "Logistics API",
+            "description": "API for managing logistics and shipping",
+            "path": "/api/logistics.json",
+            "type": "api"
+        },
+        {
+            "title": "Merchants API",
+            "description": "API for managing merchant accounts and profiles",
+            "path": "/api/merchants.json",
+            "type": "api"
+        },
+        {
+            "title": "NFC Reading API",
+            "description": "API for NFC card reading functionality",
+            "path": "/api/nfc-reading.json",
+            "type": "api"
+        },
+        {
+            "title": "Orders API",
+            "description": "API for creating and managing orders",
+            "path": "/api/orders.json",
+            "type": "api"
+        },
+        {
+            "title": "Payment Methods API",
+            "description": "API for managing supported payment methods",
+            "path": "/api/payment-methods.json",
+            "type": "api"
+        },
+        {
+            "title": "Payments API",
+            "description": "API for initiating and managing payments",
+            "path": "/api/payments.json",
+            "type": "api"
+        },
+        {
+            "title": "Product Catalogue API",
+            "description": "API for managing product catalogues",
+            "path": "/api/product-catalog.json",
+            "type": "api"
+        },
+        {
+            "title": "Promotions API",
+            "description": "API for managing promotions and discounts",
+            "path": "/api/promotions.json",
+            "type": "api"
+        },
+        {
+            "title": "Receipts API",
+            "description": "API for generating and managing receipts",
+            "path": "/api/receipts.json",
+            "type": "api"
+        },
+        {
+            "title": "Reporting API",
+            "description": "API for generating reports and analytics",
+            "path": "/api/reporting.json",
+            "type": "api"
+        },
+        {
+            "title": "Stores API",
+            "description": "API for managing store locations",
+            "path": "/api/stores.json",
+            "type": "api"
+        },
+        {
+            "title": "Templates API",
+            "description": "API for managing document templates",
+            "path": "/api/templates.json",
+            "type": "api"
+        },
+        {
+            "title": "Terminals API",
+            "description": "API for managing payment terminals",
+            "path": "/api/terminals.json",
+            "type": "api"
+        },
+        {
+            "title": "Tips API",
+            "description": "API for managing tips and gratuities",
+            "path": "/api/tips.json",
+            "type": "api"
+        },
+        {
+            "title": "Transactions API",
+            "description": "API for managing payment transactions",
+            "path": "/api/transactions.json",
+            "type": "api"
+        }
+    ]
+}

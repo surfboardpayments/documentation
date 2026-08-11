@@ -1,0 +1,1 @@
+Post request with the `serialNo` of the terminal which is to be activated
