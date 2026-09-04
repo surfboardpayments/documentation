@@ -1,3 +1,12 @@
+# Android SoftPOS SDK
+
+Turn Android devices into payment terminals with the Surfboard Android SoftPOS SDK. Complete integration guide from setup to production.
+
+Source: https://www.surfboardpayments.com/developers/guides/android-softpos-sdk
+Category: in-store
+Tags: Android, Kotlin, SoftPOS, In-Store, NFC
+
+---
 ## Overview
 
 The Surfboard Android SoftPOS SDK enables Android applications to process tap-to-pay transactions using NFC-enabled devices. It provides terminal management, transaction processing, and security -- supporting seamless integration for contactless payments.

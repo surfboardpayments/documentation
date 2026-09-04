@@ -1,3 +1,12 @@
+# Product Catalog
+
+Create and manage product catalogs, products, variants, inventory levels, and analytics through the Catalog API.
+
+Source: https://www.surfboardpayments.com/developers/guides/product-catalog
+Category: online
+Tags: Online, API, Products, Catalog, Inventory
+
+---
 ## Overview
 
 The Product Catalog API lets you build a structured product hierarchy for your stores. You can create catalogs, add products with pricing and tax configuration, define variants (such as sizes and colours), manage stock levels, and pull sales statistics -- all through a single set of REST endpoints.

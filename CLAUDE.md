@@ -9,6 +9,8 @@ This repo contains the complete API documentation for the Surfboard Payments pla
 - `docs/webhooks-md/` — Individual markdown files for each webhook event
 - `docs/webhooks-md/webhooks-index.json` — Full index of all webhook events grouped by category
 - `docs/guides/` — Integration guides (in-store payments, online payments)
+- `docs/web-guides/` — Web guides synced from surfboardpayments.com (`/api/ai/guides.json`), plus `web-guides-index.json`
+- `scripts/` — `sync-from-local.sh` (rsync from the internal GitLab docs checkout + web guide refresh) and `sync-web-guides.mjs`
 - `docs/llms.txt` — LLM-friendly overview of all documentation
 - `mcp-server/` — MCP server npm package (`@surfboardpayments/surf-mcp`)
 

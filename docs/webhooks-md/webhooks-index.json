@@ -1,7 +1,7 @@
 {
   "title": "Surfboard Payments Webhook Events Reference",
   "description": "Complete webhook events reference for Surfboard Payments platform",
-  "lastUpdated": "2026-01-21T08:59:38.265Z",
+  "lastUpdated": "2026-08-14T09:20:08.131Z",
   "webhooks": [
     {
       "title": "Logistics Events",
@@ -116,6 +116,45 @@
           "title": "Order Terminal Event",
           "description": "This event is triggered for every state the terminal undergoes during a transaction.",
           "mdFile": "webhooks-md/orders-order-terminal-event.md"
+        }
+      ]
+    },
+    {
+      "title": "Store Events",
+      "description": "The Store events reference details the events that arise as a merchant's stores are set up and enabled for payment acceptance in Surfboard. From store activation to successful onboarding of an online store, these webhooks provide real-time updates on when a store becomes ready to accept payments. By tracking these events, partners know exactly when a merchant's stores are live, without having to poll the store APIs.",
+      "sourceFile": "webhooks/stores.json",
+      "events": [
+        {
+          "title": "Store Activated",
+          "description": "This event is triggered when a store is activated and is ready for terminal registration.",
+          "mdFile": "webhooks-md/stores-store-activated.md"
+        },
+        {
+          "title": "Online Store Onboarded",
+          "description": "This event is triggered when an online store is approved for online payment acceptance. Once this event is received, the store can start accepting online payments.",
+          "mdFile": "webhooks-md/stores-online-store-onboarded.md"
+        }
+      ]
+    },
+    {
+      "title": "Terminal Events",
+      "description": "The Terminal events reference details the events that arise when payment terminals are registered under a merchant's store in Surfboard. A separate event fires per terminal category — online, softpos (tap to pay), and hardware — so you can tell what kind of terminal was registered from the event name alone. Payloads carry identifiers only; fetch the terminal from the Terminals API when you need its details.",
+      "sourceFile": "webhooks/terminals.json",
+      "events": [
+        {
+          "title": "Online Terminal Registered",
+          "description": "This event is triggered when an online terminal is registered under a store. Online terminals cover the hosted payment page, self-hosted (SDK) integrations, iFrame, and merchant-initiated interfaces. The payload contains identifiers only — fetch the terminal from GET /terminals/{terminalId} when you need its details.",
+          "mdFile": "webhooks-md/terminals-online-terminal-registered.md"
+        },
+        {
+          "title": "SoftPOS Terminal Registered",
+          "description": "This event is triggered when a softpos (tap-to-pay) terminal is registered under a store — payment acceptance running on a mobile device through the tap-to-pay app or SDK. The payload contains identifiers only — fetch the terminal from GET /terminals/{terminalId} when you need its details.",
+          "mdFile": "webhooks-md/terminals-softpos-terminal-registered.md"
+        },
+        {
+          "title": "Hardware Terminal Registered",
+          "description": "This event is triggered when a physical payment terminal, such as a Surfpad or other Surfboard hardware device, is registered under a store. The payload contains identifiers only — fetch the terminal from GET /terminals/{terminalId} when you need its details.",
+          "mdFile": "webhooks-md/terminals-hardware-terminal-registered.md"
         }
       ]
     }

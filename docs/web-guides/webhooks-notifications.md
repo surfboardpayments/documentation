@@ -1,3 +1,12 @@
+# Webhooks
+
+Receive real-time event notifications via webhooks. Subscribe to order, payment, logistics, and merchant application events with automatic retries and signature verification.
+
+Source: https://www.surfboardpayments.com/developers/guides/webhooks-notifications
+Category: online
+Tags: Online, API, Webhooks, Events
+
+---
 ## Overview
 
 Webhooks enable you to receive real-time notifications for payment-related events in Surfboard, eliminating the need for repeated polling of the Surfboard APIs. When an event occurs, Surfboard sends an HTTP `POST` request to a URL on your server with the event details in the request body. All webhook messages include a signature for authenticity verification.
@@ -24,7 +33,8 @@ Order and payment events provide real-time updates on order status and payment f
 - **Order Payment Failed** -- The payment attempt has failed.
 - **Order Payment Cancelled** -- The payment has been cancelled.
 - **Order Cancelled** -- The entire order has been cancelled.
-- **Order Terminal Event** -- A terminal-level event related to the order (e.g. device interaction).
+- **Order Customer Identity** -- A customer taps their card on the terminal, enabling you to identify the customer during a transaction and personalize the experience. Event type: `order.customer.identify`.
+- **Order Terminal Event** -- Triggered for every state the terminal undergoes during a transaction (e.g. tip selection, card presented, PIN entry, authorizing). Also covers online terminal states such as page loaded, wallet SDK mounted, and payment initiated. Event type: `order.terminal.event`.
 
 ### Logistics Events
 
@@ -46,11 +56,105 @@ Merchant application events provide updates during the onboarding process, from 
 - **Application Expired** -- The application has expired.
 - **Application Rejected** -- The application has been rejected.
 
+## Event Payload Details
+
+### Order Customer Identity
+
+This event is triggered when a customer taps their card on the terminal, before the order is finalized or payment is processed. It enables customer identification early in the transaction flow.
+
+**Event type:** `order.customer.identify`
+
+**Payload example:**
+
+```json
+{
+  "eventType": "order.customer.identify",
+  "metadata": {
+    "eventId": "832cf9fe1806581dff",
+    "created": 1747553660038,
+    "retryAttempt": 0,
+    "webhookEventId": "81a214e74b107801ff"
+  },
+  "data": {
+    "orderId": "832cf9f93d2fd0410b",
+    "cardId": "c550c29e80908c887a"
+  }
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `data.orderId` | string | Unique identifier for the order. |
+| `data.cardId` | string | Tokenized identifier for the customer's card, used to recognize or link the customer to the order. |
+
+> **Note:** The `cardId` is a tokenized representation and should be treated as sensitive data.
+
+### Order Terminal Event
+
+This event is triggered for every state the terminal undergoes during a transaction, including stages like tip selection, card presentation, PIN entry, authorization, and completion.
+
+**Event type:** `order.terminal.event`
+
+**Payload example:**
+
+```json
+{
+  "eventType": "order.terminal.event",
+  "metadata": {
+    "eventId": "81a214e74b107801ff",
+    "created": 1695793998732,
+    "retryAttempt": 0,
+    "webhookEventId": "81a214e7455ed01cff"
+  },
+  "data": {
+    "orderId": "81b5f2624b16e0080b",
+    "merchantId": "8248db4c5c8dd0130e",
+    "paymentId": "81b5f26215e9583a06",
+    "terminalTransactionStatus": "STARTED",
+    "orderStatus": "PAYMENT_INITIATED"
+  }
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `data.orderId` | string | Unique identifier for the order. |
+| `data.merchantId` | string | Unique identifier of the merchant. |
+| `data.paymentId` | string | Unique identifier for the payment. |
+| `data.terminalTransactionStatus` | string | Current terminal state (see table below). |
+| `data.orderStatus` | string | Current order status. |
+| `data.metadata` | object | Optional metadata passed with the order creation. |
+
+**Terminal transaction statuses:**
+
+| Status | Description |
+|--------|-------------|
+| `STARTED` | Transaction initiated on the terminal. |
+| `SELECT_TIP` | Tip selection screen displayed. |
+| `AWAITING_CARD` | Waiting for card tap/insert. |
+| `CARD_PRESENTED` | Customer has presented card. |
+| `SELECT_APPLICATION` | Card has multiple applications; selection required. |
+| `ENTER_PIN` | Customer needs to enter PIN. |
+| `WRONG_PIN` | Wrong PIN entered. |
+| `AUTHORIZING` | Payment authorization initiated. |
+| `SUBMITTED` | Authorization submitted to the backend. |
+| `AUTHORIZED` | Authorization complete. |
+| `PAGE_LOADED` | Online only -- payment page fully loaded. |
+| `SECURE_CHANNEL_INITIALISED` | Online only -- page ready for card details. |
+| `GOOGLE_PAY_MOUNTED` | Online only -- Google Pay SDK mounted. |
+| `APPLE_PAY_MOUNTED` | Online only -- Apple Pay SDK mounted. |
+| `CUSTOMER_INTERACTION_IN_FORM` | Online only -- customer started entering information. |
+| `CARD_PAYMENT_INITIATED` | Online only -- card payment initiated. |
+| `APPLE_PAY_ATTEMPT_INITIATED` | Online only -- Apple Pay attempt initiated. |
+| `GOOGLE_PAY_ATTEMPT_INITIATED` | Online only -- Google Pay attempt initiated. |
+| `APPLE_PAY_PAYMENT_INITIATED` | Online only -- Apple Pay payment process initiated. |
+| `GOOGLE_PAY_PAYMENT_INITIATED` | Online only -- Google Pay payment initiated. |
+
 ## Getting Started
 
 To set up webhooks via the Surfboard Console:
 
-1. Log in to the [Surfboard Console](https://console.surfboardpayments.com).
+1. Log in to the [Surfboard Developer Portal](https://developers.surfboardpayments.com).
 2. Click **Add new Webhook**.
 3. Enter a name and the URL of your webhook endpoint.
 4. Enter an email address to receive notifications in case of webhook failures.
@@ -85,7 +189,7 @@ In addition to Console webhooks, you can set a per-order callback URL when creat
 Set `controlFunctions.callBackUrl` in the [Create Order API](https://developers.surfboardpayments.com/api/orders) request:
 
 ```json
-POST /merchants/:merchantId/orders
+POST /orders
 {
   "terminal$id": "YOUR_TERMINAL_ID",
   "orderLines": [ ... ],
@@ -98,7 +202,7 @@ POST /merchants/:merchantId/orders
 }
 ```
 
-> **Note:** Retries and alert emails are not supported for callback URL webhooks. The validation process is the same as regular webhooks -- you can obtain the webhook certificate for signature validation from the [Surfboard Console Dashboard](https://console.surfboardpayments.com).
+> **Note:** Retries and alert emails are not supported for callback URL webhooks. The validation process is the same as regular webhooks -- you can obtain the webhook certificate for signature validation from the [Surfboard Developer Portal](https://developers.surfboardpayments.com).
 
 ## Handling Duplicate Deliveries
 
@@ -114,8 +218,9 @@ Use the combination of `orderId` and `paymentId` as your idempotency key. When y
 
 When a webhook delivery fails (your endpoint does not return a `200` status code), Surfboard retries automatically:
 
-- **First retry:** 5 seconds after the initial failure.
-- **Subsequent retries:** Up to 3 additional retries, spaced 30 seconds apart (30s, 60s, 90s after the first retry).
+- **Attempts:** Up to 3 total delivery attempts.
+- **First retry:** 5 minutes after the initial failure.
+- **Second retry:** 10 minutes after the first retry.
 
 ### Failure Alerts and Automatic Disabling
 
@@ -275,4 +380,4 @@ func generateHMACSignature(certificate, message string) string {
 
 | Action | Method | Endpoint |
 |--------|--------|----------|
-| Set per-order webhook | POST | `/merchants/:merchantId/orders` (via `controlFunctions.callBackUrl`) |
+| Set per-order webhook | POST | `/orders` (via `controlFunctions.callBackUrl`) |

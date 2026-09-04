@@ -1,3 +1,12 @@
+# Tips Configuration
+
+Configure tipping on Surfboard payment terminals at the merchant, store, or terminal level using a hierarchical override model.
+
+Source: https://www.surfboardpayments.com/developers/guides/tips-configuration
+Category: in-store
+Tags: In-Store, API, Tips, Configuration, Terminal
+
+---
 ## Overview
 
 Surfboard Payments provides flexible tipping capabilities across all native Android payment terminals, including SurfTouch, SurfPad, SurfPrint, and SoftPOS. You can enable tips, define preset percentage options, allow custom amounts, and control how tip values are displayed to customers -- all through the API.

@@ -1,3 +1,12 @@
+# Cancel a Payment
+
+Stop an in-progress payment before it completes. Use cancellation when a customer abandons checkout or a payment needs to be halted mid-process.
+
+Source: https://www.surfboardpayments.com/developers/guides/cancel-a-payment
+Category: online
+Tags: Online, API, Payments, In-Store
+
+---
 ## Overview
 
 Cancellation stops a payment **before it completes** -- for example, if the customer abandons checkout while payment is processing, or you need to halt a transaction before funds are transferred.
@@ -41,7 +50,7 @@ If the payment already completed before your cancel request was processed, the s
 Confirm the order reflects the cancellation:
 
 ```json
-GET /merchants/:merchantId/orders/:orderId/status
+GET /orders/:orderId/status
 ```
 
 ```json

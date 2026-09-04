@@ -1,3 +1,12 @@
+# Gift Cards & Promotions
+
+Issue and manage gift cards, track transactions, and create marketing promotions using the Surfboard Payments APIs.
+
+Source: https://www.surfboardpayments.com/developers/guides/gift-cards-promotions
+Category: online
+Tags: Online, API, Gift Cards, Promotions, Commerce
+
+---
 ## Overview
 
 Surfboard Payments provides APIs for two complementary commerce features: **gift cards** for stored-value and entitlement-based programs, and **promotions** for marketing campaigns displayed across merchant channels. This guide covers creating and managing both, with full API details and request/response examples.

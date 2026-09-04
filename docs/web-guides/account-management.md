@@ -1,3 +1,12 @@
+# Account & Service Provider Management
+
+Create merchant and partner accounts, manage user roles, register service providers, and configure external notifications via the Surfboard API.
+
+Source: https://www.surfboardpayments.com/developers/guides/account-management
+Category: online
+Tags: Online, API, Accounts, Service Providers, Partners
+
+---
 ## Overview
 
 The Surfboard API provides administrative endpoints for managing accounts, service providers, and notification subscriptions. With these APIs you can:
@@ -49,6 +58,8 @@ POST /partners/{partnerId}/accounts
 ## Service Provider Management
 
 Service providers are third-party entities that participate in transaction processing, revenue sharing, or value-added services. Partners register them, track onboarding, and query them at both partner and merchant level.
+
+For the full split-payout flow, including linking a service provider to a merchant and setting the share on an order, see [Service Providers & Split Payouts](/developers/guides/service-providers).
 
 ### Register a Service Provider
 

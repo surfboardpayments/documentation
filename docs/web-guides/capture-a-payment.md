@@ -1,3 +1,12 @@
+# Capture a Payment
+
+Finalize a previously authorized payment by capturing funds. Covers delay capture and pre-authorization flows with step-by-step API examples.
+
+Source: https://www.surfboardpayments.com/developers/guides/capture-a-payment
+Category: online
+Tags: Online, API, Payments, Capture, In-Store
+
+---
 ## Overview
 
 When you create an order with `delayCapture: true` or `authMode: "PRE-AUTH"`, funds are authorized but not immediately captured. This lets you verify inventory, confirm fulfillment, or adjust the final amount before charging the customer.
@@ -18,7 +27,7 @@ This guide walks through the full capture flow: create an authorized order, capt
 Create an order with `delayCapture: true` in `controlFunctions`:
 
 ```json
-POST /merchants/:merchantId/orders
+POST /orders
 {
   "terminal$id": "YOUR_TERMINAL_ID",
   "orderLines": [

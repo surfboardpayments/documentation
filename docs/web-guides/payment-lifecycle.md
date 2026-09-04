@@ -1,3 +1,12 @@
+# Payment Lifecycle
+
+Manage the full payment lifecycle from order creation through capture, void, cancel, and refund operations using the Surfboard Payments API.
+
+Source: https://www.surfboardpayments.com/developers/guides/payment-lifecycle
+Category: online
+Tags: Online, API, Payments, Refunds, Capture
+
+---
 ## Overview
 
 Every payment follows a lifecycle: create an order, authorize payment, capture funds, and settle. At each stage you can intervene -- void before settlement, cancel before completion, or refund after. This guide covers each operation with the API calls you need.
@@ -6,18 +15,44 @@ Every payment follows a lifecycle: create an order, authorize payment, capture f
 
 | Operation | When to Use | Endpoint | Method |
 |-----------|-------------|----------|--------|
-| **Create Order** | Start a new payment | `/merchants/:merchantId/orders` | POST |
+| **Create Order** | Start a new payment | `/orders` | POST |
 | **Capture** | Finalize a delayed-capture auth | `/payments/:paymentId/capture` | POST |
 | **Void** | Reverse before settlement | `/payments/:paymentId/void` | POST |
 | **Cancel** | Stop before completion | `/payments/:paymentId` | DELETE |
-| **Refund** | Full return after settlement | `/merchants/:merchantId/orders` | POST |
-| **Partial Refund** | Partial return after settlement | `/merchants/:merchantId/orders` | POST |
+| **Refund** | Full return after settlement | `/orders` | POST |
+| **Partial Refund** | Partial return after settlement | `/orders` | POST |
 
 ## Order and Payment Statuses
 
 **Order statuses:** `PENDING` | `PAYMENT_COMPLETED` | `PAYMENT_CANCELLED` | `PARTIAL_PAYMENT_COMPLETED` | `PAYMENT_PROCESSED`
 
 **Payment statuses:** `PAYMENT_INITIATED` | `PAYMENT_PROCESSING` | `PAYMENT_PROCESSED` | `PAYMENT_COMPLETED` | `PAYMENT_FAILED` | `PAYMENT_CANCELLED`
+
+### Status Flow
+
+A payment moves through progressive statuses before settling into one of three final (terminal) states. The happy path is:
+
+```
+PAYMENT_INITIATED → PAYMENT_PROCESSING → PAYMENT_PROCESSED → PAYMENT_COMPLETED
+                                                           → PAYMENT_FAILED
+                                                           → PAYMENT_CANCELLED
+```
+
+`PAYMENT_CANCELLED` and `PAYMENT_FAILED` can also occur **directly after** `PAYMENT_INITIATED` -- for example, if the customer abandons checkout or the payment is rejected before processing begins.
+
+#### Progressive statuses
+
+| Payment Status | Description |
+|----------------|-------------|
+| `PAYMENT_INITIATED` | Payment has been created on the order and is awaiting processing. Can transition to `PAYMENT_PROCESSING`, `PAYMENT_CANCELLED`, or `PAYMENT_FAILED`. |
+| `PAYMENT_PROCESSING` | Payment is actively being processed by the network. |
+| `PAYMENT_PROCESSED` | Payment has been authorised and processed, but is not yet in its final state (for example, awaiting capture or confirmation). |
+
+#### Order-level intermediate status
+
+| Order Status | Description |
+|--------------|-------------|
+| `PARTIAL_PAYMENT_COMPLETED` | Only set on the **order**, not on an individual payment. Indicates that one or more payments against the order have completed, but the full order amount has not yet been paid. |
 
 ### Terminal Payment States
 
@@ -36,7 +71,7 @@ Every payment ends in one of three terminal states. Once a payment reaches a ter
 Every payment starts with an order containing line items and a terminal ID.
 
 ```json
-POST /merchants/:merchantId/orders
+POST /orders
 {
   "terminal$id": "YOUR_TERMINAL_ID",
   "orderLines": [{
@@ -127,7 +162,7 @@ DELETE /payments/:paymentId
 A full refund is a **new order** with negative quantities and the original `orderId` as `purchaseOrderId` on each line item.
 
 ```json
-POST /merchants/:merchantId/orders
+POST /orders
 {
   "terminal$id": "YOUR_TERMINAL_ID",
   "orderLines": [{
@@ -159,7 +194,7 @@ Key details:
 Works the same as a full refund, but only include the specific items or reduced quantities you want to return.
 
 ```json
-POST /merchants/:merchantId/orders
+POST /orders
 {
   "terminal$id": "YOUR_TERMINAL_ID",
   "orderLines": [{
@@ -185,7 +220,7 @@ POST /merchants/:merchantId/orders
 Query the current state of any order at any point:
 
 ```json
-GET /merchants/:merchantId/orders/:orderId/status
+GET /orders/:orderId/status
 ```
 
 ```json

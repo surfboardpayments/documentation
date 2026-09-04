@@ -1,3 +1,12 @@
+# Notification Subscriptions
+
+Subscribe to persistent, account-level event notifications delivered via email, Slack, or SFTP. Receive settlement reports and operational alerts for merchants and partners.
+
+Source: https://www.surfboardpayments.com/developers/guides/notification-subscriptions
+Category: online
+Tags: Online, API, Notifications, Email, Slack, SFTP, Reports
+
+---
 ## Overview
 
 Notification subscriptions let you set up persistent, account-wide delivery of event notifications at the merchant or partner level. Unlike [webhooks](/developers/guides/webhooks-notifications), which deliver HTTP callbacks to your server, notification subscriptions deliver events through **email**, **Slack**, and **SFTP** channels.

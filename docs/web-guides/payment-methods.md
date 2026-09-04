@@ -1,3 +1,12 @@
+# Payment Methods
+
+Activate, deactivate, and list payment methods for a merchant. Manage card, Swish, Klarna, AMEX, Vipps, MobilePay, and more via the API or Partner Portal.
+
+Source: https://www.surfboardpayments.com/developers/guides/payment-methods
+Category: online
+Tags: Online, API, Payment Methods, In-Store
+
+---
 ## Overview
 
 Card payments are enabled by default for all merchants. Use the Payment Methods API to activate or deactivate additional methods like Swish, Klarna, AMEX, Vipps, MobilePay, B2B invoicing, and account-to-account transfers. Payment methods can be set at the merchant or store level.

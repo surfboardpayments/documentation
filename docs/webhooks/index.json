@@ -19,6 +19,18 @@
       "description": "Webhooks for order management events",
       "path": "/webhooks/orders.json",
       "type": "webhook"
+    },
+    {
+      "title": "Stores Webhooks",
+      "description": "Webhooks for store activation and online store onboarding events",
+      "path": "/webhooks/stores.json",
+      "type": "webhook"
+    },
+    {
+      "title": "Terminals Webhooks",
+      "description": "Webhooks for terminal registration events",
+      "path": "/webhooks/terminals.json",
+      "type": "webhook"
     }
   ]
 }

@@ -1,3 +1,12 @@
+# Store Management
+
+Create, update, verify, and manage in-store and online stores using the Surfboard Payments Store APIs.
+
+Source: https://www.surfboardpayments.com/developers/guides/store-management
+Category: online
+Tags: Online, API, Stores, Domain Verification, Management
+
+---
 ## Overview
 
 Stores are the organizational units that sit beneath merchants in the Surfboard hierarchy. Every terminal, whether physical or online, is registered under a store. This guide covers the full store lifecycle: creating in-store and online stores, retrieving store details, updating store information, verifying domains for online payments, listing terminals, and deactivating stores you no longer need.
@@ -150,7 +159,23 @@ You can retrieve the current domain verification status at any time:
 GET /partners/:partnerId/merchants/:merchantId/stores/:storeId/online
 ```
 
-Once verification succeeds, the store enters an internal approval process. After approval, you can register online terminals (PaymentPage, SelfHostedPage, MerchantInitiated) under the store.
+Once verification succeeds, the store enters an internal approval process. After approval, the store can take online payments.
+
+### Default Online Terminals
+
+Creating an online store provisions two online terminals automatically: a **PaymentPage** terminal, used for payment links and hosted checkout, and a **MerchantInitiated** terminal, used for backend charges against a stored token. You do not register either one — list the store's terminals to pick up their IDs. They exist as soon as the store does, but cannot take a payment until the domains verify and the store is approved.
+
+**SelfHostedPage** and **iFrame** terminals are not provisioned. Register those with the [Register Online Terminal](https://developers.surfboardpayments.com/api/terminals) endpoint when you need them:
+
+```
+POST /merchants/:merchantId/stores/:storeId/online-terminals
+```
+
+```json
+{
+  "onlineTerminalMode": "SelfHostedPage"
+}
+```
 
 ## Fetch Store Details
 
@@ -251,11 +276,20 @@ Optional query parameter: `terminalType` (e.g., `surfpad`, `PaymentPage`, `SelfH
       "storeId": "store-abc-123",
       "terminalName": "Online Checkout",
       "startDate": "2025-06-15T10:00:00Z"
+    },
+    {
+      "terminalId": "terminal-002",
+      "terminalType": "MerchantInitiated",
+      "terminalStatus": "ACTIVE",
+      "storeId": "store-abc-123",
+      "startDate": "2025-06-15T10:00:00Z"
     }
   ],
   "message": "Terminals fetched successfully"
 }
 ```
+
+This is the call that hands you the IDs of the `PaymentPage` and `MerchantInitiated` terminals an online store comes with. An online store returns both from the moment it is created, alongside any physical or SDK terminals you registered yourself.
 
 Terminal types include: `surfpad`, `surftouch`, `surfprint`, `checkoutPro`, `checkoutX`, `PaymentPage`, `SelfHostedPage`, `MerchantInitiated`, `printer`, `surftester`.
 
@@ -271,7 +305,7 @@ DELETE /partners/:partnerId/merchants/:merchantId/stores/:storeId
 
 Optional query parameter: `deactivationDate` in `yyyy-mm-dd` format. If omitted, the store is deactivated immediately.
 
-> **Important:** A store can only be deactivated if it has no terminals registered to it. If active terminals exist, you must first delink them or move them to another store under the same merchant.
+> **Important:** A store can only be deactivated if it has no terminals registered to it. If active terminals exist, you must first delink them or move them to another store under the same merchant. Remember that an online store carries its two default terminals, `PaymentPage` and `MerchantInitiated`, so the terminal list is never empty by default — deactivate those before you deactivate the store.
 
 ### Response
 

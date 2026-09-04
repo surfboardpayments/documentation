@@ -1,3 +1,12 @@
+# Payment Page
+
+Redirect customers to a Surfboard-hosted checkout page. The fastest way to accept online payments with minimal integration effort.
+
+Source: https://www.surfboardpayments.com/developers/guides/payment-page
+Category: online
+Tags: Online, Payment Page, Hosted Checkout, API
+
+---
 ## Overview
 
 The Payment Page is the simplest way to accept online payments with Surfboard. Instead of building your own checkout form, you redirect customers to a Surfboard-hosted payment page. The customer completes payment there and is redirected back to your site.
@@ -10,7 +19,7 @@ Before accepting payments with the Payment Page:
 
 1. Create a developer account at the [Developer Portal](https://developers.surfboardpayments.com/sign-up)
 2. Complete onboarding (merchant and store setup)
-3. Register a terminal with the type set to **PaymentPage**
+3. The `terminalId` of the store's **PaymentPage** terminal — creating an online store provisions one for you, so fetch the store's terminals rather than registering a new one
 
 ## Payment Types
 
@@ -27,8 +36,10 @@ There are two primary types of payments:
 
 Create an order using the [Create Order API](https://developers.surfboardpayments.com/api/orders). On success, you receive a **payment link** to share with the customer.
 
+For the store, domain and terminal setup this call assumes, see [Online Payment Link](/developers/guides/online-payment-link).
+
 ```json
-POST /merchants/:merchantId/orders
+POST /orders
 {
   "terminal$id": "YOUR_TERMINAL_ID",
   "orderLines": [
@@ -50,6 +61,20 @@ POST /merchants/:merchantId/orders
   }
 }
 ```
+
+```json
+// Response
+{
+  "status": "SUCCESS",
+  "data": {
+    "orderId": "8455c12f9fd0620a010b",
+    "paymentPageLink": "https://pay.withsurfboard.com/8455c12f9fd0620a010b?pi=Dr4GoyMXF0zHvjca_Oa0vHgxcT-OD1qp7KdokyI7dkTwRwYJt8nkXyQm3bT6vqCfgraOw50Bf5uOp__3ckbMWOV6L9QbiTiSEFS3YmF4Eb8lr5pTWP2KFjm9Ukmd0000&add=IzFlNDBhZg=="
+  },
+  "message": "Order created successfully"
+}
+```
+
+Pass `paymentPageLink` on whole -- the query string carries the payment intent, and a trimmed or re-encoded link will not open.
 
 ### Control Fields
 
@@ -91,7 +116,7 @@ Here is the typical integration flow:
 
 1. Customer clicks "Pay" on your website
 2. Your backend calls the Create Order API
-3. You redirect the customer to the `paymentUrl` from the response
+3. You redirect the customer to the `paymentPageLink` from the response, or to `shortLinkUrl` if you asked for a short link
 4. Customer completes payment on the Surfboard-hosted page
 5. Customer is redirected to your `redirectUrl` (or `failureRedirectUrl`)
 6. Your backend verifies the order status via the API or webhook

@@ -1,3 +1,12 @@
+# Self-Hosted Checkout
+
+Embed a payment form directly in your web app with the Surfboard Online SDK. Full UI control with Surfboard handling PCI compliance.
+
+Source: https://www.surfboardpayments.com/developers/guides/self-hosted-checkout
+Category: online
+Tags: Online, SDK, JavaScript, Self-Hosted, Checkout
+
+---
 ## Overview
 
 The Self-Hosted Checkout (Online SDK) lets you embed payment fields directly in your website while Surfboard handles PCI compliance and payment processing. You get full control over the look and feel of your checkout page.

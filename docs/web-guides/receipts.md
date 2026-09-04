@@ -1,3 +1,12 @@
+# Receipts
+
+Generate, email, print, and customise receipts for in-store transactions using the Surfboard Receipts API.
+
+Source: https://www.surfboardpayments.com/developers/guides/receipts
+Category: in-store
+Tags: In-Store, API, Receipts, Printing, ESC/POS
+
+---
 ## Overview
 
 After a payment is completed, Surfboard gives you several ways to deliver receipts to customers. You can attach cash register details for regulatory compliance, email a digital copy, retrieve a shareable link, print directly on a Surfboard terminal, or send fully custom ESC/POS commands for branded receipt output.
@@ -168,7 +177,7 @@ The `{id}` path parameter accepts a Transaction ID, Payment ID, or Order ID.
 
 ## Custom ESC/POS Printing
 
-For full control over receipt layout and branding, send raw ESC/POS commands to a terminal's built-in printer. This lets you design completely custom receipts -- including logos, formatted tables, barcodes, and styled text -- using the industry-standard ESC/POS command set.
+For full control over receipt layout and branding, send raw ESC/POS commands to a terminal's built-in printer. This lets you design completely custom receipts -- including logos, formatted tables, QR codes, and styled text -- using the industry-standard ESC/POS command set.
 
 ```
 PUT /receipts/{terminalId}/escpos
@@ -180,13 +189,15 @@ Note that this endpoint uses the `terminalId` directly in the path, not a transa
 
 ```json
 {
-  "escposCommands": "G0AbYQEbRQFTdXBlciBNYXJ0CjEyMyBNYWluIFN0ChtFABthAERhdGU6IDIwMjQvMTAvMDgKVGltZTogMTI6MDAgUE0KG0UBLS0tLS0tLS0tLQobRQAbYQBJdGVtIEE6IFdhdGVyClByaWNlOiAkMS4wMApJdGVtIEI6IEJyZWFkClByaWNlOiAkMi4wMAobRQEtLS0tLS0tLS0tClRvdGFsOiAkMy4wMAobRQAbYQFUaGFuayB5b3UhCgoKHVYA"
+  "escposCommands": "G0AbYQEbRQFTdXBlciBNYXJ0CjEyMyBNYWluIFN0ChtFABthAERhdGU6IDIwMjQvMTAvMDgKVGltZTogMTI6MDAgUE0KG0UBLS0tLS0tLS0tLQobRQAbYQBJdGVtIEE6IFdhdGVyClByaWNlOiAkMS4wMApJdGVtIEI6IEJyZWFkClByaWNlOiAkMi4wMAobRQEtLS0tLS0tLS0tClRvdGFsOiAkMy4wMAobRQAbYQFUaGFuayB5b3UhCgoKHVYA",
+  "codePages": "UTF-8"
 }
 ```
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `escposCommands` | string | Yes | A stream of ESC/POS commands encoded as a Base64 string. |
+| `codePages` | string | No | Send `UTF-8` to opt in to the validated ESC/POS contract. Omitting it keeps the deprecated legacy flow. |
 
 **Response:**
 
@@ -204,7 +215,7 @@ Note that this endpoint uses the `terminalId` directly in the path, not a transa
 
 ### Building ESC/POS Commands
 
-ESC/POS is a command protocol originally developed by Epson and now supported by most thermal receipt printers. Common commands include:
+ESC/POS is a command protocol originally developed by Epson and now supported by most thermal receipt printers. A few common commands:
 
 | Command | Hex | Description |
 |---------|-----|-------------|
@@ -219,9 +230,11 @@ ESC/POS is a command protocol originally developed by Epson and now supported by
 
 1. Compose your ESC/POS byte stream (text interspersed with control commands).
 2. Encode the entire byte stream as a Base64 string.
-3. Send the Base64 string in the `escposCommands` field.
+3. Send the Base64 string in the `escposCommands` field, with `"codePages": "UTF-8"`.
 
-> **Tip:** Most ESC/POS libraries (e.g., `escpos` for Python, `node-escpos` for Node.js) can generate the byte stream for you. Encode the output buffer to Base64 before sending it to Surfboard.
+> **Note:** The table above is a starting point, not the full picture. Once you send `"codePages": "UTF-8"`, payloads are validated against a defined contract: UTF-8 text, a fixed command set, and line widths that vary by text size. Commands outside that set -- including `GS v 0` raster images and `ESC t` charset selection -- are rejected before they reach the terminal. See the [ESC/POS Printing](/developers/guides/escpos-printing) guide for the complete contract, a worked receipt, and a preflight validator.
+
+> **Tip:** Generic ESC/POS libraries (`escpos` for Python, `node-escpos` for Node.js) can generate the byte stream for you, but their defaults often emit raster images and charset commands that the contract rejects. Check what your library actually produces before sending it.
 
 ## API Quick Reference
 

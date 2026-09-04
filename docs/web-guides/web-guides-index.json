@@ -1,8 +1,9 @@
 {
   "title": "Surfboard Payments Web Guides",
-  "description": "Developer guides from surfboardpayments.com covering payment methods, SDKs, terminal integrations, and payment lifecycle",
-  "totalGuides": 32,
-  "lastUpdated": "2026-03-11",
+  "description": "Developer guides from surfboardpayments.com covering payment methods, SDKs, terminal integrations, onboarding, and payment lifecycle",
+  "source": "https://www.surfboardpayments.com/api/ai/guides.json",
+  "totalGuides": 46,
+  "lastUpdated": "2026-09-04",
   "categories": [
     "in-store",
     "online"
@@ -37,6 +38,21 @@
       "mdFile": "web-guides/android-softpos-sdk.md"
     },
     {
+      "title": "CheckoutX SoftPOS",
+      "slug": "checkoutx-softpos",
+      "description": "Accept in-person payments on smartphones and tablets by pairing the CheckoutX app with your own POS app, a dual-app setup that requires no SDK integration.",
+      "category": "in-store",
+      "tags": [
+        "In-Store",
+        "Android",
+        "iOS",
+        "CheckoutX",
+        "SoftPOS",
+        "App Switch"
+      ],
+      "mdFile": "web-guides/checkoutx-softpos.md"
+    },
+    {
       "title": "EMV Terminal Integration",
       "slug": "emv-terminal-integration",
       "description": "Integrate traditional card-present terminals through Surfboard's unified API. From account setup to live payments in one guide.",
@@ -66,12 +82,13 @@
     {
       "title": "Inter-App Integration",
       "slug": "interapp-integration",
-      "description": "Integrate your POS app with CheckoutX using native app switch. Register terminals, process payments, and scan NFC tags through a bi-directional deep link flow.",
+      "description": "Integrate your POS app with CheckoutX using native app switch. Register terminals, process payments, and scan NFC tags through a bi-directional deep link flow -- from a native app or a browser-based POS.",
       "category": "in-store",
       "tags": [
         "In-Store",
         "Android",
         "iOS",
+        "Web",
         "CheckoutX",
         "App Switch"
       ],
@@ -121,16 +138,33 @@
     {
       "title": "Merchant Onboarding",
       "slug": "merchant-onboarding",
-      "description": "Set up merchants and stores on the Surfboard platform. Walk through the full onboarding flow from merchant creation to KYB completion and store setup.",
+      "description": "Create a merchant application through the Partner API and hand the merchant a prefilled web KYB link. Registry lookup, automatic business classification, people and signing, application status, and store setup.",
       "category": "online",
       "tags": [
         "Onboarding",
         "Merchant",
         "KYB",
+        "Prefill",
+        "MCC",
         "Store",
+        "Partners",
         "API"
       ],
       "mdFile": "web-guides/merchant-onboarding.md"
+    },
+    {
+      "title": "Device Registration",
+      "slug": "device-registration",
+      "description": "Register a terminal to a store before it can take payments or receive a partner POS app. Covers rotating codes, QR/registration links, pre-shipped codes, and in-app registration for SoftPOS.",
+      "category": "in-store",
+      "tags": [
+        "In-Store",
+        "Terminal",
+        "API",
+        "Device Management",
+        "Onboarding"
+      ],
+      "mdFile": "web-guides/device-registration.md"
     },
     {
       "title": "Payment Lifecycle",
@@ -301,6 +335,21 @@
       "mdFile": "web-guides/tips-configuration.md"
     },
     {
+      "title": "ESC/POS Printing",
+      "slug": "escpos-printing",
+      "description": "Send custom ESC/POS receipts to any Surfboard terminal using the UTF-8 contract: opt in with one field, get validated payloads and consistent output across current and legacy hardware.",
+      "category": "in-store",
+      "tags": [
+        "In-Store",
+        "API",
+        "Receipts",
+        "Printing",
+        "ESC/POS",
+        "UTF-8"
+      ],
+      "mdFile": "web-guides/escpos-printing.md"
+    },
+    {
       "title": "NFC Tag Reading",
       "slug": "nfc-tag-reading",
       "description": "Use the NFC Reading API to create tag-reading sessions on payment terminals, scan NFC/RFID-tagged products, and retrieve scanned tag data.",
@@ -413,6 +462,22 @@
       "mdFile": "web-guides/account-management.md"
     },
     {
+      "title": "Service Providers & Split Payouts",
+      "slug": "service-providers",
+      "description": "Route a share of each payment to a third party with Surfboard Flow. Onboard a service provider, link it to a merchant, and set the split on the order.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "In-Store",
+        "API",
+        "Service Providers",
+        "Flow",
+        "Payouts",
+        "Partners"
+      ],
+      "mdFile": "web-guides/service-providers.md"
+    },
+    {
       "title": "Payment Methods",
       "slug": "payment-methods",
       "description": "Activate, deactivate, and list payment methods for a merchant. Manage card, Swish, Klarna, AMEX, Vipps, MobilePay, and more via the API or Partner Portal.",
@@ -450,6 +515,147 @@
         "White-Label"
       ],
       "mdFile": "web-guides/partner-branding.md"
+    },
+    {
+      "title": "Create Order Error Codes",
+      "slug": "create-order-error-codes",
+      "description": "Reference of error codes returned by the create order and initiate payment flows, with notes on when each is thrown and how to handle it.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Orders",
+        "Errors",
+        "Reference"
+      ],
+      "mdFile": "web-guides/create-order-error-codes.md"
+    },
+    {
+      "title": "Online Payment Link",
+      "slug": "online-payment-link",
+      "description": "Take a payment on the web without a checkout page of your own. Create an online store, verify its domains, create an order against the PaymentPage terminal it comes with, and send the customer the link it returns.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Payment Link",
+        "Payment Page",
+        "Orders"
+      ],
+      "mdFile": "web-guides/online-payment-link.md"
+    },
+    {
+      "title": "Customer Identification on Card Tap",
+      "slug": "customer-identification",
+      "description": "Recognise a returning customer from the card they tap, before the payment runs. Apply their discount, points or price list to the open order, then take the money.",
+      "category": "in-store",
+      "tags": [
+        "In-Store",
+        "API",
+        "Webhooks",
+        "Loyalty",
+        "Personalisation"
+      ],
+      "mdFile": "web-guides/customer-identification.md"
+    },
+    {
+      "title": "Tokens",
+      "slug": "tokens",
+      "description": "Turn a card used once into a card you can charge again. Enable tokenization on an order, fetch the token it produced, and store it for subscriptions, repeat purchases and refunds.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Tokenization",
+        "Cards",
+        "MIT"
+      ],
+      "mdFile": "web-guides/tokens.md"
+    },
+    {
+      "title": "Order and Return Terminals",
+      "slug": "terminal-logistics",
+      "description": "Get hardware to your merchants and back again. Order terminals during onboarding or later, track the shipment by webhook, and raise a return when a device is no longer needed.",
+      "category": "in-store",
+      "tags": [
+        "In-Store",
+        "API",
+        "Logistics",
+        "Terminals",
+        "Partners"
+      ],
+      "mdFile": "web-guides/terminal-logistics.md"
+    },
+    {
+      "title": "Transactions and Reports",
+      "slug": "transactions-and-reports",
+      "description": "Retrieve, filter and search transactions, and read a monthly report the way finance does. Covers why net sales and payout never match and how to reconcile a period end to end.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Transactions",
+        "Reporting",
+        "Reconciliation",
+        "In-Store"
+      ],
+      "mdFile": "web-guides/transactions-and-reports.md"
+    },
+    {
+      "title": "AI Product Images and Branding",
+      "slug": "ai-merchandising",
+      "description": "Turn a phone photo into a usable product image and a website into a branded portal. Two endpoints that remove the design work from onboarding a merchant.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "AI",
+        "Catalog",
+        "Branding"
+      ],
+      "mdFile": "web-guides/ai-merchandising.md"
+    },
+    {
+      "title": "POS Templates",
+      "slug": "pos-templates",
+      "description": "Decide what the till shows and in what order. Lay out product categories, payment methods and terminals per store, and switch layouts automatically by time of day.",
+      "category": "in-store",
+      "tags": [
+        "In-Store",
+        "API",
+        "POS",
+        "Templates",
+        "Configuration"
+      ],
+      "mdFile": "web-guides/pos-templates.md"
+    },
+    {
+      "title": "API Conventions",
+      "slug": "api-conventions",
+      "description": "The rules that hold across every Surfboard endpoint: authentication, the response envelope, amounts and currencies, identifiers, dates, pagination and environments.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Pagination",
+        "Conventions",
+        "Authentication"
+      ],
+      "mdFile": "web-guides/api-conventions.md"
+    },
+    {
+      "title": "B2B Invoices",
+      "slug": "b2b-invoices",
+      "description": "Bill a business buyer on payment terms instead of charging a card. Create an order paid with B2BINV, distribute the invoice as an e-invoice or by email, and credit it when the goods come back.",
+      "category": "online",
+      "tags": [
+        "Online",
+        "API",
+        "Invoice",
+        "B2B",
+        "Payment Methods"
+      ],
+      "mdFile": "web-guides/b2b-invoices.md"
     }
   ]
 }

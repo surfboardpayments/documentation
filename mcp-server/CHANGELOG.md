@@ -2,6 +2,17 @@
 
 All notable changes to `@surfboardpayments/surf-mcp` are documented here. This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.3.1] — 2026-09-04
+
+### Added
+- **14 new web guides** synced from surfboardpayments.com: Service Providers & Split Payouts, Device Registration, CheckoutX SoftPOS, ESC/POS Printing, Create Order Error Codes, Online Payment Link, Customer Identification, Tokens, Terminal Logistics, Transactions & Reports, AI Merchandising, POS Templates, API Conventions, B2B Invoices. The bundle grows from 32 to **46 web guides**.
+- **5 new webhook events** from upstream GitLab `master` (through `0d6a94a2`): `stores.online-store-onboarded`, `stores.store-activated`, `terminals.hardware-terminal-registered`, `terminals.online-terminal-registered`, `terminals.softpos-terminal-registered`. The bundle now carries **24 webhook events**.
+- `scripts/sync-from-local.sh` and `scripts/sync-web-guides.mjs` at the repo root, so the whole upstream + web-guide sync is one command.
+
+### Changed
+- **20 existing web guides updated** to their current published versions, including the rewritten Merchant Onboarding guide (registry prefill, MCC classification, people and signing) and updates to account management, create-an-order, payment lifecycle, receipts, recurring payments, refunds, settlements, store management, terminal device management, webhooks, and others.
+- Web guide markdown files now start with the same header the site serves at `/api/ai/guides/<slug>.md` (title, description, source URL, category, tags) so `read_doc` output is self-describing.
+
 ## [1.3.0] — 2026-08-11
 
 ### Added

@@ -1,3 +1,12 @@
+# Partner Branding
+
+Configure white-label branding for terminals and payment pages. Set colors, fonts, logos, and cover images at the partner level via API or Partner Portal.
+
+Source: https://www.surfboardpayments.com/developers/guides/partner-branding
+Category: online
+Tags: Online, API, Branding, White-Label
+
+---
 ## Overview
 
 Surfboard is fully white-label. Use the Branding API to configure colors, fonts, logos, and images that apply to all terminals and customizable pages under your partner account. Branding can be set at the partner level and inherited by all merchants and stores beneath it.

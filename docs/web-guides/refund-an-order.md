@@ -1,3 +1,12 @@
+# Refund an Order
+
+Process a full refund by creating a return order with negative quantities. Covers the complete refund flow with API examples and payment method requirements.
+
+Source: https://www.surfboardpayments.com/developers/guides/refund-an-order
+Category: online
+Tags: Online, API, Payments, Refunds, In-Store
+
+---
 ## Overview
 
 A full refund in Surfboard is processed by creating a **new order** with negative quantities and negative amounts, referencing the original order's `orderId` as the `purchaseOrderId` on each line item. When the payment completes, the full amount is returned to the customer.
@@ -18,7 +27,7 @@ A full refund in Surfboard is processed by creating a **new order** with negativ
 Create a new order with negative `quantity` and negative `amount.total` for each line item. Include the original `orderId` as `purchaseOrderId`:
 
 ```json
-POST /merchants/:merchantId/orders
+POST /orders
 {
   "terminal$id": "YOUR_TERMINAL_ID",
   "referenceId": "refund-order-001",
@@ -62,7 +71,11 @@ POST /merchants/:merchantId/orders
   },
   "controlFunctions": {
     "initiatePaymentsOptions": {
-      "paymentMethod": "CARD"
+      "paymentMethod": "CARD_NP",
+      "refundProcessingParams": {
+        "purchasePaymentId": "ORIGINAL_PAYMENT_ID",
+        "refundReason": "CUSTOMER_INITIATED_RETURN"
+      }
     }
   }
 }
@@ -80,6 +93,8 @@ POST /merchants/:merchantId/orders
 }
 ```
 
+The `terminal$id` only needs to be a **valid** terminal -- it does **not** have to be the same terminal that processed the original purchase.
+
 Key details:
 
 - Set `quantity` to a negative value to indicate a return
@@ -89,7 +104,7 @@ Key details:
 
 ## Payment Method for Refunds
 
-Refunds must use the corresponding refund method for the original payment:
+Set `paymentMethod` to either the method the customer originally paid with, or `CARD_NP`:
 
 | Original Payment Method | Refund Method |
 |------------------------|---------------|
@@ -98,14 +113,72 @@ Refunds must use the corresponding refund method for the original payment:
 | SWISH | `SWISH` |
 | Other digital methods | Same as original |
 
+For card refunds, the two card methods behave differently:
+
+| Method | Behaviour |
+|--------|-----------|
+| `CARD_NP` | **Card not present.** Refunds straight back to the card that paid -- no terminal interaction. This is the recommended default for card refunds. |
+| `CARD` | **Card present.** Triggers a card tap on the terminal, so a card must be physically presented to receive the refund. |
+
 > **Note:** Transaction fees are charged again on refunds.
+
+## Refund Processing Parameters
+
+Pass refund metadata through `refundProcessingParams` inside `initiatePaymentsOptions`:
+
+```json
+{
+  "controlFunctions": {
+    "initiatePaymentsOptions": {
+      "paymentMethod": "CARD_NP",
+      "refundProcessingParams": {
+        "purchasePaymentId": "ORIGINAL_PAYMENT_ID",
+        "refundReason": "CUSTOMER_INITIATED_RETURN"
+      }
+    }
+  }
+}
+```
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| `purchasePaymentId` | No | The `paymentId` of the **original purchase** (returned when the original order was created). This is the payment-level reference, distinct from the `purchaseOrderId` you set on each line item. |
+| `refundReason` | No | Why the refund is being issued. See the allowed values below. |
+| `otherReason` | Conditional | Free-text explanation. **Required when `refundReason` is `OTHER`.** |
+
+### Refund Reasons
+
+| Value | Meaning |
+|-------|---------|
+| `CUSTOMER_INITIATED_RETURN` | The customer returned the goods or requested the refund. |
+| `SUSPECTED_MALFUNCTION` | The product is suspected to be faulty or not working. |
+| `SUSPECTED_FRAUD` | The transaction is suspected to be fraudulent. |
+| `DUPLICATE_TRANSACTION` | The original charge was a duplicate. |
+| `OTHER` | Any other reason -- requires a message in `otherReason`. |
+
+When using `OTHER`, include the explanation:
+
+```json
+{
+  "controlFunctions": {
+    "initiatePaymentsOptions": {
+      "paymentMethod": "CARD_NP",
+      "refundProcessingParams": {
+        "purchasePaymentId": "ORIGINAL_PAYMENT_ID",
+        "refundReason": "OTHER",
+        "otherReason": "Goodwill credit for delayed delivery"
+      }
+    }
+  }
+}
+```
 
 ## Step 2: Check Refund Status
 
 Verify the refund completed:
 
 ```json
-GET /merchants/:merchantId/orders/:orderId/status
+GET /orders/:orderId/status
 ```
 
 The order status will show `PAYMENT_COMPLETED` once the refund is processed. You can also track refund status via [webhooks](/developers/guides/webhooks-notifications).

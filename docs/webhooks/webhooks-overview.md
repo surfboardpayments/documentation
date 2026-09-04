@@ -51,6 +51,25 @@ Merchant application events include:
 -   [Application Expired](/webhooks/merchants#Application-Expired)
 -   [Application Rejected](/webhooks/merchants#Application-Rejected)
 
+### Store Events
+
+Store events provide real-time updates as a merchant's stores are set up and enabled for payment acceptance. These notifications tell you exactly when a store is ready to accept payments, without having to poll the store APIs.
+
+Store events include:
+
+-   [Store Activated](/webhooks/stores#Store-Activated)
+-   [Online Store Onboarded](/webhooks/stores#Online-Store-Onboarded)
+
+### Terminal Events
+
+Terminal events notify you when payment terminals are registered under a store. A separate event fires per terminal category, so you can tell what kind of terminal was registered from the event name alone. Payloads carry identifiers only — fetch the terminal from the Terminals API when you need its details.
+
+Terminal events include:
+
+-   [Online Terminal Registered](/webhooks/terminals#Online-Terminal-Registered)
+-   [SoftPOS Terminal Registered](/webhooks/terminals#SoftPOS-Terminal-Registered)
+-   [Hardware Terminal Registered](/webhooks/terminals#Hardware-Terminal-Registered)
+
 ## How our webhooks work?
 
 When an event occurs, Surfboard sends an HTTP **`POST`** request to a URL on your server. The details of the event are included in the request body. All webhook messages will also include a signature parameter to authenticate the event.

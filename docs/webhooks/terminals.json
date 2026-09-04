@@ -1,0 +1,236 @@
+{
+    "title": "Terminal Events",
+    "description": "The Terminal events reference details the events that arise when payment terminals are registered under a merchant's store in Surfboard. A separate event fires per terminal category — online, softpos (tap to pay), and hardware — so you can tell what kind of terminal was registered from the event name alone. Payloads carry identifiers only; fetch the terminal from the Terminals API when you need its details.",
+    "endpoints": [
+        {
+            "fragment": "Online Terminal Registered"
+        },
+        {
+            "fragment": "SoftPOS Terminal Registered"
+        },
+        {
+            "fragment": "Hardware Terminal Registered"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Online Terminal Registered",
+            "description": "This event is triggered when an online terminal is registered under a store. Online terminals cover the hosted payment page, self-hosted (SDK) integrations, iFrame, and merchant-initiated interfaces. The payload contains identifiers only — fetch the terminal from GET /terminals/{terminalId} when you need its details.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "originalCreated",
+                            "type": "number",
+                            "description": "Timestamp of the very first time the event was published"
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "terminalId",
+                            "type": "string",
+                            "description": "Unique identifier of the registered terminal."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "description": "Unique identifier of the merchant that the terminal belongs to."
+                        },
+                        {
+                            "name": "storeId",
+                            "type": "string",
+                            "description": "Unique identifier of the store the terminal is registered under."
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"eventType\": \"terminal.online.registered\",\n  \"metadata\": {\n    \"eventId\": \"8455ba8e6d1d584dff\",\n    \"created\": 1786449564082,\n    \"retryAttempt\": 0,\n    \"originalCreated\": 1786449564082,\n    \"webhookEventId\": \"8455ba8e2304b000ff\"\n  },\n  \"data\": {\n    \"terminalId\": \"8455ba8ded1d580204\",\n    \"merchantId\": \"842d872c7b99b00c0e\",\n    \"storeId\": \"8455ba3225ccb00f0f\"\n  }\n}\n   "
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "SoftPOS Terminal Registered",
+            "description": "This event is triggered when a softpos (tap-to-pay) terminal is registered under a store — payment acceptance running on a mobile device through the tap-to-pay app or SDK. The payload contains identifiers only — fetch the terminal from GET /terminals/{terminalId} when you need its details.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "originalCreated",
+                            "type": "number",
+                            "description": "Timestamp of the very first time the event was published"
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "terminalId",
+                            "type": "string",
+                            "description": "Unique identifier of the registered terminal."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "description": "Unique identifier of the merchant that the terminal belongs to."
+                        },
+                        {
+                            "name": "storeId",
+                            "type": "string",
+                            "description": "Unique identifier of the store the terminal is registered under."
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"eventType\": \"terminal.softpos.registered\",\n  \"metadata\": {\n    \"eventId\": \"8455bb1a42acf816ff\",\n    \"created\": 1786449612345,\n    \"retryAttempt\": 0,\n    \"originalCreated\": 1786449612345,\n    \"webhookEventId\": \"8455bb1a97e4c001ff\"\n  },\n  \"data\": {\n    \"terminalId\": \"8455bb19e2acf80304\",\n    \"merchantId\": \"842d872c7b99b00c0e\",\n    \"storeId\": \"8455ba3225ccb00f0f\"\n  }\n}\n   "
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Hardware Terminal Registered",
+            "description": "This event is triggered when a physical payment terminal, such as a Surfpad or other Surfboard hardware device, is registered under a store. The payload contains identifiers only — fetch the terminal from GET /terminals/{terminalId} when you need its details.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "originalCreated",
+                            "type": "number",
+                            "description": "Timestamp of the very first time the event was published"
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "terminalId",
+                            "type": "string",
+                            "description": "Unique identifier of the registered terminal."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "description": "Unique identifier of the merchant that the terminal belongs to."
+                        },
+                        {
+                            "name": "storeId",
+                            "type": "string",
+                            "description": "Unique identifier of the store the terminal is registered under."
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"eventType\": \"terminal.hardware.registered\",\n  \"metadata\": {\n    \"eventId\": \"8455bc02d51e3822ff\",\n    \"created\": 1786449701122,\n    \"retryAttempt\": 0,\n    \"originalCreated\": 1786449701122,\n    \"webhookEventId\": \"8455bc0311f0b002ff\"\n  },\n  \"data\": {\n    \"terminalId\": \"8455bc02851e380404\",\n    \"merchantId\": \"842d872c7b99b00c0e\",\n    \"storeId\": \"8455ba3225ccb00f0f\"\n  }\n}\n   "
+                    }
+                ]
+            }
+        }
+    ]
+}

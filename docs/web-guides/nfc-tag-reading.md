@@ -1,3 +1,12 @@
+# NFC Tag Reading
+
+Use the NFC Reading API to create tag-reading sessions on payment terminals, scan NFC/RFID-tagged products, and retrieve scanned tag data.
+
+Source: https://www.surfboardpayments.com/developers/guides/nfc-tag-reading
+Category: in-store
+Tags: In-Store, API, NFC, RFID, Terminal
+
+---
 ## Overview
 
 The NFC Reading API enables payment terminals to read NFC (RFID) tags attached to physical products. Instead of manually scanning barcodes or keying in item codes, store staff can place tagged items near the terminal and let the reader capture product identifiers automatically. This is useful for retail scenarios involving apparel, electronics, or high-value goods with embedded NFC tags.

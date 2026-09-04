@@ -1,3 +1,12 @@
+# Server-to-Server API
+
+Process online payments entirely from your backend with Merchant Initiated Transactions. Full control over recurring payments, subscriptions, and tokenized card flows.
+
+Source: https://www.surfboardpayments.com/developers/guides/server-to-server-api
+Category: online
+Tags: Online, API, Server-to-Server, MIT, Tokenization
+
+---
 ## Overview
 
 Merchant Initiated Transactions (MIT) allow you to initiate payments on behalf of customers entirely from your backend. This is the foundation for subscription billing, recurring charges, and any scenario where you need to charge a stored card without the customer being present.
@@ -8,9 +17,11 @@ The flow has two stages: the customer completes an initial payment (which tokeni
 
 1. Create a developer account at the [Developer Portal](https://developers.surfboardpayments.com/sign-up)
 2. Complete onboarding (merchant and store setup)
-3. Register two terminals:
+3. Two terminal IDs:
    - A **PaymentPage** or **SelfHostedPage** terminal for the initial customer payment
    - A **MerchantInitiated** terminal for subsequent server-to-server payments
+
+An online store comes with both a **PaymentPage** and a **MerchantInitiated** terminal already provisioned, so for the default setup this is a fetch, not a registration — list the store's terminals and take the two IDs. Only **SelfHostedPage** needs [registering](/developers/guides/terminal-device-management), and only if you are collecting the first payment on your own page.
 
 ## Stage 1: Initial Customer Payment
 
@@ -21,7 +32,7 @@ The first payment must be initiated by the customer. This step collects and toke
 Use the [Create Order API](https://developers.surfboardpayments.com/api/orders) with `enforceTokenization` set to `true`:
 
 ```json
-POST /merchants/:merchantId/orders
+POST /orders
 {
   "terminal$id": "YOUR_PAYMENT_PAGE_TERMINAL_ID",
   "orderLines": [
@@ -54,7 +65,7 @@ The customer enters their card details on the payment page or your self-hosted c
 After the payment completes, call the [Fetch Tokens from Orders API](https://developers.surfboardpayments.com/api/orders) to retrieve the `tokenId` and card information:
 
 ```json
-GET /merchants/:merchantId/orders/:orderId/tokens
+GET /orders/:orderId/tokens
 ```
 
 Store the `tokenId` securely against the customer in your system. You will use it for all future charges.
@@ -70,7 +81,7 @@ With the `tokenId` stored, you can now charge the customer from your backend at 
 Create a new order using the **MerchantInitiated** terminal:
 
 ```json
-POST /merchants/:merchantId/orders
+POST /orders
 {
   "terminal$id": "YOUR_MIT_TERMINAL_ID",
   "orderLines": [
@@ -109,7 +120,7 @@ curl -X POST YOUR_API_URL/payments \
 Verify the payment result using the [Fetch Order Status API](https://developers.surfboardpayments.com/api/orders):
 
 ```json
-GET /merchants/:merchantId/orders/:orderId/status
+GET /orders/:orderId/status
 ```
 
 The status will be `PAYMENT_COMPLETED` on success or `PAYMENT_CANCELLED` / `PAYMENT_FAILED` otherwise. You can also receive real-time updates via webhooks.

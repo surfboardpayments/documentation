@@ -1,0 +1,150 @@
+{
+    "title": "Store Events",
+    "description": "The Store events reference details the events that arise as a merchant's stores are set up and enabled for payment acceptance in Surfboard. From store activation to successful onboarding of an online store, these webhooks provide real-time updates on when a store becomes ready to accept payments. By tracking these events, partners know exactly when a merchant's stores are live, without having to poll the store APIs.",
+    "endpoints": [
+        {
+            "fragment": "Store Activated"
+        },
+        {
+            "fragment": "Online Store Onboarded"
+        }
+    ],
+    "apis": [
+        {
+            "heading": "Store Activated",
+            "description": "This event is triggered when a store is activated and is ready for terminal registration.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "originalCreated",
+                            "type": "number",
+                            "description": "Timestamp of the very first time the event was published"
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "storeId",
+                            "type": "string",
+                            "description": "Unique identifier of the store that was activated."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "description": "Unique identifier of the merchant that the store belongs to."
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"eventType\": \"store.activated\",\n  \"metadata\": {\n    \"eventId\": \"8455ba8da5ccb077ff\",\n    \"created\": 1786449563660,\n    \"retryAttempt\": 0,\n    \"originalCreated\": 1786449563660,\n    \"webhookEventId\": \"8455ba8da304b008ff\"\n  },\n  \"data\": {\n    \"storeId\": \"8455ba3225ccb00f0f\",\n    \"merchantId\": \"842d872c7b99b00c0e\"\n  }\n}\n   "
+                    }
+                ]
+            }
+        },
+        {
+            "heading": "Online Store Onboarded",
+            "description": "This event is triggered when an online store is approved for online payment acceptance. Once this event is received, the store can start accepting online payments.",
+            "reqParams": [
+                {
+                    "name": "eventType",
+                    "type": "string",
+                    "description": "Denotes the category of the webhook event."
+                },
+                {
+                    "name": "metadata",
+                    "type": "object",
+                    "description": "Includes information about the webhook event like the unique event ID, the date and time the event was created (timestamp), the number of retry attempts made to send the event, and the specific webhook event ID denoting the type of event.",
+                    "reqParams": [
+                        {
+                            "name": "eventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        },
+                        {
+                            "name": "created",
+                            "type": "number",
+                            "description": "Timestamp at which the event was created."
+                        },
+                        {
+                            "name": "retryAttempt",
+                            "type": "number",
+                            "description": "Number of retry attempts made for the webhook event. Surfboard will attempt to post messages three times in case of failures, with a delay of 5 minutes between the first and second attempts, and a delay of 10 minutes between the second and third attempts."
+                        },
+                        {
+                            "name": "originalCreated",
+                            "type": "number",
+                            "description": "Timestamp of the very first time the event was published"
+                        },
+                        {
+                            "name": "webhookEventId",
+                            "type": "string",
+                            "description": "Unique ID of the webhook event."
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "type": "object",
+                    "description": "The payload in the webhook event that contains the core information or updates being delivered. This is the useful data that recipients can act on.",
+                    "reqParams": [
+                        {
+                            "name": "storeId",
+                            "type": "string",
+                            "description": "Unique identifier of the store that was approved for online payments."
+                        },
+                        {
+                            "name": "merchantId",
+                            "type": "string",
+                            "description": "Unique identifier of the merchant that the store belongs to."
+                        }
+                    ]
+                }
+            ],
+            "examples": {
+                "response": [
+                    {
+                        "code": 200,
+                        "response": "\n{\n  \"eventType\": \"online.store.onboarded\",\n  \"metadata\": {\n    \"eventId\": \"8455ba8da5ccb077ff\",\n    \"created\": 1786449563660,\n    \"retryAttempt\": 0,\n    \"originalCreated\": 1786449563660,\n    \"webhookEventId\": \"8455ba8da304b008ff\"\n  },\n  \"data\": {\n    \"storeId\": \"8455ba3225ccb00f0f\",\n    \"merchantId\": \"842d872c7b99b00c0e\"\n  }\n}\n   "
+                    }
+                ]
+            }
+        }
+    ]
+}

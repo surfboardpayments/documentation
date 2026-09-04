@@ -1,3 +1,12 @@
+# Create an Order
+
+Learn how to create orders with line items, tax, customer details, and control functions. The starting point for accepting payments with the Surfboard API.
+
+Source: https://www.surfboardpayments.com/developers/guides/create-an-order
+Category: online
+Tags: Online, API, Orders, In-Store
+
+---
 ## Overview
 
 An order is the starting point for every payment in Surfboard. You create an order against a `terminal$id`, include line items with pricing, and optionally initiate payment in the same call. The API returns an `orderId` and `paymentId` that you use for all subsequent operations.
@@ -8,14 +17,16 @@ This guide covers basic order creation, line items, customer details, tax handli
 
 1. Create a developer account at the [Developer Portal](https://developers.surfboardpayments.com/sign-up)
 2. Complete onboarding (merchant and store setup)
-3. Register a terminal (any type -- in-store, PaymentPage, SelfHostedPage, or MerchantInitiated)
+3. A terminal to create the order against (any type -- in-store, PaymentPage, SelfHostedPage, or MerchantInitiated). In-store devices and SelfHostedPage are registered; an online store already carries a PaymentPage and a MerchantInitiated terminal, so fetch the store's terminals to find them.
 
 ## Basic Order
+
+Order, payment, and receipt endpoints are **not** merchant-scoped in the path. The merchant travels in the `MERCHANT-ID` header alongside `API-KEY` and `API-SECRET`, so the path is `/orders`, not `/merchants/{merchantId}/orders`. See [API Conventions](/developers/guides/api-conventions) for the full header set.
 
 Create an order with a single line item and initiate payment:
 
 ```json
-POST /merchants/:merchantId/orders
+POST /orders
 {
   "terminal$id": "YOUR_TERMINAL_ID",
   "orderLines": [
@@ -73,12 +84,48 @@ Every order requires at least one line item in the `orderLines` array. Each line
 | `name` | Yes | Product name |
 | `quantity` | Yes | Quantity (negative for refunds) |
 | `amount.regular` | Yes | Unit price in smallest currency unit |
-| `amount.total` | Yes | Total line amount in smallest currency unit |
+| `amount.total` | Yes | **Unit** price after shipping and campaign (`regular + shipping - campaign`). Not the line total |
 | `amount.currency` | Yes | Numeric ISO 4217 code (e.g., `"752"` for SEK) |
+| `amount.tax` | Yes | Tax array for the line. Required even at zero rate -- send a `0` entry rather than omitting it |
 
 Optional fields include `description`, `brand`, `imageUrl`, `gtin`, `categoryId`, `unit`, and `metadata`.
 
+> **`amount.total` is per unit, not per line.** This is the single most common first-integration error, and it only shows up once a cart has a quantity above one. `total` must equal `regular + shipping - campaign` for **one** unit; the order total is `sum(total * quantity)`. Sending `unitPrice × quantity` returns `P_0001: Invalid item price for item id <id>`.
+
+Two lines, one of them with a quantity above one:
+
+```json
+"orderLines": [
+  {
+    "id": "ITEM-001",
+    "name": "Flat white",
+    "quantity": 2,
+    "amount": {
+      "regular": 4500,
+      "total": 4500,
+      "currency": "752",
+      "tax": [{ "amount": 900, "percentage": 25, "type": "VAT" }]
+    }
+  },
+  {
+    "id": "ITEM-002",
+    "name": "Gift card",
+    "quantity": 1,
+    "amount": {
+      "regular": 10000,
+      "total": 10000,
+      "currency": "752",
+      "tax": [{ "amount": 0, "percentage": 0, "type": "VAT" }]
+    }
+  }
+]
+```
+
+The first line contributes `4500 * 2 = 9000`, not `4500`. The order total is `19000`. The gift card is zero-rated and still carries a `tax` entry: omitting it returns `P_0001: Input data validation failed. Cannot read properties of undefined (reading 'vatValue')`.
+
 > **Currency format:** All amounts use the smallest currency unit. For example, 10.00 SEK = `1000`, 5.00 EUR = `500`.
+
+> **Prices include tax.** `amount.regular` and `amount.total` are gross. The `tax` array reports the VAT *contained within* that price, not an amount to add on top. See [API Conventions](/developers/guides/api-conventions) if you are coming from a sales-tax market.
 
 ## Customer, Billing, and Shipping
 
@@ -189,7 +236,7 @@ See the [Capture a Payment](/developers/guides/capture-a-payment) guide for the 
 After creating an order, check its status at any time:
 
 ```json
-GET /merchants/:merchantId/orders/:orderId/status
+GET /orders/:orderId/status
 ```
 
 ```json
@@ -223,6 +270,12 @@ Every payment ends in one of three terminal states:
 | `PAYMENT_CANCELLED` | `PENDING` | Payment was cancelled -- the order remains open and a new payment can be initiated using the existing `orderId`. |
 | `PAYMENT_FAILED` | `PENDING` | Payment failed -- the order remains open and a new payment can be initiated using the existing `orderId`. |
 
+## Error Handling
+
+Create order responses return `status: "ERROR"` with a code in the `OR_*`, `PS_*`, `GC_*`, or `SP_*` prefix when validation or initiation fails. The most common ones are `OR_0042` (terminal not found), `OR_0037` (invalid total), `OR_0048` (mixed currencies), and `PS_0025` (terminal not connected -- retry after configure).
+
+See the [Create Order Error Codes](/developers/guides/create-order-error-codes) reference for the full list, including errors thrown by the initiate payment step when both happen in the same call.
+
 ## Next Steps
 
 Once you have an order created, you can:
@@ -237,5 +290,6 @@ Once you have an order created, you can:
 
 - [Create Order API](https://developers.surfboardpayments.com/api/orders)
 - [Payments API](https://developers.surfboardpayments.com/api/payments)
+- [Create Order Error Codes](/developers/guides/create-order-error-codes)
 - [Payment Lifecycle](/developers/guides/payment-lifecycle)
 - [Developer Portal](https://developers.surfboardpayments.com/)

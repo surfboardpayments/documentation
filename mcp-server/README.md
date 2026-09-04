@@ -86,9 +86,9 @@ After installing, restart your AI client so it picks up the new server.
 | Content | Coverage |
 |---------|----------|
 | API endpoints | 230+ endpoints across orders, payments, terminals, merchants, stores, webhooks, branding, billing, gift cards, product catalog, ECR V2, RFID, partners, transactions, AI tools |
-| Webhook events | 20+ events covering merchant lifecycle, order status, payment status, terminal events |
+| Webhook events | 24 events covering merchant lifecycle, order status, payment status, store and terminal registration |
 | Integration guides | In-store payments, online payments, SDK setup (Android/iOS), checkout flows, terminal handling, post-payment ops |
-| Web guides | 30+ task-oriented walkthroughs (recurring payments, partial captures, refunds, gift cards, onboarding, etc.) |
+| Web guides | 46 task-oriented walkthroughs (merchant onboarding, service providers and split payouts, recurring payments, partial captures, refunds, gift cards, payment links, B2B invoices, etc.) |
 
 The bundle is a snapshot of the latest published documentation at the version you install. Updating to a newer package version pulls in newer docs.
 

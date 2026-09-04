@@ -1,3 +1,12 @@
+# Multi-Merchant Terminals
+
+Set up shared payment terminals for multiple merchants using the Multi-Merchant Group API. Ideal for food courts, events, and co-located businesses.
+
+Source: https://www.surfboardpayments.com/developers/guides/multi-merchant-terminals
+Category: in-store
+Tags: In-Store, API, Multi-Merchant, Terminal, Partners
+
+---
 ## Overview
 
 A multi-merchant terminal allows several independent businesses to accept payments through a single physical device. Each merchant retains its own merchant account -- orders, transactions, and payouts are routed individually -- but they share the same hardware.

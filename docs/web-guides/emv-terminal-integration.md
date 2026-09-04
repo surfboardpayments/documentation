@@ -1,3 +1,12 @@
+# EMV Terminal Integration
+
+Integrate traditional card-present terminals through Surfboard's unified API. From account setup to live payments in one guide.
+
+Source: https://www.surfboardpayments.com/developers/guides/emv-terminal-integration
+Category: in-store
+Tags: EMV, Terminal, In-Store, API, Hardware
+
+---
 ## Overview
 
 Surfboard Payments lets you integrate traditional EMV card-present terminals through a single, unified API. Whether you are deploying countertop terminals, mobile POS devices, or kiosk setups, the integration follows the same workflow: create an account, get API credentials, build and test in the sandbox, then go live.
@@ -67,7 +76,7 @@ POST /merchants/:merchantId/stores/:storeId/devices
 Create orders and initiate payments using the [Orders API](https://developers.surfboardpayments.com/api/orders). The Carbon API uses an orders-first workflow -- create an order and initiate payment in a single call:
 
 ```json
-POST /merchants/:merchantId/orders
+POST /orders
 {
   "terminal$id": "YOUR_TERMINAL_ID",
   "orderLines": [
@@ -114,10 +123,10 @@ Once your integration is built and tested in the demo environment:
 
 Configure webhooks to receive real-time notifications about order and payment events. Key events include:
 
-- `order.payment.completed` -- Payment was successful
-- `order.payment.cancelled` -- Payment was cancelled
-- `order.payment.failed` -- Payment failed
-- `merchant.application.completed` -- Merchant onboarding completed
+- `order.paymentcompleted` -- Payment was successful
+- `order.paymentcancelled` -- Payment was cancelled
+- `order.paymentfailed` -- Payment failed
+- `order.terminal.event` -- Every terminal state during the transaction
 
 Set up webhook endpoints in the Console under your developer account settings.
 

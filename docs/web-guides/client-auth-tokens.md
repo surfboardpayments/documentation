@@ -1,3 +1,12 @@
+# Client Auth Tokens
+
+Generate client-side authentication tokens for secure API access from browsers and mobile apps without exposing your API key or secret.
+
+Source: https://www.surfboardpayments.com/developers/guides/client-auth-tokens
+Category: online
+Tags: Online, API, Authentication, Security
+
+---
 ## Overview
 
 Client auth tokens let client-side applications (web browsers, mobile apps) authenticate with the Surfboard API without exposing your `API-KEY` or `API-SECRET`. Use them for customer-facing operations where you need to call the API directly from the frontend.

@@ -1,3 +1,12 @@
+# Void a Payment
+
+Reverse a completed payment before settlement. Voiding stops funds from transferring to the merchant's account, avoiding incorrect transactions.
+
+Source: https://www.surfboardpayments.com/developers/guides/void-a-payment
+Category: online
+Tags: Online, API, Payments, In-Store
+
+---
 ## Overview
 
 Voiding reverses a **completed** payment before it settles -- no money moves from the customer's account to the merchant's. This is the quickest way to reverse a transaction on the same day, avoiding refund processing fees.
@@ -45,7 +54,7 @@ POST /payments/:paymentId/void
 Confirm the void was applied:
 
 ```json
-GET /merchants/:merchantId/orders/:orderId/status
+GET /orders/:orderId/status
 ```
 
 The order's transaction data will show `voided: true` for the affected transaction.

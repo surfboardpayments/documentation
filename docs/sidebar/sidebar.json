@@ -1425,6 +1425,38 @@
                         "extension": ".json"
                     }
                 ]
+            },
+            {
+                "heading": "Store Events",
+                "route": "/webhooks/stores",
+                "links": [
+                    {
+                        "label": "Store Activated",
+                        "route": "/webhooks/stores"
+                    },
+                    {
+                        "label": "Online Store Onboarded",
+                        "route": "/webhooks/stores"
+                    }
+                ]
+            },
+            {
+                "heading": "Terminal Events",
+                "route": "/webhooks/terminals",
+                "links": [
+                    {
+                        "label": "Online Terminal Registered",
+                        "route": "/webhooks/terminals"
+                    },
+                    {
+                        "label": "SoftPOS Terminal Registered",
+                        "route": "/webhooks/terminals"
+                    },
+                    {
+                        "label": "Hardware Terminal Registered",
+                        "route": "/webhooks/terminals"
+                    }
+                ]
             }
         ]
     },

@@ -1,3 +1,12 @@
+# Tap to Pay on iPhone SDK
+
+Accept contactless payments directly on iPhone. Complete integration guide for Surfboard's iOS SoftPOS SDK -- from setup to production.
+
+Source: https://www.surfboardpayments.com/developers/guides/tap-to-pay-iphone
+Category: in-store
+Tags: iOS, Swift, SoftPOS, In-Store, XCFramework
+
+---
 ## Overview
 
 The Surfboard Tap to Pay on iPhone SDK turns any compatible iPhone into a payment terminal. The SDK ships as a prebuilt `tap_to_pay_apple.xcframework` that you link into your iOS app.

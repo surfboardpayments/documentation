@@ -1,3 +1,12 @@
+# Terminal & Device Management
+
+Manage payment terminals and devices via the Surfboard API. Register in-store and online terminals, configure settings, and handle device operations.
+
+Source: https://www.surfboardpayments.com/developers/guides/terminal-device-management
+Category: in-store
+Tags: In-Store, Terminal, API, Device Management, Configuration
+
+---
 ## Overview
 
 Once merchants are onboarded and stores are created, the next step is registering and managing terminals. Surfboard supports both physical in-store devices and online payment terminals. This guide covers registration, configuration, and ongoing operations like moving or rebooting terminals.
@@ -47,7 +56,13 @@ The `registrationStatus` will be either `REGISTERED` (new device) or `ALREADY_RE
 
 ## Registering Online Terminals
 
-Online terminals are registered per store, specifying the terminal mode.
+Two online terminals arrive with the store. Creating an online store provisions a `PaymentPage` terminal, for payment links and hosted checkout, and a `MerchantInitiated` terminal, for backend charges against a stored token. Neither takes a registration call — fetch the store's terminals to get their IDs:
+
+```
+GET /merchants/{merchantId}/stores/{storeId}/terminals
+```
+
+The remaining modes, `SelfHostedPage` and `iFrame`, are registered per store with the mode named in the body:
 
 ```
 POST /merchants/{merchantId}/stores/{storeId}/online-terminals
@@ -59,7 +74,7 @@ POST /merchants/{merchantId}/stores/{storeId}/online-terminals
 }
 ```
 
-> **Note:** When a merchant completes onboarding, the `PaymentPage` and `MerchantInitiated` modes are registered automatically. You only need to register `SelfHostedPage` explicitly.
+> **Note:** The default terminals exist from the moment the online store does, but no online terminal can take a payment until the store's domains are verified and the store is approved.
 
 **Response:**
 
