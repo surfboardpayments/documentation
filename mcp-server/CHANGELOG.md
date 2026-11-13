@@ -2,6 +2,11 @@
 
 All notable changes to `@surfboardpayments/surf-mcp` are documented here. This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.3.2] — 2026-11-13
+
+### Changed
+- The package is now released under the **MIT License**. It was previously marked `UNLICENSED`, which left no stated terms for using it. A `LICENSE` file ships in the tarball and the `license` field in `package.json` is `MIT`. No code or documentation changes.
+
 ## [1.3.1] — 2026-09-04
 
 ### Added
