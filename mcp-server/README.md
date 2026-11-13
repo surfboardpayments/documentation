@@ -119,6 +119,10 @@ Follows [SemVer](https://semver.org/). See [CHANGELOG.md](./CHANGELOG.md) for wh
 - **The docs feel out of date.** Bump the package: `npm i -g @surfboardpayments/surf-mcp@latest`, or just re-run `npx` (it pulls latest by default).
 - **Want to file an issue?** Open one at the [GitHub repo](https://github.com/surfboardpayments/documentation/issues).
 
+## License
+
+[MIT](./LICENSE) © Surfboard Payments AB
+
 ## Links
 
 - [Developer Portal](https://developers.surfboardpayments.com)
